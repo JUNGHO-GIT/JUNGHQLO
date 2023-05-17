@@ -1,0 +1,111 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
+
+  <!-- head --------------------------------------------------------------------------------------->
+  <head>
+    <div th:replace="common/head :: head"></div>
+  </head>
+
+  <!-- body --------------------------------------------------------------------------------------->
+  <body>
+
+    <!-- header ----------------------------------------------------------------------------------->
+    <div th:replace="common/header :: header"></div>
+
+    <!-- navigation -->
+    <div th:with="icon='fas fa-chalkboard-teacher', text1='Blog', text2='Blog Search'">
+      <div th:replace="common/navigation :: navigation"></div>
+    </div>
+
+    <!-- section ---------------------------------------------------------------------------------->
+    <section class="blog spad">
+      <div class="container">
+
+        <!-- sorting + search --------------------------------------------------------------------->
+        <div class="row mb-3 jungho-inline">
+          <!-- sorting -->
+          <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+            <div class="jungho-left">
+              <i class="fas fa-sort-amount-down fa-lg"></i>&nbsp;&nbsp;
+              <form th:action="@{/board/getBoardList}" method="GET" onchange="this.submit();">
+                <select name="sort" class="form-select">
+                  <option value="default">정렬</option>
+                  <option value="titleASC">제목순(오름차순)</option>
+                  <option value="titleDESC">제목순(내림차순)</option>
+                  <option value="countASC">조회수낮은순</option>
+                  <option value="countDESC">조회수높은순</option>
+                  <option value="dateASC">오래된순</option>
+                  <option value="dateDESC">최신순</option>
+                </select>
+              </form>
+            </div>
+          </div>
+          <!-- search -->
+          <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+            <form id="searchForm" method="GET" th:action="@{/board/searchBoard}">
+              <div class="jungho-right">
+                <select class="ft-5 fw-8 ms-2 searchSelect" th:name="searchType" th:id="searchType">
+                  <option value="title">제목</option>
+                  <option value="contents">내용</option>
+                </select>
+                <input class="form-control ft-7 fw-7 me-1 searchBar" type="search" th:id="keyword" placeholder="search" th:name="keyword" required/>
+                <i class="fas fa-search fa-lg" th:id="searchIcon"></i>
+                <button type="submit" id="hiddenSubmit" class="hiddenSubmit"></button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- /.sorting + search -->
+
+        <!-- blog section -->
+        <div class="row">
+          <th:block th:each="board : ${boardList}">
+            <div class="col-lg-4 col-md-6 col-sm-6">
+              <div class="blog__item">
+                <!-- image -->
+                <div class="blog__item__pic set-bg" th:attr="data-setbg=@{${board.board_imgsUrl}}"></div>
+                <div class="blog__item__text">
+                  <!-- date -->
+                  <span><img th:src="@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/images/icon/calendar.png}"/><th:block th:text="${board.board_update != null ? board.board_update+'(수정)' : board.board_date+'(원글)'}"></th:block></span>
+                  <!-- title -->
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h5 th:id="board_title" th:value="board_title" th:text="${board.board_title}">
+                    </h5>
+                    <!-- like -->
+                    <div style="display: flex;">
+                      <div style="text-align: center">
+                        <i class="far fa-thumbs-up"></i>
+                        <h6 th:text="${board.board_like}"></h6>
+                      </div>
+                      <div style="text-align: center" class="ms-4 me-n4">
+                        <i class="far fa-thumbs-down mt-1"></i>
+                        <h6 th:text="${board.board_dislike}"></h6>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- details -->
+                  <a th:href="@{|/board/getBoardDetails?board_number=${board.board_number}|}">
+                  Read More</a>
+                </div>
+              </div>
+            </div>
+          </th:block>
+        </div>
+        <!-- /.blog section -->
+
+        <!-- pagination -->
+        <div th:with="prefix='board', subfix='Board'">
+        <div th:replace="common/pagination :: pagination"></div>
+        </div>
+
+      </div>
+    </section>
+    <!-- /.blog main -->
+
+    <!-- footer ----------------------------------------------------------------------------------->
+    <div th:replace="common/footer :: footer"></div>
+
+  </body>
+</html>
+<!-- /.html -->

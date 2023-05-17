@@ -1,0 +1,56 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
+
+	<!-- head --------------------------------------------------------------------------------------->
+	<head>
+		<div th:replace="common/head :: head"></div>
+	</head>
+
+	<!-- body --------------------------------------------------------------------------------------->
+	<body>
+
+		<!-- header ----------------------------------------------------------------------------------->
+    <div th:replace="common/header :: header"></div>
+
+    <!-- navigation -->
+    <div th:with="icon='fas fa-user-cog', text1='Member', text2='Member Delete'">
+      <div th:replace="common/navigation :: navigation"></div>
+    </div>
+
+    <!-- section ---------------------------------------------------------------------------------->
+    <div class="container">
+      <div class="row">
+        <div class="col">
+
+          <!-- form ------------------------------------------------------------------------------->
+          <form class="border-primary col-5" method="POST">
+            <div class="input-group mb-3">
+              <span class="input-group-text" >ID</span>
+              <input type="text" th:id="member_id" th:name="member_id"  placeholder="아이디를 입력하세요">
+            </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text" >Name</span>
+              <input type="text"  th:id="member_name" th:name="member_name"  placeholder="이름을 입력하세요">
+            </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text" >Pw</span>
+              <input type="password"  th:id="member_pw" th:name="member_pw"  placeholder="비밀번호를 입력하세요">
+            </div>
+            <button type="submit" class="btn btn-primary" th:onclick="return deleteMember();">
+              회원탈퇴
+            </button>
+          </form>
+          <!-- /.form -->
+
+        </div>
+      </div>
+    </div>
+    <!-- /.section -->
+
+	  <!-- footer ----------------------------------------------------------------------------------->
+    <div th:replace="common/footer :: footer"></div>
+
+  </body>
+</html>
+<!-- /.html -->

@@ -1,0 +1,136 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
+
+  <!-- head --------------------------------------------------------------------------------------->
+  <head>
+    <div th:replace="common/head :: head"></div>
+  </head>
+
+  <!-- body --------------------------------------------------------------------------------------->
+	<body>
+
+    <!-- header ----------------------------------------------------------------------------------->
+    <div th:replace="common/header :: header"></div>
+
+    <!-- navigation -->
+    <div th:with="icon='fas fa-question-circle', text1='Qna', text2='Qna List'">
+      <div th:replace="common/navigation :: navigation"></div>
+    </div>
+
+    <!-- section ---------------------------------------------------------------------------------->
+    <section class="blog spad">
+      <div class="container">
+
+        <!-- sorting + search --------------------------------------------------------------------->
+        <div class="row mb-3 jungho-inline">
+          <!-- sorting -->
+          <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+            <div class="jungho-left">
+              <i class="fas fa-sort-amount-down fa-lg"></i>&nbsp;&nbsp;
+              <form th:action="@{/qna/getQnaList}" method="GET" onchange="this.submit();">
+                <select name="sort" class="form-select">
+                  <option value="default">문의</option>
+                  <option value="goods">상품문의</option>
+                  <option value="payment">결제문의</option>
+                  <option value="exchange">교환문의</option>
+                  <option value="refund">환불문의</option>
+                  <option value="delivery">배송문의</option>
+                  <option value="etc">기타문의</option>
+                </select>
+              </form>
+            </div>
+          </div>
+          <!-- search -->
+          <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+            <form id="searchForm" method="GET" th:action="@{/qna/searchQna}">
+              <div class="jungho-right">
+                <select class="ft-5 fw-8 ms-2 searchSelect" th:name="searchType" th:id="searchType">
+                  <option value="title">제목</option>
+                  <option value="contents">내용</option>
+                </select>
+                <input class="form-control ft-7 fw-7 me-1 searchBar" type="search" th:id="keyword" placeholder="search" th:name="keyword" required/>
+                <i class="fas fa-search fa-lg" th:id="searchIcon"></i>
+                <button type="submit" id="hiddenSubmit" class="hiddenSubmit"></button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- /.sorting + search -->
+
+        <!-- qna list -->
+        <div class="row">
+          <div class="col-12">
+            <div class="junghoList-card card-margin">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <!-- qna row -->
+                    <div class="junghoList-container" th:each="qna:${qnaList}">
+                      <div class="junghoList">
+                        <div class="jungho-inline">
+                          <!-- image -->
+                          <div class="junghoList-emp-img">
+                            <img th:src="@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/images/icon/logo.png}"/>
+                          </div>
+                          <!-- writer -->
+                          <div class="junghoList-writer">
+                            <span th:text="${qna.qna_writer}"></span>
+                          </div>
+                        </div>
+                        <!-- title -->
+                        <div class="junghoList-title">
+                          <a th:id="qna_title" th:value="qna_title" th:href="@{|/qna/getQnaDetails?qna_number=${qna.qna_number}|}" th:text="${qna.qna_title}"></a>
+                        </div>
+                        <!-- content -->
+                        <div class="junghoList-contents">
+                          <span th:text="${#strings.abbreviate(qna.qna_contents, 20)}"
+                          th:id="qna_contents" th:value="qna_contents"></span>
+                        </div>
+                        <!-- status -->
+                        <div class="junghoList-answer1">
+                          <i class="fa fa-eye"></i>&nbsp;
+                          <span th:text="${qna.qna_answer2}" th:id="qna_answer2" th:value="qna_answer2"></span>&nbsp;&nbsp;
+                        </div>
+                        <!-- date -->
+                        <div class="junghoList-date">
+                          <i class="far fa-calendar-alt fa-xs"></i>&nbsp;
+                          <span th:text="${#strings.substring((qna.qna_update != null ? qna.qna_update : qna.qna_date), 0, 10)}"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /.qna row -->
+
+                    <!-- qna button -->
+                    <div class="col-lg-12 md-12 sm-12">
+                      <div class="jungho-center">
+                        <button type="button" class="jungho-button" th:if="${session.member_id != null}" th:onclick="'window.location.href=\'' + @{/qna/addQna} + '\''">
+                          문의하기
+                        </button>
+                        <button type="button" class="jungho-button" th:if="${session.member_id == null}" th:onclick="return sessionAlert()">
+                          문의하기
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- pagination -->
+                    <div th:with="prefix='qna', subfix='Qna'">
+                      <div th:replace="common/pagination :: pagination"></div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /.qna -->
+
+    <!-- footer ----------------------------------------------------------------------------------->
+    <div th:replace="common/footer :: footer"></div>
+
+  </body>
+</html>
+<!-- /.html -->

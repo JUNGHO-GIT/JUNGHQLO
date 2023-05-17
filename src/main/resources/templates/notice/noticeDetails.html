@@ -1,0 +1,137 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
+
+  <!-- head --------------------------------------------------------------------------------------->
+  <head>
+    <div th:replace="common/head :: head"></div>
+  </head>
+
+  <!-- body --------------------------------------------------------------------------------------->
+	<body>
+
+    <!-- header ----------------------------------------------------------------------------------->
+    <div th:replace="common/header :: header"></div>
+
+    <!-- navigation -->
+    <div th:with="icon='fas fa-bell', text1='Notice', text2='Notice Details'">
+      <div th:replace="common/navigation :: navigation"></div>
+    </div>
+
+    <!-- section ---------------------------------------------------------------------------------->
+    <section class="blog-details spad">
+      <div class="container">
+        <!-- row -->
+        <div class="row d-flex justify-content-center">
+          <!-- col -->
+          <div class="col-lg-12">
+            <!-- image -->
+            <div class="blog__details__pic">
+              <img th:src="@{${noticeModel.notice_imgsUrl}}"/>
+            </div>
+          </div>
+          <!-- col -->
+          <div class="col-lg-8">
+            <div class="blog__details__content">
+              <div class="blog__details__quote">
+                <div class="row">
+                  <div class="col-lg-8 md-8 sm-8">
+                    <i class="fa fa-quote-left"></i>
+                    <!-- title -->
+                    <div class="jungho-left mt-2">
+                      <h6>제&nbsp;&nbsp;&nbsp;&nbsp;목 : </h6>
+                      <p th:text="${noticeModel.notice_title}" class="p ms-1"></p>
+                    </div>
+                    <!-- writer -->
+                    <div class="jungho-left mt-2">
+                      <h6>작성자 : </h6>
+                      <p th:text="${noticeModel.notice_writer}" class="p ms-1"></p>
+                      <input type="hidden" th:id="writerId" th:name="writerId" th:value="${noticeModel.notice_writer}"/>
+                    </div>
+                    <!-- date -->
+                    <div class="jungho-left mt-2">
+                      <h6>작성일 : </h6>
+                      <p th:text="${noticeModel.notice_update != null ? noticeModel.notice_update+'(수정)' : noticeModel.notice_date+'(원글)'}" class="p ms-1"></p>
+                    </div>
+                    <!-- count -->
+                    <div class="jungho-left mt-2">
+                      <h6>조회수 : </h6>
+                      <p th:text="${noticeModel.notice_count}" class="p ms-1"></p>
+                    </div>
+                    <!-- like -->
+                    <div class="jungho-left mt-1">
+                      <h6>Like : </h6>
+                      <div class="like-container" th:onclick="likeButton();" style="cursor:pointer">
+                        <div class="ms-2">
+                          <i class="far fa-thumbs-up" th:id="likeBtn"></i>
+                          <h6 class="like-count" id="likeCount" th:text="${noticeModel.notice_like}">
+                          </h6>
+                        </div>
+                      </div>
+                      <!-- dislike -->
+                      <div class="dislike-container" th:onclick="dislikeButton();" style="cursor:pointer">
+                        <div class="ms-2">
+                          <i class="far fa-thumbs-down mt-1" th:id="dislikeBtn"></i>
+                          <h6 class="dislike-count" id="dislikeCount" th:text="${noticeModel.notice_dislike}"></h6>
+                        </div>
+                      </div>
+                      <!-- hidden -->
+                      <input type="hidden" th:id="uniqueNumber" th:value="${noticeModel.notice_number}" th:name="notice_number"/>
+                    </div>
+                  </div>
+                  <!-- share -->
+                  <div class="col-lg-4 md-4 sm-4">
+                    <h6 class="mb-3"> &nbsp; Share :</h6>
+                    <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+                      <a class="a2a_button_kakao m-1"></a>
+                      <a class="a2a_button_line m-1"></a>
+                      <a class="a2a_button_google_gmail m-1"></a>
+                      <a class="a2a_button_facebook m-1"></a>
+                      <a class="a2a_button_twitter m-1"></a>
+                      <a class="a2a_button_pinterest m-1"></a>
+                      <a class="a2a_button_reddit m-1"></a>
+                      <a class="a2a_button_yahoo_mail m-1"></a>
+                      <a class="a2a_button_blogger m-1"></a>
+                      <a class="a2a_button_evernote m-1"></a>
+                      <a class="a2a_button_facebook_messenger m-1"></a>
+                      <a class="a2a_button_outlook_com m-1"></a>
+                    </div>
+                    <script async src="https://static.addtoany.com/menu/page.js"></script>
+                  </div>
+                </div>
+              </div>
+              <div class="jungho-horizon"></div>
+              <!-- content -->
+              <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <div class="blog__details__author mt-3">
+                    <p th:text="${noticeModel.notice_contents}" class="p"></p>
+                  </div>
+                </div>
+              </div>
+              <div class="jungho-horizon mb-4"></div>
+              <!-- button -->
+              <div class="form-group d-flex justify-content-center">
+                <button class="jungho-button" th:onclick="updateAlert();">수정</button>
+                <button class="jungho-button" th:onclick="deleteAlert();">삭제</button>
+                <button class="jungho-button" th:onclick="@{|window.location.href='/notice/getNoticeList'|}">목록</button>
+              </div>
+
+              <!-- fake pagination -->
+              <div th:replace="common/pagination :: fake-pagination"></div><br>
+
+            </div>
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+    </section>
+    <!-- /.notice -->
+
+    <!-- footer ----------------------------------------------------------------------------------->
+    <div th:replace="common/footer :: footer"></div>
+
+  </body>
+</html>
+<!-- /.html -->

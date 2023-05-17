@@ -1,0 +1,28 @@
+# java
+*.java linguist-language=Java
+
+# jsp
+*.jsp linguist-language=Java
+
+# thymeleaf
+
+
+# javascript
+*.js linguist-language=JavaScript
+*.jsx linguist-language=JavaScript
+*.ts linguist-language=JavaScript
+*.tsx linguist-language=JavaScript
+
+# css
+*.css linguist-language=CSS
+
+# xml
+*.xml linguist-language=XML
+*.xsd linguist-language=XML
+*.xsl linguist-language=XML
+
+# sql
+*.sql linguist-language=SQL
+
+# json
+*.json linguist-language=JSON

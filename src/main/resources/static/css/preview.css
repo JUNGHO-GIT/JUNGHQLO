@@ -1,0 +1,203 @@
+/**
+* @author Jungho
+* @since 2023-04-17 05:37:57
+* @version 1.0
+* @desc 이미지를 선택하면 프리뷰로 보여주는 함수, 이미지는 총 2개 까지 가능합니다.
+**/
+
+
+/** media *****************************************************************************************/
+
+/** col-lg **/
+@media (min-width: 1024px) {
+  .imageLoader {
+    width: 330px;
+    height: 400px;
+  }
+  .imageMiniLoader {
+    margin-left : 5px;
+  }
+}
+
+/** col-md **/
+@media (min-width: 768px) and (max-width: 1023px) {
+  .imageLoader {
+    width: 330px;
+    height: 400px;
+  }
+  .imageMiniLoader {
+    margin-left : 20px;
+  }
+}
+
+/** col-sm **/
+@media (min-width: 480px) and (max-width: 767px) {
+  .imageLoader {
+    width: 330px;
+    height: 400px;
+  }
+  .imageMiniLoader {
+    margin-left : 70px;
+  }
+}
+
+/** col-xs **/
+@media (min-width: 280px) and (max-width: 479px) {
+  .imageLoader {
+    width: 330px;
+    height: 400px;
+  }
+
+  .imageMiniLoader {
+    margin-left : 15px;
+  }
+}
+
+/** keyframes *************************************************************************************/
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.pulse {
+  animation: pulse 0.5s ease-out;
+}
+
+/** previewExisting-group *************************************************************************/
+.previewExisting-group {
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #000000;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 0px 5px 0px;
+}
+
+.previewExisting-group img {
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 6px;
+}
+
+.existingMiniBox {
+  border-radius: 10px;
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+  position: relative;
+  margin: 10px 0px 0px 0px;
+}
+
+/** previewImage-group ****************************************************************************/
+.previewImage-group h4 {
+  font-size: 20px;
+  font-weight: 700;
+  text-align: left;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.imageLoader {
+  opacity: 1.1;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 6px;
+  padding: 5px;
+  border-style: none;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  margin-left : 10px;
+}
+
+.imageBox {
+  transition: opacity 0.3s;
+}
+
+.imageFile {
+  display: none;
+}
+
+/** previewMini-group *****************************************************************************/
+.previewMini-group {
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #000000;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 0px 5px 0px;
+}
+
+.previewMini-group h6 {
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.imageMiniLoader {
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 6px;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+  vertical-align: middle;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  border-style: none;
+}
+
+.imageMiniBox {
+  transition: opacity 0.3s;
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 6px;
+  vertical-align: middle;
+  position: relative;
+  display: flex;
+  background-color: transparent;
+  flex-direction: column;
+  border-style: none;
+  object-fit: cover;
+}
+
+/** previewButton-group ***************************************************************************/
+.previewButton-group {
+  outline: none;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.previewButton-group button {
+  background-color: #800020;
+  font-weight: 700;
+  border-radius: 5px;
+  color: white;
+  padding: 7px;
+  text-decoration: none;
+  font-size: 14px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.previewButton-group button:hover {
+  font-weight: 900;
+}

@@ -1,0 +1,44 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
+
+  <!-- head --------------------------------------------------------------------------------------->
+  <head>
+    <div th:replace="common/head :: head"></div>
+  </head>
+
+  <!-- body --------------------------------------------------------------------------------------->
+  <body>
+
+    <!-- header ----------------------------------------------------------------------------------->
+    <div th:replace="common/header :: header"></div>
+
+    <!-- navigation -->
+    <div th:with="icon='fas fa-credit-card', text1='Orders', text2='Orders Fail'">
+      <div th:replace="common/navigation :: navigation"></div>
+    </div>
+
+    <!-- section ---------------------------------------------------------------------------------->
+    <section class="checkout spad">
+      <div class="container">
+        <div class="checkout__form">
+          <div class="row jungho-center">
+            <div class="col-lg-6 col-md-6">
+              <div class="checkout__order">
+                <h4 class="order__title">주문이 실패하였습니다.</h4>
+                <button type="button" class="jungho-button" th:onclick="'window.location.href=\'' + @{/} + '\''"><i class="fa fa-barcode fa-lg"></i>&nbsp;홈으로
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- failure -->
+
+    <!-- footer ----------------------------------------------------------------------------------->
+    <div th:replace="common/footer :: footer"></div>
+
+  </body>
+</html>
+<!-- /.html -->
