@@ -1,3 +1,4 @@
+package com.example.junghqlo.model;
 /* package com.example.junghqlo.domain;
 
 import java.time.LocalDateTime;

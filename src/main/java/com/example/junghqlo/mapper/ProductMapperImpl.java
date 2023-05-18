@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
-import com.example.junghqlo.domain.Product;
+import com.example.junghqlo.model.Product;
 
 @Repository
 public class ProductMapperImpl implements ProductMapper {

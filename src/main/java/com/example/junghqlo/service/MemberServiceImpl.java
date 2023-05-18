@@ -8,10 +8,9 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
-import com.example.junghqlo.domain.Member;
 import com.example.junghqlo.handler.PageHandler;
 import com.example.junghqlo.mapper.MemberMapper;
+import com.example.junghqlo.model.Member;
 
 @Service
 public class MemberServiceImpl implements MemberService {

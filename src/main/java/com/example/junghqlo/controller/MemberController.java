@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.example.junghqlo.domain.Member;
 import com.example.junghqlo.handler.EmailHandler;
 import com.example.junghqlo.handler.PageHandler;
+import com.example.junghqlo.model.Member;
 import com.example.junghqlo.service.MemberService;
 
 @Controller

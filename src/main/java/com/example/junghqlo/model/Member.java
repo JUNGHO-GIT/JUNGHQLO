@@ -1,4 +1,4 @@
-package com.example.junghqlo.domain;
+package com.example.junghqlo.model;
 
 import java.time.LocalDateTime;
 import lombok.Data;

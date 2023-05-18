@@ -1,7 +1,7 @@
 package com.example.junghqlo.service;
 
-import com.example.junghqlo.domain.Orders;
 import com.example.junghqlo.handler.PageHandler;
+import com.example.junghqlo.model.Orders;
 import com.stripe.exception.StripeException;
 
 public interface OrdersService {

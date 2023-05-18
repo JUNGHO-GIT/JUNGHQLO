@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import com.example.junghqlo.domain.Member;
-import com.example.junghqlo.domain.Product;
 import com.example.junghqlo.handler.PageHandler;
+import com.example.junghqlo.model.Member;
+import com.example.junghqlo.model.Product;
 import com.example.junghqlo.service.ProductService;
 
 @Controller

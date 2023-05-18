@@ -8,8 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
-
-import com.example.junghqlo.domain.Member;
+import com.example.junghqlo.model.Member;
 
 @Repository
 public class MemberMapperImpl implements MemberMapper {

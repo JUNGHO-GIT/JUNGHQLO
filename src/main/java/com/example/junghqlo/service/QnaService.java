@@ -1,8 +1,8 @@
 package com.example.junghqlo.service;
 
 import javax.servlet.http.HttpSession;
-import com.example.junghqlo.domain.Qna;
 import com.example.junghqlo.handler.PageHandler;
+import com.example.junghqlo.model.Qna;
 
 public interface QnaService {
 

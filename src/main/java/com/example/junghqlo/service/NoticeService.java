@@ -1,8 +1,8 @@
 package com.example.junghqlo.service;
 
 import javax.servlet.http.HttpSession;
-import com.example.junghqlo.domain.Notice;
 import com.example.junghqlo.handler.PageHandler;
+import com.example.junghqlo.model.Notice;
 public interface NoticeService {
 
   // 1. getNoticeList ----------------------------------------------------------------------------->

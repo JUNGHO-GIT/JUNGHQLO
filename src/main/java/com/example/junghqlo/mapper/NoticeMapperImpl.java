@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
-import com.example.junghqlo.domain.Notice;
+import com.example.junghqlo.model.Notice;
 
 @Repository
 public class NoticeMapperImpl implements NoticeMapper {

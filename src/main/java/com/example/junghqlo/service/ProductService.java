@@ -1,7 +1,7 @@
 package com.example.junghqlo.service;
 
-import com.example.junghqlo.domain.Product;
 import com.example.junghqlo.handler.PageHandler;
+import com.example.junghqlo.model.Product;
 
 public interface ProductService {
 

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
-import com.example.junghqlo.domain.Board;
+import com.example.junghqlo.model.Board;
 
 @Repository
 public class BoardMapperImpl implements BoardMapper {
