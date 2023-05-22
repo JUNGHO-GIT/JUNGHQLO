@@ -130,9 +130,9 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
                             </span>
                           </div>
                         </th:block>
-                        <th:block th:if="${session.member_id != null}">
-                          <button type="submit" class="jungho-button" th:onclick="return ordersCheck();">구매</button>
-                          <button type="button" class="jungho-button" th:onclick="|window.location.href='@{/product/getProductList}'|">리스트</button>
+                        <th:block th:if="${session.member_id} != null">
+                          <button type="button" class="jungho-button" th:onclick="return sessionAlert();">구매</button>
+                          <button type="button" class="jungho-button" th:onclick="@{|window.location.href='/product/getProductList'|}">리스트</button>
                           <br>
                           <br>
                           <div class="jungho-center ms-6 mb-1">
@@ -145,29 +145,26 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
                           <!-- share -->
                           <div class="jungho-center ms-6 mb-1">
                             <h6 class="p">
-                              <i class="fa fa-share fa-xs"></i>
-                              &nbsp;공유하기&nbsp;&nbsp;:&nbsp;&nbsp;
+                              <i class="fas fa-share fa-xs"></i>
+                              &nbsp;공유&nbsp;&nbsp;:&nbsp;&nbsp;
                             </h6>
-                            <span>
-                              <div class="a2a_kit a2a_kit_size_20 a2a_default_style">
-                                <a class="a2a_button_kakao"></a>
-                                <a class="a2a_button_line"></a>
-                                <a class="a2a_button_facebook"></a>
-                                <a class="a2a_button_twitter"></a>
-                                <a class="a2a_button_pinterest"></a>
-                                <a class="a2a_button_yahoo_mail"></a>
-                                <script async src="https://static.addtoany.com/menu/page.js"></script>
-                              </div>
-                            </span>
+                            <div class="a2a_kit a2a_kit_size_20 a2a_default_style">
+                              <a class="a2a_button_kakao"></a>
+                              <a class="a2a_button_line"></a>
+                              <a class="a2a_button_facebook"></a>
+                              <a class="a2a_button_twitter"></a>
+                              <a class="a2a_button_pinterest"></a>
+                              <a class="a2a_button_yahoo_mail"></a>
+                              <script async src="https://static.addtoany.com/menu/page.js"></script>
+                            </div>
                           </div>
-                          <div class="jungho-center ms-6 mb-n5">
-                            <h6 class="p">
-                              &nbsp;*&nbsp;테스트&nbsp;&nbsp;:&nbsp;&nbsp;
-                              &nbsp;&nbsp;&nbsp;카 드&nbsp;&nbsp;&nbsp;&nbsp;
+                          <div class="jungho-center ms-6 mb-1">
+                            <h6 class="p mt-n6">
+                              <i class="fas fa-credit-card fa-xs"></i>
+                              &nbsp;카드&nbsp;&nbsp;:&nbsp;&nbsp;
                             </h6>
                             <span>
-                              <p>4242 4242 4242 4242</p>
-                              <p> 1234 / 567</p>
+                              <p class="ft-6">4242 4242 4242 4242<br/>1234 / 567</p>
                             </span>
                           </div>
                         </th:block>

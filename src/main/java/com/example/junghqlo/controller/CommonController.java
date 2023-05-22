@@ -15,7 +15,7 @@ public class CommonController {
   // contact
   @GetMapping("/contact")
   public String contact() throws Exception {
-    return "/common/contact";
+    return "/contact/contact";
   }
 
 }

@@ -2791,7 +2791,6 @@ a:not([href]):hover {
 	width: 40px;
   height: 5px;
 	background: #800020;
-  /* more effects */
   -webkit-transform: rotate(10deg);
   -moz-transform: rotate(1deg);
   -o-transform: rotate(1deg);
@@ -3311,8 +3310,7 @@ a:not([href]):hover {
 	padding: 14px 35px;
 }
 
-/** Map ***************************************************************************************/
-
+/** Map ******************************************************************************************/
 .map {
 	height: 500px;
 }
@@ -3322,7 +3320,6 @@ a:not([href]):hover {
 }
 
 /** Contact ***************************************************************************************/
-
 .contact__text .section-title {
 	text-align: left;
 	margin-bottom: 40px;

@@ -397,20 +397,22 @@ function deleteMember() {
   const member_name = $("#member_name").val();
   const member_id = $("#member_id").val();
   const member_pw = $("#member_pw").val();
+  const member_pw2 = $("#member_pw2").val();
 
-  if (member_name.trim() === "") {
-    alert("이름을 입력하세요");
-    $("#member_name").focus();
-    return false;
-  }
-  if (member_id.trim() === "") {
-    alert("아이디를 입력하세요");
-    $("#member_id").focus();
-    return false;
-  }
   if (member_pw.trim() === "") {
     alert("비밀번호를 입력하세요");
     $("#member_pw").focus();
+    return false;
+  }
+  if (member_pw2.trim() === "") {
+    alert("비밀번호를 다시 입력하세요");
+    $("#member_pw2").focus();
+    return false;
+  }
+  if (member_pw != member_pw2) {
+    alert("비밀번호 확인이 일치하지 않습니다.");
+    $("#member_pw_check").val("");
+    $("#member_pw_check").focus();
     return false;
   }
   $.ajax({
