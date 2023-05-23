@@ -116,7 +116,7 @@ public class OrdersServiceImpl implements OrdersService {
     String googleBucketUrl;
 
     if (product_imgsUrl == null) {
-      googleBucketUrl="https://storage.googleapis.com/jungho-bucket/JUNGHQLO/images/icon/logo.png";
+      googleBucketUrl="https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/icon/logo.png";
       orders.setProduct_imgsUrl(googleBucketUrl);
     }
     else {

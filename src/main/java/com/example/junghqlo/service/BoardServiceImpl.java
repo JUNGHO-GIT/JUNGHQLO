@@ -126,7 +126,7 @@ public class BoardServiceImpl implements BoardService {
 
     if (board_imgsFile.isEmpty()) {
       googleBucketUrl
-       ="https://storage.googleapis.com/jungho-bucket/JUNGHQLO/images/icon/logo.png";
+       ="https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/icon/logo.png";
       board.setBoard_imgsUrl(googleBucketUrl);
     }
     else {

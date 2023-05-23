@@ -148,7 +148,7 @@ function randomSideImage() {
     }
 
     usedValues.push(intValue);
-    var finalImageUrl = 'https://storage.googleapis.com/jungho-bucket/JUNGHQLO/images/product/all/product-' + intValue + '.jpg';
+    var finalImageUrl = 'https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/product/all/product-' + intValue + '.jpg';
     element.getElementsByClassName('set-bg')[0].style.backgroundImage = 'url(' + finalImageUrl + ')';
   }
   document.querySelectorAll('.nav-link').forEach((element) => setImageURL(element));

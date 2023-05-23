@@ -125,7 +125,7 @@ public class QnaServiceImpl implements QnaService {
     String googleBucketUrl;
 
     if (qna_imgsFile.isEmpty()) {
-      googleBucketUrl="https://storage.googleapis.com/jungho-bucket/JUNGHQLO/images/icon/logo.png";
+      googleBucketUrl="https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/icon/logo.png";
       qna.setQna_imgsUrl(googleBucketUrl);
     }
     else {

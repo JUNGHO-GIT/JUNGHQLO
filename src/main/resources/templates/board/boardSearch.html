@@ -67,7 +67,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
                 <div class="blog__item__pic set-bg" th:attr="data-setbg=@{${board.board_imgsUrl}}"></div>
                 <div class="blog__item__text">
                   <!-- date -->
-                  <span><img th:src="@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/images/icon/calendar.png}"/><th:block th:text="${board.board_update != null ? board.board_update+'(수정)' : board.board_date+'(원글)'}"></th:block></span>
+                  <span><img th:src="@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/icon/calendar.png}"/><th:block th:text="${board.board_update != null ? board.board_update+'(수정)' : board.board_date+'(원글)'}"></th:block></span>
                   <!-- title -->
                   <div style="display: flex; justify-content: space-between; align-items: center;">
                     <h5 th:id="board_title" th:value="board_title" th:text="${board.board_title}">

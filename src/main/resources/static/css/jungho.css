@@ -566,24 +566,24 @@
 }
 
 .jungho-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
 }
 
 .jungho-left {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  text-align: left;
+  display: flex !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  text-align: left !important;
 }
 
 .jungho-right {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  text-align: right;
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  text-align: right !important;
 }
 
 .p {

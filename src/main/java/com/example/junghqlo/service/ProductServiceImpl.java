@@ -167,7 +167,7 @@ public class ProductServiceImpl implements ProductService {
     String googleBucketName="jungho-bucket";
     String googleFolderPath="JUNGHQLO/DB/product/";
     String googleNoImageUrl
-    = "https://storage.googleapis.com/jungho-bucket/JUNGHQLO/images/icon/noimage.png";
+    = "https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/icon/noimage.png";
 
     if (product_imgsFile1.isEmpty()) {
       googleBucketUrl1 = googleNoImageUrl;
@@ -243,7 +243,7 @@ public class ProductServiceImpl implements ProductService {
     String googleBucketUrl2 = product_imgsUrl2;
     String googleBucketName = "jungho-bucket";
     String googleFolderPath = "JUNGHQLO/DB/product/";
-    String googleNoImageUrl = "https://storage.googleapis.com/jungho-bucket/JUNGHQLO/images/icon/noimage.png";
+    String googleNoImageUrl = "https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/icon/noimage.png";
 
     Storage storage = StorageOptions.getDefaultInstance().getService();
 

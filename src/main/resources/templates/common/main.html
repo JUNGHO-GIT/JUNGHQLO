@@ -14,7 +14,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
         <div class="hero__slider owl-carousel">
           <!-- main image loof -->
           <th:block th:each="i : ${#numbers.sequence(1, 2)}">
-            <div class="hero__items set-bg" th:attr="data-setbg=@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/images/main/main-{i}.png(i=${i})}">
+            <div class="hero__items set-bg" th:attr="data-setbg=@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/main/main-{i}.png(i=${i})}">
               <div class="container">
                 <div class="row">
                   <div class="col-xl-5 col-lg-7 col-md-8">
@@ -50,7 +50,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
             <th:block th:each="i : ${#numbers.sequence(1, 4)}">
               <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
                 <div class="product__item">
-                  <div class="product__item__pic set-bg" th:attr="data-setbg=@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/images/recommend/recommend-{i}.jpg(i=${i})}"></div>
+                  <div class="product__item__pic set-bg" th:attr="data-setbg=@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/recommend/recommend-{i}.jpg(i=${i})}"></div>
                   <div class="product__item__text">
                     <h6>Modern Styles</h6>
                     <!-- prevent click -->
@@ -74,7 +74,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
             <th:block th:each="i : ${#numbers.sequence(5, 8)}">
               <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
                 <div class="product__item">
-                  <div class="product__item__pic set-bg" th:attr="data-setbg=@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/images/recommend/recommend-{i}.jpg(i=${i})}"></div>
+                  <div class="product__item__pic set-bg" th:attr="data-setbg=@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/recommend/recommend-{i}.jpg(i=${i})}"></div>
                   <div class="product__item__text">
                     <h6>Casual Styles</h6>
                     <a class="add-cart" href="javascript:void(0);">Casual Styles</a>
@@ -107,7 +107,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
               <div class="col-lg-8">
                 <div class="instagram__pic">
                   <th:block th:each="i : ${#numbers.sequence(1, 6)}">
-                  <div class="instagram__pic__item set-bg" th:attr="data-setbg=@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/images/instagram3/instagram-{i}.jpg(i=${i})}"></div>
+                  <div class="instagram__pic__item set-bg" th:attr="data-setbg=@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/instagram3/instagram-{i}.jpg(i=${i})}"></div>
                   </th:block>
                 </div>
               </div>
