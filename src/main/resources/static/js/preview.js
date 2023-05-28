@@ -1,8 +1,9 @@
 /**
 * @author Jungho
-* @since 2023-04-17 05:37:57
-* @version 1.0
+* @since 2023-05-29
+* @version 1.1
 * @desc 이미지를 선택하면 프리뷰로 보여주는 함수, 이미지는 총 2개 까지 가능합니다.
+* @desc 인덱스값이 1개 이상이면 onchange 이벤트 등록, 아니면 oninput 이벤트를 등록합니다.
 **/
 
 function junghoPreview(index) {
@@ -10,7 +11,6 @@ function junghoPreview(index) {
   if(index == '' || index == null) {
     index = '';
   }
-
 
   // variables (getElement는 document.getElementById를 간략화한 함수) ----------------------------->
   const getElement = (id) => document.getElementById(id);
