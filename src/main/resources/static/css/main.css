@@ -1,6 +1,6 @@
 html,body {
 	height: 100%;
-	font-family: "FontAwesome", "Nunito Sans", sans-serif;
+	font-family: "Nunito Sans", sans-serif;
 	-webkit-font-smoothing: antialiased;
 }
 
@@ -8,7 +8,7 @@ h1,h2,h3,h4,h5,h6 {
 	margin: 0;
 	color: #111111;
 	font-weight: 400;
-	font-family: "FontAwesome", "Nunito Sans", sans-serif;
+	font-family: "Nunito Sans", sans-serif;
 }
 
 h1 {
@@ -31,7 +31,7 @@ h6 {
 }
 p {
 	font-size: 15px;
-	font-family: "FontAwesome", "Nunito Sans", sans-serif;
+	font-family: "Nunito Sans", sans-serif;
 	color: #3d3d3d;
 	font-weight: 400;
 	line-height: 25px;
@@ -703,7 +703,7 @@ a:not([href]):hover {
 /** Categories ************************************************************************************/
 
 .categories {
-	background: #f3f2ee;
+	background: #FDFBF8;
 	overflow: hidden;
 	padding-top: 150px;
 	padding-bottom: 125px;
@@ -1349,7 +1349,7 @@ a:not([href]):hover {
 .shop__sidebar__accordion .card-heading a:after,
 .shop__sidebar__accordion .card-heading>a.active[aria-expanded=false]:after {
 	content: "";
-	font-family: "FontAwesome";
+	font-family: "Nunito Sans", sans-serif;
 	font-size: 24px;
 	font-weight: 700;
 	color: #111111;
@@ -1501,7 +1501,7 @@ a:not([href]):hover {
 	right: -14px;
 	top: 0;
 	content: "";
-	font-family: "FontAwesome";
+	font-family: "Nunito Sans", sans-serif;
 }
 
 .product__details__breadcrumb span {
@@ -2019,7 +2019,7 @@ a:not([href]):hover {
 
 /** Breadcrumb ************************************************************************************/
 .breadcrumb-option {
-	background: #f3f2ee;
+	background: #FDFBF8;
 	padding: 30px 0;
   border-bottom: 1px solid rgba(140, 139, 139, 0.1);
   margin-bottom: 10px;
@@ -2109,7 +2109,7 @@ a:not([href]):hover {
 /** Testimonial ***********************************************************************************/
 
 .testimonial {
-	background: #f3f2ee;
+	background: #FDFBF8;
 }
 
 .testimonial__text {
@@ -2345,7 +2345,7 @@ a:not([href]):hover {
 	color: #111111;
 	height: 40px;
 	width: 40px;
-	background: #f3f2ee;
+	background: #FDFBF8;
 	border-radius: 50%;
 	line-height: 40px;
 	text-align: center;
@@ -2438,7 +2438,7 @@ a:not([href]):hover {
 }
 
 .cart__total {
-	background: #f3f2ee;
+	background: #FDFBF8;
 	padding: 35px 40px 40px;
 }
 
@@ -2696,7 +2696,7 @@ a:not([href]):hover {
 }
 
 .checkout__order {
-	background: #f3f2ee;
+	background: #FDFBF8;
 	padding: 30px;
 }
 
@@ -2980,7 +2980,7 @@ a:not([href]):hover {
 /** Blog Hero *************************************************************************************/
 
 .blog-hero {
-	background: #f3f2ee;
+	background: #FDFBF8;
 	padding-top: 125px;
 	padding-bottom: 190px;
 }
@@ -3106,7 +3106,7 @@ a:not([href]):hover {
 }
 
 .blog__details__quote {
-	background: #f3f2ee;
+	background: #FDFBF8;
 	padding: 20px;
 	border-radius: 5px;
 	position: relative;

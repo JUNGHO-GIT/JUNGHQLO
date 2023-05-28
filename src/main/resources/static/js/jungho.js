@@ -42,7 +42,10 @@ function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 document.addEventListener("DOMContentLoaded", function() {
-  for (var i = 1; i <= 8; i++) {
+  for (var i = 1; i <= 2; i++) {
+    setRandomPrice("price-" + i);
+  }
+  for (var i = 5; i <= 6; i++) {
     setRandomPrice("price-" + i);
   }
 });
@@ -93,7 +96,6 @@ function updateCheck() {
   }
   else {
     alert("수정이 취소되었습니다.");
-    window.history.back();
     return false;
   }
 }

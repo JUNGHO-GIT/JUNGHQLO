@@ -46,8 +46,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
             </div>
           </div>
           <div class="row product__filter">
-            <!-- recommended 1~4 -->
-            <th:block th:each="i : ${#numbers.sequence(1, 4)}">
+            <!-- recommended 1~2 -->
+            <th:block th:each="i : ${#numbers.sequence(1, 2)}">
               <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
                 <div class="product__item">
                   <div class="product__item__pic set-bg" th:attr="data-setbg=@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/recommend/recommend-{i}.jpg(i=${i})}"></div>
@@ -70,8 +70,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
               </div>
             </th:block>
 
-            <!-- recommended 5~8 -->
-            <th:block th:each="i : ${#numbers.sequence(5, 8)}">
+            <!-- recommended 5~6 -->
+            <th:block th:each="i : ${#numbers.sequence(5, 6)}">
               <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
                 <div class="product__item">
                   <div class="product__item__pic set-bg" th:attr="data-setbg=@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/recommend/recommend-{i}.jpg(i=${i})}"></div>

@@ -5,8 +5,12 @@
 * @desc 이미지를 선택하면 프리뷰로 보여주는 함수, 이미지는 총 2개 까지 가능합니다.
 **/
 
-// function junghoPreview() ----------------------------------------------------------------------->
 function junghoPreview(index) {
+
+  if(index == '' || index == null) {
+    index = '';
+  }
+
 
   // variables (getElement는 document.getElementById를 간략화한 함수) ----------------------------->
   const getElement = (id) => document.getElementById(id);

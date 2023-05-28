@@ -166,7 +166,7 @@ public class NoticeController {
 
     noticeService.updateNotice(notice, existingImage);
 
-    return "redirect:/board/getBoardList";
+    return "redirect:/notice/getNoticeList";
   }
 
   // 5-1. updateNoticeCount (GET) ----------------------------------------------------------------->

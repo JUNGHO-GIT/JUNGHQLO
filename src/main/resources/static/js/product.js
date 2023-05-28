@@ -271,7 +271,6 @@ function updateProduct() {
   }
   else {
     alert("상품 수정이 취소되었습니다.");
-    window.history.href = "/JUNGHQLO";
     return false;
   }
 }
