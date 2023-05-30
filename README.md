@@ -1,10 +1,6 @@
 ## 1. 📝 정보
 <table style="width:100%">
   <tr>
-    <th style="width:20%"></th>
-    <th style="width:80%"></th>
-  </tr>
-  <tr>
     <td><b>🔹프로젝트명</b></td>
     <td>JUNGHQLO</td>
   </tr>
@@ -29,10 +25,6 @@
 ## 2. ⭐ 특징
 <table style="width:100%">
   <tr>
-    <th style="width:30%"></th>
-    <th style="width:70%"></th>
-  </tr>
-  <tr>
     <td><b>🔹Spring Boot</b></td>
     <td>Spring Boot(v2.7)를 활용한 MVC 아키텍쳐 위주의 웹개발을 통한 웹앱의 코드구조화 실현으로 유지보수성 향상 및 보안성 강화</td>
   </tr>
@@ -56,10 +48,6 @@
 
 ## 3. 🛠️ 사용 기술
 <table style="width:100%">
-  <tr>
-    <th style="width:20%"></th>
-    <th style="width:80%"></th>
-  </tr>
   <tr>
     <td><b>🔹프론트엔드</b></td>
     <td>HTML, CSS, JS, Thymeleaf, JSP, React Bootstrap</td>
