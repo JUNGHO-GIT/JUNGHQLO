@@ -29,8 +29,8 @@
 ## 2. ⭐ 특징
 <table style="width:100%">
   <tr>
-    <th style="width:20%"></th>
-    <th style="width:80%"></th>
+    <th style="width:30%"></th>
+    <th style="width:70%"></th>
   </tr>
   <tr>
     <td><b>🔹Spring Boot</b></td>
