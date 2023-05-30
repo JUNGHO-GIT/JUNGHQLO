@@ -4,9 +4,6 @@
 # jsp
 *.jsp linguist-language=Java
 
-# thymeleaf
-
-
 # javascript
 *.js linguist-language=JavaScript
 *.jsx linguist-language=JavaScript
