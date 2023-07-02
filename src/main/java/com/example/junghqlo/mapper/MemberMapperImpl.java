@@ -3,9 +3,7 @@ package com.example.junghqlo.mapper;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpSession;
-
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 import com.example.junghqlo.model.Member;
@@ -117,7 +115,7 @@ public class MemberMapperImpl implements MemberMapper {
 
   // 5-1. updateMemberPw -------------------------------------------------------------------------->
   @Override
-  public String updateMemberPw(String member_id, String member_pw) {
+  public Integer updateMemberPw(String member_id, String member_pw) {
 
     Map<String, Object> params = new HashMap<>();
     params.put("member_id", member_id);

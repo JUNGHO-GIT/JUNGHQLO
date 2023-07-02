@@ -80,7 +80,7 @@ public interface MemberMapper {
 
   // 5-1. updateMemberPw -------------------------------------------------------------------------->
   @Update("UPDATE member SET member_pw=#{member_pw} WHERE member_id=#{member_id}")
-  String updateMemberPw(String member_id, String member_pw) throws Exception;
+  Integer updateMemberPw(String member_id, String member_pw) throws Exception;
 
   // 6. deleteMember ----------------------------------------------------------------------------
   @Delete("DELETE FROM member WHERE member_name=#{member_name} AND member_id=#{member_id} AND member_pw=#{member_pw}")

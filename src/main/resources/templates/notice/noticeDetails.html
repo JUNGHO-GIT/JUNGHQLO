@@ -36,7 +36,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
               <div class="blog__details__quote">
                 <div class="row">
                   <div class="col-lg-8 md-8 sm-8">
-                    <i class="fa fa-quote-left"></i>
+                    <i class="fa fa-quote-left ms-2"></i>
                     <!-- title -->
                     <div class="jungho-left mt-2">
                       <h6>제&nbsp;&nbsp;&nbsp;&nbsp;목 : </h6>
@@ -114,7 +114,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
               <div class="form-group d-flex justify-content-center">
                 <button class="jungho-button" th:onclick="updateAlert();">수정</button>
                 <button class="jungho-button" th:onclick="deleteAlert();">삭제</button>
-                <button class="jungho-button" th:onclick="@{|window.location.href='/notice/getNoticeList'|}">목록</button>
+                <button class="jungho-button" th:onclick="@{|window.location.href='/JUNGHQLO/notice/getNoticeList'|}">목록</button>
               </div>
 
               <!-- fake pagination -->

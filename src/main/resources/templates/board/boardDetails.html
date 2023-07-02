@@ -25,7 +25,6 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
         <div class="row d-flex justify-content-center">
           <!-- col -->
           <div class="col-lg-12">
-            <!-- image -->
             <div class="blog__details__pic">
               <img th:src="@{${boardModel.board_imgsUrl}}"/>
             </div>
@@ -36,7 +35,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
               <div class="blog__details__quote">
                 <div class="row">
                   <div class="col-lg-8 md-8 sm-8">
-                    <i class="fa fa-quote-left"></i>
+                    <i class="fa fa-quote-left ms-2"></i>
                     <!-- title -->
                     <div class="jungho-left mt-2">
                       <h6>제&nbsp;&nbsp;&nbsp;&nbsp;목 : </h6>
@@ -80,7 +79,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
                     </div>
                   </div>
                   <!-- share -->
-                  <div class="col-lg-4 md-4 sm-4">
+                  <div class="col-lg-4 col-md-4 col-sm-12">
                     <h6 class="mb-3"> &nbsp; Share :</h6>
                     <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
                       <a class="a2a_button_kakao m-1"></a>
@@ -114,7 +113,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
               <div class="form-group d-flex justify-content-center">
                 <button class="jungho-button" th:onclick="updateAlert();">수정</button>
                 <button class="jungho-button" th:onclick="deleteAlert();">삭제</button>
-                <button class="jungho-button" th:onclick="@{|window.location.href='/board/getBoardList'|}">목록</button>
+                <button class="jungho-button" th:onclick="@{|window.location.href='/JUNGHQLO/board/getBoardList'|}">목록</button>
               </div>
 
               <!-- fake pagination -->

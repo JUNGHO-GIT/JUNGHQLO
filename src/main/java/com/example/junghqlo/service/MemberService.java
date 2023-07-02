@@ -42,7 +42,7 @@ public interface MemberService {
   void updateMember(Member member) throws Exception;
 
   // 5-1. updateMemberPw -------------------------------------------------------------------------->
-  String updateMemberPw(String member_id, String member_pw) throws Exception;
+  Integer updateMemberPw(String member_id, String member_pw) throws Exception;
 
   // 6. deleteMember ------------------------------------------------------------------------------>
   Integer deleteMember(String member_name, String member_id, String member_pw) throws Exception;

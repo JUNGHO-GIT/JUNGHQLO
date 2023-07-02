@@ -257,7 +257,7 @@ public class MemberController {
   // 4-2. sendEmail (GET) ------------------------------------------------------------------------->
   @ResponseBody
   @GetMapping("/member/sendEmail")
-  public String sendEmail(
+  public Integer sendEmail(
     @RequestParam("member_email") String member_email
   ) throws Exception {
 
@@ -270,10 +270,10 @@ public class MemberController {
     String result = emailHandler.sendEmailCode(receiveEmail, emailCode);
 
     if (result == emailCode) {
-      return "1";
+      return 1;
     }
     else {
-      return "0";
+      return 0;
     }
   }
 
@@ -385,9 +385,9 @@ public class MemberController {
 
     String member_id = (String) session.getAttribute("member_id");
 
-    String result = memberService.updateMemberPw(member_id, member_pw);
+    Integer result = memberService.updateMemberPw(member_id, member_pw);
 
-    if (result == null || result.equals("")) {
+    if (result == null || result < 0) {
       return "0";
     }
     else {

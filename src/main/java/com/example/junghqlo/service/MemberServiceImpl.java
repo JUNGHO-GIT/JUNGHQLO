@@ -2,9 +2,7 @@ package com.example.junghqlo.service;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -178,7 +176,7 @@ public class MemberServiceImpl implements MemberService {
 
   // 5-1. updateMemberPw  ------------------------------------------------------------------------>
   @Override
-  public String updateMemberPw(String member_id, String member_pw) throws Exception {
+  public Integer updateMemberPw(String member_id, String member_pw) throws Exception {
 
     logger.info("updateMemberPw SERVICE  호출 !!!!!");
 

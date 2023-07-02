@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 public class EmailHandler {
 
   // 1. 이메일 전송을 위한 mailSender ------------------------------------------------------------->
-  private JavaMailSender mailSender;
-  private Map<String, String> emailCodeMap = new HashMap<>();
+  JavaMailSender mailSender;
+  Map<String, String> emailCodeMap = new HashMap<>();
   EmailHandler(JavaMailSender mailSender) {
   this.mailSender = mailSender;
   }

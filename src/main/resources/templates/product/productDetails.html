@@ -94,7 +94,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
                         <!-- button -->
                         <th:block th:if="${session.member_id} == null">
                           <button type="button" class="jungho-button" th:onclick="return sessionAlert();">구매</button>
-                          <button type="button" class="jungho-button" th:onclick="@{|window.location.href='/product/getProductList'|}">리스트</button>
+                          <button type="button" class="jungho-button" th:onclick="@{|window.location.href='/JUNGHQLO/product/getProductList'|}">리스트</button>
                           <br>
                           <br>
                           <div class="jungho-center ms-6 mb-1">
@@ -132,7 +132,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
                         </th:block>
                         <th:block th:if="${session.member_id} != null">
                           <button type="submit" class="jungho-button" th:onclick="return ordersCheck();">구매</button>
-                          <button type="button" class="jungho-button" th:onclick="|window.location.href='@{/product/getProductList}'|">리스트</button>
+                          <button type="button" class="jungho-button" th:onclick="@{|window.location.href='/JUNGHQLO/product/getProductList'|}">리스트</button>
                           <br>
                           <br>
                           <br>

@@ -1,4 +1,4 @@
-// 3. findMemberId -------------------------------------------------------------------------------->
+// 1. findMemberId -------------------------------------------------------------------------------->
 function findMemberId() {
 
   const member_name = $("#member_name").val();
@@ -31,7 +31,7 @@ function findMemberId() {
   });
 }
 
-// 3-1. findMemberPw ------------------------------------------------------------------------------>
+// 1-1. findMemberPw ------------------------------------------------------------------------------>
 function findMemberPw() {
 
   const member_id = $("#member_id").val();
@@ -74,7 +74,7 @@ function findMemberPw() {
   });
 }
 
-// 4. addMember ----------------------------------------------------------------------------------->
+// 2. addMember ----------------------------------------------------------------------------------->
 function addMember() {
 
   if ($("#member_id").val() == "") {
@@ -124,7 +124,7 @@ function addMember() {
     $("#member_email").focus();
     return false;
   }
-   if (document.getElementById("email_verified").value != "true") {
+  if (document.getElementById("email_verified").value != "true") {
     alert("이메일 인증을 완료해주세요");
     return false;
   }
@@ -150,7 +150,7 @@ function addMember() {
   return true;
 }
 
-// 4-1. checkMemberId ----------------------------------------------------------------------------->
+// 2-1. checkMemberId ----------------------------------------------------------------------------->
 function checkMemberId() {
 
   const memberIdInput = document.getElementById("member_id");
@@ -190,7 +190,7 @@ function checkMemberId() {
   }
 }
 
-// 4-2. daumPostcode ------------------------------------------------------------------------------>
+// 2-2. daumPostcode ------------------------------------------------------------------------------>
 function openDaumPostcode() {
   new daum.Postcode({
     oncomplete: function (data) {
@@ -200,36 +200,40 @@ function openDaumPostcode() {
   return false;
 }
 
-// 4-3. sendEmail --------------------------------------------------------------------------------->
+// 2-3. sendEmail --------------------------------------------------------------------------------->
 function sendEmail() {
 
-  const front_email = document.getElementById('email_front').value;
-  const back_email = document.getElementById('email_back').value;
+  const front_email = document.getElementById("email_front").value;
+  const back_email = document.getElementById("email_back").value;
   const member_email = front_email + back_email;
-  document.getElementById('member_email').value = member_email;
+  document.getElementById("member_email").value = member_email;
 
   $.ajax({
     url: "/JUNGHQLO/member/sendEmail",
     method: "GET",
     data: { member_email: member_email },
     success: function (response) {
-      if (response == "1") {
+      if (response == 1) {
         alert("인증번호가 전송되었습니다.");
       }
-      else {
+      else if (response == 0) {
         alert("인증번호 전송에 실패했습니다.");
         $("#member_email").val("");
         $("#member_email").focus();
+      }
+      else {
+        alert("오류가 발생했습니다. 다시 시도해주세요");
+        $("#member_email").val("");
       }
     },
   });
 }
 
-// 4-4. checkEmail -------------------------------------------------------------------------------->
+// 2-4. checkEmail -------------------------------------------------------------------------------->
 function checkEmail() {
 
-  const email_code = document.getElementById('email_code').value;
-  const member_email = document.getElementById('member_email').value;
+  const email_code = document.getElementById("email_code").value;
+  const member_email = document.getElementById("member_email").value;
 
   $.ajax({
     url: "/JUNGHQLO/member/checkEmail",
@@ -238,8 +242,8 @@ function checkEmail() {
     success: function (response) {
       if (response == 1) {
         alert("인증번호가 일치합니다.");
-        document.getElementById('email_button').disabled = true;
-        document.getElementById('email_verified').value = "true";
+        document.getElementById("email_button").disabled = true;
+        document.getElementById("email_verified").value = "true";
         return true;
       }
       else {
@@ -252,11 +256,11 @@ function checkEmail() {
   });
 }
 
-// 5-2. checkMemberIdPw --------------------------------------------------------------------------->
+// 2-5. checkMemberIdPw --------------------------------------------------------------------------->
 function checkMemberIdPw() {
 
-  let memberIdElem = document.getElementById('member_id');
-  let memberPwElem = document.getElementById('member_pw');
+  let memberIdElem = document.getElementById("member_id");
+  let memberPwElem = document.getElementById("member_pw");
 
   let memberId = memberIdElem.value;
   let memberPw = memberPwElem.value;
@@ -294,7 +298,7 @@ function checkMemberIdPw() {
   }
 }
 
-// 4-4. logoutMember ------------------------------------------------------------------------------>
+// 2-6. logoutMember ------------------------------------------------------------------------------>
 function logoutMember() {
   if (confirm("로그아웃 하시겠습니까?")) {
     $.ajax({
@@ -313,7 +317,7 @@ function logoutMember() {
   }
 }
 
-// 5. updateMember -------------------------------------------------------------------------------->
+// 3. updateMember -------------------------------------------------------------------------------->
 function updateMember() {
 
   // 전화번호는 맨앞 세자리는 010 만 가능하고, 뒤에는 8자리만 가능
@@ -347,7 +351,7 @@ function updateMember() {
   return true;
 }
 
-// 5-1. updateMemberPw ---------------------------------------------------------------------------->
+// 3-1. updateMemberPw ---------------------------------------------------------------------------->
 function updateMemberPw() {
   if ($("#member_pw").val() == "") {
     alert("비밀번호를 입력하세요");
@@ -392,7 +396,7 @@ function updateMemberPw() {
   }
 }
 
-// 6. deleteMember -------------------------------------------------------------------------------->
+// 3-2. deleteMember ------------------------------------------------------------------------------>
 function deleteMember() {
   const member_name = $("#member_name").val();
   const member_id = $("#member_id").val();

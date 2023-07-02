@@ -44,7 +44,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
                   <!-- reg date -->
                   <div class="col-lg-6">
                     <div class="checkout__input">
-                      <p class="p"> 가입일<span>*</span></p>
+                      <p class="p"> 가입일</p>
                       <input type="text" th:name="member_date" th:id="member_date"
                       th:value="${memberModel.member_update != null ? memberModel.member_update+'(수정)' : memberModel.member_date+'(최초)'}" readonly/>
                     </div>
@@ -81,7 +81,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
                     <div class="checkout__input">
                       <p class="p"> 주소</p>
                       <input type="text" th:name="member_address1" th:id="member_address1"
-                      th:value="${memberModel.member_address1}" th:onclick="openDaumPostcode();" readonly/>
+                      th:value="${memberModel.member_address1}" readonly/>
                     </div>
                   </div>
                   <!-- address detail -->
@@ -97,13 +97,13 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
                 <div class="row">
                   <div class="col-lg-6">
                     <div class="checkout__input">
-                      <p class="p">P W</p>
+                      <p class="p">P W<span> * 필수입력</span></p>
                       <input type="password" th:id="member_pw" th:name="member_pw" placeholder="비밀번호를 입력하세요."/>
                     </div>
                   </div>
                   <div class="col-lg-6">
                     <div class="checkout__input">
-                      <p class="p">P W 확인</p>
+                      <p class="p">P W 확인<span> * 필수입력</span></p>
                       <input type="password" th:id="member_pw2" th:name="member_pw2" placeholder="비밀번호를 다시 입력하세요."/>
                     </div>
                   </div>
