@@ -28,11 +28,13 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
           <div class="offcanvas__top__hover">
             <span>Admin<i class="arrow_carrot-down"></i></span>
             <ul th:if ="${session.member_id == 'eric4757'}">
+              <li><a th:href="@{https://dashboard.stripe.com/test/dashboard}">AdminPage</a></li>
               <li><a th:href="@{/member/getMemberList}">MemberList</a></li>
               <li><a th:href="@{/product/addProduct}">AddProduct</a></li>
               <li><a th:href="@{/notice/addNotice}">AddNotice</a></li>
             </ul>
             <ul th:if ="${session.member_id != 'eric4757'}">
+              <li><a th:onclick="adminAlert();">AdminPage</a></li>
               <li><a th:onclick="adminAlert();">MemberList</a></li>
               <li><a th:onclick="adminAlert();">AddProduct</a></li>
               <li><a th:onclick="adminAlert();">AddNotice</a></li>
@@ -76,11 +78,13 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
                   <div class="header__top__hover">
                     <span>Admin<i class="arrow_carrot-down"></i></span>
                     <ul th:if ="${session.member_id == 'eric4757'}">
+                      <li><a th:href="@{https://dashboard.stripe.com/test/dashboard}">AdminPage</a></li>
                       <li><a th:href="@{/member/getMemberList}">MemberList</a></li>
                       <li><a th:href="@{/product/addProduct}">AddProduct</a></li>
                       <li><a th:href="@{/notice/addNotice}">AddNotice</a></li>
                     </ul>
                     <ul th:if ="${session.member_id != 'eric4757'}">
+                      <li><a th:onclick="adminAlert();">AdminPage</a></li>
                       <li><a th:onclick="adminAlert();">MemberList</a></li>
                       <li><a th:onclick="adminAlert();">AddProduct</a></li>
                       <li><a th:onclick="adminAlert();">AddNotice</a></li>
@@ -150,13 +154,13 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en, ko">
             </div>
             <!-- /.search -->
 
-          <!-- hidden -->
-          <input type="hidden" th:id="sessionId" th:name="sessionId" th:value="${session.member_id}"/>
-          <input type="hidden" th:id="memberNumber" th:name="memberNumber" th:value="${session.member_number}"/>
+            <!-- hidden -->
+            <input type="hidden" th:id="sessionId" th:name="sessionId" th:value="${session.member_id}"/>
+            <input type="hidden" th:id="memberNumber" th:name="memberNumber" th:value="${session.member_number}"/>
+
           </div><div class="canvas__open"><i class="fa fa-bars"></i></div>
 
         </div>
-        <!-- /.container 2 -->
       </header>
       <!-- /.main -->
     </div>
