@@ -1,15 +1,14 @@
 /** Preloader ***********************************************************************************/
 $(window).on("load", function () {
-  $(".loader").fadeOut();
-  $("#preloder").delay(0).fadeOut("slow");
+  $(".loader-wrapper").fadeOut("slow");
 
   // isotope filter
-  $(".filter__controls li").on("click", function () {
-    $(".filter__controls li").removeClass("active");
+  $(".filter-controls li").on("click", function () {
+    $(".filter-controls li").removeClass("active");
     $(this).addClass("active");
   });
-  if ($(".product__filter").length > 0) {
-    var containerEl = document.querySelector(".product__filter");
+  if ($(".product-filter").length > 0) {
+    var containerEl = document.querySelector(".product-filter");
     var mixer = mixitup(containerEl);
   }
 });
@@ -26,7 +25,7 @@ $(".mobile-menu").slicknav({
   allowParentLinks: true,
 });
 
-/** Accordin Active *****************************************************************************/
+/** Accordion Active *****************************************************************************/
 $(".collapse").on("shown.bs.collapse", function () {
   $(this).prev().addClass("active");
 });
@@ -36,18 +35,18 @@ $(".collapse").on("hidden.bs.collapse", function () {
 });
 
 /** Canvas Menu Open/Close **********************************************************************/
-$(".canvas__open").on("click", function () {
-  $(".offcanvas-menu-wrapper").addClass("active");
-  $(".offcanvas-menu-overlay").addClass("active");
+$(".mobile-toggle").on("click", function () {
+  $(".off-canvas-menu-wrapper").addClass("active");
+  $(".off-canvas-menu-overlay").addClass("active");
 });
 
-$(".offcanvas-menu-overlay").on("click", function () {
-  $(".offcanvas-menu-wrapper").removeClass("active");
-  $(".offcanvas-menu-overlay").removeClass("active");
+$(".off-canvas-menu-overlay").on("click", function () {
+  $(".off-canvas-menu-wrapper").removeClass("active");
+  $(".off-canvas-menu-overlay").removeClass("active");
 });
 
 /** Hero Slider *********************************************************************************/
-$(".hero__slider").owlCarousel({
+$(".hero-slider").owlCarousel({
   loop: true,
   margin: 0,
   items: 1,
@@ -66,9 +65,9 @@ $(".hero__slider").owlCarousel({
 
 /** Product Slider *****************************************************************************/
 $("select").niceSelect();
-$(".product__color__select label, .shop__sidebar__size label, .product__details__option__size label")
+$(".product-color-select label, .shop-sidebar-size label, .product-details-option-size label")
 .on("click", function () {
-  $(".product__color__select label, .shop__sidebar__size label, .product__details__option__size label")
+  $(".product-color-select label, .shop-sidebar-size label, .product-details-option-size label")
   .removeClass("active");
   $(this).addClass("active");
 });

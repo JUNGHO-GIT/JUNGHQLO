@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  lang="en"
+>
+  <!-- head -->
+  <th:block th:replace="~{layouts/head :: head}"></th:block>
+
+  <!-- header -->
+  <th:block th:replace="~{layouts/header :: header}"></th:block>
+
+    <!-- navigation -->
+    <div th:with="icon='fas fa-credit-card', text1='Orders', text2='Orders Details'">
+      <div th:replace="components/navigation :: navigation"></div>
+    </div>
+
+    <!-- section -->
+    <section class="shopping-cart spad">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+            <div class="shopping-cart-table">
+              <div class="shopping-cart-pic">
+                <img th:src="${ordersModel.product_imgsUrl}"/>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+            <div class="cart-total">
+              <h6 class="p">Number</h6>
+              <p>
+                주문 번호&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;
+                <span th:text="${ordersModel.orders_number}"></span>
+              </p>
+              <br>
+              <h6 class="p">Name</h6>
+              <p>
+                상품 이름&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;
+                <span th:text="${ordersModel.product_name}"></span>
+              </p>
+              <br>
+              <h6 class="p">Quantity</h6>
+              <p>
+                주문 수량&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;
+                <span th:text="${ordersModel.orders_quantity}"></span>
+              </p>
+              <br>
+              <h6 class="p">Date</h6>
+              <p>
+                주문 날짜&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;
+                <span th:text="${#strings.substring((ordersModel.orders_update != null ?
+                + ordersModel.orders_update+'(수정)' : ordersModel.orders_date+'(최초)'), 0, 9)
+                + '&nbsp;' + #strings.substring((ordersModel.orders_update != null ?
+                + ordersModel.orders_update+'(수정)' : ordersModel.orders_date+'(최초)'), 11, 22)}">
+                </span>
+              </p>
+              <br>
+              <h6 class="p">Total Price</h6>
+              <p>
+                총&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;금액&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;
+                <span>
+                  <i class="fa fa-won-sign fa-xs">  </i>
+                  <span th:text="${#numbers.formatInteger(ordersModel.orders_totalPrice, 3, 'COMMA')}"></span>
+                </span>
+              </p>
+              <br>
+              <a th:href="@{|/orders/getOrdersList|}" class="primary-btn">주문 목록</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- fake pagination -->
+      <div th:replace="components/pagination :: fake-pagination"></div><br>
+
+    </section>
+
+
+    <!-- footer -->
+    <th:block th:replace="~{layouts/footer :: footer}"></th:block>
+
+</html>

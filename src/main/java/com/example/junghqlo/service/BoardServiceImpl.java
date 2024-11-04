@@ -34,8 +34,6 @@ public class BoardServiceImpl implements BoardService {
   public PageHandler<Board> getBoardList(Integer pageNumber, Integer itemsPer, String sort,
   Board board) throws Exception {
 
-    logger.info("getBoardList SERVICE  호출 !!!!!");
-
     List<Board> content = boardMapper.getBoardList(sort);
 
     Integer itemsTotal = content.size();
@@ -70,16 +68,12 @@ public class BoardServiceImpl implements BoardService {
   @Override
   public Board getBoardDetails(Integer board_number) throws Exception {
 
-    logger.info("getBoardDetails SERVICE  호출 !!!!!");
-
     return boardMapper.getBoardDetails(board_number);
   }
 
   // 3. searchBoard ------------------------------------------------------------------------------->
   @Override
   public PageHandler<Board> searchBoard(Integer pageNumber, Integer itemsPer, String searchType, String keyword, Board board) throws Exception {
-
-    logger.info("searchBoard SERVICE  호출 !!!!!");
 
     List<Board> content = boardMapper.searchBoard(searchType, keyword);
     Integer itemsTotal = content.size();
@@ -114,8 +108,6 @@ public class BoardServiceImpl implements BoardService {
   // 4. addBoard ---------------------------------------------------------------------------------->
   @Override
   public void addBoard(Board board) throws Exception {
-
-    logger.info("addBoard SERVICE  호출 !!!!!");
 
     MultipartFile board_imgsFile = board.getBoard_imgsFile();
 
@@ -160,8 +152,6 @@ public class BoardServiceImpl implements BoardService {
   @Override
   public void updateBoard(Board board, String existingImage) throws Exception {
 
-    logger.info("updateBoard SERVICE 호출 !!!!!");
-
     MultipartFile board_imgsFile = board.getBoard_imgsFile();
 
     String googleFileName;
@@ -203,8 +193,6 @@ public class BoardServiceImpl implements BoardService {
   @Override
   public void updateBoardCount(Integer board_number, HttpSession session) throws Exception {
 
-    logger.info("updateBoardCount SERVICE 호출 !!!!!");
-
     // 최초로 조회수를 올린 경우
     if (session.getAttribute("member_id") != null) {
       long update_time = 0;
@@ -232,8 +220,6 @@ public class BoardServiceImpl implements BoardService {
   @Override
   public void updateLike(Integer board_number, HttpSession session) throws Exception {
 
-    logger.info("updateLike SERVICE 호출 !!!!!");
-
     // 최초로 좋아요를 누른 경우
     if (session.getAttribute("member_id") != null) {
       long update_time = 0;
@@ -259,8 +245,6 @@ public class BoardServiceImpl implements BoardService {
   // 5-3. updateDislike --------------------------------------------------------------------------->
   @Override
   public void updateDislike(Integer board_number, HttpSession session) throws Exception {
-
-    logger.info("updateDislike SERVICE 호출 !!!!!");
 
     // 최초로 싫어요를 누른 경우
     if(session.getAttribute("member_id") != null) {
@@ -288,8 +272,6 @@ public class BoardServiceImpl implements BoardService {
   // 6. deleteBoard ------------------------------------------------------------------------------->
   @Override
   public void deleteBoard(Integer board_number) throws Exception {
-
-    logger.info("deleteBoard SERVICE  호출 !!!!!");
 
     boardMapper.deleteBoard(board_number);
   }

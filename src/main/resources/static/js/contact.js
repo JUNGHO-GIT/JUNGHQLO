@@ -1,24 +1,22 @@
-
-// ------------------------------------------------------------------------------------------------>
-const contactAlert = (event) => {
-
-  const contactName = document.getElementById("contactName").value;
-  const contactEmail = document.getElementById("contactEmail").value;
-  const contactTel = document.getElementById("contactTel").value;
-
-  if (contactName == "") {
+/** ----------------------------------------------------------------------------------------------->
+* @param {Event} event
+* @return {boolean}
+* @desc 문의 유효성 검사
+**/
+function contactAlert (event) {
+  if (getValue(getById("contactName")) === "") {
     alert("이름을 입력해주세요.");
-    document.getElementById("contactName").focus();
+    document?.getElementById("contactName")?.focus();
     return false;
   }
-  else if (contactTel == "") {
+  else if (getValue(getById("contactTel")) === "") {
     alert("연락처를 입력해주세요.");
-    document.getElementById("contactTel").focus();
+    document?.getElementById("contactTel")?.focus();
     return false;
   }
-  else if (contactEmail == "") {
+  else if (getValue(getById("contactEmail")) == "") {
     alert("이메일을 입력해주세요.");
-    document.getElementById("contactEmail").focus();
+    document?.getElementById("contactEmail")?.focus();
     return false;
   }
   else {

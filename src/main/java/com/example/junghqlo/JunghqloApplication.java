@@ -9,5 +9,4 @@ public class JunghqloApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(JunghqloApplication.class, args);
 	}
-
 }

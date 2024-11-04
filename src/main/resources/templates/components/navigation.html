@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  lang="en"
+>
+  <!-- navigation -->
+  <navigation th:fragment="navigation" class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="breadcrumb-text">
+          <h4>
+            <i th:class="${icon}"></i>
+            &nbsp;&nbsp;<th:block th:text="${text1}"></th:block>
+          </h4>
+          <div class="breadcrumb-links">
+            <a th:href="@{/}">
+              <i class="fa fa-home"></i>
+              &nbsp;&nbsp;&nbsp Home
+            </a>
+            <span><th:block th:text="${text2}"></th:block></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </navigation>
+
+</html>

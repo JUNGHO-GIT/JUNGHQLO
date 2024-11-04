@@ -1,0 +1,19 @@
+{
+  "properties": [
+    {
+      "name": "title",
+      "type": "java.lang.String",
+      "description": "JUNGHQLO"
+    },
+    {
+      "name": "admin",
+      "type": "java.lang.String",
+      "description": "eric4757"
+    },
+    {
+      "name": "storage",
+      "type": "java.lang.String",
+      "description": "https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE"
+    }
+  ]
+}

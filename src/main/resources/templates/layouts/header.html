@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  lang="en"
+>
+  <!-- header -->
+  <header th:fragment="header" class="container">
+
+    <!-- page preloader -->
+    <div class="loader-wrapper">
+      <div class="loader"></div>
+    </div>
+
+    <!-- off-canvas -->
+    <div class="off-canvas-menu-overlay"></div>
+    <div class="off-canvas-menu-wrapper">
+      <div class="d-row-center">
+        <div class="off-canvas-links">
+          <a
+            th:if="${session.member_id == null}"
+            th:href="@{/member/addMember}"
+          >
+            <span class="upper-text me-10">
+              SignUp
+            </span>
+          </a>
+          <a
+            th:if="${session.member_id == null}"
+            th:href="@{/member/loginMember}"
+          >
+            <span class="upper-text me-10">
+              Login
+            </span>
+          </a>
+          <a
+            th:if="${session.member_id != null}"
+            th:href="@{/member/getMemberDetails}"
+          >
+            <span class="upper-text me-10">
+              MyPage
+            </span>
+          </a>
+          <a
+            th:if="${session.member_id != null}"
+            th:onClick="logoutMember()"
+          >
+            <span class="upper-text me-10">
+              Logout
+            </span>
+          </a>
+        </div>
+        <div class="off-canvas-top-hover">
+          <span class="upper-text black hover">
+            Admin
+          </span>
+          <ul th:if ="${session.member_id == ADMIN}">
+            <li>
+              <a th:href="@{https://dashboard.stripe.com/test/dashboard}">
+                AdminPage
+              </a>
+            </li>
+            <li>
+              <a th:href="@{/member/getMemberList}">
+                MemberList
+              </a>
+            </li>
+            <li>
+              <a th:href="@{/product/addProduct}">
+                AddProduct
+              </a>
+            </li>
+            <li>
+              <a th:href="@{/notice/addNotice}">
+                AddNotice
+              </a>
+            </li>
+          </ul>
+          <ul th:if ="${session.member_id != ADMIN}">
+            <li>
+              <a th:onClick="adminAlert()">
+                AdminPage
+              </a>
+            </li>
+            <li>
+              <a th:onClick="adminAlert()">
+                MemberList
+              </a>
+            </li>
+            <li>
+              <a th:onClick="adminAlert()">
+                AddProduct
+              </a>
+            </li>
+            <li>
+              <a th:onClick="adminAlert()">
+                AddNotice
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <hr class="mt-30 mb-20" />
+      <div class="d-row-left">
+        <div id="mobile-menu-wrap"></div>
+      </div>
+      <hr class="mt-20 mb-30" />
+      <div class="d-col-left">
+        <a th:href="@{/}">
+          <img
+            th:src="@{${STORAGE} + '/icon/logo.png'}"
+            loading="lazy"
+            alt="logo"
+            width="70px"
+            height="70px"
+            class="pointer"
+          />
+        </a>
+        <div class="fs-1-1rem fw-700 mt-20 mb-20">
+          JUNGHQLO
+        </div>
+        <div class="fs-0-9rem fw-400 mb-10 ls-1">
+          ⓒ 2024 JUNGHQLO
+        </div>
+        <div class="fs-0-9rem fw-400 ls-1">
+          All Rights Reserved.
+        </div>
+      </div>
+    </div>
+
+    <!-- container 1 -->
+    <div class="container bg-black">
+      <div class="row d-row-center p-20">
+        <div class="d-none d-sm-block col-sm-7 col-md-7 col-lg-7">
+          <span class="fs-0-9rem fw-400 white">
+            Free shipping, 30-day return or refund guarantee.
+          </span>
+        </div>
+        <div class="col-7 d-sm-none">
+          <span class="fs-0-9rem fw-400 white">
+            Call us: 010-1234-5678
+          </span>
+        </div>
+        <div class="col-5 col-sm-5 col-md-5 col-lg-5 d-row-right">
+          <a
+            th:if="${session.member_id == null}"
+            th:href="@{/member/addMember}"
+          >
+            <span class="upper-text white hover me-20">
+              SignUp
+            </span>
+          </a>
+          <a
+            th:if="${session.member_id == null}"
+            th:href="@{/member/loginMember}"
+          >
+            <span class="upper-text white hover me-20">
+              Login
+            </span>
+          </a>
+          <a
+            th:if="${session.member_id != null}"
+            th:href="@{/member/getMemberDetails}"
+          >
+            <span class="upper-text white hover me-20">
+              MyPage
+            </span>
+          </a>
+          <a
+            th:if="${session.member_id != null}"
+            th:onClick="logoutMember()"
+          >
+            <span class="upper-text white hover me-20">
+              Logout
+            </span>
+          </a>
+          <div class="header-top-hover">
+            <span class="upper-text white hover">
+              Admin
+            </span>
+            <ul th:if ="${session.member_id == ADMIN}">
+              <li>
+                <a th:href="@{https://dashboard.stripe.com/test/dashboard}">
+                  AdminPage
+                </a>
+              </li>
+              <li>
+                <a th:href="@{/member/getMemberList}">
+                  MemberList
+                </a>
+              </li>
+              <li>
+                <a th:href="@{/product/addProduct}">
+                  AddProduct
+                </a>
+              </li>
+              <li>
+                <a th:href="@{/notice/addNotice}">
+                  AddNotice
+                </a>
+              </li>
+            </ul>
+            <ul th:if ="${session.member_id != ADMIN}">
+              <li>
+                <a th:onClick="adminAlert()">
+                  AdminPage
+                </a>
+              </li>
+              <li>
+                <a th:onClick="adminAlert()">
+                  MemberList
+                </a>
+              </li>
+              <li>
+                <a th:onClick="adminAlert()">
+                  AddProduct
+                </a>
+              </li>
+              <li>
+                <a th:onClick="adminAlert()">
+                  AddNotice
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- container 2 -->
+    <div class="container bg-white">
+      <div class="row d-row-center p-10">
+        <!-- logo -->
+        <div class="col-4 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+          <a th:href="@{/}">
+            <img
+              th:src="@{${STORAGE} + '/icon/logo.png'}"
+              loading="lazy"
+              alt="logo"
+              width="70px"
+              height="70px"
+            />
+          </a>
+        </div>
+        <!-- menu -->
+        <div class="d-none d-sm-block col-sm-10 col-md-10 col-lg-6 col-xl-6">
+          <nav class="header-menu mobile-menu">
+            <ul class="p-0 m-0">
+              <li>
+                <a
+                  th:href="@{/product/getProductList}"
+                  class="black hover"
+                >
+                  Products
+                </a>
+              </li>
+              <li th:if="${session.member_id != null}">
+                <a
+                  th:href="@{/orders/getOrdersList}"
+                  class="black hover"
+                >
+                  Orders
+                </a>
+              </li>
+              <li th:if="${session.member_id == null}">
+                <a
+                  th:onClick="return sessionAlert()"
+                  class="black hover"
+                >
+                  Orders
+                </a>
+              </li>
+              <li>
+                <a
+                  th:href="@{/board/getBoardList}"
+                  class="black hover"
+                >
+                  Blog
+                </a>
+              </li>
+              <li>
+                <a
+                  th:href="@{/notice/getNoticeList}"
+                  class="black hover"
+                >
+                  Notice
+                </a>
+              </li>
+              <li>
+                <a
+                  th:href="@{/qna/getQnaList}"
+                  class="black hover"
+                >
+                  QnA
+                </a>
+              </li>
+              <li>
+                <a
+                  th:href="@{/contact/getContactList}"
+                  class="black hover"
+                >
+                  Contact
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <!-- search -->
+        <div class="d-none d-lg-block col-lg-4 col-xl-4">
+          <form
+            id="searchForm"
+            class="d-row-center"
+            method="GET"
+            th:action="@{/product/searchProduct}"
+          >
+            <select
+              th:id="searchType"
+              th:name="searchType"
+              class="form-select me-10"
+            >
+              <option value="name">이름</option>
+              <option value="details">상세정보</option>
+            </select>
+            <input
+              type="search"
+              th:id="keyword"
+              th:name="keyword"
+              placeholder="상품 검색"
+              class="form-control w-max150 me-10"
+              required
+            />
+            <i class="fas fa-search fa-lg pointer"></i>
+          </form>
+        </div>
+        <!-- mobile menu -->
+        <div class="col-8 d-sm-none">
+          <div class="mobile-toggle d-row-right">
+            <i class="fa fa-bars fs-1-8rem"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- hidden -->
+    <input
+      type="hidden"
+      th:id="sessionId"
+      th:name="sessionId"
+      th:value="${session.member_id}"
+    />
+    <input
+      type="hidden"
+      th:id="memberNumber"
+      th:name="memberNumber"
+      th:value="${session.member_number}"
+    />
+  </header>
+
+</html>

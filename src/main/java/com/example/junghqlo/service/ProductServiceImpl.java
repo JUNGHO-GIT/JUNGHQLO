@@ -35,8 +35,6 @@ public class ProductServiceImpl implements ProductService {
   @Override
   public PageHandler<Product> getProductList(Integer pageNumber, Integer itemsPer, String sort, Product product) throws Exception {
 
-    logger.info("getProductList SERVICE 호출 !!!!!");
-
     List<Product> content = productMapper.getProductList(sort);
 
     Integer itemsTotal = content.size();
@@ -71,8 +69,6 @@ public class ProductServiceImpl implements ProductService {
   // 1-1. getProductCategory ---------------------------------------------------------------------->
   @Override
   public PageHandler<Product> getProductCategory(Integer pageNumber, Integer itemsPer, String category, String sort, Product product) throws Exception {
-
-    logger.info("getProductCategory SERVICE 호출 !!!!!");
 
     List<Product> content = productMapper.getProductCategory(category, sort);
 
@@ -109,16 +105,12 @@ public class ProductServiceImpl implements ProductService {
   @Override
   public Product getProductDetails(Integer product_number) throws Exception {
 
-    logger.info("detailsProduct SERVICE  호출 !!!!!");
-
     return productMapper.getProductDetails(product_number);
   }
 
   // 3. searchProduct ----------------------------------------------------------------------------->
   @Override
   public PageHandler<Product> searchProduct(Integer pageNumber, Integer itemsPer, String searchType, String keyword, Product product) throws Exception {
-
-    logger.info("searchProduct SERVICE 호출 !!!!!");
 
     List<Product> content = productMapper.searchProduct(searchType, keyword);
 
@@ -154,8 +146,6 @@ public class ProductServiceImpl implements ProductService {
   // 4. addProduct -------------------------------------------------------------------------------->
   @Override
   public void addProduct(Product product, String product_name, String product_details, Integer product_price) throws Exception {
-
-    logger.info("addProduct SERVICE  호출 !!!!!");
 
     MultipartFile product_imgsFile1 = product.getProduct_imgsFile1();
     MultipartFile product_imgsFile2 = product.getProduct_imgsFile2();
@@ -232,8 +222,6 @@ public class ProductServiceImpl implements ProductService {
   @Override
   public void updateProduct(Product product, String product_imgsUrl1, String product_imgsUrl2) throws Exception {
 
-    logger.info("updateProduct SERVICE 호출 !!!!!");
-
     MultipartFile product_imgsFile1 = product.getProduct_imgsFile1();
     MultipartFile product_imgsFile2 = product.getProduct_imgsFile2();
 
@@ -243,7 +231,6 @@ public class ProductServiceImpl implements ProductService {
     String googleBucketUrl2 = product_imgsUrl2;
     String googleBucketName = "jungho-bucket";
     String googleFolderPath = "JUNGHQLO/DB/product/";
-    String googleNoImageUrl = "https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/icon/noimage.png";
 
     Storage storage = StorageOptions.getDefaultInstance().getService();
 
@@ -315,8 +302,6 @@ public class ProductServiceImpl implements ProductService {
   // 6. deleteProduct ----------------------------------------------------------------------------->
   @Override
   public void deleteProduct(Integer product_number) throws Exception {
-
-    logger.info("deleteProduct SERVICE  호출 !!!!!");
 
     // 1. get product
     Product product = getProductDetails(product_number);

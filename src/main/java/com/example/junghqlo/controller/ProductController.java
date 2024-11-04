@@ -1,13 +1,12 @@
 package com.example.junghqlo.controller;
 
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.example.junghqlo.handler.PageHandler;
 import com.example.junghqlo.model.Member;
@@ -15,26 +14,27 @@ import com.example.junghqlo.model.Product;
 import com.example.junghqlo.service.ProductService;
 
 @Controller
+@RequestMapping("/product")
 public class ProductController {
 
+  // 0. static -------------------------------------------------------------------------------------
+  private static final String PAGES = "/pages/product";
+
   // 0. constructor injection -------------------------------------------------------------------->
-  Logger logger = LoggerFactory.getLogger(this.getClass());
   private ProductService productService;
   ProductController(ProductService productService) {
-  this.productService = productService;
+    this.productService = productService;
   }
 
   // 1. getProductList (GET) ---------------------------------------------------------------------->
-  @GetMapping("/product/getProductList")
+  @GetMapping("/getProductList")
   public String getProductList (
-    @RequestParam(value="sort", required = false) String sort,
+    @RequestParam(required = false) String sort,
     @RequestParam(defaultValue="1") Integer pageNumber,
     @RequestParam(defaultValue="9") Integer itemsPer,
     Model model,
     Product product
   ) throws Exception {
-
-    logger.info("getProductList GET 호출 !!!!!");
 
     // sort order
     if (sort == null || sort.equals("default")) {
@@ -65,25 +65,23 @@ public class ProductController {
     model.addAttribute("page", page);
     model.addAttribute("productList", productList);
 
-    return "/product/productList";
+    return PAGES + "/productList";
   }
 
   // 1-1. getProductCategory (GET) ---------------------------------------------------------------->
-  @GetMapping("/product/getProductCategory")
+  @GetMapping("/getProductCategory")
   public String getProductCategory(
-    @RequestParam(value="category") String category,
-    @RequestParam(value="sort", required = false) String sort,
+    @RequestParam String category,
+    @RequestParam(required = false) String sort,
     @RequestParam(defaultValue="1") Integer pageNumber,
     @RequestParam(defaultValue="9") Integer itemsPer,
     Model model,
     Product product
   ) throws Exception {
 
-    logger.info("getProductCategory GET 호출 !!!!!");
-
     sort="product_number DESC";
     // category order
-    if      (category.equals("outer")) {
+    if (category.equals("outer")) {
       category="'아우터'";
     }
     else if (category.equals("top")) {
@@ -108,37 +106,33 @@ public class ProductController {
     model.addAttribute("page", page);
     model.addAttribute("productList", productList);
 
-    return "/product/productList";
+    return PAGES + "/productList";
   }
 
   // 2. getProductDetails (GET) ------------------------------------------------------------------->
-  @GetMapping("/product/getProductDetails")
+  @GetMapping("/getProductDetails")
   public String getProductDetail (
-    @RequestParam("product_number") Integer product_number,
+    @RequestParam Integer product_number,
     Model model,
     Product product,
     Member member
   ) throws Exception {
 
-    logger.info("getProductDetails GET 호출 !!!!!");
-
     model.addAttribute("productModel", productService.getProductDetails(product_number));
 
-    return "/product/productDetails";
+    return PAGES + "/productDetails";
   }
 
   // 3. searchProduct (GET) ----------------------------------------------------------------------->
-  @GetMapping("/product/searchProduct")
+  @GetMapping("/searchProduct")
   public String searchProduct(
     @RequestParam(defaultValue="1") Integer pageNumber,
     @RequestParam(defaultValue="9") Integer itemsPer,
-    @RequestParam("searchType") String searchType,
-    @RequestParam("keyword") String keyword,
+    @RequestParam String searchType,
+    @RequestParam String keyword,
     Model model,
     Product product
   ) throws Exception {
-
-    logger.info("searchProduct GET 호출 !!!!!");
 
     // searchType order
     if (searchType == null || keyword == null) {
@@ -157,28 +151,24 @@ public class ProductController {
     model.addAttribute("page", page);
     model.addAttribute("productList", productList);
 
-    return "/product/productSearch";
+    return PAGES + "/productSearch";
   }
 
   // 4. addProduct (GET) -------------------------------------------------------------------------->
-  @GetMapping("/product/addProduct")
+  @GetMapping("/addProduct")
   public String addProduct() throws Exception {
 
-    logger.info("addProduct GET 호출 !!!!!");
-
-    return "/product/productAdd";
+    return PAGES + "/productAdd";
   }
 
   // 4. addProduct (POST) ------------------------------------------------------------------------->
-  @PostMapping("/product/addProduct")
+  @PostMapping("/addProduct")
   public String addProduct (
-    @RequestParam("product_name") String product_name,
-    @RequestParam("product_details") String product_details,
-    @RequestParam("product_price") Integer product_price,
+    @RequestParam String product_name,
+    @RequestParam String product_details,
+    @RequestParam Integer product_price,
     Product product
   ) throws Exception {
-
-    logger.info("addProduct POST 호출 !!!!!");
 
     productService.addProduct(product, product_name, product_details, product_price);
 
@@ -186,29 +176,25 @@ public class ProductController {
   }
 
   // 5. updateProduct (GET) ----------------------------------------------------------------------->
-  @GetMapping("/product/updateProduct")
+  @GetMapping("/updateProduct")
   public String updateProduct(
-    @RequestParam("product_number") Integer product_number,
+    @RequestParam Integer product_number,
     Model model
   ) throws Exception {
-
-    logger.info("updateProduct GET 호출 !!!!!");
 
     Product product = productService.getProductDetails(product_number);
     model.addAttribute("productModel", product);
 
-    return "/product/productUpdate";
+    return PAGES + "/productUpdate";
   }
 
   // 5. updateProduct (POST) ---------------------------------------------------------------------->
-  @PostMapping("/product/updateProduct")
+  @PostMapping("/updateProduct")
   public String updateProduct(
     @ModelAttribute Product product,
-    @RequestParam("product_imgsUrl1") String product_imgsUrl1,
-    @RequestParam("product_imgsUrl2") String product_imgsUrl2
+    @RequestParam String product_imgsUrl1,
+    @RequestParam String product_imgsUrl2
   ) throws Exception {
-
-    logger.info("updateProduct POST 호출 !!!!!");
 
     productService.updateProduct(product, product_imgsUrl1, product_imgsUrl2);
 
@@ -216,31 +202,26 @@ public class ProductController {
   }
 
   // 6. deleteProduct (GET) ----------------------------------------------------------------------->
-  @GetMapping("/product/deleteProduct")
+  @GetMapping("/deleteProduct")
   public String deleteProduct(
-    @RequestParam("product_number") Integer product_number,
+    @RequestParam Integer product_number,
     Model model
   ) throws Exception {
-
-    logger.info("deleteProduct GET 호출 !!!!!");
 
     Product product = productService.getProductDetails(product_number);
     model.addAttribute("productModel", product);
 
-    return "/product/productDelete";
+    return PAGES + "/productDelete";
   }
 
   // 6. deleteProduct (POST) ---------------------------------------------------------------------->
-  @PostMapping("/product/deleteProduct")
+  @PostMapping("/deleteProduct")
   public String deleteProduct(
-    @RequestParam("product_number") Integer product_number
+    @RequestParam Integer product_number
   ) throws Exception {
-
-    logger.info("deleteProduct POST 호출 !!!!!");
 
     productService.deleteProduct(product_number);
 
     return "redirect:/product/getProductList";
   }
-
 }

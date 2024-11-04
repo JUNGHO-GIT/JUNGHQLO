@@ -28,14 +28,12 @@ public class NoticeController {
   // 1. getNoticeList (GET) ----------------------------------------------------------------------->
   @GetMapping("/notice/getNoticeList")
   public String getNoticeList (
-    @RequestParam(value="sort", required=false) String sort,
+    @RequestParam(required=false) String sort,
     @RequestParam(defaultValue="1") Integer pageNumber,
     @RequestParam(defaultValue="9") Integer itemsPer,
     Model model,
     Notice notice
   ) throws Exception {
-
-    logger.info("getNoticeList GET 호출 !!!!!");
 
     // sorting order
     if(sort == null || sort.equals("default")) {
@@ -66,19 +64,17 @@ public class NoticeController {
     model.addAttribute("page", page);
     model.addAttribute("noticeList", noticeList);
 
-    return "/notice/noticeList";
+    return "/pages/notice/noticeList";
   }
 
   // 2. getNoticeDetails (GET) -------------------------------------------------------------------->
   @GetMapping("/notice/getNoticeDetails")
   public String getNoticeDetails (
-    @RequestParam("notice_number") Integer notice_number,
+    @RequestParam Integer notice_number,
     Model model,
     Notice notice,
     HttpSession session
   ) throws Exception {
-
-    logger.info("getNoticeDetails GET 호출 !!!!!");
 
     // 모델
     model.addAttribute("noticeModel", noticeService.getNoticeDetails(notice_number));
@@ -86,7 +82,7 @@ public class NoticeController {
     // 조회수
     noticeService.updateNoticeCount(notice_number, session);
 
-    return "/notice/noticeDetails";
+    return "/pages/notice/noticeDetails";
   }
 
   // 3. searchNotice (GET) ------------------------------------------------------------------------>
@@ -94,13 +90,11 @@ public class NoticeController {
   public String searchNotice (
     @RequestParam(defaultValue="1") Integer pageNumber,
     @RequestParam(defaultValue="9") Integer itemsPer,
-    @RequestParam("searchType") String searchType,
-    @RequestParam("keyword") String keyword,
+    @RequestParam String searchType,
+    @RequestParam String keyword,
     Model model,
     Notice notice
   ) throws Exception {
-
-    logger.info("searchNotice GET 호출 !!!!!");
 
     if(searchType == null || keyword == null) {
       return "redirect:/notice/getNoticeList";
@@ -118,23 +112,19 @@ public class NoticeController {
     model.addAttribute("page", page);
     model.addAttribute("noticeList", noticeList);
 
-    return "/notice/noticeSearch";
+    return "/pages/notice/noticeSearch";
   }
 
   // 4. addNotice (GET) --------------------------------------------------------------------------->
   @GetMapping("/notice/addNotice")
   public String addNotice() throws Exception {
 
-    logger.info("addNotice GET 호출 !!!!!");
-
-    return "/notice/noticeAdd";
+    return "/pages/notice/noticeAdd";
   }
 
   // 4. addNotice (POST) -------------------------------------------------------------------------->
   @PostMapping("/notice/addNotice")
   public String addNotice(Notice notice) throws Exception {
-
-    logger.info("addNotice POST 호출 !!!!!");
 
     noticeService.addNotice(notice);
 
@@ -144,15 +134,13 @@ public class NoticeController {
   // 5. updateNotice (GET) ------------------------------------------------------------------------>
   @GetMapping("/notice/updateNotice")
   public String updateNotice (
-    @RequestParam("notice_number") Integer notice_number,
+    @RequestParam Integer notice_number,
     Model model
   ) throws Exception {
 
-    logger.info("updateNotice GET 호출 !!!!!");
-
     model.addAttribute("noticeModel", noticeService.getNoticeDetails(notice_number));
 
-    return "/notice/noticeUpdate";
+    return "/pages/notice/noticeUpdate";
   }
 
   // 5. updateNotice (POST) ----------------------------------------------------------------------->
@@ -161,8 +149,6 @@ public class NoticeController {
     @ModelAttribute Notice notice,
     @RequestParam("notice_imgsUrl") String existingImage
   ) throws Exception {
-
-    logger.info("updateNotice POST 호출 !!!!!");
 
     noticeService.updateNotice(notice, existingImage);
 
@@ -175,11 +161,9 @@ public class NoticeController {
   @ResponseBody
   @GetMapping("/notice/updateLike")
   public Integer updateLike (
-    @RequestParam("notice_number") Integer notice_number,
+    @RequestParam Integer notice_number,
     HttpSession session
   ) throws Exception {
-
-    logger.info("updateLike GET 호출 !!!!!");
 
     noticeService.updateLike(notice_number, session);
     Notice notice = noticeService.getNoticeDetails(notice_number);
@@ -191,7 +175,7 @@ public class NoticeController {
   @GetMapping("/notice/updateDislike")
   @ResponseBody
   public Integer updateDislike(
-    @RequestParam("notice_number") Integer notice_number,
+    @RequestParam Integer notice_number,
     HttpSession session
   ) throws Exception {
 
@@ -204,23 +188,19 @@ public class NoticeController {
   // 6. deleteNotice (GET) ------------------------------------------------------------------------>
   @GetMapping("/notice/deleteNotice")
   public String deleteNotice(
-    @RequestParam("notice_number") Integer notice_number,
+    @RequestParam Integer notice_number,
     Model model,
     Notice notice
   ) throws Exception {
 
-    logger.info("deleteNotice GET 호출 !!!!!");
-
     model.addAttribute("noticeModel", noticeService.getNoticeDetails(notice_number));
 
-    return "/notice/noticeDelete";
+    return "/pages/notice/noticeDelete";
   }
 
   // 6. deleteNotice (POST) ----------------------------------------------------------------------->
   @PostMapping("/notice/deleteNotice")
   public String deleteNotice(Notice notice, Integer notice_number) throws Exception {
-
-    logger.info("deleteNotice POST 호출 !!!!!");
 
     noticeService.deleteNotice(notice_number);
 

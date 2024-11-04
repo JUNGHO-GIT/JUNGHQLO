@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  lang="en"
+>
+  <!-- head -->
+  <head>
+
+    <!-- meta -->
+    <title>JUNGHQLO</title>
+    <meta name="description" content="JUNGHQLO"/>
+    <meta name="keywords" content="JUNGHQLO"/>
+    <meta name="author" content="JUNGHQLO"/>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- favicon -->
+    <link
+      rel="icon"
+      type="image/x-icon"
+      th:href="@{${STORAGE} + '/icon/favicon.ico'}"
+    />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      th:href="@{${STORAGE} + '/icon/logo.png'}"
+    />
+
+    <!-- preconnect -->
+    <link
+      rel="preconnect"
+      th:href="@{https://cdn.jsdelivr.net}"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      th:href="@{https://cdnjs.cloudflare.com}"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      th:href="@{https://storage.googleapis.com}"
+      crossorigin
+    />
+
+    <!-- css 1 -->
+    <link
+      rel="stylesheet"
+      as="style"
+      th:href="@{https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css}"
+      crossorigin
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/css/bootstrap.min.css}"
+      crossorigin
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{https://cdn.jsdelivr.net/npm/@icon/elegant-icons@0.0.1-alpha.4/elegant-icons.min.css}"
+      crossorigin
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css}"
+      crossorigin
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css}"
+      crossorigin
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css}"
+      crossorigin
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css}"
+      crossorigin
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css}"
+      crossorigin
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css}"
+      crossorigin
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css}"
+      crossorigin
+    />
+
+    <!-- css 2 -->
+    <link
+      rel="stylesheet"
+      th:href="@{/css/reset.css}"
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{/css/index.css}"
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{/css/main.css}"
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{/css/common.css}"
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{/css/Jstyle.css}"
+    />
+
+    <!-- js 1 -->
+    <script
+      th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js}"
+      defer
+    ></script>
+    <script
+      th:src="@{https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js}"
+      defer
+    ></script>
+    <script
+      th:src="@{//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js}"
+      defer
+    ></script>
+    </script>
+    <script
+      th:src="@{https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.min.js}"
+      defer
+    ></script>
+    <script
+      th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js}"
+      defer
+    ></script>
+    <script
+      th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js}"
+      defer
+    ></script>
+    <script
+      th:src="@{https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js}"
+      defer
+    ></script>
+    <script
+      th:src="@{https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.min.js}"
+      defer
+    ></script>
+    <script
+      th:src="@{https://cdnjs.cloudflare.com/ajax/libs/mixitup/3.3.1/mixitup.min.js}">
+    </script>
+    <script
+      th:src="@{https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js}"
+      defer
+    ></script>
+    <script
+      th:src="@{https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js}"
+      defer
+    ></script>
+    <script
+      th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.7/umd/popper.min.js}"
+      defer
+    ></script>
+    <script
+      th:src="@{https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js}"
+      defer
+    ></script>
+
+    <!-- js 2 -->
+    <script
+      th:src="@{/js/utils.js}"
+      defer
+    ></script>
+    <script
+      th:src="@{/js/main.js}"
+      defer
+    ></script>
+    <script
+      th:src="@{/js/notice.js}"
+      defer
+    ></script>
+    <script
+      th:src="@{/js/contact.js}"
+      defer
+    ></script>
+    <script
+      th:src="@{/js/qna.js}"
+      defer
+    ></script>
+    <script
+      th:src="@{/js/orders.js}"
+      defer
+    ></script>
+    <script
+      th:src="@{/js/member.js}"
+      defer
+    ></script>
+    <script
+      th:src="@{/js/board.js}"
+      defer
+    ></script>
+    <script
+      th:src="@{/js/product.js}"
+      defer
+    ></script>
+    <script
+      th:src="@{/js/preview.js}"
+      defer
+    ></script>
+    <script
+      th:src="@{/js/jungho.js}"
+      defer
+    ></script>
+  </head>
+</html>

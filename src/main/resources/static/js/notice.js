@@ -1,44 +1,57 @@
-// 4. addNotice ----------------------------------------------------------------------------------->
+/** ----------------------------------------------------------------------------------------------->
+* @param null
+* @return {boolean}
+* @desc 공지사항 입력 유효성 검사
+**/
 function addNotice() {
-  if ($("#notice_title").val() == "") {
+  if (getValue(getById("notice_title")) == "") {
     alert("제목을 입력하세요");
-    $("#board_title").focus();
+    getById("notice_title").focus();
     return false;
   }
-  if ($("#notice_contents").val() == "") {
+  if (getValue(getById("notice_contents")) == "") {
     alert("내용을 입력하세요");
-    $("#board_contents").focus();
+    getById("notice_contents").focus();
     return false;
   }
   alert("등록이 완료되었습니다.");
   window.location.reload();
   return true;
-}
+};
 
-// 5. updateNotice -------------------------------------------------------------------------------->
+/** ----------------------------------------------------------------------------------------------->
+* @param null
+* @return {boolean}
+* @desc 공지사항 수정 유효성 검사
+**/
 function updateNotice() {
-  if ($("#notice_title").val() == "") {
+  if (getValue(getById("notice_title")) == "") {
     alert("제목을 입력하세요");
-    $("#board_title").focus();
+    getById("notice_title").focus();
     return false;
   }
-  if ($("#notice_contents").val() == "") {
+  if (getValue(getById("notice_contents")) == "") {
     alert("내용을 입력하세요");
-    $("#board_contents").focus();
+    getById("notice_contents").focus();
     return false;
   }
   alert("수정이 완료되었습니다.");
   window.location.reload();
   return true;
-}
+};
 
-// 5-2. likeNotice -------------------------------------------------------------------------------->
+/** ----------------------------------------------------------------------------------------------->
+* @param null
+* @return {boolean}
+* @desc 공지사항 좋아요 기능
+**/
 function likeNotice() {
-  const likeBtn = document.getElementById('likeBtn');
-  const likeCount = document.getElementById('likeCount');
-  const uniqueNumber = document.getElementById("uniqueNumber");
-  let likecount = 0;
 
+  const likeBtn = getById('likeBtn');
+  const likeCount = getById('likeCount');
+  const uniqueNumber = getValue(getById("uniqueNumber"));
+
+  let likeNum = 0;
   function addParticle() {
     const particle = document.createElement('span');
     particle.classList.add('particle');
@@ -49,20 +62,28 @@ function likeNotice() {
       likeBtn.removeChild(particle);
     }, 1000);
   }
+
   function onLikeBtnClick() {
-    likecount++;
+    likeNum++;
     likeBtn.classList.add('liked');
     addParticle();
-    likeCount.innerText = likecount;
+    likeCount.innerText = likeNum.toString();
   }
+
   likeBtn.addEventListener('click', onLikeBtnClick);
-  document.addEventListener('DOMContentLoaded', likeNotice);
+  document.addEventListener('DOMContentLoaded', likeButton);
 
   $.ajax({
-    url: "/JUNGHQLO/notice/updateLike?notice_number="+uniqueNumber.value,
+    url: `/JUNGHQLO/notice/updateLike`,
     type: "GET",
+    data: {
+      notice_number: uniqueNumber
+    },
+    /**
+    * @param {any} response
+    **/
     success: function(response) {
-      if(response.status == 200) {
+      if(response == 200) {
         window.location.reload();
       }
       else {
@@ -70,15 +91,22 @@ function likeNotice() {
       }
     }
   });
-}
 
-// 5-3. dislikeNotice ----------------------------------------------------------------------------->
+  return true;
+};
+
+/** ----------------------------------------------------------------------------------------------->
+* @param null
+* @return {boolean}
+* @desc 공지사항 싫어요 기능
+**/
 function dislikeNotice() {
-  const dislikeBtn = document.getElementById('dislikeBtn');
-  const dislikeCount = document.getElementById('dislikeCount');
-  const uniqueNumber = document.getElementById("uniqueNumber");
-  let dislikecount = 0;
 
+  const dislikeBtn = getById('dislikeBtn');
+  const dislikeCount = getById('dislikeCount');
+  const uniqueNumber = getValue(getById("uniqueNumber"));
+
+  let dislikeNum = 0;
   function addParticle() {
     const particle = document.createElement('span');
     particle.classList.add('particle');
@@ -89,20 +117,28 @@ function dislikeNotice() {
       dislikeBtn.removeChild(particle);
     }, 1000);
   }
+
   function onDislikeBtnClick() {
-    dislikecount++;
+    dislikeNum++;
     dislikeBtn.classList.add('disliked');
     addParticle();
-    dislikeCount.innerText = dislikecount;
+    dislikeCount.innerText = dislikeNum.toString();
   }
+
   dislikeBtn.addEventListener('click', onDislikeBtnClick);
-  document.addEventListener('DOMContentLoaded', dislikeNotice);
+  document.addEventListener('DOMContentLoaded', dislikeButton);
 
   $.ajax({
-    url: "/JUNGHQLO/notice/updateDislike?notice_number="+uniqueNumber.value,
+    url: `/JUNGHQLO/notice/updateDislike`,
     type: "GET",
+    data: {
+      notice_number: uniqueNumber
+    },
+    /**
+    * @param {any} response
+    **/
     success: function(response) {
-      if(response.status == 200) {
+      if(response == 200) {
         window.location.reload();
       }
       else {
@@ -110,4 +146,6 @@ function dislikeNotice() {
       }
     }
   });
-}
+
+  return true;
+};

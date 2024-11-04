@@ -1,11 +1,15 @@
-// 4. addBoard ------------------------------------------------------------------------------------>
+/** ----------------------------------------------------------------------------------------------->
+* @param null
+* @return {boolean}
+* @desc add 유효성 검사
+**/
 function addBoard() {
-  if ($("#board_title").val() == "") {
+  if (getValue(getById("board_title")) === "") {
     alert("제목을 입력하세요");
     $("#board_title").focus();
     return false;
   }
-  if ($("#board_contents").val() == "") {
+  if (getValue(getById("board_contents")) === "") {
     alert("내용을 입력하세요");
     $("#board_contents").focus();
     return false;
@@ -15,14 +19,18 @@ function addBoard() {
   return true;
 }
 
-// 5. updateBoard --------------------------------------------------------------------------------->
+/** ----------------------------------------------------------------------------------------------->
+* @param null
+* @return {boolean}
+* @desc update 유효성 검사
+**/
 function updateBoard() {
-  if ($("#board_title").val() == "") {
+  if (getValue(getById("board_title")) === "") {
     alert("제목을 입력하세요");
     $("#board_title").focus();
     return false;
   }
-  if ($("#board_contents").val() == "") {
+  if (getValue(getById("board_contents")) === "") {
     alert("내용을 입력하세요");
     $("#board_contents").focus();
     return false;

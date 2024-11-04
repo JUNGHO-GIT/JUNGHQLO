@@ -33,8 +33,6 @@ public class QnaServiceImpl implements QnaService {
   @Override
   public PageHandler<Qna> getQnaList(Integer pageNumber, Integer itemsPer, String sort, Qna qna) throws Exception {
 
-    logger.info("getQnaList SERVICE  호출 !!!!!");
-
     List<Qna> content = qnaMapper.getQnaList(sort);
 
     Integer itemsTotal = content.size();
@@ -70,16 +68,12 @@ public class QnaServiceImpl implements QnaService {
   @Override
   public Qna getQnaDetails(Integer qna_number) throws Exception {
 
-    logger.info("getQnaDetails SERVICE  호출 !!!!!");
-
     return qnaMapper.getQnaDetails(qna_number);
   }
 
   // 3. searchQna --------------------------------------------------------------------------------->
   @Override
   public PageHandler<Qna> searchQna(Integer pageNumber, Integer itemsPer, String searchType, String keyword, Qna qna) throws Exception {
-
-    logger.info("searchQna SERVICE  호출 !!!!!");
 
     List<Qna> content = qnaMapper.searchQna(searchType, keyword);
     Integer itemsTotal = content.size();
@@ -114,8 +108,6 @@ public class QnaServiceImpl implements QnaService {
   // 4. addQna ------------------------------------------------------------------------------------>
   @Override
   public void addQna(Qna qna) throws Exception {
-
-    logger.info("addQna SERVICE  호출 !!!!!");
 
     MultipartFile qna_imgsFile = qna.getQna_imgsFile();
 
@@ -160,8 +152,6 @@ public class QnaServiceImpl implements QnaService {
   @Override
   public void updateQna(Qna qna, String existingImage) throws Exception {
 
-    logger.info("updateQna SERVICE 호출 !!!!!");
-
     MultipartFile qna_imgsFile = qna.getQna_imgsFile();
 
     String googleFileName;
@@ -204,8 +194,6 @@ public class QnaServiceImpl implements QnaService {
   @Override
   public void updateQnaCount(Integer qna_number, HttpSession session) throws Exception {
 
-    logger.info("updateQnaCount SERVICE 호출 !!!!!");
-
     // 최초로 조회수를 올린 경우
     if (session.getAttribute("member_id") != null) {
       long update_time = 0;
@@ -233,8 +221,6 @@ public class QnaServiceImpl implements QnaService {
   @Override
   public void updateLike(Integer qna_number, HttpSession session) throws Exception {
 
-    logger.info("updateLike SERVICE 호출 !!!!!");
-
     // 최초로 좋아요를 누른 경우
     if (session.getAttribute("member_id") != null) {
       long update_time = 0;
@@ -260,8 +246,6 @@ public class QnaServiceImpl implements QnaService {
   // 5-3. updateDislike --------------------------------------------------------------------------->
   @Override
   public void updateDislike(Integer qna_number, HttpSession session) throws Exception {
-
-    logger.info("updateDislike SERVICE 호출 !!!!!");
 
     // 최초로 싫어요를 누른 경우
     if (session.getAttribute("member_id") != null) {
@@ -289,8 +273,6 @@ public class QnaServiceImpl implements QnaService {
   // 6. deleteQna --------------------------------------------------------------------------------->
   @Override
   public void deleteQna(Integer qna_number) throws Exception {
-
-    logger.info("deleteQna SERVICE  호출 !!!!!");
 
     qnaMapper.deleteQna(qna_number);
   }

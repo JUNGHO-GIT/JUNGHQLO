@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	lang="en"
+>
+	<!-- pagination -->
+  <pagination th:fragment="pagination" class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="junghoPagination">
+          <!-- prev -->
+          <a th:classappend="${page.pageNumber > 1} ? '' : 'disabled'"
+            th:href="${page.pageNumber > 1} ? @{|/${prefix}/get${subfix}List?pageNumber=${page.pageNumber-1}&itemsPer=${page.itemsPer}|} : ''">
+            &laquo;
+          </a>
+          <!-- number -->
+          <a th:each="pageNumber : ${#numbers.sequence(1, page.totalPages)}"
+            th:classappend="${pageNumber == page.pageNumber}?'active' : ''"
+            th:href="@{|/${prefix}/get${subfix}List?pageNumber=${pageNumber}&itemsPer=${page.itemsPer}|}"
+            th:text="${pageNumber}"></a>
+          <!-- next -->
+          <a th:classappend="${page.pageNumber < page.totalPages} ? '' : 'disabled'"
+            th:href="${page.pageNumber < page.totalPages} ? @{|/${prefix}/get${subfix}List?pageNumber=${page.pageNumber+1}&itemsPer=${page.itemsPer}|} : ''">
+            &raquo;
+          </a>
+        </div>
+      </div>
+    </div>
+  </pagination>
+
+  <!-- fake pagination -->
+  <fake-pagination th:fragment="fake-pagination" class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="junghoPagination">
+          <!-- prev -->
+          <a href="" class="disabled">&laquo;</a>
+          <!-- number -->
+          <a href="" class="active">1</a>
+          <!-- next -->
+          <a href="" class="disabled">&raquo;</a>
+        </div>
+      </div>
+    </div>
+  </fake-pagination>
+
+</html>

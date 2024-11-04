@@ -28,14 +28,12 @@ public class BoardController {
   // 1. getBoardList (GET) ------------------------------------------------------------------------>
   @GetMapping("/board/getBoardList")
   public String getBoardList (
-    @RequestParam(value="sort", required=false) String sort,
+    @RequestParam(required=false) String sort,
     @RequestParam(defaultValue="1") Integer pageNumber,
     @RequestParam(defaultValue="9") Integer itemsPer,
     Model model,
     Board board
   ) throws Exception {
-
-    logger.info("getBoardList GET 호출 !!!!!");
 
     // sorting order
     if(sort == null || sort.equals("default")) {
@@ -66,19 +64,17 @@ public class BoardController {
     model.addAttribute("page", page);
     model.addAttribute("boardList", boardList);
 
-    return "/board/boardList";
+    return "/pages/board/boardList";
   }
 
   // 2. getBoardDetails (GET) --------------------------------------------------------------------->
   @GetMapping("/board/getBoardDetails")
   public String getBoardDetails (
-    @RequestParam("board_number") Integer board_number,
+    @RequestParam Integer board_number,
     Model model,
     Board board,
     HttpSession session
   ) throws Exception {
-
-    logger.info("getBoardDetails GET 호출 !!!!!");
 
     // 모델
     model.addAttribute("boardModel", boardService.getBoardDetails(board_number));
@@ -87,7 +83,7 @@ public class BoardController {
     // 조회수 증가
     boardService.updateBoardCount(board_number, session);
 
-    return "/board/boardDetails";
+    return "/pages/board/boardDetails";
   }
 
   // 3. searchBoard (GET) ------------------------------------------------------------------------>
@@ -95,13 +91,11 @@ public class BoardController {
   public String searchBoard(
     @RequestParam(defaultValue="1") Integer pageNumber,
     @RequestParam(defaultValue="9") Integer itemsPer,
-    @RequestParam("searchType") String searchType,
-    @RequestParam("keyword") String keyword,
+    @RequestParam String searchType,
+    @RequestParam String keyword,
     Model model,
     Board board
   ) throws Exception {
-
-    logger.info("searchBoard GET 호출 !!!!!");
 
     if(searchType == null || keyword == null) {return "redirect:/board/getBoardList";}
     else if(searchType.equals("title"))       {searchType="board_title";}
@@ -113,22 +107,18 @@ public class BoardController {
     model.addAttribute("page", page);
     model.addAttribute("boardList", boardList);
 
-    return "/board/boardSearch";
+    return "/pages/board/boardSearch";
   }
 
   // 4. addBoard (GET) ---------------------------------------------------------------------------->
   @GetMapping("/board/addBoard")
   public String addBoard() throws Exception {
 
-    logger.info("addBoard GET 호출 !!!!!");
-
-    return "/board/boardAdd";
+    return "/pages/board/boardAdd";
   }
 
   @PostMapping("/board/addBoard")
   public String addBoard(Board board) throws Exception {
-
-    logger.info("addBoard POST 호출 !!!!!");
 
     boardService.addBoard(board);
 
@@ -138,15 +128,13 @@ public class BoardController {
   // 5. updateBoard (GET) ------------------------------------------------------------------------>
   @GetMapping("/board/updateBoard")
   public String updateBoard(
-    @RequestParam("board_number") Integer board_number,
+    @RequestParam Integer board_number,
     Model model, Board board
   ) throws Exception {
 
-    logger.info("updateBoard GET 호출 !!!!!");
-
     model.addAttribute("boardModel", boardService.getBoardDetails(board_number));
 
-    return "/board/boardUpdate";
+    return "/pages/board/boardUpdate";
   }
 
   // 5. updateBoard (POST) ------------------------------------------------------------------------>
@@ -155,8 +143,6 @@ public class BoardController {
     @ModelAttribute Board board,
     @RequestParam("board_imgsUrl") String existingImage
   ) throws Exception {
-
-    logger.info("updateBoard POST 호출 !!!!!");
 
     boardService.updateBoard(board, existingImage);
 
@@ -169,7 +155,7 @@ public class BoardController {
   @ResponseBody
   @GetMapping("/board/updateLike")
   public Integer updateLike (
-    @RequestParam("board_number") Integer board_number,
+    @RequestParam Integer board_number,
     HttpSession session
   ) throws Exception {
 
@@ -182,7 +168,7 @@ public class BoardController {
   @ResponseBody
   @GetMapping("/board/updateDislike")
   public Integer updateDislike(
-    @RequestParam("board_number") Integer board_number,
+    @RequestParam Integer board_number,
     HttpSession session
   ) throws Exception {
 
@@ -194,23 +180,19 @@ public class BoardController {
   // 6. deleteBoard (GET) ------------------------------------------------------------------------->
   @GetMapping("/board/deleteBoard")
   public String deleteBoard(
-    @RequestParam("board_number") Integer board_number,
+    @RequestParam Integer board_number,
     Model model,
     Board board
   ) throws Exception {
 
-    logger.info("deleteBoard GET 호출 !!!!!");
-
     model.addAttribute("boardModel", boardService.getBoardDetails(board_number));
 
-    return "/board/boardDelete";
+    return "/pages/board/boardDelete";
   }
 
   // 6. deleteBoard (POST) ------------------------------------------------------------------------>
   @PostMapping("/board/deleteBoard")
   public String deleteBoard(Board board, Integer board_number) throws Exception {
-
-    logger.info("deleteBoard POST 호출 !!!!!");
 
     boardService.deleteBoard(board_number);
 

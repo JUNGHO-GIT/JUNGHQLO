@@ -33,8 +33,6 @@ public class NoticeServiceImpl implements NoticeService {
   @Override
   public PageHandler<Notice> getNoticeList(Integer pageNumber, Integer itemsPer, String sort, Notice notice) throws Exception {
 
-    logger.info("getNoticeList SERVICE  호출 !!!!!");
-
     List<Notice> content = noticeMapper.getNoticeList(sort);
     Integer itemsTotal = content.size();
     Integer pageLast = (itemsTotal + itemsPer - 1) / itemsPer;
@@ -68,16 +66,12 @@ public class NoticeServiceImpl implements NoticeService {
   // 2. getNoticeDetails -------------------------------------------------------------------------->
   @Override
   public Notice getNoticeDetails(Integer notice_number) throws Exception {
-
-    logger.info("getNoticeDetails SERVICE  호출 !!!!!");
     return noticeMapper.getNoticeDetails(notice_number);
   }
 
   // 3. searchNotice ------------------------------------------------------------------------------>
   @Override
   public PageHandler<Notice> searchNotice(Integer pageNumber, Integer itemsPer, String searchType, String keyword, Notice notice) throws Exception {
-
-    logger.info("searchNotice SERVICE  호출 !!!!!");
 
     List<Notice> content = noticeMapper.searchNotice(searchType, keyword);
     Integer itemsTotal = content.size();
@@ -112,8 +106,6 @@ public class NoticeServiceImpl implements NoticeService {
   // 4. addNotice --------------------------------------------------------------------------------->
   @Override
   public void addNotice(Notice notice) throws Exception {
-
-    logger.info("addNotice SERVICE  호출 !!!!!");
 
     MultipartFile notice_imgsFile = notice.getNotice_imgsFile();
     String googleFileName;
@@ -156,8 +148,6 @@ public class NoticeServiceImpl implements NoticeService {
   @Override
     public void updateNotice(Notice notice, String existingImage) throws Exception {
 
-    logger.info("updateNotice SERVICE 호출 !!!!!");
-
     MultipartFile notice_imgsFile = notice.getNotice_imgsFile();
 
     String googleFileName;
@@ -199,8 +189,6 @@ public class NoticeServiceImpl implements NoticeService {
   @Override
   public void updateNoticeCount(Integer notice_number, HttpSession session) throws Exception {
 
-    logger.info("updateNoticeCount SERVICE 호출 !!!!!");
-
     // 최초로 조회수를 올린 경우
     if (session.getAttribute("member_id") != null) {
       long update_time = 0;
@@ -228,8 +216,6 @@ public class NoticeServiceImpl implements NoticeService {
   @Override
   public void updateLike(Integer notice_number, HttpSession session) throws Exception {
 
-    logger.info("updateLike SERVICE 호출 !!!!!");
-
     // 최초로 좋아요를 누른 경우
     if (session.getAttribute("member_id") != null) {
       long update_time = 0;
@@ -255,8 +241,6 @@ public class NoticeServiceImpl implements NoticeService {
   // 5-3. updateDislike --------------------------------------------------------------------------->
   @Override
   public void updateDislike(Integer notice_number, HttpSession session) throws Exception {
-
-    logger.info("updateDislike SERVICE 호출 !!!!!");
 
     // 최초로 싫어요를 누른 경우
     if (session.getAttribute("member_id") != null) {
@@ -284,8 +268,6 @@ public class NoticeServiceImpl implements NoticeService {
   // 6. deleteNotice ------------------------------------------------------------------------------>
   @Override
   public void deleteNotice(Integer notice_number) throws Exception {
-
-    logger.info("deleteNotice SERVICE  호출 !!!!!");
 
     noticeMapper.deleteNotice(notice_number);
   }

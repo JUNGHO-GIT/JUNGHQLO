@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  lang="en"
+>
+  <!-- slider -->
+  <slider th:fragment="slider">
+    <div class="jungho-slider">
+      <th:block th:each="i : ${#numbers.sequence(1, 7)}">
+        <img th:src="@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/instagram3/instagram-{i}.jpg(i=${i})}"/>
+      </th:block>
+    </div>
+  </slider>
+
+</html>

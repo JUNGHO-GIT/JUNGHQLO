@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  lang="en"
+>
+  <!-- preview-select 1 -->
+  <preview-select1 th:fragment="preview-select1">
+    <div class="previewSelect-group">
+      <p class="p">상품 이미지1<span>*</span></p>
+      <label for="imageFile1">선택</label>
+      <input type="file" th:id="imageFile1" onchange="junghoPreview(1)" class="imageFile"  th:name="${type} + _imgsFile1"/>
+    </div>
+  </preview-select1>
+
+  <!-- preview-select 2 -->
+  <preview-select2 th:fragment="preview-select2">
+    <div class="previewSelect-group">
+      <p class="p">상품 이미지2<span>*</span></p>
+      <label for="imageFile2">선택</label>
+      <input type="file" th:id="imageFile2" onchange="junghoPreview(2)" class="imageFile" th:name="${type} + _imgsFile2"/>
+    </div>
+  </preview-select2>
+
+  <!-- preview-image -->
+  <preview-image th:fragment="preview-image" class="container">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+        <div class="previewImage-group">
+          <h4><i class="fa fa-spinner"></i>&nbsp;Preview</h4>
+          <div class="imageLoader" id="imageLoader"></div>
+          <img class="imageBox" id="imageBox"/>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4 col-4">
+        <div class="previewMini-group">
+          <h6><i class="fa fa-spinner"></i>&nbsp;Image 1</h6>
+          <div class="imageMiniLoader" id="imageMiniLoader1"></div>
+          <img class="imageMiniBox" id="imageMiniBox1"/>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4 col-4">
+        <div class="previewMini-group">
+          <h6><i class="fa fa-spinner"></i>&nbsp;Image 2</h6>
+          <div class="imageMiniLoader" id="imageMiniLoader2"></div>
+          <img class="imageMiniBox" id="imageMiniBox2"/>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 col-4">
+        <div class="previewButton-group">
+          <button class="jungho-button" id="resetButton" type="reset">초기화</button>
+          <button class="jungho-button" id="submitButton" type="submit"
+          th:onClick="return add + ${Type} + ()">등록하기</button>
+        </div>
+      </div>
+    </div>
+  </preview-image>
+
+</html>

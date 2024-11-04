@@ -31,8 +31,6 @@ public class OrdersServiceImpl implements OrdersService {
   @Override
   public PageHandler<Orders> getOrdersList(Integer pageNumber, Integer itemsPer, String member_id, String sort, Orders orders) throws Exception {
 
-    logger.info("getOrdersList SERVICE  호출 !!!!!");
-
     List<Orders> content = ordersMapper.getOrdersList(member_id, sort);
 
     Integer itemsTotal = content.size();
@@ -68,16 +66,12 @@ public class OrdersServiceImpl implements OrdersService {
   @Override
   public Orders getOrdersDetails(Integer orders_number) throws Exception {
 
-    logger.info("getOrdersDetails SERVICE  호출 !!!!!");
-
     return ordersMapper.getOrdersDetails(orders_number);
   }
 
   // 3. searchOrders ------------------------------------------------------------------------------>
   @Override
   public PageHandler<Orders> searchOrders(Integer pageNumber, Integer itemsPer, String searchType, String keyword, String member_id, Orders orders) throws Exception {
-
-    logger.info("searchOrders SERVICE  호출 !!!!!");
 
     List<Orders> content = ordersMapper.searchOrders(searchType, keyword, member_id);
     Integer itemsTotal = content.size();
@@ -105,8 +99,6 @@ public class OrdersServiceImpl implements OrdersService {
   // 4. addOrders --------------------------------------------------------------------------------->
   @Override
   public void addOrders(Orders orders) throws Exception {
-
-    logger.info("addOrders SERVICE  호출 !!!!!");
 
     String product_imgsUrl = orders.getProduct_imgsUrl();
 

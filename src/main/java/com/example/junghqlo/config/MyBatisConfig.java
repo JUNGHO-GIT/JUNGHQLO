@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.sql.init.dependency.DependsOnDatabaseInitialization;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -16,7 +17,7 @@ public class MyBatisConfig {
   // dataSource
   DataSource dataSource;
   MyBatisConfig(DataSource dataSource) {
-  this.dataSource = dataSource;
+    this.dataSource = dataSource;
   }
 
   // SqlSessionFactory
@@ -36,9 +37,10 @@ public class MyBatisConfig {
     return new SqlSessionTemplate(sqlSessionFactory);
   }
 
-  // DataSourceTransactionManager
-  @Bean
-  DataSourceTransactionManager transactionManager() {
+    // DataSourceTransactionManager
+    @Bean
+    @DependsOnDatabaseInitialization
+    DataSourceTransactionManager transactionManager() {
 
     return new DataSourceTransactionManager(dataSource);
   }

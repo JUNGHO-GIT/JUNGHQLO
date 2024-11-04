@@ -28,14 +28,12 @@ public class QnaController {
   // 1. getQnaList (GET) -------------------------------------------------------------------------->
   @GetMapping("/qna/getQnaList")
   public String getQnaList (
-    @RequestParam(value="sort", required=false) String sort,
+    @RequestParam(required=false) String sort,
     @RequestParam(defaultValue="1") Integer pageNumber,
     @RequestParam(defaultValue="9") Integer itemsPer,
     Model model,
     Qna qna
   ) throws Exception {
-
-    logger.info("getQnaList GET 호출 !!!!!");
 
     // sorting order
     if(sort == null) {
@@ -66,19 +64,17 @@ public class QnaController {
     model.addAttribute("page", page);
     model.addAttribute("qnaList", qnaList);
 
-    return "/qna/qnaList";
+    return "/pages/qna/qnaList";
   }
 
   // 2. getQnaDetails (GET) ----------------------------------------------------------------------->
   @GetMapping("/qna/getQnaDetails")
   public String getQnaDetails(
-    @RequestParam("qna_number") Integer qna_number,
+    @RequestParam Integer qna_number,
     Model model,
     Qna qna,
     HttpSession session
   ) throws Exception {
-
-    logger.info("getQnaDetails GET 호출 !!!!!");
 
     // 모델
     model.addAttribute("qnaModel", qnaService.getQnaDetails(qna_number));
@@ -86,7 +82,7 @@ public class QnaController {
     // 조회수
     qnaService.updateQnaCount(qna_number, session);
 
-    return "/qna/qnaDetails";
+    return "/pages/qna/qnaDetails";
   }
 
   // 3. searchQna (GET) --------------------------------------------------------------------------->
@@ -94,13 +90,11 @@ public class QnaController {
   public String searchQna (
     @RequestParam(defaultValue="1") Integer pageNumber,
     @RequestParam(defaultValue="9") Integer itemsPer,
-    @RequestParam("searchType") String searchType,
-    @RequestParam("keyword") String keyword,
+    @RequestParam String searchType,
+    @RequestParam String keyword,
     Model model,
     Qna qna
   ) throws Exception {
-
-    logger.info("searchQna GET 호출 !!!!!");
 
     // searchType order
     if(searchType == null || keyword == null) {
@@ -119,23 +113,19 @@ public class QnaController {
     model.addAttribute("page", page);
     model.addAttribute("qnaList", qnaList);
 
-    return "/qna/qnaSearch";
+    return "/pages/qna/qnaSearch";
   }
 
   // 4. addQna (GET) ------------------------------------------------------------------------------>
   @GetMapping("/qna/addQna")
   public String addQna() throws Exception {
 
-    logger.info("addQna GET 호출 !!!!!");
-
-    return "/qna/qnaAdd";
+    return "/pages/qna/qnaAdd";
   }
 
   // 4. addQna (POST) ----------------------------------------------------------------------------->
   @PostMapping("/qna/addQna")
   public String addQna(Qna qna) throws Exception {
-
-    logger.info("addQna POST 호출 !!!!!");
 
     qnaService.addQna(qna);
 
@@ -145,15 +135,13 @@ public class QnaController {
   // 4. updateQna (GET) --------------------------------------------------------------------------->
   @GetMapping("/qna/updateQna")
   public String updateQna (
-    @RequestParam("qna_number") Integer qna_number,
+    @RequestParam Integer qna_number,
     Model model
   ) throws Exception {
 
-    logger.info("updateQna GET 호출 !!!!!");
-
     model.addAttribute("qnaModel", qnaService.getQnaDetails(qna_number));
 
-    return "/qna/qnaUpdate";
+    return "/pages/qna/qnaUpdate";
   }
 
   // 4. updateQna (POST) -------------------------------------------------------------------------->
@@ -162,8 +150,6 @@ public class QnaController {
     @ModelAttribute Qna qna,
     @RequestParam("qna_imgsUrl") String existingImage
   ) throws Exception {
-
-    logger.info("updateQna POST 호출 !!!!!");
 
     qnaService.updateQna(qna, existingImage);
 
@@ -176,11 +162,9 @@ public class QnaController {
   @ResponseBody
   @GetMapping("/qna/updateLike")
   public Integer updateLike (
-    @RequestParam("qna_number") Integer qna_number,
+    @RequestParam Integer qna_number,
     HttpSession session
   ) throws Exception {
-
-    logger.info("updateLike GET 호출 !!!!!");
 
     qnaService.updateLike(qna_number, session);
 
@@ -191,11 +175,9 @@ public class QnaController {
   @GetMapping("/qna/updateDislike")
   @ResponseBody
   public Integer updateDislike (
-    @RequestParam("qna_number") Integer qna_number,
+    @RequestParam Integer qna_number,
     HttpSession session
   ) throws Exception {
-
-    logger.info("updateDislike GET 호출 !!!!!");
 
     qnaService.updateDislike(qna_number, session);
 
@@ -205,23 +187,19 @@ public class QnaController {
   // 5. deleteQna (GET) --------------------------------------------------------------------------->
   @GetMapping("/qna/deleteQna")
   public String deleteQna (
-    @RequestParam("qna_number") Integer qna_number,
+    @RequestParam Integer qna_number,
     Model model,
     Qna qna
   ) throws Exception {
 
-    logger.info("deleteQna GET 호출 !!!!!");
-
     model.addAttribute("qnaModel", qnaService.getQnaDetails(qna_number));
 
-    return "/qna/qnaDelete";
+    return "/pages/qna/qnaDelete";
   }
 
   // 5. deleteQna (POST) -------------------------------------------------------------------------->
   @PostMapping("/qna/deleteQna")
   public String deleteQna (Qna qna, Model model, Integer qna_number) throws Exception {
-
-    logger.info("deleteQna POST 호출 !!!!!");
 
     model.addAttribute("qnaModel", qna);
     qnaService.deleteQna(qna_number);

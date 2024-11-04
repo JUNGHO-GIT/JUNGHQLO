@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  lang="en"
+>
+  <!-- head -->
+  <th:block th:replace="~{layouts/head :: head}"></th:block>
+
+  <!-- header -->
+  <th:block th:replace="~{layouts/header :: header}"></th:block>
+
+    <!-- navigation -->
+    <div th:with="icon='fas fa-credit-card', text1='Orders', text2='Orders Success'">
+      <div th:replace="components/navigation :: navigation"></div>
+    </div>
+
+    <!-- section -->
+    <section class="container">
+          <div class="row jungho-center">
+            <div class="col-lg-6 col-md-6">
+              <div class="checkout-order">
+                <h4 class="order-title">주문이 완료되었습니다.</h4>
+                <ul class="checkout-total-products">
+                  <!-- 주문날짜 -->
+                  <li class="p">
+                    <i class="fa fa-check fa-xs"></i>&nbsp;주문 날짜  :
+                    <span>
+                      &nbsp;&nbsp;&nbsp;
+                      <script>  document.write(new Date().toLocaleString().slice(0, 10)); </script>
+                    </span>
+                  </li>
+                  <!-- 상품 명 -->
+                  <li class="p">
+                    <i class="fa fa-check fa-xs"></i>&nbsp;상품 명   :
+                    <span>
+                      &nbsp;&nbsp;&nbsp;
+                      <th:block th:text="${product_name}"></th:block>
+                    </span>
+                  </li>
+                  <!-- 주문 수량 -->
+                  <li class="p">
+                    <i class="fa fa-check fa-xs"></i>&nbsp;주문 수량  :
+                    <span>
+                      &nbsp;&nbsp;&nbsp;
+                      <th:block th:text="${orders_quantity}"></th:block>
+                    </span>
+                  </li>
+                </ul>
+                <ul class="checkout-total-all">
+                  <li class="p">
+                    <i class="fa fa-check fa-xs"></i>&nbsp;결제 금액  :
+                    <span>
+                      &nbsp;&nbsp;&nbsp;
+                      <i class="fa fa-won-sign"></i>
+                      <th:block th:text="${#numbers.formatInteger(orders_totalPrice, 3, 'COMMA')}"></th:block>
+                    </span>
+                  </li>
+                </ul>
+                <button type="button" class="jungho-button" th:onClick="'window.location.href=\'' + @{/} + '\''"><i class="fa fa-barcode fa-lg"></i> &nbsp;홈으로
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- success -->
+
+    <!-- footer -->
+    <th:block th:replace="~{layouts/footer :: footer}"></th:block>
+
+</html>

@@ -36,15 +36,13 @@ public class OrdersController {
   // 1. getOrdersList (GET) ----------------------------------------------------------------------->
   @GetMapping("/orders/getOrdersList")
   public String getOrdersList (
-    @RequestParam(value="sort", required=false) String sort,
+    @RequestParam(required=false) String sort,
     @RequestParam(defaultValue="1") Integer pageNumber,
     @RequestParam(defaultValue="9") Integer itemsPer,
     Model model,
     Orders orders,
     HttpSession session
   ) throws Exception {
-
-    logger.info("getOrdersList GET 호출 !!!!!");
 
     if(sort == null || sort.equals("default")) {
       sort="orders_number DESC";
@@ -78,34 +76,32 @@ public class OrdersController {
       if(ordersList != null && ordersList.size() > 0) {
         model.addAttribute("page", page);
         model.addAttribute("ordersList", ordersList);
-        return "/orders/ordersList";
+        return "/pages/orders/ordersList";
       }
       // 주문내역이 없는경우
       else {
-        return "/orders/ordersListEmpty";
+        return "/pages/orders/ordersListEmpty";
       }
     }
     catch (Exception ex) {
       ex.printStackTrace();
-      return "/orders/ordersListEmpty";
+      return "/pages/orders/ordersListEmpty";
     }
   }
 
   // 2. getOrdersDetails (GET) -------------------------------------------------------------------->
   @GetMapping("/orders/getOrdersDetails")
   public String getOrdersDetails (
-    @RequestParam("orders_number") Integer orders_number,
+    @RequestParam Integer orders_number,
     Model model,
     Orders orders,
     HttpSession session
   ) throws Exception {
 
-    logger.info("getOrdersDetails GET 호출 !!!!!");
-
     model.addAttribute("ordersModel", ordersService.getOrdersDetails(orders_number));
     model.addAttribute("member_id", session.getAttribute("member_id"));
 
-    return "/orders/ordersDetails";
+    return "/pages/orders/ordersDetails";
   }
 
   // 3. searchOrders (GET) ------------------------------------------------------------------------>
@@ -113,14 +109,12 @@ public class OrdersController {
   public String searchOrders(
     @RequestParam(defaultValue="1") Integer pageNumber,
     @RequestParam(defaultValue="9") Integer itemsPer,
-    @RequestParam("searchType") String searchType,
-    @RequestParam("keyword") String keyword,
+    @RequestParam String searchType,
+    @RequestParam String keyword,
     Model model,
     Orders orders,
     HttpSession session
   ) throws Exception {
-
-    logger.info("searchOrders GET 호출 !!!!!");
 
     if(searchType == null || keyword == null) {
       return "redirect:/orders/getOrdersList";
@@ -137,22 +131,20 @@ public class OrdersController {
     model.addAttribute("page", page);
     model.addAttribute("ordersList", ordersList);
 
-    return "/orders/ordersSearch";
+    return "/pages/orders/ordersSearch";
   }
 
   // 4. addOrders (POST) -------------------------------------------------------------------------->
   @PostMapping("/orders/addOrders")
   public RedirectView addOrders (
-    @RequestParam("product_number") Integer product_number,
-    @RequestParam("product_name") String product_name,
-    @RequestParam("orders_quantity") Long orders_quantity,
-    @RequestParam("product_stock") Integer product_stock,
+    @RequestParam Integer product_number,
+    @RequestParam String product_name,
+    @RequestParam Long orders_quantity,
+    @RequestParam Integer product_stock,
     Model model,
     Orders orders,
     HttpSession httpSession
   ) throws Exception {
-
-    logger.info("addOrders POST 호출 !!!!!");
 
     // 아이디 세션값 가져오기
     String member_id = (String) httpSession.getAttribute("member_id");
@@ -205,16 +197,14 @@ public class OrdersController {
   // 4-2. successOrders (GET) -------------------------------------------------------------------->
   @GetMapping("/orders/successOrders")
   public String successOrders (
-    @RequestParam("session_id") String session_id,
-    @RequestParam("product_number") String product_number,
-    @RequestParam("orders_quantity") String orders_quantity,
-    @RequestParam("product_stock") String product_stock,
-    @RequestParam("orders_totalPrice") String orders_totalPrice,
-    @RequestParam("product_name") String product_name,
+    @RequestParam String session_id,
+    @RequestParam String product_number,
+    @RequestParam String orders_quantity,
+    @RequestParam String product_stock,
+    @RequestParam String orders_totalPrice,
+    @RequestParam String product_name,
     Model model
   ) throws Exception {
-
-    logger.info("successOrders GET 호출 !!!!!");
 
     // 1. 세션 정보 가져오기
     Session session = Session.retrieve(session_id);
@@ -242,16 +232,14 @@ public class OrdersController {
       Integer.parseInt(orders_quantity)
     );
 
-    return "/orders/ordersSuccess";
+    return "/pages/orders/ordersSuccess";
   }
 
   // 4-3. failOrders (GET) ------------------------------------------------------------------------>
   @GetMapping("/orders/failOrders")
   public String failOrders () throws Exception {
 
-    logger.info("failOrders GET 호출 !!!!!");
-
-    return "/orders/ordersFail";
+    return "/pages/orders/ordersFail";
   }
 
 }

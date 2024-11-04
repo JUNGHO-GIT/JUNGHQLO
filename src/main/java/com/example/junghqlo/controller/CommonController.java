@@ -9,13 +9,12 @@ public class CommonController {
 	// home main page
 	@GetMapping("/")
 	public String home() throws Exception {
-		return "/common/home";
+		return "/pages/home";
   }
 
   // contact
   @GetMapping("/contact")
   public String contact() throws Exception {
-    return "/contact/contact";
+    return "/pages/contact/contact";
   }
-
 }
