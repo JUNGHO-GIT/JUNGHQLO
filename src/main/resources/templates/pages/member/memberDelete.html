@@ -15,7 +15,9 @@
   <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-user-cog', text1='Member', text2='Delete')}" />
 
   <!-- main -->
-  <main class="container">
+  <main class="container px-30">
+    <div class="row">
+      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
     <div class="row">
       <div class="col-lg-6 col-md-6">
         <form th:action="@{/member/deleteMember}" onsubmit="return deleteMember()" method="POST" >
@@ -30,14 +32,14 @@
             <div class="col-lg-6">
               <div class="checkout-input">
                 <p class="p">I D</p>
-                <input type="text" th:name="member_id" th:id="member_id" th:value="${memberModel.member_id}" readonly/>
+                <input th:type="text" th:name="member_id" th:id="member_id" th:value="${memberModel.member_id}" readonly/>
               </div>
             </div>
             <!-- reg date -->
             <div class="col-lg-6">
               <div class="checkout-input">
                 <p class="p"> 가입일</p>
-                <input type="text" th:name="member_date" th:id="member_date"
+                <input th:type="text" th:name="member_date" th:id="member_date"
                 th:value="${memberModel.member_update != null ? memberModel.member_update+'(수정)' : memberModel.member_date+'(최초)'}" readonly/>
               </div>
             </div>
@@ -47,14 +49,14 @@
             <div class="col-lg-6">
               <div class="checkout-input">
                 <p class="p">이름</p>
-                <input type="text" th:id="member_name" th:name="member_name" th:value="${memberModel.member_name}" readonly/>
+                <input th:type="text" th:id="member_name" th:name="member_name" th:value="${memberModel.member_name}" readonly/>
               </div>
             </div>
             <div class="col-lg-6">
               <!-- phone -->
               <div class="checkout-input">
                 <p class="p"> 전화번호</p>
-                <input type="text" th:id="member_phone" th:name="member_phone" th:value="${memberModel.member_phone}" readonly/>
+                <input th:type="text" th:id="member_phone" th:name="member_phone" th:value="${memberModel.member_phone}" readonly/>
               </div>
             </div>
           </div>
@@ -63,7 +65,7 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
                 <p class="p"> 이메일</p>
-                <input type="email" th:name="member_email" th:id="member_email" th:value="${memberModel.member_email}"/>
+                <input th:type="email" th:name="member_email" th:id="member_email" th:value="${memberModel.member_email}"/>
               </div>
             </div>
           </div>
@@ -72,7 +74,7 @@
             <div class="col-lg-6">
               <div class="checkout-input">
                 <p class="p"> 주소</p>
-                <input type="text" th:name="member_address1" th:id="member_address1"
+                <input th:type="text" th:name="member_address1" th:id="member_address1"
                 th:value="${memberModel.member_address1}" readonly/>
               </div>
             </div>
@@ -80,7 +82,7 @@
             <div class="col-lg-6">
               <div class="checkout-input">
                 <p class="p"> 상세주소</p>
-                <input type="text" th:name="member_address2" th:id="member_address2"
+                <input th:type="text" th:name="member_address2" th:id="member_address2"
                 th:value="${memberModel.member_address2}" readonly/>
               </div>
             </div>
@@ -90,13 +92,13 @@
             <div class="col-lg-6">
               <div class="checkout-input">
                 <p class="p">P W<span> * 필수입력</span></p>
-                <input type="password" th:id="member_pw" th:name="member_pw" placeholder="비밀번호를 입력하세요."/>
+                <input th:type="password" th:id="member_pw" th:name="member_pw" placeholder="비밀번호를 입력하세요."/>
               </div>
             </div>
             <div class="col-lg-6">
               <div class="checkout-input">
                 <p class="p">P W 확인<span> * 필수입력</span></p>
-                <input type="password" th:id="member_pw2" th:name="member_pw2" placeholder="비밀번호를 다시 입력하세요."/>
+                <input th:type="password" th:id="member_pw2" th:name="member_pw2" placeholder="비밀번호를 다시 입력하세요."/>
               </div>
             </div>
           </div>
@@ -104,8 +106,8 @@
             <!-- button -->
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
-                <button type="submit" class="jungho-button" th:onClick="return deleteMember()">회원탈퇴</button>
-                <button type="button" class="jungho-button" th:onClick="'window.location.href=\'' + @{/} + '\''"> 홈으로 </button>
+                <button th:type="submit" class="jungho-button" th:onclick="return deleteMember()">회원탈퇴</button>
+                <button th:type="button" class="jungho-button" th:onclick="'window.location.href=\'' + @{/} + '\''"> 홈으로 </button>
               </div>
             </div>
           </div>

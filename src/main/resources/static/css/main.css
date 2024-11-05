@@ -1709,7 +1709,6 @@
   padding: 23px 30px 18px;
 
 }
-.coupon-code span {}
 .coupon-code a {
   color: #0d0d0d;
 }
@@ -1721,16 +1720,6 @@
   padding-bottom: 10px;
 
   font-size: 25px;
-}
-.checkout-input {
-
-}
-.checkout-input p {
-  color: #111111;
-
-}
-.checkout-input p span {
-  color: #800020;
 }
 .checkout-input input {
   height: 40px;

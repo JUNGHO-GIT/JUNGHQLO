@@ -15,78 +15,107 @@
   <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-user-cog', text1='Member', text2='Login')}" />
 
   <!-- main -->
-  <main class="container">
+  <main class="container px-30">
     <div class="row">
-      <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
         <!-- form -->
         <form onsubmit="event.preventDefault(); checkMemberIdPw()">
-          <h6 class="checkout-title">로그인</h6>
-          <!-- ID -->
-          <div class="row">
+          <!-- title -->
+          <div class="row d-row-center mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="checkout-input">
-                <p class="p">ID  <span>*</span></p>
-                <input
-                  required
-                  type="text"
-                  th:id="member_id"
-                  th:name="member_id"
-                  placeholder="아이디를 입력하세요"
-                />
+              <div class="fs-1-8rem fw-800 light-black">
+                로그인
               </div>
+            </div>
+          </div>
+          <!-- ID -->
+          <div class="row mb-20">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="d-row-left mb-10">
+                <div class="fs-0-9rem fw-800 me-5">
+                  ID
+                </div>
+                <div class="fs-0-9rem fw-800 burgundy">
+                  *
+                </div>
+              </div>
+              <input
+                required
+                th:type="text"
+                th:id="member_id"
+                th:name="member_id"
+                placeholder="아이디를 입력하세요"
+                class="form-control"
+              />
             </div>
           </div>
           <!-- pw -->
-          <div class="row">
+          <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="checkout-input">
-                <p class="p">PW  <span>*</span></p>
-                <input
-                  required
-                  type="password"
-                  th:id="member_pw"
-                  th:name="member_pw"
-                  placeholder="비밀번호를 입력하세요"
-                />
+              <div class="d-row-left mb-10">
+                <div class="fs-0-9rem fw-800 light-black">
+                  PW
+                </div>
+                <div class="fs-0-9rem fw-800 burgundy">
+                  *
+                </div>
               </div>
+              <input
+                required
+                th:type="password"
+                th:id="member_pw"
+                th:name="member_pw"
+                placeholder="비밀번호를 입력하세요"
+                class="form-control"
+              />
             </div>
           </div>
+          <hr class="mt-20 mb-20" />
           <!-- button -->
-          <div class="row">
+          <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <button
-                type="submit"
-                class="btn btn-dark"
+                th:type="submit"
+                class="btn btn-dark w-100p"
               >
                 로그인
               </button>
-              <button
-                type="button"
-                class="btn btn-dark"
-                th:onClicked="|window.location.href='@{/member/addMember}'|"
-              >
-                회원가입
-              </button>
-              <button
-                type="button"
-                class="btn btn-dark"
-                th:onClick="|window.location.href='@{/member/findMemberId}'|"
-              >
-                ID 찾기
-              </button>
-              <button
-                type="button"
-                class="btn btn-dark"
-                th:onClick="|window.location.href='@{/member/findMemberPw}'|"
-              >
-                PW 찾기
-              </button>
+            </div>
+          </div>
+          <!-- hr -->
+          <hr class="mt-20 mb-20" />
+          <!-- link -->
+          <div class="row mb-10">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 d-row-center">
+              <div class="fs-0-8rem fw-400 light-black me-10">
+                아이디가 없는 경우
+              </div>
+              <div class="fs-0-8rem fw-500 blue">
+                <a th:href="@{/member/addMember}">회원가입</a>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-10">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-center">
+              <div class="fs-0-8rem fw-400 light-black me-10">
+                아이디를 잊은 경우
+              </div>
+              <div class="fs-0-8rem fw-500 blue">
+                <a th:href="@{/member/findMemberId}">ID 찾기</a>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-10">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-center">
+              <div class="fs-0-8rem fw-400 light-black me-10">
+                비밀번호를 잊은 경우
+              </div>
+              <div class="fs-0-8rem fw-500 blue">
+                <a th:href="@{/member/findMemberPw}">PW 찾기</a>
+              </div>
             </div>
           </div>
         </form>
-      </div>
-      <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 d-row-center">
-        <th:block th:replace="~{components/slider :: slider}" />
       </div>
     </div>
   </main>

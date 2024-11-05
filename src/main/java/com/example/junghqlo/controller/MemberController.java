@@ -23,8 +23,8 @@ public class MemberController {
   private MemberService memberService;
   private EmailHandler emailHandler;
   MemberController(MemberService memberService, EmailHandler emailHandler) {
-  this.memberService = memberService;
-  this.emailHandler = emailHandler;
+    this.memberService = memberService;
+    this.emailHandler = emailHandler;
   }
 
   // 1. getMemberList (GET) ----------------------------------------------------------------------->
@@ -175,7 +175,7 @@ public class MemberController {
   @GetMapping("/member/addMember")
   public String addMember() throws Exception {
 
-    return "/pages/member/memberAdd";
+    return "/pages/member/memberSignup";
   }
 
   // 4. addMember (POST) -------------------------------------------------------------------------->

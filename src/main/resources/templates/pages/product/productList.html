@@ -15,7 +15,9 @@
   <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-shopping-bag', text1='Shop', text2='List')}" />
 
   <!-- main -->
-  <main class="container">
+  <main class="container px-30">
+    <div class="row">
+      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
     <div class="row">
 
       <!-- side bar -->
@@ -97,14 +99,14 @@
                 <div id="collapseThree">
                   <div class="card-body">
                     <div class="shop-sidebar-size">
-                      <label for="xs">xs<input type="radio" id="xs"></label>
-                      <label for="sm">s<input type="radio" id="sm"></label>
-                      <label for="md">m<input type="radio" id="md"></label>
-                      <label for="xl">xl<input type="radio" id="xl"></label>
-                      <label for="2xl">2xl<input type="radio" id="2xl"></label>
-                      <label for="xxl">xxl<input type="radio" id="xxl"></label>
-                      <label for="3xl">3xl<input type="radio" id="3xl"></label>
-                      <label for="4xl">4xl<input type="radio" id="4xl"></label>
+                      <label for="xs">xs<input th:type="radio" id="xs"></label>
+                      <label for="sm">s<input th:type="radio" id="sm"></label>
+                      <label for="md">m<input th:type="radio" id="md"></label>
+                      <label for="xl">xl<input th:type="radio" id="xl"></label>
+                      <label for="2xl">2xl<input th:type="radio" id="2xl"></label>
+                      <label for="xxl">xxl<input th:type="radio" id="xxl"></label>
+                      <label for="3xl">3xl<input th:type="radio" id="3xl"></label>
+                      <label for="4xl">4xl<input th:type="radio" id="4xl"></label>
                     </div>
                   </div>
                 </div>
@@ -127,15 +129,15 @@
                 <div id="collapseFour">
                   <div class="card-body">
                     <div class="shop-sidebar-color">
-                      <label class="c-1" for="sp-1"><input type="radio" id="sp-1"></label>
-                      <label class="c-2" for="sp-2"><input type="radio" id="sp-2"></label>
-                      <label class="c-3" for="sp-3"><input type="radio" id="sp-3"></label>
-                      <label class="c-4" for="sp-4"><input type="radio" id="sp-4"></label>
-                      <label class="c-5" for="sp-5"><input type="radio" id="sp-5"></label>
-                      <label class="c-6" for="sp-6"><input type="radio" id="sp-6"></label>
-                      <label class="c-7" for="sp-7"><input type="radio" id="sp-7"></label>
-                      <label class="c-8" for="sp-8"><input type="radio" id="sp-8"></label>
-                      <label class="c-9" for="sp-9"><input type="radio" id="sp-9"></label>
+                      <label class="c-1" for="sp-1"><input th:type="radio" id="sp-1"></label>
+                      <label class="c-2" for="sp-2"><input th:type="radio" id="sp-2"></label>
+                      <label class="c-3" for="sp-3"><input th:type="radio" id="sp-3"></label>
+                      <label class="c-4" for="sp-4"><input th:type="radio" id="sp-4"></label>
+                      <label class="c-5" for="sp-5"><input th:type="radio" id="sp-5"></label>
+                      <label class="c-6" for="sp-6"><input th:type="radio" id="sp-6"></label>
+                      <label class="c-7" for="sp-7"><input th:type="radio" id="sp-7"></label>
+                      <label class="c-8" for="sp-8"><input th:type="radio" id="sp-8"></label>
+                      <label class="c-9" for="sp-9"><input th:type="radio" id="sp-9"></label>
                     </div>
                   </div>
                 </div>
@@ -148,7 +150,7 @@
 
 
       <!-- main bar -->
-      <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 col-12">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-9 col-xl-9">
 
         <!-- sorting + search -->
         <div class="row mb-3 jungho-inline">
@@ -177,9 +179,9 @@
                   <option value="name">Name</option>
                   <option value="details">Details</option>
                 </select>
-                <input class="form-control ft-7 fw-7 me-1 searchBar" type="search" th:id="keyword" placeholder="search" th:name="keyword" required/>
+                <input class="form-control ft-7 fw-7 me-1 searchBar" th:type="search" th:id="keyword" placeholder="search" th:name="keyword" required/>
                 <i class="fas fa-search fa-lg" th:id="searchIcon"></i>
-                <button type="submit" id="hiddenSubmit" class="hiddenSubmit"></button>
+                <button th:type="submit" id="hiddenSubmit" class="hiddenSubmit"></button>
               </div>
             </form>
           </div>
@@ -190,7 +192,7 @@
         <div class="row">
           <th:block th:each="product:${productList}">
             <!-- col 1 -->
-            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 col-12 mix new-arrivals">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 mix new-arrivals">
               <div class="product-item">
                 <!-- 이미지 -->
                 <div class="product-item-pic set-bg" th:attr="data-setbg=@{${product.product_imgsUrl1}}">

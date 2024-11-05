@@ -15,92 +15,221 @@
   <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-user-cog', text1='Member', text2='Details')}" />
 
   <!-- main -->
-  <main class="container">
+  <main class="container px-30">
     <div class="row">
-      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-12">
-        <h6 class="checkout-title">회원 상세정보</h6>
-        <div class="row">
-          <!-- ID -->
-          <div class="col-lg-6">
-            <div class="checkout-input">
-              <p class="p">I D<span>*</span></p>
-              <input type="text" placeholder="ID" th:name="member_id" th:id="member_id" th:value="${memberModel.member_id}" readonly/>
-              <!-- hidden -->
-              <input type="hidden" th:name="member_number" th:id="member_number" th:value="${memberModel.member_number}"/>
-            </div>
-          </div>
-          <!-- PW -->
-          <div class="col-lg-6">
-            <div class="checkout-input">
-              <p class="p">P W<span>*</span></p>
-              <input type="password" th:id="member_pw" th:name="member_pw" th:value="${memberModel.member_pw}" readonly/>
+      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
+        <!-- hidden -->
+        <input
+          th:type="hidden"
+          th:name="member_number"
+          th:id="member_number"
+          th:value="${memberModel.member_number}"
+        />
+        <!-- title -->
+        <div class="row d-row-center mb-20">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="fs-1-8rem fw-800 light-black">
+              회원 상세정보
             </div>
           </div>
         </div>
-        <div class="row">
-          <!-- name -->
-          <div class="col-lg-6">
-            <div class="checkout-input">
-              <p class="p">이름<span>*</span></p>
-              <input type="text" th:id="member_name" th:name="member_name" th:value="${memberModel.member_name}" readonly/>
+        <!-- ID -->
+        <div class="row mb-20">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="d-row-left mb-10">
+              <div class="fs-0-9rem fw-800 me-5">
+                ID
+              </div>
+              <div class="fs-0-9rem fw-800 burgundy">
+                *
+              </div>
             </div>
+            <input
+              th:type="text"
+              th:name="member_id"
+              th:id="member_id"
+              placeholder="ID"
+              th:value="${memberModel.member_id}"
+              readonly
+              class="form-control"
+            />
           </div>
-          <div class="col-lg-6">
-            <!-- phone -->
-            <div class="checkout-input">
-              <p class="p"> 전화번호<span>*</span></p>
-              <input type="text" th:id="member_phone" th:name="member_phone" th:value="${memberModel.member_phone}" readonly/>
+        </div>
+        <!-- PW -->
+        <div class="row mb-20">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="d-row-left mb-10">
+              <div class="fs-0-9rem fw-800 light-black">
+                PW
+              </div>
+              <div class="fs-0-9rem fw-800 burgundy">
+                *
+              </div>
             </div>
+            <input
+              th:type="password"
+              th:id="member_pw"
+              th:name="member_pw"
+              th:value="${memberModel.member_pw}"
+              readonly
+              class="form-control"
+            />
+          </div>
+        </div>
+        <!-- name -->
+        <div class="row mb-20">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="d-row-left mb-10">
+              <div class="fs-0-9rem fw-800 light-black">
+                이름
+              </div>
+              <div class="fs-0-9rem fw-800 burgundy">
+                *
+              </div>
+            </div>
+            <input
+              th:type="text"
+              th:id="member_name"
+              th:name="member_name"
+              th:value="${memberModel.member_name}"
+              readonly
+              class="form-control"
+            />
+          </div>
+        </div>
+        <!-- phone -->
+        <div class="row mb-20">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="d-row-left mb-10">
+              <div class="fs-0-9rem fw-800 light-black">
+                전화번호
+              </div>
+              <div class="fs-0-9rem fw-800 burgundy">
+                *
+              </div>
+            </div>
+            <input
+              th:type="text"
+              th:id="member_phone"
+              th:name="member_phone"
+              th:value="${memberModel.member_phone}"
+              readonly
+              class="form-control"
+            />
           </div>
         </div>
         <!-- email -->
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="checkout-input">
-              <p class="p"> 이메일<span>*</span></p>
-              <input type="email" th:name="email_front" th:id="email_front" th:value="${memberModel.member_email}" readonly/>
-            </div>
-          </div>
-          <!-- date -->
-          <div class="col-lg-6">
-            <div class="checkout-input">
-              <p class="p"> 가입일<span>*</span></p>
-              <input type="text" th:name="member_date" th:id="member_date"
-                th:value="${memberModel.member_update != null ? memberModel.member_update+'(수정)' : memberModel.member_date+'(최초)'}" readonly/>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <!-- address -->
-          <div class="col-lg-6">
-            <div class="checkout-input">
-              <p class="p"> 주소<span>*</span></p>
-              <input type="text" th:name="member_address1" th:id="member_address1"
-              th:value="${memberModel.member_address1}" readonly/>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="checkout-input">
-              <p class="p"> 상세주소<span>*</span></p>
-              <input type="text" th:name="member_address2" th:id="member_address2"
-              th:value="${memberModel.member_address2}" readonly/>
-            </div>
-          </div>
-        </div>
-        <br/>
-        <div class="row">
-          <!-- button -->
+        <div class="row mb-20">
           <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <div class="checkout-input">
-              <button class="jungho-button" th:onClick="'window.location.href=\'' + @{/member/updateMember} + '\''">회원정보 수정</button>&nbsp;&nbsp;
-              <button class="jungho-button" th:onClick="'window.location.href=\'' + @{/member/updateMemberPw} + '\''">비밀번호 수정</button>&nbsp;&nbsp;
-              <button class="jungho-button" th:onClick="'window.location.href=\'' + @{/member/deleteMember?member_number={member_number}(member_number=${memberModel.member_number})} + '\''">회원 탈퇴</button>&nbsp;&nbsp;
+            <div class="d-row-left mb-10">
+              <div class="fs-0-9rem fw-800 light-black">
+                이메일
+              </div>
+              <div class="fs-0-9rem fw-800 burgundy">
+                *
+              </div>
+            </div>
+            <input
+              th:type="email"
+              th:name="email_front"
+              th:id="email_front"
+              th:value="${memberModel.member_email}"
+              readonly
+              class="form-control"
+            />
+          </div>
+        </div>
+        <!-- date -->
+        <div class="row mb-20">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="d-row-left mb-10">
+              <div class="fs-0-9rem fw-800 light-black">
+                가입일
+              </div>
+              <div class="fs-0-9rem fw-800 burgundy">
+                *
+              </div>
+            </div>
+            <input
+              th:type="text"
+              th:name="member_date"
+              th:id="member_date"
+              th:value="${memberModel.member_update != null ? memberModel.member_update+'(수정)' : memberModel.member_date+'(최초)'}"
+              readonly
+              class="form-control"
+            />
+          </div>
+        </div>
+        <!-- address -->
+        <div class="row mb-20">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="d-row-left mb-10">
+              <div class="fs-0-9rem fw-800 light-black">
+                주소
+              </div>
+              <div class="fs-0-9rem fw-800 burgundy">
+                *
+              </div>
+            </div>
+            <input
+              th:type="text"
+              th:name="member_address1"
+              th:id="member_address1"
+              th:value="${memberModel.member_address1}"
+              readonly
+              class="form-control"
+            />
+          </div>
+        </div>
+        <!-- address2 -->
+        <div class="row mb-20">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="d-row-left mb-10">
+              <div class="fs-0-9rem fw-800 light-black">
+                상세주소
+              </div>
+              <div class="fs-0-9rem fw-800 burgundy">
+                *
+              </div>
+            </div>
+            <input
+              th:type="text"
+              th:name="member_address2"
+              th:id="member_address2"
+              th:value="${memberModel.member_address2}"
+              readonly
+              class="form-control"
+            />
+          </div>
+        </div>
+        <hr class="mt-20 mb-20" />
+        <!-- link -->
+        <div class="row mb-20">
+          <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-row-right">
+            <div
+              class="fs-0-9rem fw-700 light-black hover"
+              th:onclick="'window.location.href=\'' + @{/member/updateMember} + '\''"
+            >
+              회원정보 수정
+            </div>
+          </div>
+          <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-row-center">
+            <div
+              class="fs-0-9rem fw-700 light-black hover"
+              th:onclick="'window.location.href=\'' + @{/member/updateMemberPw} + '\''"
+            >
+              비밀번호 수정
+            </div>
+          </div>
+          <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-row-left">
+            <div
+              class="fs-0-9rem fw-700 burgundy hover"
+              th:onclick="'window.location.href=\'' + @{/member/deleteMember?member_number={member_number}(member_number=${memberModel.member_number})} + '\''"
+            >
+              회원 탈퇴
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-12">
-        <div th:replace="components/slider :: slider"></div>
       </div>
     </div>
   </main>

@@ -15,7 +15,9 @@
   <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-credit-card', text1='Orders', text2='List')}" />
 
   <!-- main -->
-  <main class="container">
+  <main class="container px-30">
+    <div class="row">
+      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
     <div class="row mb-3 jungho-inline">
       <!-- sorting -->
       <div class="col-lg-6 col-md-6 col-sm-6 col-6">
@@ -41,9 +43,9 @@
             <select class="ft-5 fw-8 ms-2 searchSelect" th:name="searchType" th:id="searchType">
               <option value="name">Name</option>
             </select>
-            <input class="form-control ft-7 fw-7 me-1 searchBar" type="search" th:id="keyword" placeholder="search" th:name="keyword" required/>
+            <input class="form-control ft-7 fw-7 me-1 searchBar" th:type="search" th:id="keyword" placeholder="search" th:name="keyword" required/>
             <i class="fas fa-search fa-lg" th:id="searchIcon"></i>
-            <button type="submit" id="hiddenSubmit" class="hiddenSubmit"></button>
+            <button th:type="submit" id="hiddenSubmit" class="hiddenSubmit"></button>
           </div>
         </form>
       </div>

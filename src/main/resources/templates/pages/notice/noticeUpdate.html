@@ -15,18 +15,20 @@
   <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-bell', text1='Notice', text2='Update')}" />
 
   <!-- main -->
-  <main class="container">
+  <main class="container px-30">
+    <div class="row">
+      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
 
     <!-- form -->
-    <form th:action="@{/notice/updateNotice}" method="POST" enctype="multipart/form-data">
+    <form th:action="@{/notice/updateNotice}" method="POST" encth:type="multipart/form-data">
 
       <!-- hidden -->
-      <input type="hidden" th:name="notice_number" th:value="${noticeModel.notice_number}" th:id="notice_number"/>
-      <input type="hidden" th:name="notice_writer" th:value="${noticeModel.notice_writer}" th:id="notice_writer"/>
-      <input type="hidden" th:name="notice_count" th:value="${noticeModel.notice_count}" th:id="notice_count"/>
-      <input type="hidden" th:name="notice_like" th:value="${noticeModel.notice_like}" th:id="notice_like"/>
-      <input type="hidden" th:name="notice_dislike" th:value="${noticeModel.notice_dislike}" th:id="notice_dislike"/>
-      <input type="hidden" th:name="notice_imgsUrl" th:value="${noticeModel.notice_imgsUrl}" th:id="notice_imgsUrl"/>
+      <input th:type="hidden" th:name="notice_number" th:value="${noticeModel.notice_number}" th:id="notice_number"/>
+      <input th:type="hidden" th:name="notice_writer" th:value="${noticeModel.notice_writer}" th:id="notice_writer"/>
+      <input th:type="hidden" th:name="notice_count" th:value="${noticeModel.notice_count}" th:id="notice_count"/>
+      <input th:type="hidden" th:name="notice_like" th:value="${noticeModel.notice_like}" th:id="notice_like"/>
+      <input th:type="hidden" th:name="notice_dislike" th:value="${noticeModel.notice_dislike}" th:id="notice_dislike"/>
+      <input th:type="hidden" th:name="notice_imgsUrl" th:value="${noticeModel.notice_imgsUrl}" th:id="notice_imgsUrl"/>
 
       <div class="row">
         <div class="col-lg-6 col-md-6">
@@ -36,7 +38,7 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
                 <p class="p">제목<span>*</span></p>
-                <input type="text" placeholder="Title" th:name="notice_title" th:value="${noticeModel.notice_title}" th:id="notice_title"/>
+                <input th:type="text" placeholder="Title" th:name="notice_title" th:value="${noticeModel.notice_title}" th:id="notice_title"/>
               </div>
             </div>
           </div>
@@ -62,11 +64,11 @@
               <div class="checkout-input">
                 <p class="p"> 게시물 이미지<span>*</span></p>
                 <label for="imageFile">선택하기</label>
-                <input type="file" th:id="imageFile" th:name="notice_imgsFile"  style="display:none" class="imageFile" onchange="junghoPreview()"/>
+                <input th:type="file" th:id="imageFile" th:name="notice_imgsFile"  style="display:none" class="imageFile" onchange="junghoPreview()"/>
               </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3 mt-3">
-              <button type="submit" th:onClick="return updateCheck()" class="jungho-button">
+              <button th:type="submit" th:onclick="return updateCheck()" class="jungho-button">
               수정하기
               </button>
             </div>

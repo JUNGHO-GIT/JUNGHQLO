@@ -6,52 +6,77 @@
   lang="en"
 >
   <!-- footer -->
-  <footer th:fragment="footer" class="container bg-black mt-50">
-    <div class="row justify-content-center">
-      <div class="col-lg-2 col-md-6 col-sm-6 col-12 mb-3">
-        <div class="footer-about">
-          <div class="footer-logo" style="margin-left: -20p">
-            <a th:href="@{/}"><img th:src="@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/icon/logo.png}" width="150px" height="150px"/></a>
+  <footer th:fragment="footer" class="container bg-black mt-50 p-30">
+    <div class="row">
+      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
+        <div class="row">
+          <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-col-left">
+            <img
+              th:src="@{${STORAGE} + '/icon/logo.png'}"
+              loading="lazy"
+              alt="logo"
+              width="80px"
+              height="80px"
+            />
           </div>
-        </div>
-      </div>
-      <div class="col-lg-2 col-md-3 col-sm-6 col-6 mb-3">
-        <div class="footer-widget">
-          <h6>Shopping</h6>
-          <ul>
-            <li><a th:href="@{/product/getProductList}">Clothing Store</a></li>
-            <li><a th:href="@{/product/getProductList}">Trending Shoes</a></li>
-            <li><a th:href="@{/product/getProductList}">Accessories</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-lg-2 col-md-3 col-sm-6 col-6 mb-3">
-        <div class="footer-widget">
-          <h6>Shopping</h6>
-          <ul>
-            <li><a th:href="@{/qna/getQnaList}">QnA</a></li>
-            <li><a th:href="@{/notice/getNoticeList}">Notice</a></li>
-            <li><a th:href="@{/contact}">Contact Us</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6 col-sm-12 col-12 mb-3">
-        <div class="footer-widget">
-          <h6>NewLetter</h6>
-          <div class="footer-newslatter">
-            <p class="p">Be the first to know about new arrivals!</p>
-            <form action="">
-              <input type="text" placeholder="Your email">
-              <button type="submit"><span class="icon_mail_alt"></span></button>
-            </form>
+          <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-col-left">
+            <div class="fs-1-0rem fw-800 light-grey mb-10">
+              Shopping
+            </div>
+            <ul>
+              <li
+                class="fs-0-8rem fw-600 grey hover pointer mb-10"
+                th:onclick="|location.href='@{/product/getProductList}'|"
+              >
+                Clothing
+              </li>
+              <li
+                class="fs-0-8rem fw-600 grey hover pointer mb-10"
+                th:onclick="|location.href='@{/product/getProductList}'|"
+              >
+                Trending
+              </li>
+              <li
+                class="fs-0-8rem fw-600 grey hover pointer mb-10"
+                th:onclick="|location.href='@{/product/getProductList}'|"
+              >
+                Accessories
+              </li>
+            </ul>
+          </div>
+          <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 d-col-left">
+            <div class="fs-1-0rem fw-800 light-grey mb-10">
+              Info
+            </div>
+            <ul>
+              <li
+                class="fs-0-8rem fw-600 grey hover pointer mb-10"
+                th:onclick="|location.href='@{/qna/getQnaList}'|"
+              >
+                QnA
+              </li>
+              <li
+                class="fs-0-8rem fw-600 grey hover pointer mb-10"
+                th:onclick="|location.href='@{/notice/getNoticeList}'|"
+              >
+                Notice
+              </li>
+              <li
+                class="fs-0-8rem fw-600 grey hover pointer mb-10"
+                th:onclick="|location.href='@{/contact}'|"
+              >
+                contact
+              </li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-lg-12 text-center">
-        <div class="footer-copyright-text">
-          <p class="p">JUNGHQLO(주) ⓒ 2023 JUNGHQLO. All Rights Reserved.</p>
+    <hr class="bg-grey">
+    <div class="row d-row-center">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="fs-0-8rem fw-600 light-grey">
+          2024 JUNGHQLO. All Rights Reserved.
         </div>
       </div>
     </div>

@@ -21,13 +21,13 @@
       <div class="container">
         <div class="row">
           <!-- main -->
-          <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 col-12 mt-n3">
+          <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
             <div class="product-details-pic-item">
               <img th:src="@{${productModel.product_imgsUrl1}}" th:id="product_imgsUrl1" th:name="product_imgsUrl1"/>
             </div>
           </div>
           <!-- main -->
-          <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 col-12 mt-n3">
+          <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
             <div class="product-details-pic-item">
               <img th:src="@{${productModel.product_imgsUrl2}}" th:id="product_imgsUrl2" th:name="product_imgsUrl2"/>
             </div>
@@ -37,23 +37,23 @@
             <div class="jungho-vertical"></div>
           </div>
           <!-- detail -->
-          <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 col-12 mt-n4">
+          <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
             <div class="product-details-text">
 
               <!-- form -->
               <form th:action="@{/orders/addOrders}" method="POST">
 
                 <!-- hidden -->
-                <input type="hidden" th:id="product_number" th:name="product_number"
+                <input th:type="hidden" th:id="product_number" th:name="product_number"
                 th:value="${productModel.product_number}"/>
-                <input type="hidden" th:id="product_name" th:name="product_name" th:value="${productModel.product_name}"/>
-                <input type="hidden" th:id="product_company" th:name="product_company" th:value="${productModel.product_company}"/>
-                <input type="hidden" th:id="product_category" th:name="product_category" th:value="${productModel.product_category}"/>
-                <input type="hidden" th:id="product_price" th:name="product_price" th:value="${productModel.product_price}"/>
-                <input type="hidden" th:id="product_imgsUrl1" th:name="product_imgsUrl1" th:value="${productModel.product_imgsUrl1}"/>
-                <input type="hidden" th:id="product_imgsUrl" th:name="product_imgsUrl" th:value="${productModel.product_imgsUrl1}"/>
-                <input type="hidden" th:id="product_imgsUrl2" th:name="product_imgsUrl2" th:value="${productModel.product_imgsUrl2}"/>
-                <input type="hidden" th:id="product_stock" th:name="product_stock" th:value="${productModel.product_stock}"/>
+                <input th:type="hidden" th:id="product_name" th:name="product_name" th:value="${productModel.product_name}"/>
+                <input th:type="hidden" th:id="product_company" th:name="product_company" th:value="${productModel.product_company}"/>
+                <input th:type="hidden" th:id="product_category" th:name="product_category" th:value="${productModel.product_category}"/>
+                <input th:type="hidden" th:id="product_price" th:name="product_price" th:value="${productModel.product_price}"/>
+                <input th:type="hidden" th:id="product_imgsUrl1" th:name="product_imgsUrl1" th:value="${productModel.product_imgsUrl1}"/>
+                <input th:type="hidden" th:id="product_imgsUrl" th:name="product_imgsUrl" th:value="${productModel.product_imgsUrl1}"/>
+                <input th:type="hidden" th:id="product_imgsUrl2" th:name="product_imgsUrl2" th:value="${productModel.product_imgsUrl2}"/>
+                <input th:type="hidden" th:id="product_stock" th:name="product_stock" th:value="${productModel.product_stock}"/>
 
                 <!-- name -->
                 <h4>
@@ -82,13 +82,13 @@
                     <!-- quantity -->
                     <div class="quantity">
                       <div class="pro-qty">
-                        <input th:type="text" th:id="orders_quantity" th:name="orders_quantity" th:value="1"/>
+                        <input th:th:type="text" th:id="orders_quantity" th:name="orders_quantity" th:value="1"/>
                       </div>
                     </div>
                     <!-- button -->
                     <th:block th:if="${session.member_id} == null">
-                      <button type="button" class="jungho-button" th:onClick="return sessionAlert()">구매</button>
-                      <button type="button" class="jungho-button" th:onClick="@{|window.location.href='/JUNGHQLO/product/getProductList'|}">리스트</button>
+                      <button th:type="button" class="jungho-button" th:onclick="return sessionAlert()">구매</button>
+                      <button th:type="button" class="jungho-button" th:onclick="@{|window.location.href='/JUNGHQLO/product/getProductList'|}">리스트</button>
                       <br>
                       <br>
                       <div class="jungho-center ms-6 mb-1">
@@ -125,8 +125,8 @@
                       </div>
                     </th:block>
                     <th:block th:if="${session.member_id} != null">
-                      <button type="submit" class="jungho-button" th:onClick="return ordersCheck()">구매</button>
-                      <button type="button" class="jungho-button" th:onClick="@{|window.location.href='/JUNGHQLO/product/getProductList'|}">리스트</button>
+                      <button th:type="submit" class="jungho-button" th:onclick="return ordersCheck()">구매</button>
+                      <button th:type="button" class="jungho-button" th:onclick="@{|window.location.href='/JUNGHQLO/product/getProductList'|}">리스트</button>
                       <br>
                       <br>
                       <br>
@@ -167,8 +167,8 @@
                 </div>
                 <!-- button group -->
                 <div class="btn-group mb-n5" th:if="${session.member_id == 'eric4757'}">
-                  <button type="button" class="jungho-button-admin" th:onClick="|window.location.href='@{/product/updateProduct(product_number=${productModel.product_number})}'|">수정</button>
-                  <button type="button" class="jungho-button-admin" th:onClick="|window.location.href='@{/product/deleteProduct(product_number=${productModel.product_number})}'|">삭제</button>
+                  <button th:type="button" class="jungho-button-admin" th:onclick="|window.location.href='@{/product/updateProduct(product_number=${productModel.product_number})}'|">수정</button>
+                  <button th:type="button" class="jungho-button-admin" th:onclick="|window.location.href='@{/product/deleteProduct(product_number=${productModel.product_number})}'|">삭제</button>
                 </div>
               </form>
 
@@ -187,14 +187,14 @@
 
         <!-- related -->
         <div class="row">
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="jungho-related">
               <span><i class="fas fa-tags fa-xs p"></i>&nbsp;&nbsp;Related Products</span>
             </div>
             <ul class="nav nav-tabs" role="tablist">
               <div th:each="i : ${#numbers.sequence(1, 6)}">
                 <li class="nav-item">
-                  <a class="nav-link table-active" th:onClick="randomSideImage()">
+                  <a class="nav-link table-active" th:onclick="randomSideImage()">
                     <div class="product-thumb-pic set-bg" ></div>
                   </a>
                 </li>
@@ -209,7 +209,7 @@
       <div class="container">
         <!-- row -->
         <div class="row">
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="product-details-tab">
               <ul class="nav nav-tabs" role="tablist">
                 <!-- description -->
@@ -228,7 +228,7 @@
                 <div class="tab-pane active" id="tabs-1" role="tabpanel">
                   <div class="product-details-tab-content">
                     <div class="row">
-                      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-4">
+                      <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                         <!-- number -->
                         <div class="product-details-tab-content-item">
                           <h5><i class="fas fa-hand-point-up"></i>&nbsp;&nbsp;상품번호</h5>
@@ -245,7 +245,7 @@
                           <p th:text="${productModel.product_category}"></p>
                         </div>
                       </div>
-                      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-4">
+                      <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                         <!-- company -->
                         <div class="product-details-tab-content-item">
                           <h5><i class="fa fa-building"></i>&nbsp;&nbsp;제조사</h5>
@@ -262,7 +262,7 @@
                           <p th:text="${#numbers.formatInteger(productModel.product_price, 3, 'COMMA')}"></p>
                         </div>
                       </div>
-                      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-4">
+                      <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                         <!-- date -->
                         <div class="product-details-tab-content-item">
                           <h5><i class="far fa-calendar-alt fa-xs"></i>&nbsp;&nbsp;등록일자</h5>

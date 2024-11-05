@@ -16,7 +16,7 @@
     <!-- off-canvas -->
     <div class="off-canvas-menu-overlay"></div>
     <div class="off-canvas-menu-wrapper">
-      <div class="d-row-center">
+      <div class="d-row-center ms-n20">
         <div class="off-canvas-links">
           <a
             th:if="${session.member_id == null}"
@@ -44,7 +44,7 @@
           </a>
           <a
             th:if="${session.member_id != null}"
-            th:onClick="logoutMember()"
+            th:onclick="logoutMember()"
           >
             <span class="upper-text me-10">
               Logout
@@ -79,22 +79,22 @@
           </ul>
           <ul th:if ="${session.member_id != ADMIN}">
             <li>
-              <a th:onClick="adminAlert()">
+              <a th:onclick="adminAlert()">
                 AdminPage
               </a>
             </li>
             <li>
-              <a th:onClick="adminAlert()">
+              <a th:onclick="adminAlert()">
                 MemberList
               </a>
             </li>
             <li>
-              <a th:onClick="adminAlert()">
+              <a th:onclick="adminAlert()">
                 AddProduct
               </a>
             </li>
             <li>
-              <a th:onClick="adminAlert()">
+              <a th:onclick="adminAlert()">
                 AddNotice
               </a>
             </li>
@@ -137,12 +137,18 @@
             Free shipping, 30-day return or refund guarantee.
           </span>
         </div>
-        <div class="col-7 d-sm-none">
-          <span class="fs-0-9rem fw-400 white">
-            Call us: 010-1234-5678
-          </span>
+        <div class="col-2 d-sm-none">
+          <a th:href="@{/}" class="d-row-left">
+            <img
+              th:src="@{${STORAGE} + '/icon/logo.png'}"
+              loading="lazy"
+              alt="logo"
+              width="20px"
+              height="20px"
+            />
+          </a>
         </div>
-        <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 d-row-right">
+        <div class="col-10 col-sm-5 col-md-5 col-lg-5 col-xl-5 d-row-right">
           <a
             th:if="${session.member_id == null}"
             th:href="@{/member/addMember}"
@@ -169,7 +175,7 @@
           </a>
           <a
             th:if="${session.member_id != null}"
-            th:onClick="logoutMember()"
+            th:onclick="logoutMember()"
           >
             <span class="upper-text white hover me-20">
               Logout
@@ -203,22 +209,22 @@
             </ul>
             <ul th:if ="${session.member_id != ADMIN}">
               <li>
-                <a th:onClick="adminAlert()">
+                <a th:onclick="adminAlert()">
                   AdminPage
                 </a>
               </li>
               <li>
-                <a th:onClick="adminAlert()">
+                <a th:onclick="adminAlert()">
                   MemberList
                 </a>
               </li>
               <li>
-                <a th:onClick="adminAlert()">
+                <a th:onclick="adminAlert()">
                   AddProduct
                 </a>
               </li>
               <li>
-                <a th:onClick="adminAlert()">
+                <a th:onclick="adminAlert()">
                   AddNotice
                 </a>
               </li>
@@ -229,7 +235,7 @@
     </div>
 
     <!-- container 2 -->
-    <div class="container bg-white border-2">
+    <div class="container bg-white">
       <div class="row d-row-center p-10">
         <!-- logo -->
         <div class="col-4 col-sm-2 col-md-2 col-lg-2 col-xl-2">
@@ -265,7 +271,7 @@
               </li>
               <li th:if="${session.member_id == null}">
                 <a
-                  th:onClick="return sessionAlert()"
+                  th:onclick="return sessionAlert()"
                   class="black hover"
                 >
                   Orders
@@ -323,7 +329,7 @@
               <option value="details">상세정보</option>
             </select>
             <input
-              type="search"
+              th:type="search"
               th:id="keyword"
               th:name="keyword"
               placeholder="상품 검색"
@@ -344,13 +350,13 @@
 
     <!-- hidden -->
     <input
-      type="hidden"
+      th:type="hidden"
       th:id="sessionId"
       th:name="sessionId"
       th:value="${session.member_id}"
     />
     <input
-      type="hidden"
+      th:type="hidden"
       th:id="memberNumber"
       th:name="memberNumber"
       th:value="${session.member_number}"

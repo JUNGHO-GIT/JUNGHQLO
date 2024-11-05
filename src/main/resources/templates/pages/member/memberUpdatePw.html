@@ -15,40 +15,75 @@
   <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-user-cog', text1='Member', text2='Update Pw')}" />
 
   <!-- main -->
-  <main class="container">
+  <main class="container px-30">
     <div class="row">
-      <div class="col-lg-6 col-md-6">
+      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
         <!-- form -->
         <form method="POST" onsubmit="return updateMemberPw()">
-          <h6 class="checkout-title">비밀번호 변경</h6>
-          <!-- pw -->
-          <div class="row">
+          <!-- title -->
+          <div class="row d-row-center mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="checkout-input">
-                <p class="p">비밀번호 <span>*</span></p>
-                <input type="text" th:id="member_pw" th:name="member_pw" placeholder="변경할 비밀번호를 입력하세요"/>
-              </div>
-            </div>
-          </div><br>
-          <!-- pw -->
-          <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="checkout-input">
-                <p class="p">비밀번호 확인<span>*</span></p>
-                <input type="password" th:id="member_pw2" th:name="member_pw2" placeholder="변경할 비밀번호를 다시 입력하세요"/>
+              <div class="fs-1-8rem fw-800 light-black">
+                비밀번호 변경
               </div>
             </div>
           </div>
+          <!-- pw -->
+          <div class="row mb-20">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="d-row-left mb-10">
+                <div class="fs-0-9rem fw-800 me-5">
+                  비밀번호
+                </div>
+                <div class="fs-0-9rem fw-800 burgundy">
+                  *
+                </div>
+              </div>
+              <input
+                required
+                th:type="password"
+                th:id="member_pw"
+                th:name="member_pw"
+                placeholder="변경할 비밀번호를 입력하세요"
+                class="form-control"
+              />
+            </div>
+          </div>
+          <!-- pw confirm -->
+          <div class="row mb-20">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="d-row-left mb-10">
+                <div class="fs-0-9rem fw-800 light-black">
+                  비밀번호 확인
+                </div>
+                <div class="fs-0-9rem fw-800 burgundy">
+                  *
+                </div>
+              </div>
+              <input
+                required
+                th:type="password"
+                th:id="member_pw2"
+                th:name="member_pw2"
+                placeholder="변경할 비밀번호를 다시 입력하세요"
+                class="form-control"
+              />
+            </div>
+          </div>
+          <!-- hr -->
+          <hr class="mt-20 mb-20" />
           <!-- button -->
-          <div class="row">
-            <div class="col-lg-12 mt-3">
-              <button type="submit" class="jungho-button">비밀번호 변경</button>
+          <div class="row mb-20">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <button
+                th:type="submit"
+                class="btn btn-dark w-100p"
+              >
+                비밀번호 변경
+              </button>
             </div>
           </div>
         </form>
-      </div>
-      <div class="col-lg-6 col-md-6 col-sm-12">
-        <div th:replace="components/slider :: slider"></div>
       </div>
     </div>
   </main>

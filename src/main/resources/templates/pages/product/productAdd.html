@@ -15,43 +15,48 @@
   <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-shopping-bag', text1='Shop', text2='Add')}" />
 
   <!-- main -->
-  <main class="container">
+  <main class="container px-30">
+    <div class="row">
+      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
     <!-- form -->
-    <form th:action="@{/product/addProduct}" method="POST" enctype="multipart/form-data">
+    <form th:action="@{/product/addProduct}" method="POST" encth:type="multipart/form-data">
       <div class="row">
-        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12">
-          <h6 class="checkout-title">상품 등록</h6>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+
+          <div class="row d-row-center mb-20">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="fs-1-8rem fw-800 light-black">상품 등록</h6>
           <div class="row">
             <!-- name -->
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 col-6">
+            <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
               <div class="checkout-input">
                 <p class="p">상품명<span>*</span></p>
-                <input type="text" placeholder="Name" th:name="product_name" th:id="product_name"/>
+                <input th:type="text" placeholder="Name" th:name="product_name" th:id="product_name"/>
               </div>
             </div>
             <!-- price -->
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 col-6">
+            <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
               <div class="checkout-input">
                 <p class="p">상품 가격<span>*</span></p>
-                <input type="text" placeholder="Price" th:name="product_price" th:id="product_price"/>
+                <input th:type="text" placeholder="Price" th:name="product_price" th:id="product_price"/>
               </div>
             </div>
             <!-- stock -->
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 col-6">
+            <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
               <div class="checkout-input">
                 <p class="p"> 상품 수량<span>*</span></p>
-                <input type="text" placeholder="Stock" th:id="product_stock" th:name="product_stock"/>
+                <input th:type="text" placeholder="Stock" th:id="product_stock" th:name="product_stock"/>
               </div>
             </div>
             <!-- company -->
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 col-6">
+            <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
               <div class="checkout-input">
                 <p class="p"> 제조사<span>*</span></p>
-                <input type="text" placeholder="Company" th:id="product_company" th:name="product_company"/>
+                <input th:type="text" placeholder="Company" th:id="product_company" th:name="product_company"/>
               </div>
             </div>
             <!-- category -->
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 col-6">
+            <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
               <div class="checkout-input">
                 <p class="p">카테고리<span>*</span></p>
                 <select th:id="product_category" th:name="product_category">
@@ -66,7 +71,7 @@
               </div>
             </div>
             <!-- origin -->
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 col-6">
+            <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
               <div class="checkout-input">
                 <p class="p">원산지<span>*</span></p>
                 <select placeholder="Origin" th:id="product_origin" th:name="product_origin" required>
@@ -81,7 +86,7 @@
           </div>
           <div class="row">
             <!-- details -->
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
                 <p class="p">상품 상세설명<span>*</span></p>
                 <textarea class="checkout-input-textarea" placeholder="Details" th:id="product_details" th:name="product_details"></textarea>
@@ -90,7 +95,7 @@
           </div>
           <div class="row mb-5">
             <!-- existing image 1 -->
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-6">
+            <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">
               <div class="checkout-input">
                 <div class="previewExisting-group">
                   <p class="p">기존 이미지<span>*</span></p>
@@ -99,11 +104,11 @@
               </div>
             </div>
             <!-- product image 1 -->
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-6">
+            <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">
               <div class="checkout-input">
                 <div class="previewMini-group">
                   <p class="p"><label for="imageFile1">상품 이미지<span>*</span></label></p>
-                  <input type="file" id="imageFile1" onchange="junghoPreview(1)" class="imageFile" name="product_imgsFile1"/>
+                  <input th:type="file" id="imageFile1" onchange="junghoPreview(1)" class="imageFile" name="product_imgsFile1"/>
                   <div class="imageMiniLoader" id="imageMiniLoader1"></div>
                   <img class="imageMiniBox" id="imageMiniBox1"/>
                 </div>
@@ -112,10 +117,10 @@
           </div>
         </div>
         <!-- preview -->
-        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 col-12">
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
           <div class="row">
             <!-- preview image -->
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="previewImage-group">
                 <h4 class="p"><i class="fa fa-image"></i>&nbsp;Preview</h4>
                 <hr>
@@ -126,13 +131,13 @@
           </div>
           <div class="row">
             <!-- button -->
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="previewButton-group">
-                <button class="jungho-button" id="resetButton" type="reset"
-                th:onClick="window.location.reload()">새로고침</button>
-                <button class="jungho-button" id="submitButton" type="submit"
-                th:onClick="return addProduct()">등록하기</button>
-                <button type="button" class="jungho-button" th:onClick="'window.location.href=\'' + @{/} + '\''"> 홈으로 </button>
+                <button class="jungho-button" id="resetButton" th:type="reset"
+                th:onclick="window.location.reload()">새로고침</button>
+                <button class="jungho-button" id="submitButton" th:type="submit"
+                th:onclick="return addProduct()">등록하기</button>
+                <button th:type="button" class="jungho-button" th:onclick="'window.location.href=\'' + @{/} + '\''"> 홈으로 </button>
               </div>
             </div>
           </div>

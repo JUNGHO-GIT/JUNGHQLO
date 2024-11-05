@@ -15,12 +15,14 @@
   <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-credit-card', text1='Orders', text2='Fail')}" />
 
   <!-- main -->
-  <main class="container">
+  <main class="container px-30">
+    <div class="row">
+      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
     <div class="row jungho-center">
       <div class="col-lg-6 col-md-6">
         <div class="checkout-order">
           <h4 class="order-title">주문이 실패하였습니다.</h4>
-          <button type="button" class="jungho-button" th:onClick="'window.location.href=\'' + @{/} + '\''"><i class="fa fa-barcode fa-lg"></i>&nbsp;홈으로
+          <button th:type="button" class="jungho-button" th:onclick="'window.location.href=\'' + @{/} + '\''"><i class="fa fa-barcode fa-lg"></i>&nbsp;홈으로
           </button>
         </div>
       </div>

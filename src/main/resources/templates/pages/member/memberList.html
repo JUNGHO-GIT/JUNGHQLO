@@ -42,9 +42,9 @@
               <option value="id">아이디</option>
               <option value="name">이름</option>
             </select>
-            <input class="form-control ft-7 fw-7 me-1 searchBar" type="search" th:id="keyword" placeholder="search" th:name="keyword" required/>
+            <input class="form-control ft-7 fw-7 me-1 searchBar" th:type="search" th:id="keyword" placeholder="search" th:name="keyword" required/>
             <i class="fas fa-search fa-lg" th:id="searchIcon"></i>
-            <button type="submit" id="hiddenSubmit" class="hiddenSubmit"></button>
+            <button th:type="submit" id="hiddenSubmit" class="hiddenSubmit"></button>
           </div>
         </form>
       </div>
@@ -96,7 +96,7 @@
                 <!-- member button -->
                 <div class="col-lg-12 md-12 sm-12">
                   <div class="jungho-center">
-                    <button type="button" class="jungho-button" th:onClick="'window.location.href=\'' + @{/} + '\''"> 홈으로 </button>
+                    <button th:type="button" class="jungho-button" th:onClick="'window.location.href=\'' + @{/} + '\''"> 홈으로 </button>
                   </div>
                 </div>
               </div>

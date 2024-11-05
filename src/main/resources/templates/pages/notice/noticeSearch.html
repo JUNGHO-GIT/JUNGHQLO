@@ -15,7 +15,9 @@
   <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-bell', text1='Notice', text2='List')}" />
 
   <!-- main -->
-  <main class="container">
+  <main class="container px-30">
+    <div class="row">
+      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
     <div class="row mb-3 jungho-inline">
       <div class="col-lg-6 col-md-6 col-sm-6 col-6">
         <div class="jungho-left">
@@ -41,9 +43,9 @@
               <option value="title">제목</option>
               <option value="contents">내용</option>
             </select>
-            <input class="form-control ft-7 fw-7 me-1 searchBar" type="search" th:id="keyword" placeholder="search" th:name="keyword" required/>
+            <input class="form-control ft-7 fw-7 me-1 searchBar" th:type="search" th:id="keyword" placeholder="search" th:name="keyword" required/>
             <i class="fas fa-search fa-lg" th:id="searchIcon"></i>
-            <button type="submit" id="hiddenSubmit" class="hiddenSubmit"></button>
+            <button th:type="submit" id="hiddenSubmit" class="hiddenSubmit"></button>
           </div>
         </form>
       </div>
@@ -93,10 +95,10 @@
                 <!-- notice button -->
                 <div class="col-lg-12 md-12 sm-12">
                   <div class="jungho-center">
-                    <button type="button" class="jungho-button" th:if="${session.member_id != null}" th:onClick="'window.location.href=\'' + @{/notice/addNotice} + '\''">
+                    <button th:type="button" class="jungho-button" th:if="${session.member_id != null}" th:onclick="'window.location.href=\'' + @{/notice/addNotice} + '\''">
                       작성하기
                     </button>
-                    <button type="button" class="jungho-button" th:if="${session.member_id == null}" th:onClick="return sessionAlert()">
+                    <button th:type="button" class="jungho-button" th:if="${session.member_id == null}" th:onclick="return sessionAlert()">
                       작성하기
                     </button>
                   </div>

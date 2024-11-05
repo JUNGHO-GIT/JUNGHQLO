@@ -15,29 +15,34 @@
   <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-shopping-bag', text1='Shop', text2='Delete')}" />
 
   <!-- main -->
-  <main class="container">
-    <form th:action="@{/product/deleteProduct}" method="POST" enctype="multipart/form-data" onsubmit="return deleteCheck()">
+  <main class="container px-30">
+    <div class="row">
+      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
+    <form th:action="@{/product/deleteProduct}" method="POST" encth:type="multipart/form-data" onsubmit="return deleteCheck()">
 
       <!-- hidden -->
-      <input type="hidden" th:name="product_number" th:value="${productModel.product_number}" th:id="product_number"/>
-      <input type="hidden" th:name="stripe_id"th:value="${productModel.stripe_id}" th:id="stripe_id"/>
-      <input type="hidden" th:name="stripe_price" th:value="${productModel.stripe_price}" th:id="stripe_price"/>
+      <input th:type="hidden" th:name="product_number" th:value="${productModel.product_number}" th:id="product_number"/>
+      <input th:type="hidden" th:name="stripe_id"th:value="${productModel.stripe_id}" th:id="stripe_id"/>
+      <input th:type="hidden" th:name="stripe_price" th:value="${productModel.stripe_price}" th:id="stripe_price"/>
 
       <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6">
-          <h6 class="checkout-title">상품 삭제</h6>
+        <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+          <!-- title -->
+          <div class="row d-row-center mb-20">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="fs-1-8rem fw-800 light-black">상품 삭제</h6>
           <!-- name -->
           <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
                 <p class="p">상품명<span>*</span></p>
-                <input type="text" placeholder="Name" th:name="product_name" th:id="product_name" th:value="${productModel.product_name}" disabled readonly/>
+                <input th:type="text" placeholder="Name" th:name="product_name" th:id="product_name" th:value="${productModel.product_name}" disabled readonly/>
               </div>
             </div>
           </div>
           <!-- detail -->
           <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
                 <p class="p"> 상품 설명<span>*</span></p>
                 <textarea placeholder="Details" th:id="product_details" th:name="product_details" th:text="${productModel.product_details}" disabled readonly>
@@ -47,30 +52,30 @@
           </div>
           <!-- price -->
           <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-4">
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
               <div class="checkout-input">
                 <p class="p"> 상품 가격<span>*</span></p>
-                <input type="text" placeholder="Price" th:id="product_price" th:name="product_price" th:value="${productModel.product_price}"/>
+                <input th:type="text" placeholder="Price" th:id="product_price" th:name="product_price" th:value="${productModel.product_price}"/>
               </div>
             </div>
             <!-- stock -->
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-4">
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
               <div class="checkout-input">
                 <p class="p"> 상품 수량<span>*</span></p>
-                <input type="text" placeholder="Stock" th:id="product_stock" th:name="product_stock" th:value="${productModel.product_stock}" disabled readonly/>
+                <input th:type="text" placeholder="Stock" th:id="product_stock" th:name="product_stock" th:value="${productModel.product_stock}" disabled readonly/>
               </div>
             </div>
             <!-- company -->
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-4">
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
               <div class="checkout-input">
                 <p class="p"> 상품 제조사<span>*</span></p>
-                <input type="text" placeholder="Company" th:id="product_company" th:name="product_company" th:value="${productModel.product_company}" disabled readonly/>
+                <input th:type="text" placeholder="Company" th:id="product_company" th:name="product_company" th:value="${productModel.product_company}" disabled readonly/>
               </div>
             </div>
           </div>
           <div class="row">
             <!-- category -->
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 col-6">
+            <div class="class="col-6 col-sm-3 col-md-3 col-lg-3 col-xl-3">
               <div class="checkout-input">
                 <p class="p">카테고리<span>*</span></p>
                 <select th:id="product_category" th:name="product_category" disabled readonly>
@@ -86,10 +91,10 @@
               </div>
             </div>
             <!-- origin -->
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 col-6">
+            <div class="class="col-6 col-sm-3 col-md-3 col-lg-3 col-xl-3">
               <div class="checkout-input">
                 <p class="p">원산지<span>*</span></p>
-                <select type="text" placeholder="Origin" th:id="product_origin" th:name="product_origin" disabled readonly>
+                <select th:type="text" placeholder="Origin" th:id="product_origin" th:name="product_origin" disabled readonly>
                   <option selected th:text="${productModel.product_origin}"></option>
                   <option value="대한민국">대한민국</option>
                   <option value="중국">중국</option>
@@ -99,31 +104,31 @@
               </div>
             </div>
             <!-- select 1 -->
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 col-6">
+            <div class="class="col-6 col-sm-3 col-md-3 col-lg-3 col-xl-3">
               <div class="checkout-input">
                 <div class="previewSelect-group">
                   <p class="p">상품 이미지1<span>*</span></p>
                   <label for="imageFile1">선택</label>
-                  <input type="file" th:id="imageFile1" onchange="junghoPreview(1)" class="imageFile" th:name="product_imgsFile1" disabled readonly>
+                  <input th:type="file" th:id="imageFile1" onchange="junghoPreview(1)" class="imageFile" th:name="product_imgsFile1" disabled readonly>
                 </div>
               </div>
             </div>
             <!-- select 2 -->
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 col-6">
+            <div class="class="col-6 col-sm-3 col-md-3 col-lg-3 col-xl-3">
               <div class="checkout-input">
                 <div class="previewSelect-group">
                   <p class="p">상품 이미지2<span>*</span></p>
                   <label for="imageFile2">선택</label>
-                  <input type="file" th:id="imageFile2" onchange="junghoPreview(2)" class="imageFile" th:name="product_imgsFile2" disabled readonly>
+                  <input th:type="file" th:id="imageFile2" onchange="junghoPreview(2)" class="imageFile" th:name="product_imgsFile2" disabled readonly>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <!-- preview -->
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-12">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
           <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="previewImage-group">
                 <h4><i class="fa fa-spinner"></i>&nbsp;Preview</h4>
                 <div class="imageLoader" id="imageLoader"></div>
@@ -132,25 +137,25 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4 col-4">
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
               <div class="previewMini-group">
                 <h6><i class="fa fa-spinner"></i>&nbsp;Image&nbsp;1</h6>
                 <div class="imageMiniLoader" id="imageMiniLoader1"></div>
                 <img class="imageMiniBox" id="imageMiniBox1" th:src="${productModel.product_imgsUrl1}"/>
               </div>
             </div>
-            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4 col-4">
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
               <div class="previewMini-group">
                 <h6><i class="fa fa-spinner"></i>&nbsp;Image&nbsp;2</h6>
                 <div class="imageMiniLoader" id="imageMiniLoader2"></div>
                 <img class="imageMiniBox" id="imageMiniBox2" th:src="${productModel.product_imgsUrl2}"/>
               </div>
             </div>
-            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 col-4">
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
               <div class="previewButton-group">
-                <button class="jungho-button" id="resetButton" type="reset"
-                th:onClick="window.location.reload()">새로고침</button>
-                <button class="jungho-button" id="submitButton" type="submit">
+                <button class="jungho-button" id="resetButton" th:type="reset"
+                th:onclick="window.location.reload()">새로고침</button>
+                <button class="jungho-button" id="submitButton" th:type="submit">
                 삭제하기</button>
               </div>
             </div>

@@ -15,16 +15,18 @@
   <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-chalkboard-teacher', text1='Blog', text2='Update')}" />
 
   <!-- main -->
-  <main class="container">
-    <form th:action="@{/board/updateBoard}" method="POST" enctype="multipart/form-data">
+  <main class="container px-30">
+    <div class="row">
+      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
+    <form th:action="@{/board/updateBoard}" method="POST" encth:type="multipart/form-data">
 
       <!-- hidden -->
-      <input type="hidden" th:name="board_number" th:value="${boardModel.board_number}" th:id="board_number" readonly/>
-      <input type="hidden" th:name="board_writer" th:value="${boardModel.board_writer}" th:id="board_writer" readonly/>
-      <input type="hidden" th:name="board_count" th:value="${boardModel.board_count}" th:id="board_count" readonly/>
-      <input type="hidden" th:name="board_like" th:value="${boardModel.board_like}" th:id="board_like" readonly/>
-      <input type="hidden" th:name="board_dislike" th:value="${boardModel.board_dislike}" th:id="board_dislike" readonly/>
-      <input type="hidden" th:name="board_imgsUrl" th:value="${boardModel.board_imgsUrl}" th:id="board_imgsUrl" readonly/>
+      <input th:type="hidden" th:name="board_number" th:value="${boardModel.board_number}" th:id="board_number" readonly/>
+      <input th:type="hidden" th:name="board_writer" th:value="${boardModel.board_writer}" th:id="board_writer" readonly/>
+      <input th:type="hidden" th:name="board_count" th:value="${boardModel.board_count}" th:id="board_count" readonly/>
+      <input th:type="hidden" th:name="board_like" th:value="${boardModel.board_like}" th:id="board_like" readonly/>
+      <input th:type="hidden" th:name="board_dislike" th:value="${boardModel.board_dislike}" th:id="board_dislike" readonly/>
+      <input th:type="hidden" th:name="board_imgsUrl" th:value="${boardModel.board_imgsUrl}" th:id="board_imgsUrl" readonly/>
 
       <div class="row">
         <div class="col-lg-6 col-md-6">
@@ -34,7 +36,7 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
                 <p class="p">제목<span>*</span></p>
-                <input type="text" placeholder="Title" th:name="board_title" th:value="${boardModel.board_title}" th:id="board_title"/>
+                <input th:type="text" placeholder="Title" th:name="board_title" th:value="${boardModel.board_title}" th:id="board_title"/>
               </div>
             </div>
           </div>
@@ -60,11 +62,11 @@
               <div class="checkout-input">
                 <p class="p"> 게시물 이미지<span>*</span></p>
                 <label for="imageFile">선택하기</label>
-                <input type="file" th:id="imageFile" th:name="board_imgsFile"   style="display:none" class="imageFile" oninput="junghoPreview()"/>
+                <input th:type="file" th:id="imageFile" th:name="board_imgsFile"   style="display:none" class="imageFile" oninput="junghoPreview()"/>
               </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3 mt-3">
-              <button type="submit" th:onClick="return updateCheck()" class="jungho-button">
+              <button th:type="submit" th:onclick="return updateCheck()" class="jungho-button">
               수정하기
               </button>
             </div>
