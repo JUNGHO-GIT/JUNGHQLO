@@ -1,10 +1,5 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-  lang="en"
->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
   <!-- head -->
   <th:block th:replace="~{layouts/head :: head}" />
 
@@ -158,7 +153,7 @@
           <div class="col-lg-6 col-md-6 col-sm-6 col-6">
             <div class="jungho-left">
               <i class="fas fa-sort-amount-down fa-lg"></i>&nbsp;&nbsp;
-              <form th:action="@{/product/getProductList}" method="GET" onchange="this.submit()" th:id="searchForm">
+              <form th:action="@{/product/getProductList}" th:method="|GET|" onchange="this.submit()" th:id="|searchForm|">
                 <select name="sort" class="form-select">
                   <option value="default">정렬</option>
                   <option value="nameASC">이름순(오름차순)</option>
@@ -173,15 +168,15 @@
           </div>
           <!-- search -->
           <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-            <form id="searchForm" method="GET" th:action="@{/product/searchProduct}">
+            <form id="searchForm" th:method="|GET|" th:action="@{/product/searchProduct}">
               <div class="jungho-right">
-                <select class="ft-5 fw-8 ms-2 searchSelect" th:name="searchType" th:id="searchType">
+                <select class="ft-5 fw-8 ms-2 searchSelect" th:name="|searchType" th:id="searchType|">
                   <option value="name">Name</option>
                   <option value="details">Details</option>
                 </select>
-                <input class="form-control ft-7 fw-7 me-1 searchBar" th:type="search" th:id="keyword" placeholder="search" th:name="keyword" required/>
-                <i class="fas fa-search fa-lg" th:id="searchIcon"></i>
-                <button th:type="submit" id="hiddenSubmit" class="hiddenSubmit"></button>
+                <input class="form-control ft-7 fw-7 me-1 searchBar" th:type="search" th:id="|keyword" th:placeholder="|search" th:name=|"keyword|" required/>
+                <i class="fas fa-search fa-lg" th:id="|searchIcon|"></i>
+                <button th:type="|submit|" id="hiddenSubmit" class="hiddenSubmit"></button>
               </div>
             </form>
           </div>
@@ -210,15 +205,15 @@
                 <div class="product-item-text">
                   <div class="jungho-inline">
                     <!-- 이름 -->
-                    <h6 th:value="product_name" th:id="product_name" th:href="@{|/product/getProductDetails?product_number=${product.product_number}|}" th:text="${product.product_name}"></h6>
+                    <h6 th:value="product_name" th:id="|product_name" th:href="@{|/product/getProductDetails?product_number=${product.product_number}|}" th:text="${product.product_name}|"></h6>
                     <!-- 구매 -->
                     <a th:href="@{|/product/getProductDetails?product_number=${product.product_number}|}" class="add-cart">+ 구매</a>
                     <!-- 회사 -->
-                    <h6 th:text="${product.product_company}" th:id="product_company" th:value="product_company"></h6>
+                    <h6 th:text="${product.product_company}" th:id="|product_company" th:value="product_company|"></h6>
                   </div>
                   <div class="jungho-inline">
                     <!-- 가격 -->
-                    <h5 th:text="'₩  ' +${#numbers.formatInteger(product.product_price, 3, 'COMMA')}" th:id="product_price" th:value="product_price"></h5>
+                    <h5 th:text="'₩  ' +${#numbers.formatInteger(product.product_price, 3, 'COMMA')}" th:id="|product_price" th:value="product_price|"></h5>
                   </div>
                 </div>
               </div>

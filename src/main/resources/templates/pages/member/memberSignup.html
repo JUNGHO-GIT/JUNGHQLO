@@ -1,11 +1,7 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-  lang="en"
->
-	<!-- head -->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+  <!-- head -->
 	<th:block th:replace="~{layouts/head :: head}" />
 
 	<!-- header -->
@@ -19,7 +15,10 @@
     <div class="row">
       <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
         <!-- form -->
-        <form th:action="@{/member/addMember}" method="POST" onsubmit="return addMember()">
+        <form
+          th:method="|POST|"
+          th:onsubmit="|event.preventDefault(); addMember()|"
+        >
           <!-- title -->
           <div class="row d-row-center mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -40,13 +39,11 @@
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <input
-                required
-                th:type="text"
-                th:id="member_id"
-                th:name="member_id"
-                placeholder="아이디를 입력하세요"
-                class="form-control"
-                onblur="checkMemberId()"
+                th:type="|text|"
+                th:id="|member_id|"
+                th:name="|member_id|"
+                th:class="|form-control|"
+                th:placeholder="|아이디를 입력하세요|"
               />
             </div>
           </div>
@@ -62,12 +59,11 @@
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <input
-                required
-                th:type="password"
-                th:id="member_pw"
-                th:name="member_pw"
-                placeholder="비밀번호를 입력하세요"
-                class="form-control"
+                th:type="|password|"
+                th:id="|member_pw|"
+                th:name="|member_pw|"
+                th:class="|form-control|"
+                th:placeholder="|비밀번호를 입력하세요|"
               />
             </div>
           </div>
@@ -83,12 +79,11 @@
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <input
-                required
-                th:type="text"
-                th:id="member_name"
-                th:name="member_name"
-                placeholder="이름을 입력하세요"
-                class="form-control"
+                th:type="|text|"
+                th:id="|member_name|"
+                th:name="|member_name|"
+                th:class="|form-control|"
+                th:placeholder="|이름을 입력하세요|"
               />
             </div>
           </div>
@@ -104,12 +99,11 @@
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <input
-                required
                 th:type="number"
-                th:id="member_phone"
-                th:name="member_phone"
-                placeholder="숫자만 입력해주세요"
-                class="form-control"
+                th:id="|member_phone|"
+                th:name="|member_phone|"
+                th:class="|form-control|"
+                th:placeholder="|숫자만 입력해주세요|"
               />
             </div>
           </div>
@@ -127,16 +121,19 @@
               <div class="row">
                 <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 d-col-center">
                   <input
-                    required
-                    th:type="text"
-                    th:id="member_email1"
-                    th:name="member_email1"
-                    placeholder="이메일을 입력하세요"
-                    class="form-control"
+                    th:type="|text|"
+                    th:id="|member_email1|"
+                    th:name="|member_email1|"
+                    th:class="|form-control|"
+                    th:placeholder="|이메일을 입력하세요|"
                   />
                 </div>
                 <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 d-col-center">
-                  <select class="form-select" th:name="email_back" id="email_back">
+                  <select
+                    th:id="|email_back|"
+                    th:name="|email_back|"
+                    th:class="|form-select|"
+                  >
                     <option value="@naver.com">@naver.com</option>
                     <option value="@gmail.com">@gmail.com</option>
                     <option value="@daum.net">@daum.net</option>
@@ -145,9 +142,9 @@
                 </div>
                 <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 d-col-center">
                   <button
-                    th:type="button"
-                    class="btn btn-dark btn-sm"
-                    onclick="return sendEmail()"
+                    th:type="|button|"
+                    th:class="|btn btn-dark btn-sm|"
+                    th:onclick="|return sendEmail()|"
                   >
                     전송
                   </button>
@@ -171,25 +168,26 @@
               <div class="row">
                 <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 d-col-center">
                   <input
-                    th:type="text"
-                    th:id="email_code"
-                    th:name="email_code"
-                    placeholder="인증번호"
-                    class="form-control"
+                    th:type="|text|"
+                    th:id="|email_code|"
+                    th:name="|email_code|"
+                    th:class="|form-control|"
+                    th:placeholder="|인증번호|"
                   />
                 </div>
                 <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 d-col-center">
                   <input
-                    th:type="hidden"
-                    th:id="email_verified"
-                    th:name="email_verified"
-                    value="false"
+                    th:type="|hidden|"
+                    th:id="|email_verified|"
+                    th:name="|email_verified|"
+                    th:value="|false|"
                   />
                   <button
-                    th:type="button"
-                    class="btn btn-dark btn-sm"
-                    onclick="return checkEmail()"
-                    th:id="email_button"
+                    th:type="|button|"
+                    th:id="|email_button|"
+                    th:name="|email_button|"
+                    th:class="|btn btn-dark btn-sm|"
+                    th:onclick="|return checkEmail()|"
                   >
                     확인
                   </button>
@@ -209,13 +207,13 @@
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <input
-                th:type="text"
-                th:id="member_address1"
-                th:name="member_address1"
-                placeholder="주소를 입력하세요"
-                class="form-control"
-                onclick="openDaumPostcode()"
                 readonly
+                th:type="|text|"
+                th:id="|member_address1|"
+                th:name="|member_address1|"
+                th:class="|form-control|"
+                th:onclick="|openDaumPostcode()|"
+                th:placeholder="|주소를 입력하세요|"
               />
             </div>
           </div>
@@ -231,11 +229,11 @@
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <input
-                th:type="text"
-                th:id="member_address2"
-                th:name="member_address2"
-                placeholder="상세주소"
-                class="form-control"
+                th:type="|text|"
+                th:id="|member_address2|"
+                th:name="|member_address2|"
+                th:class="|form-control|"
+                th:placeholder="|상세주소|"
               />
             </div>
           </div>
@@ -252,23 +250,25 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left ms-10">
               <input
                 th:type="checkbox"
-                th:id="member_agree"
-                th:name="member_agree"
-                value="1"
+                th:id="|member_agree|"
+                th:name="|member_agree|"
                 class="form-check-inline"
+                th:value="|1|"
               />
               <label for="member_agree" class="form-check-inline">
                 약관에 동의합니다.
               </label>
             </div>
           </div>
+          <!-- hr -->
           <hr class="mt-20 mb-20" />
           <!-- button -->
           <div class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <button
-                th:type="submit"
-                class="btn btn-dark w-100p"
+                th:type="|submit|"
+                th:class="|btn btn-dark w-100p|"
+                th:onclick="|return checkMemberId()|"
               >
                 회원 가입
               </button>

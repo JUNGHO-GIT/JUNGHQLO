@@ -124,7 +124,7 @@ function productCheck() {
   }
   else {
     alert("상품 등록이 취소되었습니다.");
-    window.location.href = `/${TITLE}`;
+    location.href = `/${TITLE}`;
     return false;
   }
 };

@@ -1,10 +1,5 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-  lang="en"
->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
   <!-- head -->
   <th:block th:replace="~{layouts/head :: head}" />
 
@@ -18,14 +13,14 @@
   <main class="container px-30">
     <div class="row">
       <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
-    <form th:action="@{/qna/deleteQna}" method="POST" encth:type="multipart/form-data">
+    <form th:action="@{/qna/deleteQna}" th:method="|POST|" enctype="multipart/form-data">
 
       <!-- hidden -->
-      <input th:type="hidden" th:name="qna_number" th:value="${qnaModel.qna_number}" th:id="qna_number"/>
-      <input th:type="hidden" th:name="qna_writer" th:value="${qnaModel.qna_writer}" th:id="qna_writer" disabled readonly>
-      <input th:type="hidden" th:name="qna_count" th:value="${qnaModel.qna_count}" th:id="qna_count" disabled readonly>
-      <input th:type="hidden" th:name="qna_like" th:value="${qnaModel.qna_like}" th:id="qna_like" disabled readonly>
-      <input th:type="hidden" th:name="qna_dislike" th:value="${qnaModel.qna_dislike}" th:id="qna_dislike" disabled readonly>
+      <input th:type="|hidden|" th:name="|qna_number" th:value="${qnaModel.qna_number}" th:id="qna_number|"/>
+      <input th:type="|hidden|" th:name="|qna_writer" th:value="${qnaModel.qna_writer}" th:id="qna_writer|" disabled readonly>
+      <input th:type="|hidden|" th:name="|qna_count" th:value="${qnaModel.qna_count}" th:id="qna_count|" disabled readonly>
+      <input th:type="|hidden|" th:name="|qna_like" th:value="${qnaModel.qna_like}" th:id="qna_like|" disabled readonly>
+      <input th:type="|hidden|" th:name="|qna_dislike" th:value="${qnaModel.qna_dislike}" th:id="qna_dislike|" disabled readonly>
 
       <div class="row">
         <div class="col-lg-6 col-md-6">
@@ -38,7 +33,7 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
                 <p class="p">제목<span>*</span></p>
-                <input th:type="text" placeholder="Title" th:name="qna_title" th:value="${qnaModel.qna_title}" th:id="qna_title" disabled readonly>
+                <input th:type="|text|" th:placeholder="|Title" th:name="|qna_title" th:value="${qnaModel.qna_title}" th:id=|"qna_title|" disabled readonly>
               </div>
             </div>
           </div>
@@ -47,7 +42,7 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
                 <p class="p">내용<span>*</span></p>
-                <textarea placeholder="Contents" th:id="qna_contents" th:name="qna_contents" th:text="${qnaModel.qna_contents}" disabled readonly>
+                <textarea th:placeholder="|Contents" th:id="|qna_contents" th:name="|qna_contents|" th:text=|"${qnaModel.qna_contents}|" disabled readonly>
                 </textarea>
               </div>
             </div>
@@ -57,15 +52,15 @@
             <div class="col-lg-5">
               <div class="checkout-input">
                 <p class="p">답변상태<span>*</span></p>
-                <input th:type="hidden" th:name="qna_answer1" th:value="${qnaModel.qna_answer1}" th:id="qna_answer1" disabled readonly/>
-                <input th:type="text" th:name="qna_answer2" th:value="${qnaModel.qna_answer2}" th:id="qna_answer2" disabled readonly/>
+                <input th:type="|hidden|" th:name="|qna_answer1" th:value="${qnaModel.qna_answer1}" th:id="qna_answer1|" disabled readonly/>
+                <input th:type="|text|" th:name="|qna_answer2" th:value="${qnaModel.qna_answer2}" th:id="qna_answer2|" disabled readonly/>
               </div>
             </div>
             <!-- category -->
             <div class="col-lg-3">
               <div class="checkout-input">
                 <p class="p">카테고리<span>*</span></p>
-                <select th:type="text" th:id="qna_category" th:name="qna_category" disabled readonly>
+                <select th:type="|text|" th:id="|qna_category" th:name=|"|qna_category|" disabled readonly>
                   <option selected th:text="${qnaModel.qna_category}"></option>
                   <option value="상품문의">상품문의</option>
                   <option value="교환문의">교환문의</option>
@@ -80,7 +75,7 @@
               <div class="checkout-input">
                 <p class="p"> 게시물 이미지<span>*</span></p>
                 <label for="qna_imgsFile">선택하기</label>
-                <input th:type="file" th:id="qna_imgsFile" th:name="qna_imgsFile"  style="display:none" class="imageFile" oninput="junghoPreview()"
+                <input th:type="file" th:id="|qna_imgsFile" th:name="|qna_imgsFile"  style="display:none" class="imageFile" oninput=|"junghoPreview()|"
                 disabled readonly>
               </div>
             </div>
@@ -90,11 +85,11 @@
             <div class="col-lg-5 col-md-5 col-sm-5">
               <div class="checkout-input">
               <p class="p">기존 이미지<span>*</span></p>
-              <img th:src="${qnaModel.qna_imgsUrl}" style="width: 150px; height: 150px; border-radius: 10px; box-shadow: 0px 10px 10px rgba(0, 0.5, 0.5, 0.5)()" th:id="existingImage" th:name="existingImage" th:value="existingImage"/>
+              <img th:src="${qnaModel.qna_imgsUrl}" style="width: 150px; height: 150px; border-radius: 10px; box-shadow: 0px 10px 10px rgba(0, 0.5, 0.5, 0.5)()" th:id="|existingImage" th:name="|existingImage" th:value=|"existingImage|"/>
               </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3 mt-3">
-              <button th:type="submit" th:onclick="return deleteCheck()" class="jungho-button">
+              <button th:type="|submit|" th:onclick="return deleteCheck()" class="jungho-button">
               삭제하기
               </button>
             </div>
@@ -105,8 +100,8 @@
           <div class="preview">
             <div class="border-dark justify-content-center">
               <h4 class="order-title mb-4"><i class="fa fa-spinner"></i>&nbsp;Preview</h4>
-              <div class="imageLoader" th:id="imageLoader"></div>
-              <img class="imageBox" th:id="imageBox"/>
+              <div class="imageLoader" th:id="|imageLoader|"></div>
+              <img class="imageBox" th:id="|imageBox|"/>
             </div>
           </div>
         </div>

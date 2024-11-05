@@ -198,10 +198,10 @@ public class MemberController {
     String result = memberService.checkMemberId(member_id);
 
     if (result == null || result.equals("") || result =="0") {
-      return "0";
+      return "fail";
     }
     else {
-      return "1";
+      return "success";
     }
   }
 
@@ -220,20 +220,20 @@ public class MemberController {
     Integer member_number = memberService.getMemberNumber(member_id);
 
     if (result == null || result.equals("") || result =="0") {
-      return "0";
+      return "fail";
     }
     else {
       session.setAttribute("member_id", member_id);
       session.setAttribute("member_pw", member_pw);
       session.setAttribute("member_number", member_number);
-      return "1";
+      return "success";
     }
   }
 
   // 4-2. sendEmail (GET) ------------------------------------------------------------------------->
   @ResponseBody
   @GetMapping("/member/sendEmail")
-  public Integer sendEmail(
+  public String sendEmail(
     @RequestParam String member_email
   ) throws Exception {
 
@@ -244,17 +244,17 @@ public class MemberController {
     String result = emailHandler.sendEmailCode(receiveEmail, emailCode);
 
     if (result == emailCode) {
-      return 1;
+      return "success";
     }
     else {
-      return 0;
+      return "fail";
     }
   }
 
   // 4-3. checkEmail (GET) ------------------------------------------------------------------------>
   @ResponseBody
   @GetMapping("/member/checkEmail")
-  public Integer checkEmail(
+  public String checkEmail(
     @RequestParam String member_email,
     @RequestParam String email_code
   ) throws Exception {
@@ -262,10 +262,10 @@ public class MemberController {
     Integer result = emailHandler.checkEmailCode(member_email, email_code);
 
     if (result != null && result > 0) {
-      return 1;
+      return "success";
     }
     else {
-      return 0;
+      return "fail";
     }
   }
 
@@ -288,19 +288,20 @@ public class MemberController {
     String result = memberService.checkMemberIdPw(member_id, member_pw);
 
     if (result == null || result.equals("")) {
-      return "0";
+      return "fail";
     }
     else {
       session.setAttribute("member_id", member_id);
       session.setAttribute("member_pw", member_pw);
-      return "1";
+      return "success";
     }
   }
 
   // 4-2. logoutMember (GET) ---------------------------------------------------------------------->
   @ResponseBody
   @GetMapping("/member/logoutMember")
-  public void logoutMember(HttpSession session
+  public void logoutMember(
+    HttpSession session
   ) throws Exception {
 
     session.invalidate();
@@ -308,7 +309,10 @@ public class MemberController {
 
   // 5. updateMember (GET) ------------------------------------------------------------------------>
   @GetMapping("/member/updateMember")
-  public String updateMember(HttpSession session, Model model) throws Exception {
+  public String updateMember(
+    HttpSession session,
+    Model model
+  ) throws Exception {
 
     Integer member_number = (Integer) session.getAttribute("member_number");
 
@@ -319,7 +323,9 @@ public class MemberController {
 
   // 5. updateMember (POST) ----------------------------------------------------------------------->
   @PostMapping("/member/updateMember")
-  public String updateMember(Member member) throws Exception {
+  public String updateMember(
+    Member member
+  ) throws Exception {
 
     memberService.updateMember(member);
 
@@ -346,10 +352,10 @@ public class MemberController {
     Integer result = memberService.updateMemberPw(member_id, member_pw);
 
     if (result == null || result < 0) {
-      return "0";
+      return "fail";
     }
     else {
-      return "1";
+      return "success";
     }
   }
 
@@ -368,7 +374,7 @@ public class MemberController {
   // 6. deleteMember (POST) ----------------------------------------------------------------------->
   @ResponseBody
   @PostMapping("/member/deleteMember")
-  public Integer deleteMember (
+  public String deleteMember (
     @RequestParam String member_name,
     @RequestParam String member_id,
     @RequestParam String member_pw
@@ -377,10 +383,10 @@ public class MemberController {
     Integer result = memberService.deleteMember(member_name, member_id, member_pw);
 
     if (result == null || result == 0) {
-      return 0;
+      return "fail";
     }
     else {
-      return 1;
+      return "success";
     }
   }
 

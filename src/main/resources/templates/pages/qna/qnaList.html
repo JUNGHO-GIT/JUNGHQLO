@@ -1,10 +1,5 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-  lang="en"
->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
   <!-- head -->
   <th:block th:replace="~{layouts/head :: head}" />
 
@@ -25,7 +20,7 @@
       <div class="col-lg-6 col-md-6 col-sm-6 col-6">
         <div class="jungho-left">
           <i class="fas fa-sort-amount-down fa-lg"></i>&nbsp;&nbsp;
-          <form th:action="@{/qna/getQnaList}" method="GET" onchange="this.submit()">
+          <form th:action="@{/qna/getQnaList}" th:method="|GET|" onchange="this.submit()">
             <select name="sort" class="form-select">
               <option value="default">문의</option>
               <option value="goods">상품문의</option>
@@ -40,15 +35,15 @@
       </div>
       <!-- search -->
       <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-        <form id="searchForm" method="GET" th:action="@{/qna/searchQna}">
+        <form id="searchForm" th:method="|GET|" th:action="@{/qna/searchQna}">
           <div class="jungho-right">
-            <select class="ft-5 fw-8 ms-2 searchSelect" th:name="searchType" th:id="searchType">
+            <select class="ft-5 fw-8 ms-2 searchSelect" th:name="|searchType" th:id="searchType|">
               <option value="title">제목</option>
               <option value="contents">내용</option>
             </select>
-            <input class="form-control ft-7 fw-7 me-1 searchBar" th:type="search" th:id="keyword" placeholder="search" th:name="keyword" required/>
-            <i class="fas fa-search fa-lg" th:id="searchIcon"></i>
-            <button th:type="submit" id="hiddenSubmit" class="hiddenSubmit"></button>
+            <input class="form-control ft-7 fw-7 me-1 searchBar" th:type="search" th:id="|keyword" th:placeholder="|search" th:name=|"keyword|" required/>
+            <i class="fas fa-search fa-lg" th:id="|searchIcon|"></i>
+            <button th:type="|submit|" id="hiddenSubmit" class="hiddenSubmit"></button>
           </div>
         </form>
       </div>
@@ -76,17 +71,17 @@
                     </div>
                     <!-- title -->
                     <div class="junghoList-title">
-                      <a th:id="qna_title" th:value="qna_title" th:href="@{|/qna/getQnaDetails?qna_number=${qna.qna_number}|}" th:text="${qna.qna_title}"></a>
+                      <a th:id="|qna_title" th:value="qna_title" th:href="@{|/qna/getQnaDetails?qna_number=${qna.qna_number}|}" th:text="${qna.qna_title}|"></a>
                     </div>
                     <!-- content -->
                     <div class="junghoList-contents">
                       <span th:text="${#strings.abbreviate(qna.qna_contents, 20)}"
-                      th:id="qna_contents" th:value="qna_contents"></span>
+                      th:id="|qna_contents" th:value="qna_contents|"></span>
                     </div>
                     <!-- status -->
                     <div class="junghoList-answer1">
                       <i class="fa fa-eye"></i>&nbsp;
-                      <span th:text="${qna.qna_answer2}" th:id="qna_answer2" th:value="qna_answer2"></span>&nbsp;&nbsp;
+                      <span th:text="${qna.qna_answer2}" th:id="|qna_answer2" th:value="qna_answer2|"></span>&nbsp;&nbsp;
                     </div>
                     <!-- date -->
                     <div class="junghoList-date">
@@ -100,10 +95,10 @@
                 <!-- qna button -->
                 <div class="col-lg-12 md-12 sm-12">
                   <div class="jungho-center">
-                    <button th:type="button" class="jungho-button" th:if="${session.member_id != null}" th:onclick="'window.location.href=\'' + @{/qna/addQna} + '\''">
+                    <button th:type="|button|" class="jungho-button" th:if="${session.member_id != null}" th:onclick="'location.href=\'' + @{/qna/addQna} + '\''">
                       문의하기
                     </button>
-                    <button th:type="button" class="jungho-button" th:if="${session.member_id == null}" th:onclick="return sessionAlert()">
+                    <button th:type="|button|" class="jungho-button" th:if="${session.member_id == null}" th:onclick="return sessionAlert()">
                       문의하기
                     </button>
                   </div>

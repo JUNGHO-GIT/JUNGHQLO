@@ -1,22 +1,20 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-  lang="en"
->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
   <!-- footer -->
-  <footer th:fragment="footer" class="container bg-black mt-50 p-30">
+  <footer th:fragment="footer" th:class="|container-fluid bg-black mt-50 p-30|">
     <div class="row">
       <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
         <div class="row">
           <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-col-left">
             <img
               th:src="@{${STORAGE} + '/icon/logo.png'}"
-              loading="lazy"
-              alt="logo"
-              width="80px"
-              height="80px"
+              th:loading="|lazy|"
+              th:alt="|logo|"
+              th:width="|80px|"
+              th:height="|80px|"
+              th:class="|pointer|"
+              th:onclick="|location.href='@{/}'|"
             />
           </div>
           <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-col-left">

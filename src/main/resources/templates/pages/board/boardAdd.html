@@ -1,10 +1,5 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-  lang="en"
->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
   <!-- head -->
   <th:block th:replace="~{layouts/head :: head}" />
 
@@ -18,13 +13,13 @@
   <main class="container px-30">
     <div class="row">
       <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
-    <form th:action="@{/board/addBoard}" method="POST" encth:type="multipart/form-data">
+    <form th:action="@{/board/addBoard}" th:method="|POST|" enctype="multipart/form-data">
 
       <!-- hidden -->
-      <input th:type="hidden" th:id="board_writer" th:name="board_writer" th:value="${session.member_id}"/>
-      <input th:type="hidden" th:id="board_count" th:name="board_count" th:value="0"/>
-      <input th:type="hidden" th:id="board_like" th:name="board_like" th:value="0"/>
-      <input th:type="hidden" th:id="board_dislike" th:name="board_dislike" th:value="0"/>
+      <input th:type="|hidden|" th:id="|board_writer" th:name="|board_writer" th:value=|"${session.member_id}|"/>
+      <input th:type="|hidden|" th:id="|board_count" th:name="|board_count" th:value=|"0|"/>
+      <input th:type="|hidden|" th:id="|board_like" th:name="|board_like" th:value=|"0|"/>
+      <input th:type="|hidden|" th:id="|board_dislike" th:name="|board_dislike" th:value=|"0|"/>
 
       <!-- row 1 -->
       <div class="row">
@@ -43,14 +38,14 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
                 <p class="p">제목<span>*</span></p>
-                <input th:type="text" placeholder="Title" th:name="board_title" th:id="board_title"/>
+                <input th:type="|text|" th:placeholder="|Title" th:name="|board_title" th:id=|"board_title|"/>
               </div>
             </div>
             <!-- details -->
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
                 <p class="p">내용<span>*</span></p>
-                <textarea placeholder="Details" th:id="board_contents" th:name="board_contents"></textarea>
+                <textarea th:placeholder="|Details" th:id="|board_contents" th:name=|"board_contents|"></textarea>
               </div>
             </div>
           </div>
@@ -96,9 +91,9 @@
               <div class="previewButton-group">
                 <button class="jungho-button" id="resetButton" th:type="reset"
                 th:onclick="window.location.reload()">새로고침</button>
-                <button class="jungho-button" id="submitButton" th:type="submit"
+                <button class="jungho-button" id="submitButton" th:type="|submit|"
                 th:onclick="return addBoard()">등록하기</button>
-                <button th:type="button" class="jungho-button" th:onclick="'window.location.href=\'' + @{/} + '\''"> 홈으로 </button>
+                <button th:type="|button|" class="jungho-button" th:onclick="|location.href='@{/}'|"> 홈으로 </button>
               </div>
             </div>
           </div>

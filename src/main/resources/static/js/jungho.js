@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function() {
 **/
 function sessionAlert() {
   alert("로그인한 회원만 가능합니다.")
-  window.location.href = "/JUNGHQLO/member/loginMember";
+  location.href = `/${TITLE}/member/loginMember`;
   return false;
 };
 
@@ -47,7 +47,7 @@ function sessionAlert() {
 **/
 function adminAlert() {
   alert("관리자만 가능합니다.")
-  window.location.href = "/JUNGHQLO/member/loginMember";
+  location.href = `/${TITLE}/member/loginMember`;
   return false;
 };
 
@@ -69,7 +69,7 @@ function updateAlert() {
     return false;
   }
   else {
-    window.location.href = (
+    location.href = (
       `/JUNGHQLO/${preFix1}/update${preFix2}?${preFix1}_number=${uniqueNumber}`
     );
     return true;
@@ -108,7 +108,7 @@ function deleteAlert() {
     return false;
   }
   else {
-    window.location.href = (
+    location.href = (
       `/JUNGHQLO/${preFix1}/delete${preFix2}?${preFix1}_number=${uniqueNumber}`
     );
     return true;

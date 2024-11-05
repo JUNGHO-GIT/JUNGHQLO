@@ -1,10 +1,6 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-  lang="en"
->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
   <!-- head -->
   <th:block th:replace="~{layouts/head :: head}" />
 
@@ -57,7 +53,7 @@
                 <a class="add-cart" href="javascript:void(0)()">Modern Styles</a>
                 <h5>
                   <i class="fas fa-won-sign fa-xs"></i>
-                  <span th:id="'price-' + ${i}"></span>
+                  <span th:id="|'price-' + ${i}|"></span>
                 </h5>
                 <!-- color -->
                 <div class="product-color-select">
@@ -80,7 +76,7 @@
                 <a class="add-cart" href="javascript:void(0)()">Casual Styles</a>
                 <h5>
                   <i class="fas fa-won-sign fa-xs"></i>
-                  <span th:id="'price-' + ${i}"></span>
+                  <span th:id="|'price-' + ${i}|"></span>
                 </h5>
                 <!-- color -->
                 <div class="product-color-select">

@@ -1,10 +1,5 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-  lang="en"
->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
   <!-- head -->
   <th:block th:replace="~{layouts/head :: head}" />
 
@@ -72,16 +67,16 @@
           <form>
             <div class="row">
               <div class="col-lg-6">
-                <input th:type="text" id="contactName" placeholder="이름" style="caret-color: black()" class="fw-6" required/>
+                <input th:type="|text|" id="contactName" th:placeholder="|이름" style="caret-color: black()" class="fw-6|" required/>
               </div>
               <div class="col-lg-6">
-                <input th:type="tel" id="contactTel" placeholder="연락처" style="caret-color: black()" class="fw-6" required/>
+                <input th:type="tel" id="contactTel" th:placeholder="|연락처" style="caret-color: black()" class="fw-6|" required/>
               </div>
               <div class="col-lg-6">
-                <input th:type="email" id="contactEmail" placeholder="이메일" style="caret-color: black()" class="fw-6" required/>
+                <input th:type="|email|" id="contactEmail" th:placeholder="|이메일" style="caret-color: black()" class="fw-6|" required/>
               </div>
               <div class="col-lg-6 text-center">
-                <button th:type="submit" class="site-btn" onclick="return contactAlert(event)">
+                <button th:type="|submit|" class="site-btn" onclick="return contactAlert(event)">
                   상담 신청
                 </button>
               </div>

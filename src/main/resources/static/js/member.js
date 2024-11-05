@@ -154,7 +154,7 @@ function addMember() {
     return false;
   }
   alert("등록이 완료되었습니다.");
-  window.location.href = "/JUNGHQLO/member/loginMember";
+  location.href = `/${TITLE}/member/loginMember`;
   return true;
 };
 
@@ -169,7 +169,7 @@ function checkMemberId() {
     getById("member_id")?.focus();
     return false;
   }
-  else if (
+  if (
     getValue(getById("member_id")).length < 4 ||
     getValue(getById("member_id")).length > 12 ||
     !getValue(getById("member_id")).toString().match(/^[a-zA-Z0-9]+$/)
@@ -186,7 +186,7 @@ function checkMemberId() {
     * @param {any} responseText
     **/
     success: function (responseText) {
-      if (responseText == "1") {
+      if (responseText === "fail") {
         alert("이미 사용중인 아이디입니다.");
         getById("member_id")?.focus();
         return false;
@@ -236,10 +236,10 @@ function sendEmail() {
     * @param {any} response
     **/
     success: function (response) {
-      if (response == 1) {
+      if (response === "success") {
         alert("인증번호가 전송되었습니다.");
       }
-      else if (response == 0) {
+      else if (response === "fail") {
         alert("인증번호 전송에 실패했습니다.");
         setValue(getById("member_email"), "");
         getById("member_email")?.focus();
@@ -270,7 +270,7 @@ function checkEmail() {
     * @param {any} response
     **/
     success: function (response) {
-      if (response == 1) {
+      if (response === "success") {
         alert("인증번호가 일치합니다.");
         getById("email_button")?.setAttribute("disabled", "true");
         getById("email_verified")?.setAttribute("value", "true");
@@ -312,13 +312,15 @@ function checkMemberIdPw() {
     * @param {any} response
     **/
     success: function (response) {
-      if (response == "0") {
+      if (response === "success") {
+        alert("로그인 되었습니다.");
+        location.href = `/${TITLE}`;
+        return true;
+      }
+      else if (response === "fail") {
         alert("아이디 또는 비밀번호가 일치하지 않습니다.");
         getById("member_id")?.focus();
-      }
-      else if (response == "1") {
-        alert("로그인 되었습니다.");
-        window.location.href = "/JUNGHQLO";
+        return false;
       }
     },
   });
@@ -338,7 +340,7 @@ function logoutMember() {
       method: "GET",
       success: function () {
         alert("로그아웃 되었습니다.");
-        window.location.href = "/JUNGHQLO";
+        location.href = "/JUNGHQLO";
         return true;
       }
     });
@@ -383,7 +385,7 @@ function updateMember() {
     return false;
   }
   alert("수정이 완료되었습니다.");
-  window.location.href = "/JUNGHQLO";
+  window.location.reload();
   return true;
 };
 
@@ -405,8 +407,8 @@ function updateMemberPw() {
   }
   if (getValue(getById("member_pw")) !== getValue(getById("member_pw2"))) {
     alert("비밀번호 확인이 일치하지 않습니다.");
-    setValue(getById("member_pw_check"), "");
-    getById("member_pw_check")?.focus();
+    setValue(getById("member_pw2"), "");
+    getById("member_pw2")?.focus();
     return false;
   }
   if (!getValue(getById("member_pw")).toString().match(/^[a-zA-Z0-9]{8,12}$/)) {
@@ -425,12 +427,12 @@ function updateMemberPw() {
     * @param {any} response
     **/
     success: function (response) {
-      if (response == "1") {
+      if (response === "success") {
         alert("비밀번호가 변경되었습니다.");
-        window.location.href = "/JUNGHQLO";
+        location.href = `/${TITLE}/member/loginMember`;
         return true;
       }
-      else if (response == "0") {
+      else if (response === "fail") {
         alert("비밀번호 변경에 실패했습니다.");
         window.location.reload();
         return false;
@@ -459,8 +461,8 @@ function deleteMember() {
   }
   if (getValue(getById("member_pw")) !== getValue(getById("member_pw2"))) {
     alert("비밀번호 확인이 일치하지 않습니다.");
-    setValue(getById("member_pw_check"), "");
-    getById("member_pw_check")?.focus();
+    setValue(getById("member_pw2"), "");
+    getById("member_pw2")?.focus();
     return false;
   }
 
@@ -476,18 +478,21 @@ function deleteMember() {
     * @param {any} response
     **/
     success: function (response) {
-      if (response == 0) {
+      if (response === "fail") {
         alert("일치하는 회원정보가 없습니다.");
         window.location.reload();
+        return false;
       }
-      else if (response == 1) {
+      else if (response === "success") {
         if (confirm("회원 탈퇴를 하시겠습니까?")) {
           alert("회원 탈퇴 되었습니다.");
-          window.location.href = "/JUNGHQLO/member/loginMember";
+          location.href = `/${TITLE}/member/loginMember`;
+          return true;
         }
         else {
           alert("회원탈퇴가 취소되었습니다.");
           window.location.reload();
+          return false;
         }
       }
     },

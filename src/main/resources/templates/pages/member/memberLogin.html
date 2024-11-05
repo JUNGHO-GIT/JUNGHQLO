@@ -1,11 +1,7 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-  lang="en"
->
-	<!-- head -->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+  <!-- head -->
 	<th:block th:replace="~{layouts/head :: head}" />
 
 	<!-- header -->
@@ -19,7 +15,10 @@
     <div class="row">
       <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
         <!-- form -->
-        <form onsubmit="event.preventDefault(); checkMemberIdPw()">
+        <form
+          th:method="|POST|"
+          th:onsubmit="|event.preventDefault(); checkMemberIdPw()|"
+        >
           <!-- title -->
           <div class="row d-row-center mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -39,13 +38,14 @@
                   *
                 </div>
               </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <input
-                required
-                th:type="text"
-                th:id="member_id"
-                th:name="member_id"
-                placeholder="아이디를 입력하세요"
-                class="form-control"
+                th:type="|text|"
+                th:id="|member_id|"
+                th:name="|member_id|"
+                th:class="|form-control|"
+                th:placeholder="|아이디를 입력하세요|"
               />
             </div>
           </div>
@@ -60,22 +60,24 @@
                   *
                 </div>
               </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <input
-                required
-                th:type="password"
-                th:id="member_pw"
-                th:name="member_pw"
-                placeholder="비밀번호를 입력하세요"
-                class="form-control"
+                th:type="|password|"
+                th:id="|member_pw|"
+                th:name="|member_pw|"
+                th:class="|form-control|"
+                th:placeholder="|비밀번호를 입력하세요|"
               />
             </div>
           </div>
+          <!-- hr -->
           <hr class="mt-20 mb-20" />
           <!-- button -->
           <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <button
-                th:type="submit"
+                th:type="|submit|"
                 class="btn btn-dark w-100p"
               >
                 로그인
@@ -90,8 +92,11 @@
               <div class="fs-0-8rem fw-400 light-black me-10">
                 아이디가 없는 경우
               </div>
-              <div class="fs-0-8rem fw-500 blue">
-                <a th:href="@{/member/addMember}">회원가입</a>
+              <div
+                th:class="|fs-0-8rem fw-500 blue|"
+                th:onclick="|location.href='| + @{/member/addMember} + |'|"
+              >
+                회원가입
               </div>
             </div>
           </div>
@@ -100,8 +105,11 @@
               <div class="fs-0-8rem fw-400 light-black me-10">
                 아이디를 잊은 경우
               </div>
-              <div class="fs-0-8rem fw-500 blue">
-                <a th:href="@{/member/findMemberId}">ID 찾기</a>
+              <div
+                th:class="|fs-0-8rem fw-500 blue|"
+                th:onclick="|location.href='| + @{/member/findMemberId} + |'|"
+              >
+                ID 찾기
               </div>
             </div>
           </div>
@@ -110,8 +118,11 @@
               <div class="fs-0-8rem fw-400 light-black me-10">
                 비밀번호를 잊은 경우
               </div>
-              <div class="fs-0-8rem fw-500 blue">
-                <a th:href="@{/member/findMemberPw}">PW 찾기</a>
+              <div
+                th:class="|fs-0-8rem fw-500 blue|"
+                th:onclick="|location.href='| + @{/member/findMemberPw} + |'|"
+              >
+                PW 찾기
               </div>
             </div>
           </div>

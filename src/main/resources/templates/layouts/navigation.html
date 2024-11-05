@@ -1,12 +1,8 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-  lang="en"
->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">\
+
   <!-- navigation -->
-  <nav th:fragment="navigation" class="container bg-ivory border-1 p-30 mb-50">
+  <nav th:fragment="navigation" th:class="|container-fluid bg-ivory border-1 p-30 mb-50|">
     <div class="row">
       <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <div class="fs-1-8rem fw-600 mb-20">
@@ -14,7 +10,7 @@
           <span th:text="${text1}" class="ms-5"></span>
         </div>
         <div class="fs-1-2rem fw-500">
-          <i class="fa fa-home pointer" th:onClick="|window.location.href='@{/}'|"></i>
+          <i class="fa fa-home pointer" th:onClick="|location.href='@{/}'|"></i>
           <span class="ms-5">Home</span>
           <span class="ms-6">|</span>
           <span th:text="${text2}" class="ms-6"></span>

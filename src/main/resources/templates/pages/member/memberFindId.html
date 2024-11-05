@@ -1,11 +1,7 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-  lang="en"
->
-	<!-- head -->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+  <!-- head -->
 	<th:block th:replace="~{layouts/head :: head}" />
 
 	<!-- header -->
@@ -18,42 +14,77 @@
   <main class="container px-30">
     <div class="row">
       <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
-    <div class="row">
-      <div class="col-lg-6 col-md-6">
         <!-- form -->
-        <form method="POST" onsubmit="return findMemberId()">
+        <form
+          th:method="|POST|"
+          th:onsubmit="|event.preventDefault(); findMemberId()|"
+        >
           <!-- title -->
           <div class="row d-row-center mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="fs-1-8rem fw-800 light-black">아이디 찾기</h6>
-          <!-- ID -->
-          <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="checkout-input">
-                <p class="p">Name<span>*</span></p>
-                <input th:type="text" th:id="member_name" th:name="member_name" placeholder="이름을 입력하세요" required/>
-              </div>
-            </div>
-          </div><br>
-          <!-- pw -->
-          <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="checkout-input">
-                <p class="p">Email<span>*</span></p>
-                <input th:type="email" th:id="member_email" th:name="member_email" placeholder="이메일을 입력하세요" required/>
+              <div class="fs-1-8rem fw-800 light-black">
+                아이디 찾기
               </div>
             </div>
           </div>
+          <!-- name -->
+          <div class="row mb-20">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="d-row-left mb-10">
+                <div class="fs-0-9rem fw-800 me-5">
+                  이름
+                </div>
+                <div class="fs-0-9rem fw-800 burgundy">
+                  *
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <input
+                th:type="|text|"
+                th:id="|member_name|"
+                th:name="|member_name|"
+                th:class="|form-control|"
+                th:placeholder="|이름을 입력하세요|"
+              />
+            </div>
+          </div>
+          <!-- email -->
+          <div class="row mb-20">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="d-row-left mb-10">
+                <div class="fs-0-9rem fw-800 light-black">
+                  이메일
+                </div>
+                <div class="fs-0-9rem fw-800 burgundy">
+                  *
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <input
+                th:type="|email|"
+                th:id="|member_email|"
+                th:name="|member_email|"
+                th:class="|form-control|"
+                th:placeholder="|이메일을 입력하세요|"
+              />
+            </div>
+          </div>
+          <!-- hr -->
+          <hr class="mt-20 mb-20" />
           <!-- button -->
-          <div class="row">
-            <div class="col-lg-12 mt-3">
-              <button th:type="submit" class="jungho-button">아이디 찾기</button>
+          <div class="row mb-20">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <button
+                th:type="|submit|"
+                class="btn btn-dark w-100p"
+              >
+                아이디 찾기
+              </button>
             </div>
           </div>
         </form>
-      </div>
-      <div class="col-lg-6 col-md-6 col-sm-12">
-        <div th:replace="components/slider :: slider"></div>
       </div>
     </div>
   </main>

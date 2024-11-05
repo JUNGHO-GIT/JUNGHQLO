@@ -35,14 +35,13 @@ function getByClass(el) {
 * @desc value 값 얻기
 **/
 function getValue(el) {
-  const element = el instanceof HTMLInputElement ? el.value : null;
-  if (element) {
-    return element;
+  if (el instanceof HTMLInputElement) {
+    return el.value;
   }
   else {
-    throw new Error(`Element with value ${el} not found`);
+    throw new Error(`Expected an HTMLInputElement, but received ${el}`);
   }
-};
+}
 
 /** ----------------------------------------------------------------------------------------------->
 * @param {HTMLElement} el
@@ -85,7 +84,7 @@ function setValue(el, text) {
     el.value = text;
   }
   else {
-    throw new Error(`Element with value ${el} not found`);
+    throw new Error(`Expected an HTMLInputElement, but received ${el}`);
   }
 };
 

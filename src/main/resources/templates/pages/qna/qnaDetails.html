@@ -1,10 +1,5 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-  lang="en"
->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
   <!-- head -->
   <th:block th:replace="~{layouts/head :: head}" />
 
@@ -43,7 +38,7 @@
                 <div class="jungho-left mt-2">
                   <h6>작성자 : </h6>
                   <p th:text="${qnaModel.qna_writer}" class="p ms-1"></p>
-                  <input th:type="hidden" th:id="writerId" th:name="writerId" th:value="${qnaModel.qna_writer}"/>
+                  <input th:type="|hidden|" th:id="|writerId" th:name="|writerId" th:value=|"${qnaModel.qna_writer}|"/>
                 </div>
                 <!-- date -->
                 <div class="jungho-left mt-2">
@@ -65,7 +60,7 @@
                   <h6>Like : </h6>
                   <div class="like-container" th:onclick="likeButton()" style="cursor:pointer">
                     <div class="ms-2">
-                      <i class="far fa-thumbs-up" th:id="likeBtn"></i>
+                      <i class="far fa-thumbs-up" th:id="|likeBtn|"></i>
                       <h6 class="like-count" id="likeCount" th:text="${qnaModel.qna_like}">
                       </h6>
                     </div>
@@ -73,12 +68,12 @@
                   <!-- dislike -->
                   <div class="dislike-container" th:onclick="dislikeButton()" style="cursor:pointer">
                     <div class="ms-2">
-                      <i class="far fa-thumbs-down mt-1" th:id="dislikeBtn"></i>
+                      <i class="far fa-thumbs-down mt-1" th:id="|dislikeBtn|"></i>
                       <h6 class="dislike-count" id="dislikeCount" th:text="${qnaModel.qna_dislike}"></h6>
                     </div>
                   </div>
                   <!-- hidden -->
-                  <input th:type="hidden" th:id="uniqueNumber" th:value="${qnaModel.qna_number}" th:name="qna_number"/>
+                  <input th:type="|hidden|" th:id="|uniqueNumber" th:value="${qnaModel.qna_number}" th:name=|"|qna_number|"/>
                 </div>
               </div>
               <!-- share -->
@@ -116,7 +111,7 @@
           <div class="form-group d-flex justify-content-center">
             <button class="jungho-button" th:onclick="updateAlert()">수정</button>
             <button class="jungho-button" th:onclick="deleteAlert()">삭제</button>
-            <button class="jungho-button" th:onclick="@{|window.location.href='/JUNGHQLO/qna/getQnaList'|}">목록</button>
+            <button class="jungho-button" th:onclick="@{|location.href='/JUNGHQLO/qna/getQnaList'|}">목록</button>
           </div>
         </div>
       </div>

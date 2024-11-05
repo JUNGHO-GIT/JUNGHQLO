@@ -1,10 +1,6 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-  lang="en"
->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
   <!-- head -->
   <head th:fragment="head">
 
@@ -220,5 +216,12 @@
       th:src="@{/js/jungho.js}"
       defer
     ></script>
+
+    <!-- js 3 -->
+    <script defer>
+      const TITLE = 'JUNGHQLO';
+      const STORAGE = 'https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE';
+    </script>
+
   </head>
 </html>

@@ -1,10 +1,5 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-  lang="en"
->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
   <!-- head -->
   <th:block th:replace="~{layouts/head :: head}" />
 
@@ -20,15 +15,15 @@
       <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
 
     <!-- form -->
-    <form th:action="@{/notice/updateNotice}" method="POST" encth:type="multipart/form-data">
+    <form th:action="@{/notice/updateNotice}" th:method="|POST|" enctype="multipart/form-data">
 
       <!-- hidden -->
-      <input th:type="hidden" th:name="notice_number" th:value="${noticeModel.notice_number}" th:id="notice_number"/>
-      <input th:type="hidden" th:name="notice_writer" th:value="${noticeModel.notice_writer}" th:id="notice_writer"/>
-      <input th:type="hidden" th:name="notice_count" th:value="${noticeModel.notice_count}" th:id="notice_count"/>
-      <input th:type="hidden" th:name="notice_like" th:value="${noticeModel.notice_like}" th:id="notice_like"/>
-      <input th:type="hidden" th:name="notice_dislike" th:value="${noticeModel.notice_dislike}" th:id="notice_dislike"/>
-      <input th:type="hidden" th:name="notice_imgsUrl" th:value="${noticeModel.notice_imgsUrl}" th:id="notice_imgsUrl"/>
+      <input th:type="|hidden|" th:name="|notice_number" th:value="${noticeModel.notice_number}" th:id="notice_number|"/>
+      <input th:type="|hidden|" th:name="|notice_writer" th:value="${noticeModel.notice_writer}" th:id="notice_writer|"/>
+      <input th:type="|hidden|" th:name="|notice_count" th:value="${noticeModel.notice_count}" th:id="notice_count|"/>
+      <input th:type="|hidden|" th:name="|notice_like" th:value="${noticeModel.notice_like}" th:id="notice_like|"/>
+      <input th:type="|hidden|" th:name="|notice_dislike" th:value="${noticeModel.notice_dislike}" th:id="notice_dislike|"/>
+      <input th:type="|hidden|" th:name="|notice_imgsUrl" th:value="${noticeModel.notice_imgsUrl}" th:id="notice_imgsUrl|"/>
 
       <div class="row">
         <div class="col-lg-6 col-md-6">
@@ -38,7 +33,7 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
                 <p class="p">제목<span>*</span></p>
-                <input th:type="text" placeholder="Title" th:name="notice_title" th:value="${noticeModel.notice_title}" th:id="notice_title"/>
+                <input th:type="|text|" th:placeholder="|Title" th:name="|notice_title" th:value="${noticeModel.notice_title}" th:id=|"notice_title|"/>
               </div>
             </div>
           </div>
@@ -47,7 +42,7 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
                 <p class="p">내용<span>*</span></p>
-                <textarea placeholder="Contents" th:id="notice_contents" th:name="notice_contents" th:text="${noticeModel.notice_contents}">
+                <textarea th:placeholder="|Contents" th:id="|notice_contents" th:name="|notice_contents|" th:text=|"${noticeModel.notice_contents}|">
                 </textarea>
               </div>
             </div>
@@ -57,18 +52,18 @@
             <div class="col-lg-5 col-md-5 col-sm-5">
               <div class="checkout-input">
               <p class="p">기존 이미지<span>*</span></p>
-              <img th:src="${noticeModel.notice_imgsUrl}" style="width: 150px; height: 150px; border-radius: 10px; box-shadow: 0px 10px 10px rgba(0, 0.5, 0.5, 0.5)()" th:id="existingImage" th:name="existingImage" th:value="existingImage"/>
+              <img th:src="${noticeModel.notice_imgsUrl}" style="width: 150px; height: 150px; border-radius: 10px; box-shadow: 0px 10px 10px rgba(0, 0.5, 0.5, 0.5)()" th:id="|existingImage" th:name="|existingImage" th:value=|"existingImage|"/>
               </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4">
               <div class="checkout-input">
                 <p class="p"> 게시물 이미지<span>*</span></p>
                 <label for="imageFile">선택하기</label>
-                <input th:type="file" th:id="imageFile" th:name="notice_imgsFile"  style="display:none" class="imageFile" onchange="junghoPreview()"/>
+                <input th:type="file" th:id="|imageFile" th:name="|notice_imgsFile"  style="display:none" class="imageFile" onchange=|"junghoPreview()|"/>
               </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3 mt-3">
-              <button th:type="submit" th:onclick="return updateCheck()" class="jungho-button">
+              <button th:type="|submit|" th:onclick="return updateCheck()" class="jungho-button">
               수정하기
               </button>
             </div>
@@ -79,8 +74,8 @@
           <div class="preview">
             <div class="border-dark justify-content-center">
               <h4 class="order-title mb-4"><i class="fa fa-spinner"></i>&nbsp;Preview</h4>
-              <div class="imageLoader" th:id="imageLoader"></div>
-              <img class="imageBox" th:id="imageBox"/>
+              <div class="imageLoader" th:id="|imageLoader|"></div>
+              <img class="imageBox" th:id="|imageBox|"/>
             </div>
           </div>
         </div>

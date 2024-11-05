@@ -1,11 +1,7 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-  lang="en"
->
-	<!-- head -->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+  <!-- head -->
 	<th:block th:replace="~{layouts/head :: head}" />
 
 	<!-- header -->
@@ -18,103 +14,230 @@
   <main class="container px-30">
     <div class="row">
       <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
-    <div class="row">
-      <div class="col-lg-6 col-md-6">
-        <form th:action="@{/member/deleteMember}" onsubmit="return deleteMember()" method="POST" >
-
+        <!-- form -->
+        <form
+          th:method="|POST|"
+          th:action="@{/member/deleteMember}"
+          th:onsubmit="|deleteMember()|"
+        >
           <!-- hidden -->
-          <input th:type="hidden" th:id=member_number th:name="member_number" th:value="${memberModel.member_number}"/>
-          <input th:type="hidden" th:id="member_agree" th:name="member_agree" th:value="${memberModel.member_agree}"/>
-
-          <h6 class="checkout-title">회원 탈퇴</h6>
-          <div class="row">
-            <!-- ID -->
-            <div class="col-lg-6">
-              <div class="checkout-input">
-                <p class="p">I D</p>
-                <input th:type="text" th:name="member_id" th:id="member_id" th:value="${memberModel.member_id}" readonly/>
-              </div>
-            </div>
-            <!-- reg date -->
-            <div class="col-lg-6">
-              <div class="checkout-input">
-                <p class="p"> 가입일</p>
-                <input th:type="text" th:name="member_date" th:id="member_date"
-                th:value="${memberModel.member_update != null ? memberModel.member_update+'(수정)' : memberModel.member_date+'(최초)'}" readonly/>
+          <input
+            th:type="|hidden|"
+            th:id="|member_number|"
+            th:name="|member_number|"
+            th:value="${memberModel.member_number}"
+          />
+          <input
+            th:type="|hidden|"
+            th:id="|member_agree|"
+            th:name="|member_agree|"
+            th:value="${memberModel.member_agree}"
+          />
+          <!-- title -->
+          <div class="row d-row-center mb-20">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="fs-1-8rem fw-800 light-black">
+                회원 탈퇴
               </div>
             </div>
           </div>
-          <div class="row">
-            <!-- name -->
-            <div class="col-lg-6">
-              <div class="checkout-input">
-                <p class="p">이름</p>
-                <input th:type="text" th:id="member_name" th:name="member_name" th:value="${memberModel.member_name}" readonly/>
+          <!-- ID -->
+          <div class="row mb-20">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="d-row-left mb-10">
+                <div class="fs-0-9rem fw-800 me-5">
+                  ID
+                </div>
+                <div class="fs-0-6rem fw-800 burgundy">
+                  *
+                </div>
               </div>
+              <input
+                readonly
+                th:type="|text|"
+                th:id="|member_id|"
+                th:name="|member_id|"
+                th:value="${memberModel.member_id}"
+                th:class="|form-control|"
+              />
             </div>
-            <div class="col-lg-6">
-              <!-- phone -->
-              <div class="checkout-input">
-                <p class="p"> 전화번호</p>
-                <input th:type="text" th:id="member_phone" th:name="member_phone" th:value="${memberModel.member_phone}" readonly/>
+          </div>
+          <!-- reg date -->
+          <div class="row mb-20">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="d-row-left mb-10">
+                <div class="fs-0-9rem fw-800 me-5">
+                  가입일
+                </div>
+                <div class="fs-0-6rem fw-800 burgundy">
+                  *
+                </div>
               </div>
+              <input
+                readonly
+                th:type="|text|"
+                th:name="|member_date|"
+                th:id="|member_date|"
+                th:value="${memberModel.member_update != null ? memberModel.member_update+'(수정)' : memberModel.member_date+'(최초)'}"
+                th:class="|form-control|"
+              />
+            </div>
+          </div>
+          <!-- name -->
+          <div class="row mb-20">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="d-row-left mb-10">
+                <div class="fs-0-9rem fw-800 me-5">
+                  이름
+                </div>
+                <div class="fs-0-6rem fw-800 burgundy">
+                  *
+                </div>
+              </div>
+              <input
+                readonly
+                th:type="|text|"
+                th:id="|member_name|"
+                th:name="|member_name|"
+                th:value="${memberModel.member_name}"
+                th:class="|form-control|"
+              />
+            </div>
+          </div>
+          <!-- phone -->
+          <div class="row mb-20">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="d-row-left mb-10">
+                <div class="fs-0-9rem fw-800 light-black">
+                  전화번호
+                </div>
+              </div>
+              <input
+                readonly
+                th:type="|text|"
+                th:id="|member_phone|"
+                th:name="|member_phone|"
+                th:value="${memberModel.member_phone}"
+                th:class="|form-control|"
+              />
             </div>
           </div>
           <!-- email -->
-          <div class="row">
+          <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="checkout-input">
-                <p class="p"> 이메일</p>
-                <input th:type="email" th:name="member_email" th:id="member_email" th:value="${memberModel.member_email}"/>
+              <div class="d-row-left mb-10">
+                <div class="fs-0-9rem fw-800 light-black">
+                  이메일
+                </div>
               </div>
+              <input
+                readonly
+                th:type="|email|"
+                th:name="|member_email|"
+                th:id="|member_email|"
+                th:value="${memberModel.member_email}"
+                th:class="|form-control|"
+              />
             </div>
           </div>
-          <div class="row">
-            <!-- address -->
-            <div class="col-lg-6">
-              <div class="checkout-input">
-                <p class="p"> 주소</p>
-                <input th:type="text" th:name="member_address1" th:id="member_address1"
-                th:value="${memberModel.member_address1}" readonly/>
+          <!-- address -->
+          <div class="row mb-20">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="d-row-left mb-10">
+                <div class="fs-0-9rem fw-800 light-black">
+                  주소
+                </div>
               </div>
+              <input
+                readonly
+                th:type="|text|"
+                th:name="|member_address1|"
+                th:id="|member_address1|"
+                th:value="${memberModel.member_address1}"
+                th:class="|form-control|"
+              />
             </div>
-            <!-- address detail -->
-            <div class="col-lg-6">
-              <div class="checkout-input">
-                <p class="p"> 상세주소</p>
-                <input th:type="text" th:name="member_address2" th:id="member_address2"
-                th:value="${memberModel.member_address2}" readonly/>
+          </div>
+          <!-- address detail -->
+          <div class="row mb-20">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="d-row-left mb-10">
+                <div class="fs-0-9rem fw-800 light-black">
+                  상세주소
+                </div>
               </div>
+              <input
+                readonly
+                th:type="|text|"
+                th:name="|member_address2|"
+                th:id="|member_address2|"
+                th:value="${memberModel.member_address2}"
+                th:class="|form-control|"
+              />
             </div>
           </div>
           <!-- PW -->
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="checkout-input">
-                <p class="p">P W<span> * 필수입력</span></p>
-                <input th:type="password" th:id="member_pw" th:name="member_pw" placeholder="비밀번호를 입력하세요."/>
+          <div class="row mb-20">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="d-row-left mb-10">
+                <div class="fs-0-9rem fw-800 me-5">
+                  비밀번호
+                </div>
+                <div class="fs-0-6rem fw-800 burgundy">
+                  *  필수입력
+                </div>
               </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="checkout-input">
-                <p class="p">P W 확인<span> * 필수입력</span></p>
-                <input th:type="password" th:id="member_pw2" th:name="member_pw2" placeholder="비밀번호를 다시 입력하세요."/>
-              </div>
+              <input
+                th:type="|password|"
+                th:id="|member_pw|"
+                th:name="|member_pw|"
+                th:placeholder="|비밀번호를 입력하세요.|"
+                th:class="|form-control|"
+              />
             </div>
           </div>
-          <div class="row">
-            <!-- button -->
+          <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="checkout-input">
-                <button th:type="submit" class="jungho-button" th:onclick="return deleteMember()">회원탈퇴</button>
-                <button th:type="button" class="jungho-button" th:onclick="'window.location.href=\'' + @{/} + '\''"> 홈으로 </button>
+              <div class="d-row-left mb-10">
+                <div class="fs-0-9rem fw-800 me-5">
+                  비밀번호 확인
+                </div>
+                <div class="fs-0-6rem fw-800 burgundy">
+                  *  필수입력
+                </div>
               </div>
+              <input
+                th:type="|password|"
+                th:id="|member_pw2|"
+                th:name="|member_pw2|"
+                th:placeholder="|비밀번호를 다시 입력하세요.|"
+                th:class="|form-control|"
+              />
+            </div>
+          </div>
+          <!-- hr -->
+          <hr class="mt-20 mb-20" />
+          <!-- button -->
+          <div class="row mb-20">
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+              <button
+                th:type="|submit|"
+                th:class="|btn btn-danger w-90p|"
+              >
+                탈퇴하기
+              </button>
+            </div>
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+              <button
+                th:type="|button|"
+                th:class="|btn btn-dark w-90p|"
+                th:onclick="|location.href='@{/}'|"
+              >
+                홈으로
+              </button>
             </div>
           </div>
         </form>
-      </div>
-      <div class="col-lg-6 col-md-6 col-sm-12">
-        <div th:replace="components/slider :: slider"></div>
       </div>
     </div>
   </main>

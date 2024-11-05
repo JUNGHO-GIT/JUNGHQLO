@@ -1,12 +1,8 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	lang="en"
->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 	<!-- pagination -->
-  <section th:fragment="pagination" class="container">
+  <section th:fragment="pagination" th:class="|container-fluid|">
     <div class="row">
       <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <div class="junghoPagination">
@@ -31,7 +27,7 @@
   </section>
 
   <!-- fake pagination -->
-  <section th:fragment="fake-pagination" class="container">
+  <section th:fragment="fake-pagination" th:class="|container-fluid|">
     <div class="row">
       <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <div class="junghoPagination">

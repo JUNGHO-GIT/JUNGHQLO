@@ -1,10 +1,5 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-  lang="en"
->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
   <!-- head -->
   <th:block th:replace="~{layouts/head :: head}" />
 
@@ -22,7 +17,7 @@
       <div class="col-lg-6 col-md-6">
         <div class="checkout-order">
           <h4 class="order-title">주문이 실패하였습니다.</h4>
-          <button th:type="button" class="jungho-button" th:onclick="'window.location.href=\'' + @{/} + '\''"><i class="fa fa-barcode fa-lg"></i>&nbsp;홈으로
+          <button th:type="|button|" class="jungho-button" th:onclick="|location.href='@{/}'|"><i class="fa fa-barcode fa-lg"></i>&nbsp;홈으로
           </button>
         </div>
       </div>

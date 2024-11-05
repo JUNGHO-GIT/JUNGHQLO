@@ -11693,57 +11693,57 @@
   border-radius: 0px !important;
 }
 .radius-1 {
-  border-radius: 10px !important;
+  border-radius: 5px !important;
 }
 .radius-top-1 {
-  border-top-left-radius: 10px !important;
-  border-top-right-radius: 10px !important;
+  border-top-left-radius: 5px !important;
+  border-top-right-radius: 5px !important;
   border-bottom-left-radius: 0px !important;
   border-bottom-right-radius: 0px !important;
 }
 .radius-right-1 {
   border-top-left-radius: 0px !important;
-  border-top-right-radius: 10px !important;
+  border-top-right-radius: 5px !important;
   border-bottom-left-radius: 0px !important;
-  border-bottom-right-radius: 10px !important;
+  border-bottom-right-radius: 5px !important;
 }
 .radius-bottom-1 {
   border-top-left-radius: 0px !important;
   border-top-right-radius: 0px !important;
-  border-bottom-left-radius: 10px !important;
-  border-bottom-right-radius: 10px !important;
+  border-bottom-left-radius: 5px !important;
+  border-bottom-right-radius: 5px !important;
 }
 .radius-left-1 {
-  border-top-left-radius: 10px !important;
+  border-top-left-radius: 5px !important;
   border-top-right-radius: 0px !important;
-  border-bottom-left-radius: 10px !important;
+  border-bottom-left-radius: 5px !important;
   border-bottom-right-radius: 0px !important;
 }
 .radius-2 {
-  border-radius: 20px !important;
+  border-radius: 10px !important;
 }
 .radius-top-2 {
-  border-top-left-radius: 20px !important;
-  border-top-right-radius: 20px !important;
+  border-top-left-radius: 10px !important;
+  border-top-right-radius: 10px !important;
   border-bottom-left-radius: 0px !important;
   border-bottom-right-radius: 0px !important;
 }
 .radius-right-2 {
   border-top-left-radius: 0px !important;
-  border-top-right-radius: 20px !important;
+  border-top-right-radius: 10px !important;
   border-bottom-left-radius: 0px !important;
-  border-bottom-right-radius: 20px !important;
+  border-bottom-right-radius: 10px !important;
 }
 .radius-bottom-2 {
   border-top-left-radius: 0px !important;
   border-top-right-radius: 0px !important;
-  border-bottom-left-radius: 20px !important;
-  border-bottom-right-radius: 20px !important;
+  border-bottom-left-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
 }
 .radius-left-2 {
-  border-top-left-radius: 20px !important;
+  border-top-left-radius: 10px !important;
   border-top-right-radius: 0px !important;
-  border-bottom-left-radius: 20px !important;
+  border-bottom-left-radius: 10px !important;
   border-bottom-right-radius: 0px !important;
 }
 
