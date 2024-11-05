@@ -12,7 +12,7 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-question-circle', text1='Qna', text2='Qna List')}" />
+  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-question-circle', text1='Qna', text2='List')}" />
 
   <!-- main -->
   <main class="container">
@@ -31,7 +31,7 @@
           <h6 class="checkout-title">게시물 수정</h6>
           <!-- name -->
           <div class="row">
-            <div class="col-lg-12">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
                 <p class="p">제목<span>*</span></p>
                 <input type="text" placeholder="Title" th:name="qna_title" th:value="${qnaModel.qna_title}" th:id="qna_title"/>
@@ -40,7 +40,7 @@
           </div>
           <!-- content -->
           <div class="row">
-            <div class="col-lg-12">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
                 <p class="p">내용<span>*</span></p>
                 <textarea placeholder="Contents" th:id="qna_contents" th:name="qna_contents" th:text="${qnaModel.qna_contents}">

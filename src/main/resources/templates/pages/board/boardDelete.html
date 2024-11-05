@@ -12,7 +12,7 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-chalkboard-teacher', text1='Blog', text2='Blog Delete')}" />
+  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-chalkboard-teacher', text1='Blog', text2='Delete')}" />
 
   <!-- main -->
   <main class="container">
@@ -27,7 +27,7 @@
           <h6 class="checkout-title">게시물 삭제</h6>
           <!-- name -->
           <div class="row">
-            <div class="col-lg-12">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
                 <p class="p">제목<span>*</span></p>
                 <input type="text" placeholder="Title" th:name="board_title" th:value="${boardModel.board_title}" th:id="board_title" disabled readonly>
@@ -36,7 +36,7 @@
           </div>
           <!-- content -->
           <div class="row">
-            <div class="col-lg-12">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
                 <p class="p">내용<span>*</span></p>
                 <textarea placeholder="Contents" th:id="board_contents" th:name="board_contents" th:text="${boardModel.board_contents}" disabled readonly>

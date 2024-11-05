@@ -12,7 +12,7 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-credit-card', text1='Orders', text2='Orders List')}" />
+  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-credit-card', text1='Orders', text2='List')}" />
 
   <!-- main -->
   <main class="container">
@@ -53,7 +53,7 @@
         <div class="junghoList-card card-margin">
           <div class="card-body">
             <div class="row">
-              <div class="col-lg-12">
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <!-- orders row -->
                 <div class="junghoList-container" th:each="orders:${ordersList}">
                   <div class="junghoList">

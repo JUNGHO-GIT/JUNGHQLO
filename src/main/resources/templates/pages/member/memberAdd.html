@@ -12,7 +12,7 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-user-cog', text1='Member', text2='Member Add')}" />
+  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-user-cog', text1='Member', text2='Add')}" />
 
   <!-- main -->
   <main class="container">
@@ -98,13 +98,13 @@
           </div>
           <div class="row">
             <!-- address -->
-            <div class="col-lg-12">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
                 <p class="p"> 주소<span>*</span></p>
                 <input type="text" placeholder="Address" th:name="member_address1" th:id="member_address1" th:onClick="openDaumPostcode()" readonly/>
               </div>
             </div>
-            <div class="col-lg-12">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
                 <p class="p"> 상세주소<span>*</span></p>
                 <input type="text" placeholder="상세주소" th:name="member_address2" th:id="member_address2"/>
@@ -112,7 +112,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-lg-12">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input mt-2">
                 <p class="p"> 약관 동의<span>*</span></p>
               </div>

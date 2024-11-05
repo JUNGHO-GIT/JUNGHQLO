@@ -12,7 +12,7 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-user-cog', text1='Member', text2='Member Find Id')}" />
+  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-user-cog', text1='Member', text2='Find Id')}" />
 
   <!-- main -->
   <main class="container">
@@ -23,7 +23,7 @@
           <h6 class="checkout-title">아이디 찾기</h6>
           <!-- ID -->
           <div class="row">
-            <div class="col-lg-12">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
                 <p class="p">Name<span>*</span></p>
                 <input type="text" th:id="member_name" th:name="member_name" placeholder="이름을 입력하세요" required/>
@@ -32,7 +32,7 @@
           </div><br>
           <!-- pw -->
           <div class="row">
-            <div class="col-lg-12">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
                 <p class="p">Email<span>*</span></p>
                 <input type="email" th:id="member_email" th:name="member_email" placeholder="이메일을 입력하세요" required/>

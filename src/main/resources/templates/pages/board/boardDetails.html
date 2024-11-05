@@ -12,14 +12,14 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-chalkboard-teacher', text1='Blog', text2='Blog Details')}" />
+  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-chalkboard-teacher', text1='Blog', text2='Details')}" />
 
   <!-- main -->
   <main class="container">
     <!-- row -->
     <div class="row d-flex justify-content-center">
       <!-- col -->
-      <div class="col-lg-12">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <div class="blog-details-pic">
           <img th:src="@{${boardModel.board_imgsUrl}}"/>
         </div>

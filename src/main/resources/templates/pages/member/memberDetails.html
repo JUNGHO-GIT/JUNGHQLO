@@ -12,7 +12,7 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-user-cog', text1='Member', text2='Member Details')}" />
+  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-user-cog', text1='Member', text2='Details')}" />
 
   <!-- main -->
   <main class="container">
@@ -90,7 +90,7 @@
         <br/>
         <div class="row">
           <!-- button -->
-          <div class="col-lg-12">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="checkout-input">
               <button class="jungho-button" th:onClick="'window.location.href=\'' + @{/member/updateMember} + '\''">회원정보 수정</button>&nbsp;&nbsp;
               <button class="jungho-button" th:onClick="'window.location.href=\'' + @{/member/updateMemberPw} + '\''">비밀번호 수정</button>&nbsp;&nbsp;
