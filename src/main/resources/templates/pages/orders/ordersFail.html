@@ -6,32 +6,28 @@
   lang="en"
 >
   <!-- head -->
-  <th:block th:replace="~{layouts/head :: head}"></th:block>
+  <th:block th:replace="~{layouts/head :: head}" />
 
   <!-- header -->
-  <th:block th:replace="~{layouts/header :: header}"></th:block>
+  <th:block th:replace="~{layouts/header :: header}" />
 
-    <!-- navigation -->
-    <div th:with="icon='fas fa-credit-card', text1='Orders', text2='Orders Fail'">
-      <div th:replace="components/navigation :: navigation"></div>
-    </div>
+  <!-- navigation -->
+  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-credit-card', text1='Orders', text2='Orders Fail')}" />
 
-    <!-- section -->
-    <section class="container">
-          <div class="row jungho-center">
-            <div class="col-lg-6 col-md-6">
-              <div class="checkout-order">
-                <h4 class="order-title">주문이 실패하였습니다.</h4>
-                <button type="button" class="jungho-button" th:onClick="'window.location.href=\'' + @{/} + '\''"><i class="fa fa-barcode fa-lg"></i>&nbsp;홈으로
-                </button>
-              </div>
-            </div>
-          </div>
+  <!-- main -->
+  <main class="container">
+    <div class="row jungho-center">
+      <div class="col-lg-6 col-md-6">
+        <div class="checkout-order">
+          <h4 class="order-title">주문이 실패하였습니다.</h4>
+          <button type="button" class="jungho-button" th:onClick="'window.location.href=\'' + @{/} + '\''"><i class="fa fa-barcode fa-lg"></i>&nbsp;홈으로
+          </button>
         </div>
       </div>
-    </section>
+    </div>
+  </main>
 
-    <!-- footer -->
-    <th:block th:replace="~{layouts/footer :: footer}"></th:block>
+  <!-- footer -->
+  <th:block th:replace="~{layouts/footer :: footer}" />
 
 </html>

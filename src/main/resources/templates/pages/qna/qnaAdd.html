@@ -6,16 +6,16 @@
   lang="en"
 >
   <!-- head -->
-  <th:block th:replace="~{layouts/head :: head}"></th:block>
+  <th:block th:replace="~{layouts/head :: head}" />
 
   <!-- header -->
-  <th:block th:replace="~{layouts/header :: header}"></th:block>
+  <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{components/navigation :: navigation (icon='fas fa-question-circle', text1='Qna', text2='Qna Add')}"></th:block>
+  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-question-circle', text1='Qna', text2='Qna Add')}" />
 
-  <!-- section -->
-  <section class="container">
+  <!-- main -->
+  <main class="container">
     <form th:action="@{/qna/addQna}" method="POST" enctype="multipart/form-data">
 
       <!-- hidden -->
@@ -119,9 +119,9 @@
         </div>
       </div>
     </form>
-  </section>
+  </main>
 
   <!-- footer -->
-  <th:block th:replace="~{layouts/footer :: footer}"></th:block>
+  <th:block th:replace="~{layouts/footer :: footer}" />
 
 </html>

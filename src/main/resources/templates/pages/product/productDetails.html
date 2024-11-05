@@ -6,13 +6,13 @@
   lang="en"
 >
   <!-- head -->
-  <th:block th:replace="~{layouts/head :: head}"></th:block>
+  <th:block th:replace="~{layouts/head :: head}" />
 
   <!-- header -->
-  <th:block th:replace="~{layouts/header :: header}"></th:block>
+  <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{components/navigation :: navigation (icon='fas fa-shopping-bag', text1='Shop', text2='Product Details')}"></th:block>
+  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-shopping-bag', text1='Shop', text2='Product Details')}" />
 
   <!-- section -->
   <section class="container" onload="randomSideImage()">
@@ -68,13 +68,13 @@
                 <!-- price -->
                 <h3>
                   <i class="fas fa-won-sign fa-xs"></i>
-                  <th:block th:text="${#numbers.formatInteger(productModel.product_price, 3, 'COMMA')}"></th:block>
+                  <th:block th:text="${#numbers.formatInteger(productModel.product_price, 3, 'COMMA')}" />
                 </h3>
                 <!-- sale -->
                 <h3 class="mt-n4">
                   <span>
                     <i class="fas fa-won-sign fa-xs"></i>
-                    <th:block th:text="${#numbers.formatInteger(productModel.product_price * 3, 3, 'COMMA')}"></th:block>
+                    <th:block th:text="${#numbers.formatInteger(productModel.product_price * 3, 3, 'COMMA')}" />
                   </span>
                 </h3>
                 <div class="product-details-cart-option">
@@ -316,12 +316,12 @@
         </div>
       </div>
     </div>
-  </section>
+  </main>
 
   <!-- fake pagination -->
-  <th:block th:replace="components/pagination :: fake-pagination"></th:block>
+  <th:block th:replace="components/pagination :: fake-pagination" />
 
   <!-- footer -->
-  <th:block th:replace="~{layouts/footer :: footer}"></th:block>
+  <th:block th:replace="~{layouts/footer :: footer}" />
 
 </html>

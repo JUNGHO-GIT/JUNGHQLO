@@ -6,16 +6,16 @@
   lang="en"
 >
   <!-- head -->
-  <th:block th:replace="~{layouts/head :: head}"></th:block>
+  <th:block th:replace="~{layouts/head :: head}" />
 
   <!-- header -->
-  <th:block th:replace="~{layouts/header :: header}"></th:block>
+  <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{components/navigation :: navigation (icon='fas fa-bell', text1='Notice', text2='Notice Delete')}"></th:block>
+  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-bell', text1='Notice', text2='Notice Delete')}" />
 
-  <!-- section -->
-  <section class="container">
+  <!-- main -->
+  <main class="container">
     <!-- form -->
     <form th:action="@{/notice/deleteNotice}" method="POST" enctype="multipart/form-data">
 
@@ -80,9 +80,9 @@
         </div>
       </div>
     </form>
-  </section>
+  </main>
 
   <!-- footer -->
-  <th:block th:replace="~{layouts/footer :: footer}"></th:block>
+  <th:block th:replace="~{layouts/footer :: footer}" />
 
 </html>

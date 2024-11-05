@@ -5,141 +5,128 @@
   xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
   lang="en"
 >
-
 	<!-- head -->
-	<th:block th:replace="~{layouts/head :: head}"></th:block>
+	<th:block th:replace="~{layouts/head :: head}" />
 
-	<!-- body -->
-	<body>
+	<!-- header -->
+  <th:block th:replace="~{layouts/header :: header}" />
 
-		<!-- header -->
-    <th:block th:replace="~{layouts/header :: header}"></th:block>
+  <!-- navigation -->
+  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-user-cog', text1='Member', text2='Member Add')}" />
 
-    <!-- navigation -->
-    <div th:with="icon='fas fa-user-cog', text1='Member', text2='Member Add'">
-      <div th:replace="components/navigation :: navigation"></div>
-    </div>
-
-    <!-- section -->
-    <section class="container">
-          <div class="row justify-content-center">
-            <div class="col-lg-6 col-md-10 col-sm-10 col-xs-10 col-10">
-
-              <!-- form -->
-              <form th:action="@{/member/addMember}" method="POST" onsubmit="return addMember()">
-                <h6 class="checkout-title">회원 가입</h6>
-                <div class="row">
-                  <!-- ID -->
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
-                    <div class="checkout-input">
-                      <p class="p">I D<span>*</span></p>
-                      <input type="text" placeholder="ID" th:name="member_id" th:id="member_id" onblur="checkMemberId()"/>
-                    </div>
-                  </div>
-                  <!-- PW -->
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
-                    <div class="checkout-input">
-                      <p class="p">P W<span>*</span></p>
-                      <input type="password" placeholder="PW" th:id="member_pw" th:name="member_pw"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <!-- name -->
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
-                    <div class="checkout-input">
-                      <p class="p">이름<span>*</span></p>
-                      <input type="text" placeholder="Name" th:id="member_name" th:name="member_name"/>
-                    </div>
-                  </div>
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
-                    <!-- phone -->
-                    <div class="checkout-input">
-                      <p class="p">전화번호<span>*</span></p>
-                      <input type="number" th:id="member_phone" th:name="member_phone"  placeholder="숫자만 입력해주세요"/>
-                    </div>
-                  </div>
-                </div>
-                <!-- email -->
-                <div class="row">
-                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-12">
-                    <div class="checkout-input">
-                      <p class="p">이메일<span>*</span></p>
-                      <input type="text" placeholder="Email" name="email_front" id="email_front"/>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-6">
-                    <div class="checkout-input">
-                      <p class="p d-md-block d-none">&nbsp;</p>
-                      <select class="form-select" name="email_back" id="email_back">
-                        <option value="@naver.com">@naver.com</option>
-                        <option value="@gmail.com">@gmail.com</option>
-                        <option value="@daum.net">@daum.net</option>
-                        <option value="@nate.com">@nate.com</option>
-                      </select>
-                      <input type="hidden" th:id="member_email" th:name="member_email"/>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-6">
-                    <div class="checkout-input">
-                      <p class="p d-md-block d-none">&nbsp;</p>
-                      <button type="button" class="jungho-button ms-2" onclick="return sendEmail()">전송
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-9 col-md-9 col-sm-8 col-xs-7 col-7">
-                    <div class="checkout-input">
-                      <p class="p"> 인증번호<span>*</span></p>
-                      <input type="text" placeholder="인증번호" th:id="email_code" th:name="email_code"/>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-4 col-xs-5 col-5">
-                    <div class="checkout-input">
-                      <p class="p">&nbsp;</p>
-                      <input type="hidden" id="email_verified" name="email_verified" value="false"/>
-                      <button type="button" class="jungho-button ms-2" th:onClick="checkEmail()" id="email_button"> 확인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <!-- address -->
-                  <div class="col-lg-12">
-                    <div class="checkout-input">
-                      <p class="p"> 주소<span>*</span></p>
-                      <input type="text" placeholder="Address" th:name="member_address1" th:id="member_address1" th:onClick="openDaumPostcode()" readonly/>
-                    </div>
-                  </div>
-                  <div class="col-lg-12">
-                    <div class="checkout-input">
-                      <p class="p"> 상세주소<span>*</span></p>
-                      <input type="text" placeholder="상세주소" th:name="member_address2" th:id="member_address2"/>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <!-- agree -->
-                  <div class="col-lg-12">
-                    <div class="checkout-input mt-2">
-                      <p class="p"> 약관 동의<span>*</span></p>
-                    </div>
-                    <label for="member_agree" class="form-check-inline ft-4">약관에 동의합니다.</label>
-                    <input type="checkbox" class="form-check-inline ms-n2" th:name="member_agree" th:id="member_agree" value="1"/>
-                    <button type="submit" class="jungho-button">회원 가입</button>
-                  </div>
-                </div>
-              </form>
-
+  <!-- main -->
+  <main class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-10 col-sm-10 col-xs-10 col-10">
+        <form th:action="@{/member/addMember}" method="POST" onsubmit="return addMember()">
+          <h6 class="checkout-title">회원 가입</h6>
+          <div class="row">
+            <!-- ID -->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+              <div class="checkout-input">
+                <p class="p">I D<span>*</span></p>
+                <input type="text" placeholder="ID" th:name="member_id" th:id="member_id" onblur="checkMemberId()"/>
+              </div>
             </div>
-
+            <!-- PW -->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+              <div class="checkout-input">
+                <p class="p">P W<span>*</span></p>
+                <input type="password" placeholder="PW" th:id="member_pw" th:name="member_pw"
+                />
+              </div>
+            </div>
           </div>
-        </div>
+          <div class="row">
+            <!-- name -->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+              <div class="checkout-input">
+                <p class="p">이름<span>*</span></p>
+                <input type="text" placeholder="Name" th:id="member_name" th:name="member_name"/>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+              <!-- phone -->
+              <div class="checkout-input">
+                <p class="p">전화번호<span>*</span></p>
+                <input type="number" th:id="member_phone" th:name="member_phone"  placeholder="숫자만 입력해주세요"/>
+              </div>
+            </div>
+          </div>
+          <!-- email -->
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-12">
+              <div class="checkout-input">
+                <p class="p">이메일<span>*</span></p>
+                <input type="text" placeholder="Email" name="email_front" id="email_front"/>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-6">
+              <div class="checkout-input">
+                <p class="p d-md-block d-none">&nbsp;</p>
+                <select class="form-select" name="email_back" id="email_back">
+                  <option value="@naver.com">@naver.com</option>
+                  <option value="@gmail.com">@gmail.com</option>
+                  <option value="@daum.net">@daum.net</option>
+                  <option value="@nate.com">@nate.com</option>
+                </select>
+                <input type="hidden" th:id="member_email" th:name="member_email"/>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-6">
+              <div class="checkout-input">
+                <p class="p d-md-block d-none">&nbsp;</p>
+                <button type="button" class="jungho-button ms-2" onclick="return sendEmail()">전송
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-9 col-md-9 col-sm-8 col-xs-7 col-7">
+              <div class="checkout-input">
+                <p class="p"> 인증번호<span>*</span></p>
+                <input type="text" placeholder="인증번호" th:id="email_code" th:name="email_code"/>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-5 col-5">
+              <div class="checkout-input">
+                <p class="p">&nbsp;</p>
+                <input type="hidden" id="email_verified" name="email_verified" value="false"/>
+                <button type="button" class="jungho-button ms-2" th:onClick="checkEmail()" id="email_button"> 확인</button>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!-- address -->
+            <div class="col-lg-12">
+              <div class="checkout-input">
+                <p class="p"> 주소<span>*</span></p>
+                <input type="text" placeholder="Address" th:name="member_address1" th:id="member_address1" th:onClick="openDaumPostcode()" readonly/>
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="checkout-input">
+                <p class="p"> 상세주소<span>*</span></p>
+                <input type="text" placeholder="상세주소" th:name="member_address2" th:id="member_address2"/>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="checkout-input mt-2">
+                <p class="p"> 약관 동의<span>*</span></p>
+              </div>
+              <label for="member_agree" class="form-check-inline ft-4">약관에 동의합니다.</label>
+              <input type="checkbox" class="form-check-inline ms-n2" th:name="member_agree" th:id="member_agree" value="1"/>
+              <button type="submit" class="jungho-button">회원 가입</button>
+            </div>
+          </div>
+        </form>
       </div>
-    </section>
+    </div>
+  </main>
 
-	  <!-- footer -->
-    <th:block th:replace="~{layouts/footer :: footer}"></th:block>
+  <!-- footer -->
+  <th:block th:replace="~{layouts/footer :: footer}" />
 
 </html>

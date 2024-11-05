@@ -266,7 +266,7 @@ function dislikeButton() {
 
 // 0. slider -------------------------------------------------------------------------------------->
 document.addEventListener("DOMContentLoaded", function() {
-  $('.jungho-slider').slick({
+  $('.slider').slick({
     infinite: true,
     slidesToShow: 1,
     slidesToScroll: 1,

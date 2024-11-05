@@ -5,67 +5,58 @@
   xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
   lang="en"
 >
-  <!-- head -->
-  <th:block th:replace="~{layouts/head :: head}"></th:block>
+	<!-- head -->
+	<th:block th:replace="~{layouts/head :: head}" />
 
-  <!-- header -->
-  <th:block th:replace="~{layouts/header :: header}"></th:block>
+	<!-- header -->
+  <th:block th:replace="~{layouts/header :: header}" />
 
-    <!-- navigation -->
-    <div th:with="icon='fas fa-user-cog', text1='Member', text2='Member Login'">
-      <div th:replace="components/navigation :: navigation"></div>
-    </div>
+  <!-- navigation -->
+  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-user-cog', text1='Member', text2='Member Login')}" />
 
-    <!-- section -->
-    <section class="container">
+  <!-- main -->
+  <main class="container">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+        <!-- form -->
+        <form onsubmit="event.preventDefault(); checkMemberIdPw()">
+          <h6 class="checkout-title">로그인</h6>
+          <!-- ID -->
           <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-12">
-              <!-- form -->
-              <form onsubmit="event.preventDefault(); checkMemberIdPw()">
-                <h6 class="checkout-title">로그인</h6>
-                <!-- ID -->
-                <div class="row">
-                  <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="checkout-input">
-                      <p class="p">ID  <span>*</span></p>
-                      <input type="text" th:id="member_id" th:name="member_id" placeholder="아이디를 입력하세요"/>
-                    </div>
-                  </div>
-                </div><br>
-                <!-- pw -->
-                <div class="row">
-                  <div class="col-lg-12">
-                    <div class="checkout-input">
-                      <p class="p">PW  <span>*</span></p>
-                      <input type="password" th:id="member_pw" th:name="member_pw" placeholder="비밀번호를 입력하세요"/>
-                    </div>
-                  </div>
-                </div>
-                <!-- button -->
-                <div class="row">
-                  <div class="col-lg-12 col-md-12 col-sm-12 jungho-center mt-4">
-                    <button type="submit" class="jungho-button">로그인</button>
-                    <button type="button" class="jungho-button"  th:onClick="'window.location.href=\'' + @{/member/addMember} + '\''">회원가입</button>
-                    <button type="button" class="jungho-button" th:onClick="'window.location.href=\'' + @{/member/findMemberId} + '\''">ID 찾기</button>
-                    <button type="button" class="jungho-button" th:onClick="'window.location.href=\'' + @{/member/findMemberPw} + '\''">PW 찾기</button>
-                  </div>
-                </div>
-              </form>
-
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <div class="checkout-input">
+                <p class="p">ID  <span>*</span></p>
+                <input type="text" th:id="member_id" th:name="member_id" placeholder="아이디를 입력하세요"/>
+              </div>
             </div>
-
-            <!-- slider -->
-            <div class="col-lg-6 col-md-6 col-sm-12">
-              <div th:replace="components/slider :: jungho-slider"></div>
+          </div><br>
+          <!-- pw -->
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="checkout-input">
+                <p class="p">PW  <span>*</span></p>
+                <input type="password" th:id="member_pw" th:name="member_pw" placeholder="비밀번호를 입력하세요"/>
+              </div>
             </div>
-
           </div>
-        </div>
+          <!-- button -->
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 jungho-center mt-4">
+              <button type="submit" class="jungho-button">로그인</button>
+              <button type="button" class="jungho-button"  th:onClick="'window.location.href=\'' + @{/member/addMember} + '\''">회원가입</button>
+              <button type="button" class="jungho-button" th:onClick="'window.location.href=\'' + @{/member/findMemberId} + '\''">ID 찾기</button>
+              <button type="button" class="jungho-button" th:onClick="'window.location.href=\'' + @{/member/findMemberPw} + '\''">PW 찾기</button>
+            </div>
+          </div>
+        </form>
       </div>
-    </section>
+      <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 d-row-center">
+        <th:block th:replace="~{components/slider :: slider}" />
+      </div>
+    </div>
+  </main>
 
-
-    <!-- footer -->
-    <th:block th:replace="~{layouts/footer :: footer}"></th:block>
+  <!-- footer -->
+  <th:block th:replace="~{layouts/footer :: footer}" />
 
 </html>

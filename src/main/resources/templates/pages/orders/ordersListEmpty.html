@@ -6,98 +6,82 @@
   lang="en"
 >
   <!-- head -->
-  <th:block th:replace="~{layouts/head :: head}"></th:block>
+  <th:block th:replace="~{layouts/head :: head}" />
 
   <!-- header -->
-  <th:block th:replace="~{layouts/header :: header}"></th:block>
+  <th:block th:replace="~{layouts/header :: header}" />
 
-    <!-- navigation -->
-    <div th:with="icon='fas fa-credit-card', text1='Orders', text2='Orders List'">
-      <div th:replace="components/navigation :: navigation"></div>
-    </div>
+  <!-- navigation -->
+  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-credit-card', text1='Orders', text2='Orders List')}" />
 
-    <!-- section -->
-    <section class="container">
-
-        <!-- sorting + search -->
-        <div class="row mb-3">
-          <!-- sorting -->
-          <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="jungho-left">
-              <i class="fas fa-sort-amount-down fa-lg"></i>&nbsp;&nbsp;
-              <form th:action="@{/orders/getOrdersList}" method="GET" onchange="this.submit()">
-                <select name="sort" class="form-select">
-                  <option value="default">정렬</option>
-                  <option value="nameASC">이름순(오름차순)</option>
-                  <option value="nameDESC">이름순(내림차순)</option>
-                  <option value="priceASC">가격낮은순</option>
-                  <option value="priceDESC">가격높은순</option>
-                  <option value="dateASC">오래된순</option>
-                  <option value="dateDESC">최신순</option>
-                </select>
-              </form>
-            </div>
-          </div>
-          <!-- search -->
-          <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-            <form id="searchForm" method="GET" th:action="@{/orders/searchOrders}">
-              <div class="jungho-right">
-                <select class="ft-5 fw-8 ms-2 searchSelect" th:name="searchType" th:id="searchType">
-                  <option value="name">Name</option>
-                </select>
-                <input class="form-control ft-7 fw-7 me-1 searchBar" type="search" th:id="keyword" placeholder="search" th:name="keyword" required/>
-                <i class="fas fa-search fa-lg" th:id="searchIcon"></i>
-                <button type="submit" id="hiddenSubmit" class="hiddenSubmit"></button>
-              </div>
-            </form>
-          </div>
+  <!-- main -->
+  <main class="container">
+    <div class="row mb-3">
+      <!-- sorting -->
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="jungho-left">
+          <i class="fas fa-sort-amount-down fa-lg"></i>&nbsp;&nbsp;
+          <form th:action="@{/orders/getOrdersList}" method="GET" onchange="this.submit()">
+            <select name="sort" class="form-select">
+              <option value="default">정렬</option>
+              <option value="nameASC">이름순(오름차순)</option>
+              <option value="nameDESC">이름순(내림차순)</option>
+              <option value="priceASC">가격낮은순</option>
+              <option value="priceDESC">가격높은순</option>
+              <option value="dateASC">오래된순</option>
+              <option value="dateDESC">최신순</option>
+            </select>
+          </form>
         </div>
-
-
-        <!-- orders list -->
-        <div class="row">
-          <div class="col-12">
-            <div class="junghoList-card card-margin">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-lg-12">
-                    <!-- orders row -->
-                    <div class="junghoList-container" th:each="orders:${ordersList}">
-                      <div class="junghoList">
-                        <div class="jungho-inline">
-                          <!-- image -->
-                          <div class="junghoList-emp-img">
-                            <img th:src="${orders.product_imgsUrl}"/>
-                          </div>
-                          <!-- name -->
-                          <div class="junghoList-title">
-                            <a th:href="@{|/orders/getOrdersDetails?orders_number=${orders.orders_number}|}" th:text="${orders.product_name}" th:id="product_name" th:value="${orders.product_name}"></a>
-                          </div>
-                        </div>
-                        <!-- quantity -->
-                        <div class="junghoList-quantity">
-                          <span th:text="'수량  : ' + ${orders.orders_quantity}" th:id="orders_quantity" th:value="${orders.orders_quantity}"></span>
-                        </div>
-                        <!-- price -->
-                        <div class="junghoList-price">
-                          <i class="fas fa-won-sign fa-xs"></i>&nbsp;
-                          <span  th:text="${#numbers.formatInteger(orders.orders_totalPrice, 3, 'COMMA')}" th:id="orders_totalPrice" th:value="${orders.orders_totalPrice}">
-                          </span>
-                        </div>
-                        <!-- date -->
-                        <div class="junghoList-date">
-                          <i class="far fa-calendar-alt fa-xs"></i>&nbsp;
-                          <span th:text="${#strings.substring((orders.orders_update != null ? orders.orders_update : orders.orders_date), 0, 10)}"></span>
-                        </div>
+      </div>
+      <!-- search -->
+      <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+        <form id="searchForm" method="GET" th:action="@{/orders/searchOrders}">
+          <div class="jungho-right">
+            <select class="ft-5 fw-8 ms-2 searchSelect" th:name="searchType" th:id="searchType">
+              <option value="name">Name</option>
+            </select>
+            <input class="form-control ft-7 fw-7 me-1 searchBar" type="search" th:id="keyword" placeholder="search" th:name="keyword" required/>
+            <i class="fas fa-search fa-lg" th:id="searchIcon"></i>
+            <button type="submit" id="hiddenSubmit" class="hiddenSubmit"></button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="junghoList-card card-margin">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-12">
+                <!-- orders row -->
+                <div class="junghoList-container" th:each="orders:${ordersList}">
+                  <div class="junghoList">
+                    <div class="jungho-inline">
+                      <!-- image -->
+                      <div class="junghoList-emp-img">
+                        <img th:src="${orders.product_imgsUrl}"/>
+                      </div>
+                      <!-- name -->
+                      <div class="junghoList-title">
+                        <a th:href="@{|/orders/getOrdersDetails?orders_number=${orders.orders_number}|}" th:text="${orders.product_name}" th:id="product_name" th:value="${orders.product_name}"></a>
                       </div>
                     </div>
-                    <!-- /.orders row -->
-
-                    <!-- pagination -->
-                    <div th:with="prefix='orders', subfix='Orders'">
-                      <div th:replace="components/pagination :: pagination"></div>
+                    <!-- quantity -->
+                    <div class="junghoList-quantity">
+                      <span th:text="'수량  : ' + ${orders.orders_quantity}" th:id="orders_quantity" th:value="${orders.orders_quantity}"></span>
                     </div>
-
+                    <!-- price -->
+                    <div class="junghoList-price">
+                      <i class="fas fa-won-sign fa-xs"></i>&nbsp;
+                      <span  th:text="${#numbers.formatInteger(orders.orders_totalPrice, 3, 'COMMA')}" th:id="orders_totalPrice" th:value="${orders.orders_totalPrice}">
+                      </span>
+                    </div>
+                    <!-- date -->
+                    <div class="junghoList-date">
+                      <i class="far fa-calendar-alt fa-xs"></i>&nbsp;
+                      <span th:text="${#strings.substring((orders.orders_update != null ? orders.orders_update : orders.orders_date), 0, 10)}"></span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -105,10 +89,13 @@
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </main>
 
+  <!-- pagination -->
+  <th:block th:replace="~{components/pagination :: pagination (prefix='orders', subfix='Orders')}" />
 
-    <!-- footer -->
-    <th:block th:replace="~{layouts/footer :: footer}"></th:block>
+  <!-- footer -->
+  <th:block th:replace="~{layouts/footer :: footer}" />
 
 </html>

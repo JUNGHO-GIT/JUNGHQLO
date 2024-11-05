@@ -11764,79 +11764,76 @@
   border-left: none !important;
 }
 .border-0 {
-  border: 0px solid #dbdbdb !important;
+  border: 0px solid transparent !important;
 }
 .border-top-0 {
-  border-top: 0px solid #dbdbdb !important;
+  border-top: 0px solid transparent !important;
 }
 .border-right-0 {
-  border-right: 0px solid #dbdbdb !important;
+  border-right: 0px solid transparent !important;
 }
 .border-bottom-0 {
-  border-bottom: 0px solid #dbdbdb !important;
+  border-bottom: 0px solid transparent !important;
 }
 .border-left-0 {
-  border-left: 0px solid #dbdbdb !important;
+  border-left: 0px solid transparent !important;
+}
+.border-dark-1 {
+  border: 1px solid #707070 !important;
+}
+.border-dark-top-1 {
+  border-top: 1px solid #707070 !important;
+}
+.border-dark-right-1 {
+  border-right: 1px solid #707070 !important;
+}
+.border-dark-bottom-1 {
+  border-bottom: 1px solid #707070 !important;
 }
 .border-1 {
-  border: 1px solid #dbdbdb !important;
+  border: 1px solid #bebebe !important;
 }
 .border-top-1 {
-  border-top: 1px solid #dbdbdb !important;
+  border-top: 1px solid #bebebe !important;
 }
 .border-right-1 {
-  border-right: 1px solid #dbdbdb !important;
+  border-right: 1px solid #bebebe !important;
 }
 .border-bottom-1 {
-  border-bottom: 1px solid #dbdbdb !important;
+  border-bottom: 1px solid #bebebe !important;
 }
 .border-left-1 {
-  border-left: 1px solid #dbdbdb !important;
-}
-.border-1-burgundy {
-  border: 1px solid #973131 !important;
-}
-.border-top-1-burgundy {
-  border-top: 1px solid #973131 !important;
-}
-.border-right-1-burgundy {
-  border-right: 1px solid #973131 !important;
-}
-.border-bottom-1-burgundy {
-  border-bottom: 1px solid #973131 !important;
+  border-left: 1px solid #bebebe !important;
 }
 .border-2 {
-  border: 2px solid #dbdbdb !important;
+  border: 2px solid #bebebe !important;
 }
 .border-top-2 {
-  border-top: 2px solid #dbdbdb !important;
+  border-top: 2px solid #bebebe !important;
 }
 .border-right-2 {
-  border-right: 2px solid #dbdbdb !important;
+  border-right: 2px solid #bebebe !important;
 }
 .border-bottom-2 {
-  border-bottom: 2px solid #dbdbdb !important;
+  border-bottom: 2px solid #bebebe !important;
 }
 .border-left-2 {
-  border-left: 2px solid #dbdbdb !important;
+  border-left: 2px solid #bebebe !important;
 }
 .border-3 {
-  border: 3px solid #dbdbdb !important;
+  border: 3px solid #bebebe !important;
 }
 .border-top-3 {
-  border-top: 3px solid #dbdbdb !important;
+  border-top: 3px solid #bebebe !important;
 }
 .border-right-3 {
-  border-right: 3px solid #dbdbdb !important;
+  border-right: 3px solid #bebebe !important;
 }
 .border-bottom-3 {
-  border-bottom: 3px solid #dbdbdb !important;
+  border-bottom: 3px solid #bebebe !important;
 }
 .border-left-3 {
-  border-left: 3px solid #dbdbdb !important;
-}
-.border-dark {
-  border: 1px solid #b3b3b3 !important;
+  border-left: 3px solid #bebebe !important;
 }
 
 /** 99. color *************************************************************************************/

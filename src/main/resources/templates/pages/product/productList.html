@@ -6,16 +6,16 @@
   lang="en"
 >
   <!-- head -->
-  <th:block th:replace="~{layouts/head :: head}"></th:block>
+  <th:block th:replace="~{layouts/head :: head}" />
 
   <!-- header -->
-  <th:block th:replace="~{layouts/header :: header}"></th:block>
+  <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{components/navigation :: navigation (icon='fas fa-shopping-bag', text1='Shop', text2='Product List')}"></th:block>
+  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-shopping-bag', text1='Shop', text2='Product List')}" />
 
-  <!-- section -->
-  <section class="container">
+  <!-- main -->
+  <main class="container">
     <div class="row">
 
       <!-- side bar -->
@@ -228,12 +228,12 @@
       <!-- /. col -->
 
     </div>
-  </section>
+  </main>
 
   <!-- pagination -->
-  <th:block th:replace="~{components/pagination :: pagination (prefix='product', subfix='Product')}"></th:block>
+  <th:block th:replace="~{components/pagination :: pagination (prefix='product', subfix='Product')}" />
 
   <!-- footer -->
-  <th:block th:replace="~{layouts/footer :: footer}"></th:block>
+  <th:block th:replace="~{layouts/footer :: footer}" />
 
 </html>

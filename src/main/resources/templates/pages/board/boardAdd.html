@@ -6,114 +6,103 @@
   lang="en"
 >
   <!-- head -->
-  <th:block th:replace="~{layouts/head :: head}"></th:block>
+  <th:block th:replace="~{layouts/head :: head}" />
 
   <!-- header -->
-  <th:block th:replace="~{layouts/header :: header}"></th:block>
+  <th:block th:replace="~{layouts/header :: header}" />
 
-    <!-- navigation -->
-    <div th:with="icon='fas fa-chalkboard-teacher', text1='Blog', text2='Blog Add'">
-      <div th:replace="components/navigation :: navigation"></div>
-    </div>
+  <!-- navigation -->
+  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-chalkboard-teacher', text1='Blog', text2='Blog Add')}" />
 
-    <!-- section -->
-    <section class="container">
+  <!-- main -->
+  <main class="container">
+    <form th:action="@{/board/addBoard}" method="POST" enctype="multipart/form-data">
 
-          <!-- form -->
-          <form th:action="@{/board/addBoard}" method="POST" enctype="multipart/form-data">
+      <!-- hidden -->
+      <input th:type="hidden" th:id="board_writer" th:name="board_writer" th:value="${session.member_id}"/>
+      <input th:type="hidden" th:id="board_count" th:name="board_count" th:value="0"/>
+      <input th:type="hidden" th:id="board_like" th:name="board_like" th:value="0"/>
+      <input th:type="hidden" th:id="board_dislike" th:name="board_dislike" th:value="0"/>
 
-            <!-- hidden -->
-            <input th:type="hidden" th:id="board_writer" th:name="board_writer" th:value="${session.member_id}"/>
-            <input th:type="hidden" th:id="board_count" th:name="board_count" th:value="0"/>
-            <input th:type="hidden" th:id="board_like" th:name="board_like" th:value="0"/>
-            <input th:type="hidden" th:id="board_dislike" th:name="board_dislike" th:value="0"/>
+      <!-- row 1 -->
+      <div class="row">
 
-            <!-- row 1 -->
-            <div class="row">
+        <!-- col 1 -->
+        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12">
+          <h6 class="checkout-title">게시판 등록</h6>
 
-              <!-- col 1 -->
-              <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12">
-                <h6 class="checkout-title">게시판 등록</h6>
+          <!-- row 2 -->
+          <div class="row">
 
-                <!-- row 2 -->
-                <div class="row">
-
-                  <!-- title -->
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
-                    <div class="checkout-input">
-                      <p class="p">제목<span>*</span></p>
-                      <input type="text" placeholder="Title" th:name="board_title" th:id="board_title"/>
-                    </div>
-                  </div>
-                  <!-- details -->
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
-                    <div class="checkout-input">
-                      <p class="p">내용<span>*</span></p>
-                      <textarea placeholder="Details" th:id="board_contents" th:name="board_contents"></textarea>
-                    </div>
-                  </div>
-                </div>
-                <div class="row mb-5">
-                  <!-- existing image 1 -->
-                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-6">
-                    <div class="checkout-input">
-                      <div class="previewExisting-group">
-                        <p class="p">기존 이미지<span>*</span></p>
-                        <img class="existingMiniBox" id="existingMiniBox" th:src="@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/icon/noimage.png}"/>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- board image 1 -->
-                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-6">
-                    <div class="checkout-input">
-                      <div class="previewMini-group">
-                        <p class="p"><label for="imageFile1">게시물 이미지<span>*</span></label></p>
-                        <input type="file" id="imageFile1" onchange="junghoPreview(1)" class="imageFile" name="board_imgsFile"/>
-                        <div class="imageMiniLoader" id="imageMiniLoader1"></div>
-                        <img class="imageMiniBox" id="imageMiniBox1"/>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+            <!-- title -->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+              <div class="checkout-input">
+                <p class="p">제목<span>*</span></p>
+                <input type="text" placeholder="Title" th:name="board_title" th:id="board_title"/>
               </div>
-
-
-              <!-- preview -->
-              <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 col-12">
-                <div class="row">
-                  <!-- preview image -->
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
-                    <div class="previewImage-group">
-                      <h4 class="p"><i class="fa fa-image"></i>&nbsp;Preview</h4>
-                      <hr>
-                      <div class="imageLoader" id="imageLoader"></div>
-                      <img class="imageBox" id="imageBox"/>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <!-- button -->
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
-                    <div class="previewButton-group">
-                      <button class="jungho-button" id="resetButton" type="reset"
-                      th:onClick="window.location.reload()">새로고침</button>
-                      <button class="jungho-button" id="submitButton" type="submit"
-                      th:onClick="return addBoard()">등록하기</button>
-                      <button type="button" class="jungho-button" th:onClick="'window.location.href=\'' + @{/} + '\''"> 홈으로 </button>
-                    </div>
-                  </div>
+            </div>
+            <!-- details -->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+              <div class="checkout-input">
+                <p class="p">내용<span>*</span></p>
+                <textarea placeholder="Details" th:id="board_contents" th:name="board_contents"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-5">
+            <!-- existing image 1 -->
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-6">
+              <div class="checkout-input">
+                <div class="previewExisting-group">
+                  <p class="p">기존 이미지<span>*</span></p>
+                  <img class="existingMiniBox" id="existingMiniBox" th:src="@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/icon/noimage.png}"/>
                 </div>
               </div>
             </div>
-          </form>
-
-
+            <!-- board image 1 -->
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-6">
+              <div class="checkout-input">
+                <div class="previewMini-group">
+                  <p class="p"><label for="imageFile1">게시물 이미지<span>*</span></label></p>
+                  <input type="file" id="imageFile1" onchange="junghoPreview(1)" class="imageFile" name="board_imgsFile"/>
+                  <div class="imageMiniLoader" id="imageMiniLoader1"></div>
+                  <img class="imageMiniBox" id="imageMiniBox1"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- preview -->
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 col-12">
+          <div class="row">
+            <!-- preview image -->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+              <div class="previewImage-group">
+                <h4 class="p"><i class="fa fa-image"></i>&nbsp;Preview</h4>
+                <hr>
+                <div class="imageLoader" id="imageLoader"></div>
+                <img class="imageBox" id="imageBox"/>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!-- button -->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+              <div class="previewButton-group">
+                <button class="jungho-button" id="resetButton" type="reset"
+                th:onClick="window.location.reload()">새로고침</button>
+                <button class="jungho-button" id="submitButton" type="submit"
+                th:onClick="return addBoard()">등록하기</button>
+                <button type="button" class="jungho-button" th:onClick="'window.location.href=\'' + @{/} + '\''"> 홈으로 </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </section>
+    </form>
+  </main>
 
-
-    <!-- footer -->
-    <th:block th:replace="~{layouts/footer :: footer}"></th:block>
+  <!-- footer -->
+  <th:block th:replace="~{layouts/footer :: footer}" />
 
 </html>

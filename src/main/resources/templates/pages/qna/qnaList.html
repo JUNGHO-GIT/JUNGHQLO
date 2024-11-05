@@ -6,16 +6,16 @@
   lang="en"
 >
   <!-- head -->
-  <th:block th:replace="~{layouts/head :: head}"></th:block>
+  <th:block th:replace="~{layouts/head :: head}" />
 
   <!-- header -->
-  <th:block th:replace="~{layouts/header :: header}"></th:block>
+  <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{components/navigation :: navigation (icon='fas fa-question-circle', text1='Qna', text2='Qna List')}"></th:block>
+  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-question-circle', text1='Qna', text2='Qna List')}" />
 
-  <!-- section -->
-  <section class="container">
+  <!-- main -->
+  <main class="container">
 
     <!-- sorting + search -->
     <div class="row mb-3 jungho-inline">
@@ -112,12 +112,12 @@
         </div>
       </div>
     </div>
-  </section>
+  </main>
 
   <!-- pagination -->
-  <th:block th:replace="~{components/pagination :: pagination (prefix='qna', subfix='Qna')}"></th:block>
+  <th:block th:replace="~{components/pagination :: pagination (prefix='qna', subfix='Qna')}" />
 
   <!-- footer -->
-  <th:block th:replace="~{layouts/footer :: footer}"></th:block>
+  <th:block th:replace="~{layouts/footer :: footer}" />
 
 </html>
