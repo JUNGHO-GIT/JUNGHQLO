@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+  <!-- slider -->
+  <section th:fragment="slider" class="slider">
+    <th:block th:each="i : ${#numbers.sequence(1, 7)}">
+      <img
+        th:src="@{${STORAGE} + '/instagram3/instagram-' + ${i} + '.jpg'}"
+        loading="lazy"
+        alt="instagram"
+        class="img-fluid"
+      />
+    </th:block>
+  </section>
+
+</html>

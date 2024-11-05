@@ -7,117 +7,218 @@
   <!-- header -->
   <th:block th:replace="~{layouts/header :: header}" />
 
-  <!-- hero -->
-  <section class="hero">
-    <div class="hero-slider owl-carousel">
+  <!-- main -->
+  <main class="container">
+
+    <!-- hero -->
+    <section class="container hero-slider owl-carousel mb-30">
       <th:block th:each="i : ${#numbers.sequence(1, 2)}">
-        <div class="hero-items set-bg" th:attr="data-setbg=@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/main/main-{i}.png(i=${i})}">
-          <div class="container w-100p">
-            <div class="row">
-              <div class="col-xl-5 col-lg-7 col-md-8">
-                <div class="hero-text">
-                  <h6>Summer Collection</h6>
-                  <h2>Summer - Fall Collections 2023</h2>
-                  <p class="p">A specialist label creating luxury essentials. Ethically crafted with an unwavering commitment to exceptional quality.</p>
-                  <a th:href="@{/product/getProductList}" class="primary-btn">Shop now <span class="arrow_right"></span></a>
-                </div>
-              </div>
+        <div
+          th:class="|hero-items set-bg|"
+          th:attr="data-setbg=@{${STORAGE} + '/main/main-' + ${i} + '.png'(i=${i})}"
+        >
+          <div class="hero-text px-20">
+            <div class="fw-1-0rem fw-800 burgundy upper-text mb-20">
+              <span th:text="${#dates.year(#dates.createNow())}"></span>
+              <span>New Arrivals</span>
+            </div>
+            <div class="fs-2-5rem fw-800 black upper-text mb-20">
+              <span th:text="${#dates.year(#dates.createNow())}"></span>
+              <span>Collection</span>
+            </div>
+            <div class="fs-1-0rem fw-600 light-black lh-2-0 mb-20">
+              A specialist label creating luxury essentials. Ethically crafted with an unwavering commitment to exceptional quality.
+            </div>
+            <div
+              th:class="|primary-btn|"
+              th:onclick="|location.href='@{/product/getProductList}'|"
+            >
+              <p>Shop now</p>
+              <span class="arrow_right"></span>
             </div>
           </div>
         </div>
       </th:block>
-    </div>
-  </main>
+    </section>
 
-  <!-- product -->
-  <section class="product spad">
-    <div class="container">
+    <!-- product -->
+    <section class="container px-30 mb-30">
+      <!-- filter -->
       <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-          <!-- styling -->
-          <ul class="filter-controls">
-            <li data-filter=".new-arrivals" class="active">Modern Styles</li>
-            <li data-filter=".hot-sales">Classic Styles</li>
-          </ul>
+          <div class="filter-controls d-row-center mb-30">
+            <div
+              th:class="|fs-1-4rem fw-700 pointer-burgundy me-4vw active|"
+              data-filter="all"
+              th:text="|All|"
+            ></div>
+            <div
+              th:class="|fs-1-4rem fw-700 pointer-burgundy me-4vw|"
+              data-filter=".modern"
+              th:text="|Modern|"
+            ></div>
+            <div
+              th:class="|fs-1-4rem fw-700 pointer-burgundy|"
+              data-filter=".classic"
+              th:text="|Classic|"
+            ></div>
+          </div>
         </div>
       </div>
-      <div class="row product-filter">
-        <!-- recommended 1~2 -->
-        <th:block th:each="i : ${#numbers.sequence(1, 2)}">
-          <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
-            <div class="product-item">
-              <div class="product-item-pic set-bg" th:attr="data-setbg=@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/recommend/recommend-{i}.jpg(i=${i})}"></div>
-              <div class="product-item-text">
-                <h6>Modern Styles</h6>
-                <!-- prevent click -->
-                <a class="add-cart" href="javascript:void(0)()">Modern Styles</a>
-                <h5>
-                  <i class="fas fa-won-sign fa-xs"></i>
-                  <span th:id="|'price-' + ${i}|"></span>
-                </h5>
-                <!-- color -->
-                <div class="product-color-select">
-                  <label for="pc-1"><input th:type="radio" id="pc-1"></label>
-                  <label class="active black" for="pc-2"><input th:type="radio" id="pc-2"></label>
-                  <label class="grey" for="pc-3"><input th:type="radio" id="pc-3"></label>
+      <!-- image -->
+      <div class="row product-filter" id="productContainer">
+        <!-- 1~4 (Modern) -->
+        <th:block th:each="i, iterStat : ${#numbers.sequence(1, 4)}">
+          <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mix modern p-10">
+            <!-- image -->
+            <div class="d-row-center">
+              <img
+                th:id="|product-item-pic-${i}|"
+                th:name="|product-item-pic-${i}|"
+                th:aria-label="|product-item-pic-${i}|"
+                th:src="@{${STORAGE} + '/recommend/recommend-' + ${i} + '.jpg'(i=${i})}"
+                th:class="|w-100p h-300 radius-2 border-1 shadow-1|"
+              />
+            </div>
+            <!-- title & theme -->
+            <div class="d-row-between">
+              <div class="d-row-left">
+                <div class="fs-1-2rem fw-700 lh-2-0">
+                  Modern Styles
                 </div>
+              </div>
+              <div class="d-row-right me-20">
+                <div
+                  th:if="${iterStat.index} == 0"
+                  th:class="|fs-0-7rem primary me-5 mt-5|"
+                  th:text="|New|"
+                ></div>
+                <div
+                  th:if="${iterStat.index} == 1"
+                  th:class="|fs-0-7rem danger me-5 mt-5|"
+                  th:text="|Hot|"
+                ></div>
+                <div
+                  th:if="${iterStat.index} == 2"
+                  th:class="|fs-0-7rem warning me-5 mt-5|"
+                  th:text="|Sale|"
+                ></div>
+                <div
+                  th:if="${iterStat.index} == 3"
+                  th:class="|fs-0-7rem success me-5 mt-5|"
+                  th:text="|Best|"
+                ></div>
+              </div>
+            </div>
+            <!-- price & color -->
+            <div class="d-row-between">
+              <div class="d-row-left">
+                <div class="fs-1-0rem fw-600 dark lh-2-0">
+                  <i class="fas fa-won-sign fa-xs"></i>
+                  <span th:id="|price-${i}|"></span>
+                </div>
+              </div>
+              <div class="d-row-right me-20">
+                <div class="fs-0-7rem primary me-5">●</div>
+                <div class="fs-0-7rem danger me-5">●</div>
+                <div class="fs-0-7rem warning">●</div>
               </div>
             </div>
           </div>
         </th:block>
-
-        <!-- recommended 5~6 -->
-        <th:block th:each="i : ${#numbers.sequence(5, 6)}">
-          <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
-            <div class="product-item">
-              <div class="product-item-pic set-bg" th:attr="data-setbg=@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/recommend/recommend-{i}.jpg(i=${i})}"></div>
-              <div class="product-item-text">
-                <h6>Casual Styles</h6>
-                <a class="add-cart" href="javascript:void(0)()">Casual Styles</a>
-                <h5>
-                  <i class="fas fa-won-sign fa-xs"></i>
-                  <span th:id="|'price-' + ${i}|"></span>
-                </h5>
-                <!-- color -->
-                <div class="product-color-select">
-                  <label for="pc-1"><input th:type="radio" id="pc-1"></label>
-                  <label class="active black" for="pc-2"><input th:type="radio" id="pc-2"></label>
-                  <label class="grey" for="pc-3"><input th:type="radio" id="pc-3"></label>
+        <!-- 5~8 (Classic) -->
+        <th:block th:each="i, iterStat : ${#numbers.sequence(5, 8)}">
+          <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mix classic p-10">
+            <!-- image -->
+            <div class="d-row-center">
+              <img
+                th:id="|product-item-pic-${i}|"
+                th:name="|product-item-pic-${i}|"
+                th:aria-label="|product-item-pic-${i}|"
+                th:src="@{${STORAGE} + '/recommend/recommend-' + ${i} + '.jpg'(i=${i})}"
+                th:class="|w-100p h-300 radius-2 border-1 shadow-1|"
+              />
+            </div>
+            <!-- title & theme -->
+            <div class="d-row-between">
+              <div class="d-row-left">
+                <div class="fs-1-2rem fw-700 lh-2-0">
+                  Classic Styles
                 </div>
+              </div>
+              <div class="d-row-right me-20">
+                <div
+                  th:if="${iterStat.index} == 2"
+                  th:class="|fs-0-7rem primary me-5 mt-5|"
+                  th:text="|New|"
+                ></div>
+                <div
+                  th:if="${iterStat.index} == 1"
+                  th:class="|fs-0-7rem danger me-5 mt-5|"
+                  th:text="|Hot|"
+                ></div>
+                <div
+                  th:if="${iterStat.index} == 3"
+                  th:class="|fs-0-7rem warning me-5 mt-5|"
+                  th:text="|Sale|"
+                ></div>
+                <div
+                  th:if="${iterStat.index} == 0"
+                  th:class="|fs-0-7rem success me-5 mt-5|"
+                  th:text="|Best|"
+                ></div>
+              </div>
+            </div>
+            <!-- price & color -->
+            <div class="d-row-between">
+              <div class="d-row-left">
+                <div class="fs-1-0rem fw-600 dark lh-2-0">
+                  <i class="fas fa-won-sign fa-xs"></i>
+                  <span th:id="|price-${i}|"></span>
+                </div>
+              </div>
+              <div class="d-row-right me-20">
+                <div class="fs-0-7rem dark me-5">●</div>
+                <div class="fs-0-7rem info me-5">●</div>
+                <div class="fs-0-7rem success">●</div>
               </div>
             </div>
           </div>
         </th:block>
-        <!-- /.col -->
-
       </div>
-    </div>
-  </main>
+    </section>
 
-  <!-- instagram -->
-  <section class="instagram spad mt-n3">
-    <div class="container">
+    <!-- instagram -->
+    <section class="container px-30">
       <div class="row">
-
-          <div class="col-lg-8">
-            <div class="instagram-pic">
-              <th:block th:each="i : ${#numbers.sequence(1, 6)}">
-              <div class="instagram-pic-item set-bg" th:attr="data-setbg=@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/instagram3/instagram-{i}.jpg(i=${i})}"></div>
-              </th:block>
-            </div>
-          </div>
-
-        <div class="col-lg-4">
-          <div class="instagram-text">
-            <h2>Instagram</h2>
-            <p class="p">
-              In a quaint village by the sea, young Amelia dreamed of adventure. She spent her days exploring the shoreline, collecting seashells and watching the ships sail by.
-            </p>
-            <h3>#JUNGHQLO</h3>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <div class="instagram-pic">
+            <th:block th:each="i : ${#numbers.sequence(1, 6)}">
+              <img
+                th:id="|instagram-pic-${i}|"
+                th:name="|instagram-pic-${i}|"
+                th:aria-label="|instagram-pic-${i}|"
+                th:src="@{${STORAGE} + '/instagram3/instagram-' + ${i} + '.jpg'(i=${i})}"
+                th:class="|instagram-pic-item|"
+              />
+            </th:block>
           </div>
         </div>
       </div>
-    </div>
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 pt-40">
+          <div class="fs-2-2rem fw-700 black mb-20">
+            Instagram
+          </div>
+          <div class="fs-1-1rem fw-600 light-black lh-1-4 mb-20">
+            In a quaint village by the sea, young Amelia dreamed of adventure. She spent her days exploring the shoreline, collecting seashells and watching the ships sail by.
+          </div>
+          <div class="fs-1-7rem fw-700 burgundy">
+            #JUNGHQLO
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- footer -->

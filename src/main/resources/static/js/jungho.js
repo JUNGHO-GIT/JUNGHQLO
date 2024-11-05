@@ -1,21 +1,24 @@
-/**
-* @author Jungho
-* @since 2023-04-08
-* @desc 주제 : 1.board / 2.member / 3.notice / 4.orders / 5.product / 6.qna
-* @desc 순서 : 1.list / 2.details / 3.find / 4.sort / 5.add / 6.update / 7.delete
-**/
-
 /** ----------------------------------------------------------------------------------------------->
 * @param {string} id
 * @desc 50,000 ~ 150,000 사이의 랜덤 가격을 생성
 **/
-function setRandomPrice(id) {
-  let minPrice = 50000;
-  let maxPrice = 150000;
-  let randomPrice = Math.floor(Math.random() * (maxPrice - minPrice + 1)) + minPrice;
-  const element = document.getElementById(id);
-  element && (element.innerText = numberWithCommas(randomPrice));
-}
+(function() {
+  function setRandomPrice(ids) {
+    let minPrice = 50000;
+    let maxPrice = 150000;
+
+    ids.forEach(id => {
+      let randomPrice = Math.floor(Math.random() * (maxPrice - minPrice + 1)) + minPrice;
+      const element = document.getElementById(id);
+      element && (element.innerText = numberWithCommas(randomPrice));
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const priceIds = Array.from({ length: 8 }, (_, i) => `price-${i + 1}`);
+    setRandomPrice(priceIds);
+  });
+})();
 
 /** ----------------------------------------------------------------------------------------------->
 * @param {number} x
@@ -24,14 +27,6 @@ function setRandomPrice(id) {
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
-document.addEventListener("DOMContentLoaded", function() {
-  for (let i = 1; i <= 2; i++) {
-    setRandomPrice("price-" + i);
-  }
-  for (let i = 5; i <= 6; i++) {
-    setRandomPrice("price-" + i);
-  }
-});
 
 /** ----------------------------------------------------------------------------------------------->
 * @desc 로그인 회원 알림

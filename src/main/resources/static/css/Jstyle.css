@@ -11840,278 +11840,302 @@
 .red {
   color: #ff0000 !important;
 }
-.pointer-red:hover {
+.bg-red {
+  background-color: #ff0000 !important;
+}
+.pointer-red:hover,
+.pointer-red.active {
   cursor: pointer !important;
   color: #ff0000 !important;
   transition: transform 0.1s ease-in-out !important;
   transform: scale(1.1) !important;
 }
-.bg-red {
-  background-color: #ff0000 !important;
-}
 
 .burgundy {
   color: #973131 !important;
 }
-.pointer-burgundy:hover {
+.bg-burgundy {
+  background-color: #973131 !important;
+}
+.pointer-burgundy:hover,
+.pointer-burgundy.active {
   cursor: pointer !important;
   color: #973131 !important;
   transition: transform 0.1s ease-in-out !important;
   transform: scale(1.1) !important;
-}
-.bg-burgundy {
-  background-color: #973131 !important;
 }
 
 .danger {
   color: #EF4444 !important;
 }
-.pointer-danger:hover {
+.bg-danger {
+  background-color: #EF4444 !important;
+}
+.pointer-danger:hover,
+.pointer-danger.active {
   cursor: pointer !important;
   color: #EF4444 !important;
   transition: transform 0.1s ease-in-out !important;
   transform: scale(1.1) !important;
 }
-.bg-danger {
-  background-color: #EF4444 !important;
-}
 
 .warning {
   color: #F59E0B !important;
 }
-.pointer-warning:hover {
+.bg-warning {
+  background-color: #F59E0B !important;
+}
+.pointer-warning:hover,
+.pointer-warning.active {
   cursor: pointer !important;
   color: #F59E0B !important;
   transition: transform 0.1s ease-in-out !important;
   transform: scale(1.1) !important;
-}
-.bg-warning {
-  background-color: #F59E0B !important;
 }
 
 .orange {
   color: #F59E0B !important;
 }
-.pointer-orange:hover {
+.bg-orange {
+  background-color: #F59E0B !important;
+}
+.pointer-orange:hover,
+.pointer-orange.active {
   cursor: pointer !important;
   color: #F59E0B !important;
   transition: transform 0.1s ease-in-out !important;
   transform: scale(1.1) !important;
 }
-.bg-orange {
-  background-color: #F59E0B !important;
-}
 
 .yellow {
   color: #FBBF24 !important;
 }
-.pointer-yellow:hover {
+.bg-yellow {
+  background-color: #FBBF24 !important;
+}
+.pointer-yellow:hover,
+.pointer-yellow.active {
   cursor: pointer !important;
   color: #FBBF24 !important;
   transition: transform 0.1s ease-in-out !important;
   transform: scale(1.1) !important;
-}
-.bg-yellow {
-  background-color: #FBBF24 !important;
 }
 
 .ivory {
   color: #F2ECBE !important;
 }
-.pointer-ivory:hover {
+.bg-ivory {
+  background-color: #F2ECBE !important;
+}
+.pointer-ivory:hover,
+.pointer-ivory.active {
   cursor: pointer !important;
   color: #F2ECBE !important;
   transition: transform 0.1s ease-in-out !important;
   transform: scale(1.1) !important;
 }
-.bg-ivory {
-  background-color: #F2ECBE !important;
-}
 
 .success {
   color: #10B981 !important;
 }
-.pointer-success:hover {
+.bg-success {
+  background-color: #10B981 !important;
+}
+.pointer-success:hover,
+.pointer-success.active {
   cursor: pointer !important;
   color: #10B981 !important;
   transition: transform 0.1s ease-in-out !important;
   transform: scale(1.1) !important;
-}
-.bg-success {
-  background-color: #10B981 !important;
 }
 
 .green {
   color: #10B981 !important;
 }
-.pointer-green:hover {
+.bg-green {
+  background-color: #10B981 !important;
+}
+.pointer-green:hover,
+.pointer-green.active {
   cursor: pointer !important;
   color: #10B981 !important;
   transition: transform 0.1s ease-in-out !important;
   transform: scale(1.1) !important;
 }
-.bg-green {
-  background-color: #10B981 !important;
-}
 
 .info {
   color: #89e2ff !important;
 }
-.pointer-info:hover {
+.bg-info {
+  background-color: #89e2ff !important;
+}
+.pointer-info:hover,
+.pointer-info.active {
   cursor: pointer !important;
   color: #89e2ff !important;
   transition: transform 0.1s ease-in-out !important;
   transform: scale(1.1) !important;
-}
-.bg-info {
-  background-color: #89e2ff !important;
 }
 
 .primary {
   color: #1976D2 !important;
 }
-.pointer-primary:hover {
+.bg-primary {
+  background-color: #1976D2 !important;
+}
+.pointer-primary:hover,
+.pointer-primary.active {
   cursor: pointer !important;
   color: #1976D2 !important;
   transition: transform 0.1s ease-in-out !important;
   transform: scale(1.1) !important;
 }
-.bg-primary {
-  background-color: #1976D2 !important;
-}
 
 .blue {
   color: #3B82F6 !important;
 }
-.pointer-blue:hover {
+.bg-blue {
+  background-color: #3B82F6 !important;
+}
+.pointer-blue:hover,
+.pointer-blue.active {
   cursor: pointer !important;
   color: #3B82F6 !important;
   transition: transform 0.1s ease-in-out !important;
   transform: scale(1.1) !important;
-}
-.bg-blue {
-  background-color: #3B82F6 !important;
 }
 
 .navy {
   color: #0f2f74 !important;
 }
-.pointer-navy:hover {
+.bg-navy {
+  background-color: #0f2f74 !important;
+}
+.pointer-navy:hover,
+.pointer-navy.active {
   cursor: pointer !important;
   color: #0f2f74 !important;
   transition: transform 0.1s ease-in-out !important;
   transform: scale(1.1) !important;
 }
-.bg-navy {
-  background-color: #0f2f74 !important;
-}
 
 .secondary {
   color: #6c757d !important;
 }
-.pointer-secondary:hover {
+.bg-secondary {
+  background-color: #6c757d !important;
+}
+.pointer-secondary:hover,
+.pointer-secondary.active {
   cursor: pointer !important;
   color: #6c757d !important;
   transition: transform 0.1s ease-in-out !important;
   transform: scale(1.1) !important;
-}
-.bg-secondary {
-  background-color: #6c757d !important;
 }
 
 .white {
   color: #FFFFFF !important;
 }
-.pointer-white:hover {
+.bg-white {
+  background-color: #FFFFFF !important;
+}
+.pointer-white:hover,
+.pointer-white.active {
   cursor: pointer !important;
   color: #FFFFFF !important;
   transition: transform 0.1s ease-in-out !important;
   transform: scale(1.1) !important;
 }
-.bg-white {
-  background-color: #FFFFFF !important;
-}
 
 .light {
   color: #f8f8f8 !important;
 }
-.pointer-light:hover {
+.bg-light {
+  background-color: #f8f8f8 !important;
+}
+.pointer-light:hover,
+.pointer-light.active {
   cursor: pointer !important;
   color: #f8f8f8 !important;
   transition: transform 0.1s ease-in-out !important;
   transform: scale(1.1) !important;
-}
-.bg-light {
-  background-color: #f8f8f8 !important;
 }
 
 .light-grey {
   color: #dbdbdb !important;
 }
-.pointer-light-grey:hover {
+.bg-light-grey {
+  background-color: #dbdbdb !important;
+}
+.pointer-light-grey:hover,
+.pointer-light-grey.active {
   cursor: pointer !important;
   color: #dbdbdb !important;
   transition: transform 0.1s ease-in-out !important;
   transform: scale(1.1) !important;
 }
-.bg-light-grey {
-  background-color: #dbdbdb !important;
-}
 
 .grey {
   color: #9CA3AF !important;
 }
-.pointer-grey:hover {
+.bg-grey {
+  background-color: #9CA3AF !important;
+}
+.pointer-grey:hover,
+.pointer-grey.active {
   cursor: pointer !important;
   color: #9CA3AF !important;
   transition: transform 0.1s ease-in-out !important;
   transform: scale(1.1) !important;
-}
-.bg-grey {
-  background-color: #9CA3AF !important;
 }
 
 .dark {
   color: #5e5e5e !important;
 }
-.pointer-dark:hover {
+.bg-dark {
+  background-color: #5e5e5e !important;
+}
+.pointer-dark:hover,
+.pointer-dark.active {
   cursor: pointer !important;
   color: #5e5e5e !important;
   transition: transform 0.1s ease-in-out !important;
   transform: scale(1.1) !important;
 }
-.bg-dark {
-  background-color: #5e5e5e !important;
-}
 
 .light-black {
   color: #3a3a3a !important;
 }
-.pointer-light-black:hover {
+.bg-light-black {
+  background-color: #3a3a3a !important;
+}
+.pointer-light-black:hover,
+.pointer-light-black.active {
   cursor: pointer !important;
   color: #3a3a3a !important;
   transition: transform 0.1s ease-in-out !important;
   transform: scale(1.1) !important;
-}
-.bg-light-black {
-  background-color: #3a3a3a !important;
 }
 
 .black {
   color: #111111 !important;
 }
-.pointer-black:hover {
+.bg-black {
+  background-color: #111111 !important;
+}
+.pointer-black:hover,
+.pointer-black.active {
   cursor: pointer !important;
   color: #111111 !important;
   transition: transform 0.1s ease-in-out !important;
   transform: scale(1.1) !important;
 }
-.bg-black {
-  background-color: #111111 !important;
-}
 
 .transparent {
   color: transparent !important;
+}
+.bg-transparent {
+  background-color: transparent !important;
 }
 .pointer-transparent {
   cursor: pointer !important;
@@ -12119,10 +12143,8 @@
   transition: transform 0.1s ease-in-out !important;
   transform: scale(1.1) !important;
 }
-.bg-transparent {
-  background-color: transparent !important;
-}
 
+/** 99. color *************************************************************************************/
 .firstScore {
   color: #1976D2 !important;
 }

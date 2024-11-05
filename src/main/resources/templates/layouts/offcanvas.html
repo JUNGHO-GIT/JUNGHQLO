@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+  <!-- off-canvas -->
+  <section th:fragment="offcanvas">
+
+    <!-- off-canvas-menu-overlay -->
+    <div class="off-canvas-menu-overlay"></div>
+
+    <!-- off-canvas -->
+    <div class="off-canvas-menu-wrapper">
+      <div class="d-row-center mt-20 ms-n20">
+        <div class="off-canvas-links">
+          <a
+            th:if="${session.member_id == null}"
+            th:href="@{/member/addMember}"
+          >
+            <span class="upper-text me-20">
+              SignUp
+            </span>
+          </a>
+          <a
+            th:if="${session.member_id == null}"
+            th:href="@{/member/loginMember}"
+          >
+            <span class="upper-text me-20">
+              Login
+            </span>
+          </a>
+          <a
+            th:if="${session.member_id != null}"
+            th:href="@{/member/getMemberDetails}"
+          >
+            <span class="upper-text me-20">
+              MyPage
+            </span>
+          </a>
+          <a
+            th:if="${session.member_id != null}"
+            th:onclick="logoutMember()"
+          >
+            <span class="upper-text me-20">
+              Logout
+            </span>
+          </a>
+        </div>
+        <div class="off-canvas-top-hover">
+          <span class="upper-text black hover">
+            Admin
+          </span>
+          <ul th:if ="${session.member_id == ADMIN}">
+            <li>
+              <a th:href="@{https://dashboard.stripe.com/test/dashboard}">
+                AdminPage
+              </a>
+            </li>
+            <li>
+              <a th:href="@{/member/getMemberList}">
+                MemberList
+              </a>
+            </li>
+            <li>
+              <a th:href="@{/product/addProduct}">
+                AddProduct
+              </a>
+            </li>
+            <li>
+              <a th:href="@{/notice/addNotice}">
+                AddNotice
+              </a>
+            </li>
+          </ul>
+          <ul th:if ="${session.member_id != ADMIN}">
+            <li>
+              <a th:onclick="adminAlert()">
+                AdminPage
+              </a>
+            </li>
+            <li>
+              <a th:onclick="adminAlert()">
+                MemberList
+              </a>
+            </li>
+            <li>
+              <a th:onclick="adminAlert()">
+                AddProduct
+              </a>
+            </li>
+            <li>
+              <a th:onclick="adminAlert()">
+                AddNotice
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- hr -->
+      <hr class="mt-40 mb-40" />
+      <!-- menu -->
+      <div class="d-col-left">
+        <div
+          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-50|"
+          th:onclick="|location.href='@{/product/getProductList}'|"
+        >
+          Products
+        </div>
+        <div
+          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-50|"
+          th:if="${session.member_id != null}"
+          th:onclick="|location.href='@{/orders/getOrdersList}'|"
+        >
+          Orders
+        </div>
+        <div
+          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-50|"
+          th:if="${session.member_id == null}"
+          th:onclick="return sessionAlert()"
+        >
+          Orders
+        </div>
+        <div
+          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-50|"
+          th:onclick="|location.href='@{/board/getBoardList}'|"
+        >
+          Blog
+        </div>
+        <div
+          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-50|"
+          th:onclick="|location.href='@{/notice/getNoticeList}'|"
+        >
+          Notice
+        </div>
+        <div
+          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-50|"
+          th:onclick="|location.href='@{/qna/getQnaList}'|"
+        >
+          QnA
+        </div>
+        <div
+          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-50|"
+          th:onclick="|location.href='@{/contact/getContactList}'|"
+        >
+          Contact
+        </div>
+      </div>
+      <!-- hr -->
+      <hr class="mt-20 mb-40" />
+      <!-- text -->
+      <div class="d-col-left">
+        <img
+          th:src="@{${STORAGE} + '/icon/logo.png'}"
+          th:loading="|lazy|"
+          th:alt="|logo|"
+          th:width="|70px|"
+          th:height="|70px|"
+          th:class="|pointer|"
+          th:onclick="|location.href='@{/}'|"
+        />
+        <div class="fs-1-1rem fw-700 mt-20 mb-20">
+          JUNGHQLO
+        </div>
+        <div class="fs-0-9rem fw-400 mb-10 ls-1">
+          ⓒ 2024 JUNGHQLO
+        </div>
+        <div class="fs-0-9rem fw-400 ls-1">
+          All Rights Reserved.
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</html>

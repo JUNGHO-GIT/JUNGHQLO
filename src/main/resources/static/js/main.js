@@ -3,8 +3,8 @@ $(window).on("load", function () {
   $(".loader-wrapper").fadeOut("slow");
 
   // isotope filter
-  $(".filter-controls li").on("click", function () {
-    $(".filter-controls li").removeClass("active");
+  $(".filter-controls div").on("click", function () {
+    $(".filter-controls div").removeClass("active");
     $(this).addClass("active");
   });
   if ($(".product-filter").length > 0) {
@@ -17,12 +17,6 @@ $(window).on("load", function () {
 $(".set-bg").each(function () {
   var bg = $(this).data("setbg");
   $(this).css("background-image", "url(" + bg + ")");
-});
-
-/** Navigation **********************************************************************************/
-$(".mobile-menu").slicknav({
-  prependTo: "#mobile-menu-wrap",
-  allowParentLinks: true,
 });
 
 /** Accordion Active *****************************************************************************/
@@ -61,30 +55,6 @@ $(".hero-slider").owlCarousel({
   smartSpeed: 1200,
   autoHeight: false,
   autoplay: false,
-});
-
-/** Product Slider *****************************************************************************/
-$("select").niceSelect();
-$(".product-color-select label, .shop-sidebar-size label, .product-details-option-size label")
-.on("click", function () {
-  $(".product-color-select label, .shop-sidebar-size label, .product-details-option-size label")
-  .removeClass("active");
-  $(this).addClass("active");
-});
-
-/** Product Details Slider **********************************************************************/
-$(".nice-scroll").niceScroll({
-  cursorcolor: "#0d0d0d",
-  cursorwidth: "5px",
-  background: "#e5e5e5",
-  cursorborder: "",
-  autohidemode: true,
-  horizrailenabled: false,
-});
-
-/** Magnific Popup ******************************************************************************/
-$(".video-popup").magnificPopup({
-  type: "iframe",
 });
 
 /** Quantity change *****************************************************************************/
