@@ -1,5 +1,7 @@
 package com.example.junghqlo.controller;
 
+import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -18,16 +20,17 @@ import com.example.junghqlo.service.BoardService;
 @RequestMapping("/board")
 public class BoardController {
 
-  // 0. static -------------------------------------------------------------------------------------
-  private static final String PAGES = "/pages/board";
-  private static final String PAGE = "board";
-  private static final String PAGE_UP = "Board";
-
   // 0. constructor injection --------------------------------------------------------------------->
   private BoardService boardService;
   BoardController(BoardService boardService) {
     this.boardService = boardService;
   }
+
+  // 0. static -------------------------------------------------------------------------------------
+  private static String PAGE = "board";
+  private static String PAGE_UP = "Board";
+  private static Board MODEL = new Board();
+  private static List<Board> LIST = new ArrayList<>();
 
   // 1. getBoardList (GET) ------------------------------------------------------------------------>
   @GetMapping("/getBoardList")
@@ -63,15 +66,14 @@ public class BoardController {
     }
 
     PageHandler<Board> page = boardService.getBoardList(pageNumber, itemsPer, sort, board);
-    List<Board> boardList = page.getContent();
+    LIST = page.getContent();
 
-    model.addAttribute("PAGE", PAGE);
-    model.addAttribute("PAGE_UP", PAGE_UP);
+    // 모델
     model.addAttribute("sort", sort);
     model.addAttribute("page", page);
-    model.addAttribute("boardList", boardList);
+    model.addAttribute("LIST", LIST);
 
-    return PAGES + "/" + PAGE + "List";
+    return MessageFormat.format("/pages/{0}/{1}List", PAGE, PAGE);
   };
 
   // 2. getBoardDetails (GET) --------------------------------------------------------------------->
@@ -87,18 +89,17 @@ public class BoardController {
     boardService.updateBoardCount(board_number, session);
 
     // 모델
-    model.addAttribute("PAGE", PAGE);
-    model.addAttribute("PAGE_UP", PAGE_UP);
-    model.addAttribute("boardModel", boardService.getBoardDetails(board_number));
+    model.addAttribute("MODEL", MODEL);
     model.addAttribute("member_id", session.getAttribute("member_id"));
 
-    return PAGES + "/" + PAGE + "Details";
+    return MessageFormat.format("/pages/{0}/{1}Details", PAGE, PAGE);
   }
 
   // 3. searchBoard (GET) ------------------------------------------------------------------------>
   @GetMapping("/searchBoard")
   public String searchBoard(
     @ModelAttribute Board board,
+    @RequestParam(required=false) String sort,
     @RequestParam(defaultValue="1") Integer pageNumber,
     @RequestParam(defaultValue="9") Integer itemsPer,
     @RequestParam String searchType,
@@ -107,7 +108,7 @@ public class BoardController {
   ) throws Exception {
 
     if (searchType == null || keyword == null) {
-      return "redirect:/" + PAGE + "/get" + PAGE_UP + "List";
+      return MessageFormat.format("redirect:/{0}/get{1}List", PAGE, PAGE_UP);
     }
     else if (searchType.equals("title")) {
       searchType="board_title";
@@ -116,27 +117,25 @@ public class BoardController {
       searchType="board_contents";
     }
 
-    PageHandler<Board> page = boardService.searchBoard(pageNumber, itemsPer, keyword, searchType, board);
-    List<Board> boardList = page.getContent();
+    PageHandler<Board> page
+      = boardService.searchBoard(pageNumber, itemsPer, keyword, searchType, board);
 
-    model.addAttribute("PAGE", PAGE);
-    model.addAttribute("PAGE_UP", PAGE_UP);
+    LIST = page.getContent();
+
+    // 모델
+    model.addAttribute("sort", sort);
     model.addAttribute("page", page);
-    model.addAttribute("boardList", boardList);
+    model.addAttribute("LIST", LIST);
 
-    return PAGES + "/" + PAGE + "Search";
+    return MessageFormat.format("/pages/{0}/{1}Search", PAGE, PAGE);
   }
 
   // 4. addBoard (GET) ---------------------------------------------------------------------------->
   @GetMapping("/addBoard")
   public String addBoard(
-    Model model
   ) throws Exception {
 
-    model.addAttribute("PAGE", PAGE);
-    model.addAttribute("PAGE_UP", PAGE_UP);
-
-    return PAGES + "/" + PAGE + "Add";
+    return MessageFormat.format("/pages/{0}/{1}Add", PAGE, PAGE);
   }
 
   // 4. addBoard (POST) --------------------------------------------------------------------------->
@@ -147,7 +146,7 @@ public class BoardController {
 
     boardService.addBoard(board);
 
-    return "redirect:/" + PAGE + "/get" + PAGE_UP + "List";
+    return MessageFormat.format("redirect:/{0}/get{1}List", PAGE, PAGE_UP);
   }
 
   // 5. updateBoard (GET) ------------------------------------------------------------------------>
@@ -157,11 +156,10 @@ public class BoardController {
     Model model
   ) throws Exception {
 
-    model.addAttribute("PAGE", PAGE);
-    model.addAttribute("PAGE_UP", PAGE_UP);
-    model.addAttribute("boardModel", boardService.getBoardDetails(board_number));
+    // 모델
+    model.addAttribute("MODEL", MODEL);
 
-    return PAGES + "/" + PAGE + "Update";
+    return MessageFormat.format("/pages/{0}/{1}Update", PAGE, PAGE);
   }
 
   // 5. updateBoard (POST) ------------------------------------------------------------------------>
@@ -173,7 +171,7 @@ public class BoardController {
 
     boardService.updateBoard(board, existingImage);
 
-    return "redirect:/" + PAGE + "/get" + PAGE_UP + "List";
+    return MessageFormat.format("redirect:/{0}/get{1}List", PAGE, PAGE_UP);
   }
 
   // 5-2. updateLike (GET) ------------------------------------------------------------------------>
@@ -214,11 +212,10 @@ public class BoardController {
     Model model
   ) throws Exception {
 
-    model.addAttribute("PAGE", PAGE);
-    model.addAttribute("PAGE_UP", PAGE_UP);
-    model.addAttribute("boardModel", boardService.getBoardDetails(board_number));
+    // 모델
+    model.addAttribute("MODEL", MODEL);
 
-    return PAGES + "/" + PAGE + "Delete";
+    return MessageFormat.format("/pages/{0}/{1}Delete", PAGE, PAGE);
   }
 
   // 6. deleteBoard (POST) ------------------------------------------------------------------------>
@@ -229,6 +226,6 @@ public class BoardController {
 
     boardService.deleteBoard(board_number);
 
-    return "redirect:/" + PAGE + "/get" + PAGE_UP + "List";
+    return MessageFormat.format("redirect:/{0}/get{1}List", PAGE, PAGE_UP);
   }
 }

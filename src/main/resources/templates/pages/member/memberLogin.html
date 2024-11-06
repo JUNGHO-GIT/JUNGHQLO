@@ -16,7 +16,7 @@
         <!-- form -->
         <form
           th:method="|POST|"
-          th:onsubmit="|event.preventDefault(); checkMemberIdPw()|"
+          th:onsubmit="|event.preventDefault(); checkMemberIdPw();|"
         >
           <!-- title -->
           <div class="row d-row-center mb-20">
@@ -77,7 +77,7 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <button
                 th:type="|submit|"
-                class="btn btn-dark w-100p"
+                th:class="|btn btn-dark w-100p|"
               >
                 로그인
               </button>

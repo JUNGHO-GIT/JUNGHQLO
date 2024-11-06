@@ -1,11 +1,13 @@
 /** ------------------------------------------------------------------------------------------------
 * @param {string} url
+* @param {string} param
+* @param {string} value
+* @return {void}
 * @desc url로 페이지 이동
 **/
-function goToPage(url) {
-  console.log(url);
-  location.href = url;
-}
+function goToPage(url, param, value) {
+  location.href = `${url}?${param}=${value}`;
+};
 
 /** ----------------------------------------------------------------------------------------------->
 * @param {string} el

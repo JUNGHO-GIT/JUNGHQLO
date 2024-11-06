@@ -16,7 +16,7 @@ public class EmailHandler {
   JavaMailSender mailSender;
   Map<String, String> emailCodeMap = new HashMap<>();
   EmailHandler(JavaMailSender mailSender) {
-  this.mailSender = mailSender;
+    this.mailSender = mailSender;
   }
 
   // 2. 이메일 인증번호 생성 ---------------------------------------------------------------------->

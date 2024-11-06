@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- head -->
@@ -7,7 +8,22 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-bell', text1='Notice', text2='List')}" />
+  <th:block th:replace="~{layouts/navigation :: navigation (
+    icon = 'fas fa-bell',
+    text1 = ${PAGE_UP},
+    text2 = ${THEME}
+  )}" />
+
+  <!-- declare -->
+  <th:block th:with="
+    number = |${PAGE}_number|,
+    title = |${PAGE}_title|,
+    contents = |${PAGE}_contents|,
+    date = |${PAGE}_date|,
+    update = |${PAGE}_update|,
+    count = |${PAGE}_count|,
+    getDetails = |/${PAGE}/get${PAGE_UP}Details|
+  " />
 
   <!-- main -->
   <main class="container px-30">
@@ -26,7 +42,7 @@
           <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
             <form
               th:method="|GET|"
-              th:action="@{${'/'+PAGE+'/get'+PAGE_UP+'List'}}"
+              th:action="@{|/${PAGE}/get${PAGE_UP}List|}"
               th:onchange="|this.submit()|"
               th:class="|d-row-left w-90p|"
             >
@@ -49,7 +65,7 @@
             <form
               th:id="|searchForm|"
               th:method="|GET|"
-              th:action="@{${'/'+PAGE+'/search'+PAGE_UP}}"
+              th:action="@{|/${PAGE}/search${PAGE_UP}|}"
               th:class="|d-row-right|"
             >
               <select class="form-control" name="searchType">
@@ -84,7 +100,7 @@
                 <!-- logo + title -->
                 <div class="d-row-left w-100p mb-20">
                   <img
-                    th:src="|${STORAGE}/icon/logo.png|"
+                    th:src="@{|${STORAGE}/icon/logo.png|}"
                     th:loading="|lazy|"
                     th:alt="|logo|"
                     th:width="|30px|"
@@ -92,19 +108,19 @@
                     th:class="|radius-2 me-10|"
                   />
                   <div
-                    th:id="|${PAGE}_title|"
-                    th:name="|${PAGE}_title|"
-                    th:value="|${LIST[PAGE + '_title']}|"
-                    th:text="|${LIST[PAGE + '_title']}|"
+                    th:id="|${title}|"
+                    th:name="|${title}|"
+                    th:value="|${LIST[title]}|"
+                    th:text="|${LIST[title]}|"
                     th:class="|fs-1-2rem fw-700 burgundy hover|"
-                    th:onclick="|goToPage(@{/${PAGE + /get}${PAGE_UP}Details(pageNumber=${LIST[PAGE + '_number']})})|">
+                    th:onclick="|location.href='@{|${getDetails}?${number}=${LIST[number]}|}'|"
                   >
                   </div>
                   <div
-                    th:id="|${PAGE}_number|"
-                    th:name="|${PAGE}_number|"
-                    th:value="|${LIST[PAGE + '_number']}|"
-                    th:text="|${LIST[PAGE + '_number']}|"
+                    th:id="|${number}|"
+                    th:name="|${number}|"
+                    th:value="|${LIST[number]}|"
+                    th:text="|${LIST[number]}|"
                     th:class="|fs-0-9rem fw-600 grey ms-auto|"
                   >
                   </div>
@@ -112,10 +128,10 @@
                 <!-- contents -->
                 <div class="d-row-left w-100p mb-30">
                   <div
-                    th:id="|${PAGE}_contents|"
-                    th:name="|${PAGE}_contents|"
-                    th:value="|${LIST[PAGE + '_contents']}|"
-                    th:text="|${#strings.abbreviate(LIST[PAGE + '_contents'], 40)}|"
+                    th:id="|${contents}|"
+                    th:name="|${contents}|"
+                    th:value="|${LIST[contents]}|"
+                    th:text="|${#strings.abbreviate((LIST[contents]), 40)}|"
                     th:class="|fs-0-9rem fw-600 light-black|"
                   >
                   </div>
@@ -125,21 +141,21 @@
                   <div class="d-row-center">
                     <i th:class="|fa fa-calendar fs-0-7rem me-10|"></i>
                     <div
-                      th:id="|${PAGE}_date|"
-                      th:name="|${PAGE}_date|"
-                      th:value="|${LIST[PAGE + '_date']}|"
-                      th:text="|${#strings.substring((LIST[PAGE + '_update'] != null ? LIST[PAGE + '_update'] : LIST[PAGE + '_date']), 0, 10)}|"
+                      th:id="|${date}|"
+                      th:name="|${date}|"
+                      th:value="|${LIST[date]}|"
                       th:class="|fs-0-9rem fw-600 dark|"
+                      th:text="|${#strings.substring((LIST[update] != null ? LIST[update] : LIST[date]), 0, 10)}|"
                     >
                     </div>
                   </div>
                   <div class="d-row-center">
                     <i th:class="|fa fa-eye fs-0-7rem me-10|"></i>
                     <div
-                      th:id="|${PAGE}_count|"
-                      th:name="|${PAGE}_count|"
-                      th:value="|${LIST[PAGE + '_count']}|"
-                      th:text="|${LIST[PAGE + '_count']}|"
+                      th:id="|${count}|"
+                      th:name="|${count}|"
+                      th:value="|${LIST[count]}|"
+                      th:text="|${LIST[count]}|"
                       th:class="|fs-0-9rem fw-600 dark|"
                     >
                     </div>
@@ -157,15 +173,15 @@
             <button
               th:type="|button|"
               th:class="|btn btn-dark w-90p|"
-              th:if="${session.member_id != null}"
-              th:onclick="|location.href='| + @{${'/' + PAGE + '/add' + PAGE_UP}} + |'|"
+              th:if="|${session.member_id != null}|"
+              th:onclick="|location.href='@{|/${PAGE}/add${PAGE_UP}|}'|"
             >
               공지사항 추가
             </button>
             <button
               th:type="|button|"
               th:class="|btn btn-dark w-90p|"
-              th:if="${session.member_id == null}"
+              th:if="|${session.member_id == null}|"
               th:onclick="|return sessionAlert()|"
             >
               공지사항 추가
@@ -186,7 +202,10 @@
   </main>
 
   <!-- pagination -->
-  <th:block th:replace="~{components/pagination :: pagination (prefix='notice', subfix='Notice')}" />
+  <th:block th:replace="~{components/pagination :: pagination (
+    prefix = ${PAGE},
+    suffix = ${PAGE_UP}
+  )}" />
 
   <!-- footer -->
   <th:block th:replace="~{layouts/footer :: footer}" />

@@ -98,7 +98,7 @@
       <!-- menu -->
       <div class="d-col-left">
         <div
-          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30|"
+          class="fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30"
           th:onclick="|location.href='@{/product/getProductList}'|"
         >
           Products
@@ -147,7 +147,7 @@
       <!-- text -->
       <div class="d-col-left">
         <img
-          th:src="|${STORAGE}/icon/logo.png|"
+          th:src="@{|${STORAGE}/icon/logo.png|}"
           th:loading="|lazy|"
           th:alt="|logo|"
           th:width="|70px|"

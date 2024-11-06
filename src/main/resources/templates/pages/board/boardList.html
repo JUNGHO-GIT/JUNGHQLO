@@ -109,7 +109,10 @@
   </main>
 
   <!-- pagination -->
-  <th:block th:replace="~{components/pagination :: pagination (prefix='board', subfix='Board')}" />
+  <th:block th:replace="~{components/pagination :: pagination (
+    prefix = ${PAGE},
+    suffix = ${PAGE_UP}
+  )}" />
 
   <!-- footer -->
   <th:block th:replace="~{layouts/footer :: footer}" />

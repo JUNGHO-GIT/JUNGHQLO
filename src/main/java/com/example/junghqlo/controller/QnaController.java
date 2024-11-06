@@ -1,5 +1,6 @@
 package com.example.junghqlo.controller;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -26,7 +27,6 @@ public class QnaController {
   }
 
   // 0. static -------------------------------------------------------------------------------------
-  private static String RETURN = "/pages/qna/";
   private static String PAGE = "qna";
   private static String PAGE_UP = "Qna";
   private static Qna MODEL = new Qna();
@@ -43,7 +43,7 @@ public class QnaController {
   ) throws Exception {
 
     // sorting order
-    if(sort == null) {
+    if(sort == null || sort.equals("default")) {
       sort="qna_category IS NOT NULL ORDER BY qna_number DESC";
     }
     else if(sort.equals("goods")) {
@@ -72,10 +72,8 @@ public class QnaController {
     model.addAttribute("sort", sort);
     model.addAttribute("page", page);
     model.addAttribute("LIST", LIST);
-    model.addAttribute("PAGE", PAGE);
-    model.addAttribute("PAGE_UP", PAGE_UP);
 
-    return RETURN + PAGE + "List";
+    return MessageFormat.format("/pages/{0}/{1}List", PAGE, PAGE);
   };
 
   // 2. getQnaDetails (GET) ----------------------------------------------------------------------->
@@ -93,11 +91,9 @@ public class QnaController {
 
     // 모델
     model.addAttribute("MODEL", MODEL);
-    model.addAttribute("PAGE", PAGE);
-    model.addAttribute("PAGE_UP", PAGE_UP);
     model.addAttribute("member_id", session.getAttribute("member_id"));
 
-    return RETURN + PAGE + "Details";
+    return MessageFormat.format("/pages/{0}/{1}Details", PAGE, PAGE);
   }
 
   // 3. searchQna (GET) --------------------------------------------------------------------------->
@@ -113,8 +109,8 @@ public class QnaController {
   ) throws Exception {
 
     // searchType order
-    if(searchType == null || keyword == null) {
-      return "redirect:/" + PAGE + "/get" + PAGE_UP + "List";
+    if (searchType == null || keyword == null) {
+      return MessageFormat.format("redirect:/{0}/get{1}List", PAGE, PAGE_UP);
     }
     else if(searchType.equals("title")) {
       searchType="qna_title";
@@ -125,29 +121,21 @@ public class QnaController {
 
     PageHandler<Qna> page
     = qnaService.searchQna(pageNumber, itemsPer, keyword, searchType, qna);
-
     LIST = page.getContent();
 
     // 모델
     model.addAttribute("sort", sort);
     model.addAttribute("page", page);
     model.addAttribute("LIST", LIST);
-    model.addAttribute("PAGE", PAGE);
-    model.addAttribute("PAGE_UP", PAGE_UP);
 
-    return RETURN + PAGE + "Search";
+    return MessageFormat.format("/pages/{0}/{1}Search", PAGE, PAGE);
   }
 
   // 4. addQna (GET) ------------------------------------------------------------------------------>
   @GetMapping("/addQna")
-  public String addQna(
-    Model model
-  ) throws Exception {
+  public String addQna() throws Exception {
 
-    model.addAttribute("PAGE", PAGE);
-    model.addAttribute("PAGE_UP", PAGE_UP);
-
-    return RETURN + PAGE + "Add";
+    return MessageFormat.format("/pages/{0}/{1}Add", PAGE, PAGE);
   }
 
   // 4. addQna (POST) ----------------------------------------------------------------------------->
@@ -158,7 +146,7 @@ public class QnaController {
 
     qnaService.addQna(qna);
 
-    return "redirect:/" + PAGE + "/get" + PAGE_UP + "List";
+    return MessageFormat.format("redirect:/{0}/get{1}List", PAGE, PAGE_UP);
   }
 
   // 4. updateQna (GET) --------------------------------------------------------------------------->
@@ -172,10 +160,8 @@ public class QnaController {
 
     // 모델
     model.addAttribute("MODEL", MODEL);
-    model.addAttribute("PAGE", PAGE);
-    model.addAttribute("PAGE_UP", PAGE_UP);
 
-    return RETURN + PAGE + "Update";
+    return MessageFormat.format("/pages/{0}/{1}Update", PAGE, PAGE);
   }
 
   // 4. updateQna (POST) -------------------------------------------------------------------------->
@@ -187,7 +173,7 @@ public class QnaController {
 
     qnaService.updateQna(qna, existingImage);
 
-    return "redirect:/" + PAGE + "/get" + PAGE_UP + "List";
+    return MessageFormat.format("redirect:/{0}/get{1}List", PAGE, PAGE_UP);
   }
 
   // 5-2. updateLike (GET) ------------------------------------------------------------------------>
@@ -232,10 +218,8 @@ public class QnaController {
 
     // 모델
     model.addAttribute("MODEL", MODEL);
-    model.addAttribute("PAGE", PAGE);
-    model.addAttribute("PAGE_UP", PAGE_UP);
 
-    return RETURN + PAGE + "Delete";
+    return MessageFormat.format("/pages/{0}/{1}Delete", PAGE, PAGE);
   }
 
   // 5. deleteQna (POST) -------------------------------------------------------------------------->
@@ -246,6 +230,6 @@ public class QnaController {
 
     qnaService.deleteQna(qna_number);
 
-    return "redirect:/" + PAGE + "/get" + PAGE_UP + "List";
+    return MessageFormat.format("redirect:/{0}/get{1}List", PAGE, PAGE_UP);
   }
 }

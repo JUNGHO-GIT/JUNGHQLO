@@ -1,5 +1,6 @@
 package com.example.junghqlo.controller;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -26,7 +27,6 @@ public class NoticeController {
   }
 
   // 0. static -------------------------------------------------------------------------------------
-  private static String RETURN = "/pages/notice/";
   private static String PAGE = "notice";
   private static String PAGE_UP = "Notice";
   private static Notice MODEL = new Notice();
@@ -42,8 +42,8 @@ public class NoticeController {
     Model model
   ) throws Exception {
 
-    // sorting order
-    if(sort == null || sort.equals("default")) {
+    // sort order
+    if (sort == null || sort.equals("default")) {
       sort="notice_number DESC";
     }
     else if(sort.equals("titleASC")) {
@@ -65,17 +65,17 @@ public class NoticeController {
       sort="notice_date DESC";
     }
 
-    PageHandler<Notice> page = noticeService.getNoticeList(pageNumber, itemsPer, sort, notice);
+    PageHandler<Notice> page
+    = noticeService.getNoticeList(pageNumber, itemsPer, sort, notice);
+
     LIST = page.getContent();
 
     // 모델
     model.addAttribute("sort", sort);
     model.addAttribute("page", page);
     model.addAttribute("LIST", LIST);
-    model.addAttribute("PAGE", PAGE);
-    model.addAttribute("PAGE_UP", PAGE_UP);
 
-    return RETURN + PAGE + "List";
+    return MessageFormat.format("/pages/{0}/{1}List", PAGE, PAGE);
   };
 
   // 2. getNoticeDetails (GET) -------------------------------------------------------------------->
@@ -93,11 +93,9 @@ public class NoticeController {
 
     // 모델
     model.addAttribute("MODEL", MODEL);
-    model.addAttribute("PAGE", PAGE);
-    model.addAttribute("PAGE_UP", PAGE_UP);
     model.addAttribute("member_id", session.getAttribute("member_id"));
 
-    return RETURN + PAGE + "Details";
+    return MessageFormat.format("/pages/{0}/{1}Details", PAGE, PAGE);
   }
 
   // 3. searchNotice (GET) ------------------------------------------------------------------------>
@@ -114,7 +112,7 @@ public class NoticeController {
 
     // searchType order
     if (searchType == null || keyword == null) {
-      return "redirect:/" + PAGE + "/get" + PAGE_UP + "List";
+      return MessageFormat.format("redirect:/{0}/get{1}List", PAGE, PAGE_UP);
     }
     else if(searchType.equals("title")) {
       searchType="notice_title";
@@ -132,22 +130,15 @@ public class NoticeController {
     model.addAttribute("sort", sort);
     model.addAttribute("page", page);
     model.addAttribute("LIST", LIST);
-    model.addAttribute("PAGE", PAGE);
-    model.addAttribute("PAGE_UP", PAGE_UP);
 
-    return RETURN + PAGE + "Search";
+    return MessageFormat.format("/pages/{0}/{1}Search", PAGE, PAGE);
   }
 
   // 4. addNotice (GET) --------------------------------------------------------------------------->
   @GetMapping("/addNotice")
-  public String addNotice(
-    Model model
-  ) throws Exception {
+  public String addNotice() throws Exception {
 
-    model.addAttribute("PAGE", PAGE);
-    model.addAttribute("PAGE_UP", PAGE_UP);
-
-    return RETURN + PAGE + "Add";
+    return MessageFormat.format("/pages/{0}/{1}Add", PAGE, PAGE);
   }
 
   // 4. addNotice (POST) -------------------------------------------------------------------------->
@@ -158,7 +149,7 @@ public class NoticeController {
 
     noticeService.addNotice(notice);
 
-    return "redirect:/" + PAGE + "/get" + PAGE_UP + "List";
+    return MessageFormat.format("redirect:/{0}/get{1}List", PAGE, PAGE_UP);
   }
 
   // 5. updateNotice (GET) ------------------------------------------------------------------------>
@@ -172,10 +163,8 @@ public class NoticeController {
 
     // 모델
     model.addAttribute("MODEL", MODEL);
-    model.addAttribute("PAGE", PAGE);
-    model.addAttribute("PAGE_UP", PAGE_UP);
 
-    return RETURN + PAGE + "Update";
+    return MessageFormat.format("/pages/{0}/{1}Update", PAGE, PAGE);
   }
 
   // 5. updateNotice (POST) ----------------------------------------------------------------------->
@@ -187,7 +176,7 @@ public class NoticeController {
 
     noticeService.updateNotice(notice, existingImage);
 
-    return "redirect:/" + PAGE + "/get" + PAGE_UP + "List";
+    return MessageFormat.format("redirect:/{0}/get{1}List", PAGE, PAGE_UP);
   }
 
   // 5-2. updateLike (GET) ------------------------------------------------------------------------>
@@ -223,8 +212,8 @@ public class NoticeController {
   // 6. deleteNotice (GET) ------------------------------------------------------------------------>
   @GetMapping("/deleteNotice")
   public String deleteNotice(
-    @RequestParam Integer notice_number,
     @ModelAttribute Notice notice,
+    @RequestParam Integer notice_number,
     Model model
   ) throws Exception {
 
@@ -232,10 +221,8 @@ public class NoticeController {
 
     // 모델
     model.addAttribute("MODEL", MODEL);
-    model.addAttribute("PAGE", PAGE);
-    model.addAttribute("PAGE_UP", PAGE_UP);
 
-    return RETURN + PAGE + "Delete";
+    return MessageFormat.format("/pages/{0}/{1}Delete", PAGE, PAGE);
   }
 
   // 6. deleteNotice (POST) ----------------------------------------------------------------------->
@@ -246,6 +233,6 @@ public class NoticeController {
 
     noticeService.deleteNotice(notice_number);
 
-    return "redirect:/" + PAGE + "/get" + PAGE_UP + "List";
+    return MessageFormat.format("redirect:/{0}/get{1}List", PAGE, PAGE_UP);
   }
 }

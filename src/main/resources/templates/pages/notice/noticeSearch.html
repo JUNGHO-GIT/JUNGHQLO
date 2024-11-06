@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- head -->
@@ -7,7 +8,7 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-bell', text1='Notice', text2='Search')}" />
+  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-bell', text1='Notice', text2='${PAGE_UP}')}" />
 
   <!-- main -->
   <main class="container px-30">
@@ -26,7 +27,7 @@
           <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
             <form
               th:method="|GET|"
-              th:action="@{/notice/getNoticeList}"
+              th:action="@{${'/'+PAGE+'/get'+PAGE_UP+'List'}}"
               th:onchange="|this.submit()|"
               th:class="|d-row-left w-90p|"
             >
@@ -49,7 +50,7 @@
             <form
               th:id="|searchForm|"
               th:method="|GET|"
-              th:action="@{/notice/searchNotice}"
+              th:action="@{${'/'+PAGE+'/search'+PAGE_UP}}"
               th:class="|d-row-right|"
             >
               <select class="form-control" name="searchType">
@@ -79,12 +80,25 @@
         <!-- notice list -->
         <div class="row">
           <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <th:block th:each="notice:${noticeList}">
+            <th:block
+              th:each="
+                LIST: ${LIST}
+              "
+              th:with="
+                number = |${PAGE}_number|,
+                title = |${PAGE}_title|,
+                contents = |${PAGE}_contents|,
+                date = |${PAGE}_date|,
+                update = |${PAGE}_update|,
+                count = |${PAGE}_count|,
+                getDetails = |/${PAGE}/get${PAGE_UP}Details|
+              "
+            >
               <div class="d-col-center border-1 radius-2 shadow-1 p-30 mb-20">
                 <!-- logo + title -->
                 <div class="d-row-left w-100p mb-20">
                   <img
-                    th:src="|${STORAGE}/icon/logo.png|"
+                    th:src="@{|${STORAGE}/icon/logo.png|}"
                     th:loading="|lazy|"
                     th:alt="|logo|"
                     th:width="|30px|"
@@ -92,19 +106,19 @@
                     th:class="|radius-2 me-10|"
                   />
                   <div
-                    th:id="|notice_title|"
-                    th:name="|notice_title|"
-                    th:value="${notice.notice_title}"
+                    th:id="|${title}|"
+                    th:name="|${title}|"
+                    th:value="|${LIST[title]}|"
+                    th:text="|${LIST[title]}|"
                     th:class="|fs-1-2rem fw-700 burgundy hover|"
-                    th:text="${notice.notice_title}"
-                    th:onclick="|location.href='@{/notice/getNoticeDetails(notice_number=${notice.notice_number})}'|"
+                    th:onclick="|location.href='@{|${getDetails}?${number}=${LIST[number]}|}'|"
                   >
                   </div>
                   <div
-                    th:id="|notice_number|"
-                    th:name="|notice_number|"
-                    th:value="${notice.notice_number}"
-                    th:text="${notice.notice_number}"
+                    th:id="|${number}|"
+                    th:name="|${number}|"
+                    th:value="|${LIST[number]}|"
+                    th:text="|${LIST[number]}|"
                     th:class="|fs-0-9rem fw-600 grey ms-auto|"
                   >
                   </div>
@@ -112,11 +126,11 @@
                 <!-- contents -->
                 <div class="d-row-left w-100p mb-30">
                   <div
-                    th:id="|notice_contents|"
-                    th:name="|notice_contents|"
-                    th:value="${notice.notice_contents}"
+                    th:id="|${contents}|"
+                    th:name="|${contents}|"
+                    th:value="|${LIST[contents]}|"
+                    th:text="|${#strings.abbreviate((LIST[contents]), 40)}|"
                     th:class="|fs-0-9rem fw-600 light-black|"
-                    th:text="${#strings.abbreviate(notice.notice_contents, 20)}"
                   >
                   </div>
                 </div>
@@ -125,22 +139,22 @@
                   <div class="d-row-center">
                     <i th:class="|fa fa-calendar fs-0-7rem me-10|"></i>
                     <div
-                      th:id="|notice_date|"
-                      th:name="|notice_date|"
-                      th:value="${notice.notice_date}"
+                      th:id="|${date}|"
+                      th:name="|${date}|"
+                      th:value="|${LIST[date]}|"
                       th:class="|fs-0-9rem fw-600 dark|"
-                      th:text="${#strings.substring((notice.notice_update != null ? notice.notice_update : notice.notice_date), 0, 10)}"
+                      th:text="|${#strings.substring((LIST[update] != null ? LIST[update] : LIST[date]), 0, 10)}|"
                     >
                     </div>
                   </div>
                   <div class="d-row-center">
                     <i th:class="|fa fa-eye fs-0-7rem me-10|"></i>
                     <div
-                      th:id="|notice_count|"
-                      th:name="|notice_count|"
-                      th:value="${notice.notice_count}"
+                      th:id="|${count}|"
+                      th:name="|${count}|"
+                      th:value="|${LIST[count]}|"
+                      th:text="|${LIST[count]}|"
                       th:class="|fs-0-9rem fw-600 dark|"
-                      th:text="${notice.notice_count}"
                     >
                     </div>
                   </div>
@@ -157,15 +171,15 @@
             <button
               th:type="|button|"
               th:class="|btn btn-dark w-90p|"
-              th:if="${session.member_id != null}"
-              th:onclick="|location.href='@{/notice/addNotice}'|"
+              th:if="|${session.member_id != null}|"
+              th:onclick="|location.href='@{|/${PAGE}/add${PAGE_UP}|}'|"
             >
               공지사항 추가
             </button>
             <button
               th:type="|button|"
               th:class="|btn btn-dark w-90p|"
-              th:if="${session.member_id == null}"
+              th:if="|${session.member_id == null}|"
               th:onclick="|return sessionAlert()|"
             >
               공지사항 추가
@@ -186,7 +200,10 @@
   </main>
 
   <!-- pagination -->
-  <th:block th:replace="~{components/pagination :: pagination (prefix='notice', subfix='Notice')}" />
+  <th:block th:replace="~{components/pagination :: pagination (
+    prefix = ${PAGE},
+    suffix = ${PAGE_UP}
+  )}" />
 
   <!-- footer -->
   <th:block th:replace="~{layouts/footer :: footer}" />
