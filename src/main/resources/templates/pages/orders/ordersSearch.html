@@ -1,5 +1,5 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
   <!-- head -->
   <th:block th:replace="~{layouts/head :: head}" />
 
@@ -19,7 +19,7 @@
         <div class="jungho-left">
           <i class="fas fa-sort-amount-down fa-lg"></i>&nbsp;&nbsp;
           <form th:action="@{/orders/getOrdersList}" th:method="|GET|" onchange="this.submit()">
-            <select name="sort" class="form-select">
+            <select name="sort" class="form-control">
               <option value="default">정렬</option>
               <option value="nameASC">이름순(오름차순)</option>
               <option value="nameDESC">이름순(내림차순)</option>

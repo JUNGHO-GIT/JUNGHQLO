@@ -1,5 +1,5 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
   <!-- head -->
   <th:block th:replace="~{layouts/head :: head}" />
 
@@ -13,97 +13,172 @@
   <main class="container px-30">
     <div class="row">
       <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
-    <!-- sorting + search -->
-    <div class="row mb-3 jungho-inline">
-      <!-- sorting -->
-      <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-        <div class="jungho-left">
-          <i class="fas fa-sort-amount-down fa-lg"></i>&nbsp;&nbsp;
-          <form th:action="@{/notice/getNoticeList}" th:method="|GET|" onchange="this.submit()">
-            <select name="sort" class="form-select">
-              <option value="default">정렬</option>
-              <option value="titleASC">제목순(오름차순)</option>
-              <option value="titleDESC">제목순(내림차순)</option>
-              <option value="countASC">조회수낮은순</option>
-              <option value="countDESC">조회수높은순</option>
-              <option value="dateASC">오래된순</option>
-              <option value="dateDESC">최신순</option>
-            </select>
-          </form>
-        </div>
-      </div>
-      <!-- search -->
-      <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-        <form id="searchForm" th:method="|GET|" th:action="@{/notice/searchNotice}">
-          <div class="jungho-right">
-            <select class="ft-5 fw-8 ms-2 searchSelect" th:name="|searchType" th:id="searchType|">
-              <option value="title">제목</option>
-              <option value="contents">내용</option>
-            </select>
-            <input class="form-control ft-7 fw-7 me-1 searchBar" th:type="search" th:id="|keyword" th:placeholder="|search" th:name=|"keyword|" required/>
-            <i class="fas fa-search fa-lg" th:id="|searchIcon|"></i>
-            <button th:type="|submit|" id="hiddenSubmit" class="hiddenSubmit"></button>
+        <!-- title -->
+        <div class="row d-row-center mb-20">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="fs-1-8rem fw-800 light-black">
+              공지사항
+            </div>
           </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- notice list -->
-    <div class="row">
-      <div class="col-12">
-        <div class="junghoList-card card-margin">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <!-- notice row -->
-                <div class="junghoList-container" th:each="notice:${noticeList}">
-                  <div class="junghoList">
-                    <div class="jungho-inline">
-                      <!-- image -->
-                      <div class="junghoList-emp-img">
-                        <img th:src="@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/icon/logo.png}"/>
-                      </div>
-                      <!-- writer -->
-                      <div class="junghoList-writer">
-                        <span th:text="${notice.notice_writer}"></span>
-                      </div>
-                    </div>
-                    <!-- title -->
-                    <div class="junghoList-title">
-                      <a th:id="|notice_title" th:value="notice_title" th:href="@{|/notice/getNoticeDetails?notice_number=${notice.notice_number}|}" th:text="${notice.notice_title}|"></a>
-                    </div>
-                    <!-- content -->
-                    <div class="junghoList-contents">
-                      <span th:text="${#strings.abbreviate(notice.notice_contents, 20)}"
-                      th:id="|notice_contents" th:value="notice_contents|"></span>
-                    </div>
-                    <!-- view -->
-                    <div class="junghoList-count">
-                      <i class="fa fa-eye"></i>&nbsp;
-                      <span th:text="${notice.notice_count}" th:id="|notice_count" th:value="${notice.notice_count}|"></span>
-                    </div>
-                    <!-- date -->
-                    <div class="junghoList-date">
-                      <i class="far fa-calendar-alt fa-xs"></i>&nbsp;
-                      <span th:text="${#strings.substring((notice.notice_update != null ? notice.notice_update : notice.notice_date), 0, 10)}"></span>
-                    </div>
+        </div>
+        <!-- sort & search -->
+        <div class="row mb-20">
+          <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+            <form
+              th:method="|GET|"
+              th:action="@{${'/'+PAGE+'/get'+PAGE_UP+'List'}}"
+              th:onchange="|this.submit()|"
+              th:class="|d-row-left w-90p|"
+            >
+              <i
+                th:id="|sortIcon|"
+                th:class="|fas fa-sort-amount-down fa-lg me-10|"
+              ></i>
+              <select name="sort" class="form-control">
+                <option value="default">정렬</option>
+                <option value="titleASC">제목순(오름차순)</option>
+                <option value="titleDESC">제목순(내림차순)</option>
+                <option value="countASC">조회수낮은순</option>
+                <option value="countDESC">조회수높은순</option>
+                <option value="dateASC">오래된순</option>
+                <option value="dateDESC">최신순</option>
+              </select>
+            </form>
+          </div>
+          <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+            <form
+              th:id="|searchForm|"
+              th:method="|GET|"
+              th:action="@{${'/'+PAGE+'/search'+PAGE_UP}}"
+              th:class="|d-row-right|"
+            >
+              <select class="form-control" name="searchType">
+                <option value="title">제목</option>
+                <option value="contents">내용</option>
+              </select>
+              <input
+                th:type="|search|"
+                th:id="|keyword|"
+                th:name="|keyword|"
+                th:placeholder="|search|"
+                th:class="|form-control|"
+              />
+              <i
+                th:id="|searchIcon|"
+                th:class="|fas fa-search fa-lg ms-10|"
+              ></i>
+              <button
+                th:type="|submit|"
+                th:id="|hiddenSubmit|"
+                th:name="|hiddenSubmit|"
+                th:class="|hiddenSubmit d-none|"
+              ></button>
+            </form>
+          </div>
+        </div>
+        <!-- notice list -->
+        <div class="row">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <th:block th:each="LIST: ${LIST}">
+              <div class="d-col-center border-1 radius-2 shadow-1 p-30 mb-20">
+                <!-- logo + title -->
+                <div class="d-row-left w-100p mb-20">
+                  <img
+                    th:src="|${STORAGE}/icon/logo.png|"
+                    th:loading="|lazy|"
+                    th:alt="|logo|"
+                    th:width="|30px|"
+                    th:height="|30px|"
+                    th:class="|radius-2 me-10|"
+                  />
+                  <div
+                    th:id="|${PAGE}_title|"
+                    th:name="|${PAGE}_title|"
+                    th:value="|${LIST[PAGE + '_title']}|"
+                    th:text="|${LIST[PAGE + '_title']}|"
+                    th:class="|fs-1-2rem fw-700 burgundy hover|"
+                    th:onclick="|goToPage(@{/${PAGE + /get}${PAGE_UP}Details(pageNumber=${LIST[PAGE + '_number']})})|">
+                  >
+                  </div>
+                  <div
+                    th:id="|${PAGE}_number|"
+                    th:name="|${PAGE}_number|"
+                    th:value="|${LIST[PAGE + '_number']}|"
+                    th:text="|${LIST[PAGE + '_number']}|"
+                    th:class="|fs-0-9rem fw-600 grey ms-auto|"
+                  >
                   </div>
                 </div>
-                <!-- /.notice row -->
-
-                <!-- notice button -->
-                <div class="col-lg-12 md-12 sm-12">
-                  <div class="jungho-center">
-                    <button th:type="|button|" class="jungho-button" th:if="${session.member_id != null}" th:onclick="'location.href=\'' + @{/notice/addNotice} + '\''">
-                      작성하기
-                    </button>
-                    <button th:type="|button|" class="jungho-button" th:if="${session.member_id == null}" th:onclick="return sessionAlert()">
-                      작성하기
-                    </button>
+                <!-- contents -->
+                <div class="d-row-left w-100p mb-30">
+                  <div
+                    th:id="|${PAGE}_contents|"
+                    th:name="|${PAGE}_contents|"
+                    th:value="|${LIST[PAGE + '_contents']}|"
+                    th:text="|${#strings.abbreviate(LIST[PAGE + '_contents'], 40)}|"
+                    th:class="|fs-0-9rem fw-600 light-black|"
+                  >
+                  </div>
+                </div>
+                <!-- date & view count -->
+                <div class="d-row-between w-100p">
+                  <div class="d-row-center">
+                    <i th:class="|fa fa-calendar fs-0-7rem me-10|"></i>
+                    <div
+                      th:id="|${PAGE}_date|"
+                      th:name="|${PAGE}_date|"
+                      th:value="|${LIST[PAGE + '_date']}|"
+                      th:text="|${#strings.substring((LIST[PAGE + '_update'] != null ? LIST[PAGE + '_update'] : LIST[PAGE + '_date']), 0, 10)}|"
+                      th:class="|fs-0-9rem fw-600 dark|"
+                    >
+                    </div>
+                  </div>
+                  <div class="d-row-center">
+                    <i th:class="|fa fa-eye fs-0-7rem me-10|"></i>
+                    <div
+                      th:id="|${PAGE}_count|"
+                      th:name="|${PAGE}_count|"
+                      th:value="|${LIST[PAGE + '_count']}|"
+                      th:text="|${LIST[PAGE + '_count']}|"
+                      th:class="|fs-0-9rem fw-600 dark|"
+                    >
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </th:block>
+          </div>
+        </div>
+        <!-- hr -->
+        <hr class="mt-20 mb-20" />
+        <!-- button -->
+        <div class="row d-row-center">
+          <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+            <button
+              th:type="|button|"
+              th:class="|btn btn-dark w-90p|"
+              th:if="${session.member_id != null}"
+              th:onclick="|location.href='| + @{${'/' + PAGE + '/add' + PAGE_UP}} + |'|"
+            >
+              공지사항 추가
+            </button>
+            <button
+              th:type="|button|"
+              th:class="|btn btn-dark w-90p|"
+              th:if="${session.member_id == null}"
+              th:onclick="|return sessionAlert()|"
+            >
+              공지사항 추가
+            </button>
+          </div>
+          <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+            <button
+              th:type="|button|"
+              th:class="|btn btn-dark w-90p|"
+              th:onclick="|location.href='@{/}'|"
+            >
+              홈으로
+            </button>
           </div>
         </div>
       </div>

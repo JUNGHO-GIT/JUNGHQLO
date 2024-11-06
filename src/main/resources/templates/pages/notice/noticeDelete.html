@@ -1,5 +1,5 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
   <!-- head -->
   <th:block th:replace="~{layouts/head :: head}" />
 
@@ -47,14 +47,14 @@
           </div>
           <!-- image -->
           <div class="row">
-            <div class="col-lg-5 col-md-5 col-sm-5">
+            <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
               <div class="checkout-input">
               <p class="p">기존 이미지<span>*</span></p>
               <img th:src="${noticeModel.notice_imgsUrl}" style="width: 150px; height: 150px; border-radius: 10px; box-shadow: 0px 10px 10px rgba(0, 0.5, 0.5, 0.5)()" th:id="|existingImage" th:name="|existingImage" th:value=|"existingImage|"
               readonly/>
               </div>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-4">
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
               <div class="checkout-input">
                 <p class="p"> 게시물 이미지<span>*</span></p>
                 <label for="notice_imgsFile">선택하기</label>
@@ -69,7 +69,7 @@
           </div>
         </div>
         <!-- preview -->
-        <div class="col-lg-6 col-md-6 col-sm-6 ps-4">
+        <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
           <div class="preview">
             <div class="border-dark justify-content-center">
               <h4 class="order-title mb-4"><i class="fa fa-spinner"></i>&nbsp;Preview</h4>

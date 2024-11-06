@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- off-canvas -->
@@ -99,45 +98,45 @@
       <!-- menu -->
       <div class="d-col-left">
         <div
-          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-50|"
+          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30|"
           th:onclick="|location.href='@{/product/getProductList}'|"
         >
           Products
         </div>
         <div
-          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-50|"
+          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30|"
           th:if="${session.member_id != null}"
           th:onclick="|location.href='@{/orders/getOrdersList}'|"
         >
           Orders
         </div>
         <div
-          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-50|"
+          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30|"
           th:if="${session.member_id == null}"
           th:onclick="return sessionAlert()"
         >
           Orders
         </div>
         <div
-          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-50|"
+          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30|"
           th:onclick="|location.href='@{/board/getBoardList}'|"
         >
           Blog
         </div>
         <div
-          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-50|"
+          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30|"
           th:onclick="|location.href='@{/notice/getNoticeList}'|"
         >
           Notice
         </div>
         <div
-          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-50|"
+          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30|"
           th:onclick="|location.href='@{/qna/getQnaList}'|"
         >
           QnA
         </div>
         <div
-          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-50|"
+          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30|"
           th:onclick="|location.href='@{/contact/getContactList}'|"
         >
           Contact
@@ -148,7 +147,7 @@
       <!-- text -->
       <div class="d-col-left">
         <img
-          th:src="@{${STORAGE} + '/icon/logo.png'}"
+          th:src="|${STORAGE}/icon/logo.png|"
           th:loading="|lazy|"
           th:alt="|logo|"
           th:width="|70px|"
@@ -167,7 +166,6 @@
         </div>
       </div>
     </div>
-
   </section>
 
 </html>

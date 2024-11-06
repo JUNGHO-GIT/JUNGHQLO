@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- header -->
@@ -110,7 +109,7 @@
         <!-- logo -->
         <div class="col-4 col-sm-2 col-md-2 col-lg-2 col-xl-2">
           <img
-            th:src="@{${STORAGE} + '/icon/logo.png'}"
+            th:src="|${STORAGE}/icon/logo.png|"
             th:loading="|lazy|"
             th:alt="|logo|"
             th:width="|70px|"
@@ -177,7 +176,7 @@
             <select
               th:id="|searchType|"
               th:name="|searchType|"
-              class="form-select me-10"
+              th:class="|form-control me-10|"
             >
               <option value="name">이름</option>
               <option value="details">상세정보</option>

@@ -2,13 +2,12 @@ package com.example.junghqlo.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.junghqlo.handler.PageHandler;
@@ -16,23 +15,28 @@ import com.example.junghqlo.model.Board;
 import com.example.junghqlo.service.BoardService;
 
 @Controller
+@RequestMapping("/board")
 public class BoardController {
 
+  // 0. static -------------------------------------------------------------------------------------
+  private static final String PAGES = "/pages/board";
+  private static final String PAGE = "board";
+  private static final String PAGE_UP = "Board";
+
   // 0. constructor injection --------------------------------------------------------------------->
-  Logger logger = LoggerFactory.getLogger(this.getClass());
   private BoardService boardService;
   BoardController(BoardService boardService) {
-  this.boardService = boardService;
+    this.boardService = boardService;
   }
 
   // 1. getBoardList (GET) ------------------------------------------------------------------------>
-  @GetMapping("/board/getBoardList")
+  @GetMapping("/getBoardList")
   public String getBoardList (
+    @ModelAttribute Board board,
     @RequestParam(required=false) String sort,
     @RequestParam(defaultValue="1") Integer pageNumber,
     @RequestParam(defaultValue="9") Integer itemsPer,
-    Model model,
-    Board board
+    Model model
   ) throws Exception {
 
     // sorting order
@@ -61,84 +65,107 @@ public class BoardController {
     PageHandler<Board> page = boardService.getBoardList(pageNumber, itemsPer, sort, board);
     List<Board> boardList = page.getContent();
 
+    model.addAttribute("PAGE", PAGE);
+    model.addAttribute("PAGE_UP", PAGE_UP);
+    model.addAttribute("sort", sort);
     model.addAttribute("page", page);
     model.addAttribute("boardList", boardList);
 
-    return "/pages/board/boardList";
-  }
+    return PAGES + "/" + PAGE + "List";
+  };
 
   // 2. getBoardDetails (GET) --------------------------------------------------------------------->
-  @GetMapping("/board/getBoardDetails")
+  @GetMapping("/getBoardDetails")
   public String getBoardDetails (
+    @ModelAttribute Board board,
     @RequestParam Integer board_number,
-    Model model,
-    Board board,
-    HttpSession session
+    HttpSession session,
+    Model model
   ) throws Exception {
-
-    // 모델
-    model.addAttribute("boardModel", boardService.getBoardDetails(board_number));
-    model.addAttribute("member_id", session.getAttribute("member_id"));
 
     // 조회수 증가
     boardService.updateBoardCount(board_number, session);
 
-    return "/pages/board/boardDetails";
+    // 모델
+    model.addAttribute("PAGE", PAGE);
+    model.addAttribute("PAGE_UP", PAGE_UP);
+    model.addAttribute("boardModel", boardService.getBoardDetails(board_number));
+    model.addAttribute("member_id", session.getAttribute("member_id"));
+
+    return PAGES + "/" + PAGE + "Details";
   }
 
   // 3. searchBoard (GET) ------------------------------------------------------------------------>
-  @GetMapping("/board/searchBoard")
+  @GetMapping("/searchBoard")
   public String searchBoard(
+    @ModelAttribute Board board,
     @RequestParam(defaultValue="1") Integer pageNumber,
     @RequestParam(defaultValue="9") Integer itemsPer,
     @RequestParam String searchType,
     @RequestParam String keyword,
-    Model model,
-    Board board
+    Model model
   ) throws Exception {
 
-    if(searchType == null || keyword == null) {return "redirect:/board/getBoardList";}
-    else if(searchType.equals("title"))       {searchType="board_title";}
-    else if(searchType.equals("contents"))    {searchType="board_contents";}
+    if (searchType == null || keyword == null) {
+      return "redirect:/" + PAGE + "/get" + PAGE_UP + "List";
+    }
+    else if (searchType.equals("title")) {
+      searchType="board_title";
+    }
+    else if (searchType.equals("contents")) {
+      searchType="board_contents";
+    }
 
     PageHandler<Board> page = boardService.searchBoard(pageNumber, itemsPer, keyword, searchType, board);
     List<Board> boardList = page.getContent();
 
+    model.addAttribute("PAGE", PAGE);
+    model.addAttribute("PAGE_UP", PAGE_UP);
     model.addAttribute("page", page);
     model.addAttribute("boardList", boardList);
 
-    return "/pages/board/boardSearch";
+    return PAGES + "/" + PAGE + "Search";
   }
 
   // 4. addBoard (GET) ---------------------------------------------------------------------------->
-  @GetMapping("/board/addBoard")
-  public String addBoard() throws Exception {
+  @GetMapping("/addBoard")
+  public String addBoard(
+    Model model
+  ) throws Exception {
 
-    return "/pages/board/boardAdd";
+    model.addAttribute("PAGE", PAGE);
+    model.addAttribute("PAGE_UP", PAGE_UP);
+
+    return PAGES + "/" + PAGE + "Add";
   }
 
-  @PostMapping("/board/addBoard")
-  public String addBoard(Board board) throws Exception {
+  // 4. addBoard (POST) --------------------------------------------------------------------------->
+  @PostMapping("/addBoard")
+  public String addBoard(
+    @ModelAttribute Board board
+  ) throws Exception {
 
     boardService.addBoard(board);
 
-    return "redirect:/board/getBoardList";
+    return "redirect:/" + PAGE + "/get" + PAGE_UP + "List";
   }
 
   // 5. updateBoard (GET) ------------------------------------------------------------------------>
-  @GetMapping("/board/updateBoard")
+  @GetMapping("/updateBoard")
   public String updateBoard(
     @RequestParam Integer board_number,
-    Model model, Board board
+    Model model
   ) throws Exception {
 
+    model.addAttribute("PAGE", PAGE);
+    model.addAttribute("PAGE_UP", PAGE_UP);
     model.addAttribute("boardModel", boardService.getBoardDetails(board_number));
 
-    return "/pages/board/boardUpdate";
+    return PAGES + "/" + PAGE + "Update";
   }
 
   // 5. updateBoard (POST) ------------------------------------------------------------------------>
-  @PostMapping("/board/updateBoard")
+  @PostMapping("/updateBoard")
   public String updateBoard (
     @ModelAttribute Board board,
     @RequestParam("board_imgsUrl") String existingImage
@@ -146,14 +173,12 @@ public class BoardController {
 
     boardService.updateBoard(board, existingImage);
 
-    return "redirect:/board/getBoardList";
+    return "redirect:/" + PAGE + "/get" + PAGE_UP + "List";
   }
-
-  // 5-1. updateBoardCount ------------------------------------------------------------------------>
 
   // 5-2. updateLike (GET) ------------------------------------------------------------------------>
   @ResponseBody
-  @GetMapping("/board/updateLike")
+  @GetMapping("/updateLike")
   public Integer updateLike (
     @RequestParam Integer board_number,
     HttpSession session
@@ -161,12 +186,14 @@ public class BoardController {
 
     boardService.updateLike(board_number, session);
 
-    return boardService.getBoardDetails(board_number).getBoard_like();
+    Integer like = boardService.getBoardDetails(board_number).getBoard_like();
+
+    return like;
   }
 
   // 5-3. updateDislike (GET) --------------------------------------------------------------------->
   @ResponseBody
-  @GetMapping("/board/updateDislike")
+  @GetMapping("/updateDislike")
   public Integer updateDislike(
     @RequestParam Integer board_number,
     HttpSession session
@@ -174,29 +201,34 @@ public class BoardController {
 
     boardService.updateDislike(board_number, session);
 
-    return boardService.getBoardDetails(board_number).getBoard_dislike();
+    Integer dislike = boardService.getBoardDetails(board_number).getBoard_dislike();
+
+    return dislike;
   }
 
   // 6. deleteBoard (GET) ------------------------------------------------------------------------->
-  @GetMapping("/board/deleteBoard")
+  @GetMapping("/deleteBoard")
   public String deleteBoard(
     @RequestParam Integer board_number,
-    Model model,
-    Board board
+    @ModelAttribute Board board,
+    Model model
   ) throws Exception {
 
+    model.addAttribute("PAGE", PAGE);
+    model.addAttribute("PAGE_UP", PAGE_UP);
     model.addAttribute("boardModel", boardService.getBoardDetails(board_number));
 
-    return "/pages/board/boardDelete";
+    return PAGES + "/" + PAGE + "Delete";
   }
 
   // 6. deleteBoard (POST) ------------------------------------------------------------------------>
-  @PostMapping("/board/deleteBoard")
-  public String deleteBoard(Board board, Integer board_number) throws Exception {
+  @PostMapping("/deleteBoard")
+  public String deleteBoard(
+    @RequestParam Integer board_number
+  ) throws Exception {
 
     boardService.deleteBoard(board_number);
 
-    return "redirect:/board/getBoardList";
+    return "redirect:/" + PAGE + "/get" + PAGE_UP + "List";
   }
-
 }

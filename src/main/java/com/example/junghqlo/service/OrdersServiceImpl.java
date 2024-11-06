@@ -7,8 +7,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import com.example.junghqlo.handler.PageHandler;
 import com.example.junghqlo.mapper.OrdersMapper;
@@ -21,10 +19,9 @@ import com.stripe.exception.StripeException;
 public class OrdersServiceImpl implements OrdersService {
 
   // 0. constructor injection --------------------------------------------------------------------->
-  Logger logger = LoggerFactory.getLogger(this.getClass());
   private OrdersMapper ordersMapper;
   OrdersServiceImpl(OrdersMapper ordersMapper) {
-  this.ordersMapper = ordersMapper;
+    this.ordersMapper = ordersMapper;
   }
 
   // 1. getOrdersList ----------------------------------------------------------------------------->
@@ -91,7 +88,6 @@ public class OrdersServiceImpl implements OrdersService {
   // 3-1. getStripePrice -------------------------------------------------------------------------->
   @Override
   public String getStripePrice(Integer orders_number) throws StripeException {
-    logger.debug("getStripePrice() 호출 !!!!!");
 
     return ordersMapper.getStripePrice(orders_number);
   }
@@ -153,16 +149,12 @@ public class OrdersServiceImpl implements OrdersService {
   @Override
   public Integer updateProductStock(Integer product_number, Integer product_stock, Integer orders_quantity) throws Exception {
 
-    logger.debug("updateOrdersStock() 호출 !!!!!");
-
     return ordersMapper.updateProductStock(product_number, product_stock, orders_quantity);
   }
 
   // 6. deleteOrders ------------------------------------------------------------------------------>
   @Override
   public void deleteOrders(Integer orders_number) {
-
-    logger.debug("deleteOrders() 호출 !!!!!");
 
     ordersMapper.deleteOrders(orders_number);
   }

@@ -1,5 +1,5 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
   <!-- head -->
   <th:block th:replace="~{layouts/head :: head}" />
 
@@ -13,74 +13,168 @@
   <main class="container px-30">
     <div class="row">
       <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
-
-    <!-- form -->
-    <form th:action="@{/notice/updateNotice}" th:method="|POST|" enctype="multipart/form-data">
-
-      <!-- hidden -->
-      <input th:type="|hidden|" th:name="|notice_number" th:value="${noticeModel.notice_number}" th:id="notice_number|"/>
-      <input th:type="|hidden|" th:name="|notice_writer" th:value="${noticeModel.notice_writer}" th:id="notice_writer|"/>
-      <input th:type="|hidden|" th:name="|notice_count" th:value="${noticeModel.notice_count}" th:id="notice_count|"/>
-      <input th:type="|hidden|" th:name="|notice_like" th:value="${noticeModel.notice_like}" th:id="notice_like|"/>
-      <input th:type="|hidden|" th:name="|notice_dislike" th:value="${noticeModel.notice_dislike}" th:id="notice_dislike|"/>
-      <input th:type="|hidden|" th:name="|notice_imgsUrl" th:value="${noticeModel.notice_imgsUrl}" th:id="notice_imgsUrl|"/>
-
-      <div class="row">
-        <div class="col-lg-6 col-md-6">
-          <h6 class="checkout-title">게시물 수정</h6>
-          <!-- name -->
-          <div class="row">
+        <!-- form -->
+        <form
+          th:method="|POST|"
+          th:action="@{/${PAGE}/update${PAGE_UP}}"
+          th:onsubmit="|update${PAGE_UP}()|"
+        >
+          <!-- hidden -->
+          <input
+            th:type="|hidden|"
+            th:id="|${PAGE}_number|"
+            th:name="|${PAGE}_number|"
+            th:value="${${PAGE}Model.${PAGE}_number}"
+          />
+          <input
+            th:type="|hidden|"
+            th:id="|${PAGE}_writer|"
+            th:name="|${PAGE}_writer|"
+            th:value="${${PAGE}Model.${PAGE}_writer}"
+          />
+          <input
+            th:type="|hidden|"
+            th:id="|${PAGE}_count|"
+            th:name="|${PAGE}_count|"
+            th:value="${${PAGE}Model.${PAGE}_count}"
+          />
+          <input
+            th:type="|hidden|"
+            th:id="|${PAGE}_like|"
+            th:name="|${PAGE}_like|"
+            th:value="${${PAGE}Model.${PAGE}_like}"
+          />
+          <input
+            th:type="|hidden|"
+            th:id="|${PAGE}_dislike|"
+            th:name="|${PAGE}_dislike|"
+            th:value="${${PAGE}Model.${PAGE}_dislike}"
+          />
+          <input
+            th:type="|hidden|"
+            th:id="|${PAGE}_imgsUrl|"
+            th:name="|${PAGE}_imgsUrl|"
+            th:value="${${PAGE}Model.${PAGE}_imgsUrl}"
+          />
+          <!-- title -->
+          <div class="row d-row-center mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="checkout-input">
-                <p class="p">제목<span>*</span></p>
-                <input th:type="|text|" th:placeholder="|Title" th:name="|notice_title" th:value="${noticeModel.notice_title}" th:id=|"notice_title|"/>
+              <div class="fs-1-8rem fw-800 light-black">
+                공지사항 수정
               </div>
+            </div>
+          </div>
+          <!-- title -->
+          <div class="row mb-20">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="d-row-left mb-10">
+                <div class="fs-0-9rem fw-800 me-5">
+                  제목
+                </div>
+                <div class="fs-0-6rem fw-800 burgundy">
+                  *
+                </div>
+              </div>
+              <input
+                th:type="|text|"
+                th:name="|${PAGE}_title|"
+                th:id="|${PAGE}_title|"
+                th:value="${${PAGE}Model.${PAGE}_title}"
+                th:class="|form-control|"
+              />
             </div>
           </div>
           <!-- content -->
-          <div class="row">
+          <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="checkout-input">
-                <p class="p">내용<span>*</span></p>
-                <textarea th:placeholder="|Contents" th:id="|notice_contents" th:name="|notice_contents|" th:text=|"${noticeModel.notice_contents}|">
-                </textarea>
+              <div class="d-row-left mb-10">
+                <div class="fs-0-9rem fw-800 light-black">
+                  내용
+                </div>
+                <div class="fs-0-6rem fw-800 burgundy">
+                  *
+                </div>
               </div>
+              <textarea
+                th:id="|${PAGE}_contents|"
+                th:name="|${PAGE}_contents|"
+                th:text="${${PAGE}Model.${PAGE}_contents}"
+                th:class="|form-control|"
+              ></textarea>
             </div>
           </div>
           <!-- image -->
-          <div class="row">
-            <div class="col-lg-5 col-md-5 col-sm-5">
-              <div class="checkout-input">
-              <p class="p">기존 이미지<span>*</span></p>
-              <img th:src="${noticeModel.notice_imgsUrl}" style="width: 150px; height: 150px; border-radius: 10px; box-shadow: 0px 10px 10px rgba(0, 0.5, 0.5, 0.5)()" th:id="|existingImage" th:name="|existingImage" th:value=|"existingImage|"/>
+          <div class="row mb-20">
+            <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+              <div class="fs-0-9rem fw-800 light-black">
+                기존 이미지
+              </div>
+              <div class="fs-0-6rem fw-800 burgundy">
+                *
+              </div>
+              <img
+                th:src="${${PAGE}Model.${PAGE}_imgsUrl}"
+                style="width: 150px; height: 150px; border-radius: 10px; box-shadow: 0px 10px 10px rgba(0, 0.5, 0.5, 0.5)()"
+                th:id="|existingImage|"
+                th:name="|existingImage|"
+                th:value="|existingImage|"
+              />
+            </div>
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+              <div class="fs-0-9rem fw-800 light-black">
+                게시물 이미지
+              </div>
+              <div class="fs-0-6rem fw-800 burgundy">
+                *
+              </div>
+              <label for="imageFile">선택하기</label>
+              <input
+                th:type="|file|"
+                th:id="|imageFile|"
+                th:name="|${PAGE}_imgsFile|"
+                th:class="|imageFile d-none"
+                th:onchange="|junghoPreview()|"
+              />
+            </div>
+          </div>
+          <!-- preview -->
+          <div class="row mb-20">
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+              <div class="preview">
+                <div class="border-dark justify-content-center">
+                  <h4 class="order-title mb-4"><i class="fa fa-spinner"></i>&nbsp;Preview</h4>
+                  <div class="imageLoader" th:id="|imageLoader|"></div>
+                  <img class="imageBox" th:id="|imageBox|"/>
+                </div>
               </div>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-4">
-              <div class="checkout-input">
-                <p class="p"> 게시물 이미지<span>*</span></p>
-                <label for="imageFile">선택하기</label>
-                <input th:type="file" th:id="|imageFile" th:name="|notice_imgsFile"  style="display:none" class="imageFile" onchange=|"junghoPreview()|"/>
-              </div>
+          </div>
+          <!-- hr -->
+          <hr class="mt-20 mb-20" />
+          <!-- button -->
+          <div class="row mb-20">
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+              <button
+                th:type="|submit|"
+                th:class="|btn btn-dark w-90p|"
+                th:onclick="|updateCheck()|"
+              >
+                수정하기
+              </button>
             </div>
-            <div class="col-lg-3 col-md-3 col-sm-3 mt-3">
-              <button th:type="|submit|" th:onclick="return updateCheck()" class="jungho-button">
-              수정하기
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+              <button
+                th:type="|button|"
+                th:class="|btn btn-dark w-90p|"
+                th:onclick="|location.href='@{/}'|"
+              >
+                홈으로
               </button>
             </div>
           </div>
-        </div>
-        <!-- preview -->
-        <div class="col-lg-6 col-md-6 col-sm-6 ps-4">
-          <div class="preview">
-            <div class="border-dark justify-content-center">
-              <h4 class="order-title mb-4"><i class="fa fa-spinner"></i>&nbsp;Preview</h4>
-              <div class="imageLoader" th:id="|imageLoader|"></div>
-              <img class="imageBox" th:id="|imageBox|"/>
-            </div>
-          </div>
-        </div>
+        </form>
       </div>
-    </form>
+    </div>
   </main>
 
   <!-- footer -->

@@ -5,8 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import com.example.junghqlo.handler.PageHandler;
@@ -23,7 +21,6 @@ import com.google.cloud.storage.StorageOptions;
 public class QnaServiceImpl implements QnaService {
 
   // 0. constructor injection --------------------------------------------------------------------->
-  Logger logger = LoggerFactory.getLogger(this.getClass());
   private QnaMapper qnaMapper;
   QnaServiceImpl(QnaMapper qnaMapper) {
   this.qnaMapper = qnaMapper;

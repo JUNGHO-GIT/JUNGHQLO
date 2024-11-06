@@ -3,8 +3,6 @@ package com.example.junghqlo.service;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import com.example.junghqlo.handler.PageHandler;
 import com.example.junghqlo.mapper.MemberMapper;
@@ -14,7 +12,6 @@ import com.example.junghqlo.model.Member;
 public class MemberServiceImpl implements MemberService {
 
   // 0. constructor injection --------------------------------------------------------------------->
-  Logger logger = LoggerFactory.getLogger(this.getClass());
 	private MemberMapper memberMapper;
   MemberServiceImpl(MemberMapper memberMapper) {
   this.memberMapper = memberMapper;

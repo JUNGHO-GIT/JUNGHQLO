@@ -19,6 +19,8 @@ public class ProductController {
 
   // 0. static -------------------------------------------------------------------------------------
   private static final String PAGES = "/pages/product";
+  private static final String PAGE = "product";
+  private static final String PAGE_UP = "Product";
 
   // 0. constructor injection -------------------------------------------------------------------->
   private ProductService productService;

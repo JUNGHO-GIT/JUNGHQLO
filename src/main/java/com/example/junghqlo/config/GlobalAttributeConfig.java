@@ -25,4 +25,4 @@ public class GlobalAttributeConfig {
     model.addAttribute("ADMIN", ADMIN);
     model.addAttribute("STORAGE", STORAGE);
   }
-};
+}

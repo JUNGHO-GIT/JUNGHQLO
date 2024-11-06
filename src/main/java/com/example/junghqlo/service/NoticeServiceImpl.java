@@ -5,8 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import com.example.junghqlo.handler.PageHandler;
@@ -23,7 +21,6 @@ import com.google.cloud.storage.StorageOptions;
 public class NoticeServiceImpl implements NoticeService {
 
   // 0. constructor injection --------------------------------------------------------------------->
-  Logger logger = LoggerFactory.getLogger(this.getClass());
   private NoticeMapper noticeMapper;
   NoticeServiceImpl (NoticeMapper noticeMapper) {
   this.noticeMapper = noticeMapper;

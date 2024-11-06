@@ -2,8 +2,6 @@ package com.example.junghqlo.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +16,12 @@ import com.example.junghqlo.service.MemberService;
 @Controller
 public class MemberController {
 
+  // 0. static -------------------------------------------------------------------------------------
+  private static final String PAGES = "/pages/member";
+  private static final String PAGE = "member";
+  private static final String PAGE_UP = "Member";
+
   // 0. constructor injection --------------------------------------------------------------------->
-  Logger logger = LoggerFactory.getLogger(this.getClass());
   private MemberService memberService;
   private EmailHandler emailHandler;
   MemberController(MemberService memberService, EmailHandler emailHandler) {
