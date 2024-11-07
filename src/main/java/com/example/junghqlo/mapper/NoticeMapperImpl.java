@@ -10,77 +10,85 @@ import com.example.junghqlo.model.Notice;
 @Repository
 public class NoticeMapperImpl implements NoticeMapper {
 
-  // 0. constructor injection --------------------------------------------------------------------->
+  // 0. constructor injection ----------------------------------------------------------------------
   SqlSessionTemplate sqlSession;
   NoticeMapperImpl(SqlSessionTemplate sqlSession) {
   this.sqlSession = sqlSession;
   }
 
-  // 1. getNoticeList ----------------------------------------------------------------------------->
+  // 1-1. listNotice ------------------------------------------------------------------------------
   @Override
-  public List<Notice> getNoticeList(String sort) throws Exception {
+  public List<Notice> listNotice(String sort) throws Exception {
 
-    return sqlSession.selectList("getNoticeList", sort);
+    return sqlSession.selectList("listNotice", sort);
   }
 
-  // 2. getNoticeDetails -------------------------------------------------------------------------->
-  @Override
-  public Notice getNoticeDetails(Integer notice_number) throws Exception {
-
-    return sqlSession.selectOne("getNoticeDetails", notice_number);
-  }
-
-  // 3. searchNotice ------------------------------------------------------------------------------>
+  // 1-2. searchNotice -----------------------------------------------------------------------------
   @Override
   public List<Notice> searchNotice(String searchType, String keyword) throws Exception {
 
-    Map<String, Object> params = new HashMap<>();
-    params.put("searchType", searchType);
-    params.put("keyword", keyword);
+    Map<String, Object> map = new HashMap<>();
+    map.put("searchType", searchType);
+    map.put("keyword", keyword);
 
-    return sqlSession.selectList("searchNotice", params);
+    return sqlSession.selectList("searchNotice", map);
   }
 
-  // 4. addNotice --------------------------------------------------------------------------------->
+  // 2. detailNotice ---------------------------------------------------------------------------
+  @Override
+  public Notice detailNotice(Integer notice_number) throws Exception {
+
+    return sqlSession.selectOne("detailNotice", notice_number);
+  }
+
+  // 3. addNotice ----------------------------------------------------------------------------------
   @Override
   public void addNotice(Notice notice) throws Exception {
 
     sqlSession.insert("addNotice", notice);
   }
 
-  // 5. updateNotice ------------------------------------------------------------------------------>
+  // 4. updateNotice -------------------------------------------------------------------------------
   @Override
   public void updateNotice(Notice notice) throws Exception {
 
     sqlSession.update("updateNotice", notice);
   }
 
-  // 5-1. updateNoticeCount ----------------------------------------------------------------------->
+  // 4-1. updateNoticeCount ------------------------------------------------------------------------
   @Override
   public void updateNoticeCount(Integer notice_number) throws Exception {
 
     sqlSession.update("updateNoticeCount", notice_number);
   }
 
-  // 5-2. updateLike ------------------------------------------------------------------------------>
+  // 4-2. updateLike -------------------------------------------------------------------------------
   @Override
   public void updateLike(Integer notice_number) throws Exception {
 
     sqlSession.update("updateNoticeLike", notice_number);
   }
 
-  // 5-3. updateDislike --------------------------------------------------------------------------->
+  // 4-3. updateDislike ----------------------------------------------------------------------------
   @Override
   public void updateDislike(Integer notice_number) throws Exception {
 
     sqlSession.update("updateNoticeDislike", notice_number);
   }
 
-  // 6. deleteNotice ------------------------------------------------------------------------------>
+  // 5. deleteNotice -------------------------------------------------------------------------------
   @Override
-  public void deleteNotice(Integer notice_number) throws Exception {
+  public Integer deleteNotice(Integer notice_number) throws Exception {
 
-    sqlSession.delete("deleteNotice", notice_number);
-  }
+    Integer result = 0;
 
-}
+    if (sqlSession.delete("deleteNotice", notice_number) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
+  };
+};

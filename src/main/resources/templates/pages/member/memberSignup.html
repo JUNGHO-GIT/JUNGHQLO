@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- head -->
@@ -7,131 +8,135 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-user-cog', text1='Member', text2='Signup')}" />
+  <th:block th:replace="~{layouts/navigation :: navigation (
+    icon = 'fas fa-user-cog',
+    text1 = ${PAGE},
+    text2 = ${THEME}
+  )}" />
 
   <!-- main -->
-  <main class="container px-30">
+  <main class="container-fluid px-30">
     <div class="row">
-      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
         <!-- form -->
         <form
-          th:method="|POST|"
+          th:method="${'POST'}"
           th:onsubmit="|event.preventDefault(); addMember()|"
         >
-          <!-- title -->
-          <div class="row d-row-center mb-20">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="fs-1-8rem fw-800 light-black">
-                회원 가입
-              </div>
-            </div>
-          </div>
           <!-- ID -->
           <div class="row mb-20">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-10">
-              <div class="fs-0-9rem fw-800 me-5">
-                ID
-              </div>
-              <div class="fs-0-9rem fw-800 burgundy">
-                *
-              </div>
-            </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <input
-                th:type="|text|"
-                th:id="|member_id|"
-                th:name="|member_id|"
-                th:class="|form-control|"
-                th:placeholder="|아이디를 입력하세요|"
-              />
+              <div class="d-row-left mb-10">
+                <div class="fs-0-9rem fw-800 me-5">
+                  ID
+                </div>
+                <div class="fs-0-9rem fw-800 burgundy">
+                  *
+                </div>
+              </div>
+              <div class="d-row-left">
+                <input
+                  th:type="${'text'}"
+                  th:id="${'member_id'}"
+                  th:name="${'member_id'}"
+                  th:class="${'form-control'}"
+                  th:placeholder="${'아이디를 입력하세요'}"
+                />
+              </div>
             </div>
           </div>
           <!-- PW -->
           <div class="row mb-20">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-10">
-              <div class="fs-0-9rem fw-800 light-black">
-                PW
-              </div>
-              <div class="fs-0-9rem fw-800 burgundy">
-                *
-              </div>
-            </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <input
-                th:type="|password|"
-                th:id="|member_pw|"
-                th:name="|member_pw|"
-                th:class="|form-control|"
-                th:placeholder="|비밀번호를 입력하세요|"
-              />
+              <div class="d-row-left mb-10">
+                <div class="fs-0-9rem fw-800 me-5">
+                  PW
+                </div>
+                <div class="fs-0-9rem fw-800 burgundy">
+                  *
+                </div>
+              </div>
+              <div class="d-row-left">
+                <input
+                  th:type="${'password'}"
+                  th:id="${'member_pw'}"
+                  th:name="${'member_pw'}"
+                  th:class="${'form-control'}"
+                  th:placeholder="${'비밀번호를 입력하세요'}"
+                />
+              </div>
             </div>
           </div>
           <!-- name -->
           <div class="row mb-20">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-10">
-              <div class="fs-0-9rem fw-800 light-black">
-                이름
-              </div>
-              <div class="fs-0-9rem fw-800 burgundy">
-                *
-              </div>
-            </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <input
-                th:type="|text|"
-                th:id="|member_name|"
-                th:name="|member_name|"
-                th:class="|form-control|"
-                th:placeholder="|이름을 입력하세요|"
-              />
+              <div class="d-row-left mb-10">
+                <div class="fs-0-9rem fw-800 me-5">
+                  이름
+                </div>
+                <div class="fs-0-9rem fw-800 burgundy">
+                  *
+                </div>
+              </div>
+              <div class="d-row-left">
+                <input
+                  th:type="${'text'}"
+                  th:id="${'member_name'}"
+                  th:name="${'member_name'}"
+                  th:class="${'form-control'}"
+                  th:placeholder="${'이름을 입력하세요'}"
+                />
+              </div>
             </div>
           </div>
           <!-- phone -->
           <div class="row mb-20">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-10">
-              <div class="fs-0-9rem fw-800 light-black">
-                전화번호
-              </div>
-              <div class="fs-0-9rem fw-800 burgundy">
-                *
-              </div>
-            </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <input
-                th:type="number"
-                th:id="|member_phone|"
-                th:name="|member_phone|"
-                th:class="|form-control|"
-                th:placeholder="|숫자만 입력해주세요|"
-              />
+              <div class="d-row-left mb-10">
+                <div class="fs-0-9rem fw-800 me-5">
+                  전화번호
+                </div>
+                <div class="fs-0-9rem fw-800 burgundy">
+                  *
+                </div>
+              </div>
+              <div class="d-row-left">
+                <input
+                  th:type="${'number'}"
+                  th:id="${'member_phone'}"
+                  th:name="${'member_phone'}"
+                  th:class="${'form-control'}"
+                  th:placeholder="${'숫자만 입력해주세요'}"
+                />
+              </div>
             </div>
           </div>
           <!-- email -->
           <div class="row mb-20">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-10">
-              <div class="fs-0-9rem fw-800 light-black">
-                이메일
-              </div>
-              <div class="fs-0-9rem fw-800 burgundy">
-                *
-              </div>
-            </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="row">
+              <div class="d-row-left mb-10">
+                <div class="fs-0-9rem fw-800 me-5">
+                  이메일
+                </div>
+                <div class="fs-0-9rem fw-800 burgundy">
+                  *
+                </div>
+              </div>
+              <div class="row d-row-left">
                 <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 d-col-center">
                   <input
-                    th:type="|text|"
-                    th:id="|member_email1|"
-                    th:name="|member_email1|"
-                    th:class="|form-control|"
-                    th:placeholder="|이메일을 입력하세요|"
+                    th:type="${'text'}"
+                    th:id="${'member_email1'}"
+                    th:name="${'member_email1'}"
+                    th:class="${'form-control'}"
+                    th:placeholder="${'이메일을 입력하세요'}"
                   />
                 </div>
                 <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 d-col-center">
                   <select
-                    th:id="|email_back|"
-                    th:name="|email_back|"
-                    th:class="|form-control|"
+                    th:id="${'email_back'}"
+                    th:name="${'email_back'}"
+                    th:class="${'form-control'}"
                   >
                     <option value="@naver.com">@naver.com</option>
                     <option value="@gmail.com">@gmail.com</option>
@@ -141,8 +146,8 @@
                 </div>
                 <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 d-col-center">
                   <button
-                    th:type="|button|"
-                    th:class="|btn btn-dark btn-sm|"
+                    th:type="${'button'}"
+                    th:class="${'btn btn-dark btn-sm'}"
                     th:onclick="|return sendEmail()|"
                   >
                     전송
@@ -155,37 +160,35 @@
           <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="d-row-left mb-10">
-                <div class="fs-0-9rem fw-800 light-black">
+                <div class="fs-0-9rem fw-800 me-5">
                   인증번호
                 </div>
                 <div class="fs-0-9rem fw-800 burgundy">
                   *
                 </div>
               </div>
-            </div>
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="row">
+              <div class="row d-row-left">
                 <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 d-col-center">
                   <input
-                    th:type="|text|"
-                    th:id="|email_code|"
-                    th:name="|email_code|"
-                    th:class="|form-control|"
-                    th:placeholder="|인증번호|"
+                    th:type="${'text'}"
+                    th:id="${'email_code'}"
+                    th:name="${'email_code'}"
+                    th:class="${'form-control'}"
+                    th:placeholder="${'인증번호'}"
                   />
                 </div>
                 <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 d-col-center">
                   <input
-                    th:type="|hidden|"
-                    th:id="|email_verified|"
-                    th:name="|email_verified|"
-                    th:value="|false|"
+                    th:type="${'hidden'}"
+                    th:id="${'email_verified'}"
+                    th:name="${'email_verified'}"
+                    th:value="${'false'}"
                   />
                   <button
-                    th:type="|button|"
-                    th:id="|email_button|"
-                    th:name="|email_button|"
-                    th:class="|btn btn-dark btn-sm|"
+                    th:type="${'button'}"
+                    th:id="${'email_button'}"
+                    th:name="${'email_button'}"
+                    th:class="${'btn btn-dark btn-sm'}"
                     th:onclick="|return checkEmail()|"
                   >
                     확인
@@ -196,67 +199,73 @@
           </div>
           <!-- address -->
           <div class="row mb-20">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-10">
-              <div class="fs-0-9rem fw-800 light-black">
-                주소
-              </div>
-              <div class="fs-0-9rem fw-800 burgundy">
-                *
-              </div>
-            </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <input
-                readonly
-                th:type="|text|"
-                th:id="|member_address1|"
-                th:name="|member_address1|"
-                th:class="|form-control|"
-                th:onclick="|openDaumPostcode()|"
-                th:placeholder="|주소를 입력하세요|"
-              />
+              <div class="d-row-left mb-10">
+                <div class="fs-0-9rem fw-800 me-5">
+                  주소
+                </div>
+                <div class="fs-0-9rem fw-800 burgundy">
+                  *
+                </div>
+              </div>
+              <div class="d-row-left">
+                <input
+                  readonly
+                  th:type="${'text'}"
+                  th:id="${'member_address1'}"
+                  th:name="${'member_address1'}"
+                  th:class="${'form-control'}"
+                  th:onclick="|openDaumPostcode()|"
+                  th:placeholder="${'주소를 입력하세요'}"
+                />
+              </div>
             </div>
           </div>
           <!-- address detail -->
           <div class="row mb-20">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-10">
-              <div class="fs-0-9rem fw-800 light-black">
-                상세주소
-              </div>
-              <div class="fs-0-9rem fw-800 burgundy">
-                *
-              </div>
-            </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <input
-                th:type="|text|"
-                th:id="|member_address2|"
-                th:name="|member_address2|"
-                th:class="|form-control|"
-                th:placeholder="|상세주소|"
-              />
+              <div class="d-row-left mb-10">
+                <div class="fs-0-9rem fw-800 me-5">
+                  상세주소
+                </div>
+                <div class="fs-0-9rem fw-800 burgundy">
+                  *
+                </div>
+              </div>
+              <div class="d-row-left">
+                <input
+                  th:type="${'text'}"
+                  th:id="${'member_address2'}"
+                  th:name="${'member_address2'}"
+                  th:class="${'form-control'}"
+                  th:placeholder="${'상세주소'}"
+                />
+              </div>
             </div>
           </div>
           <!-- agree -->
           <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-10">
-              <div class="fs-0-9rem fw-800 light-black">
-                약관 동의
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="d-row-left mb-10">
+                <div class="fs-0-9rem fw-800 me-5">
+                  약관 동의
+                </div>
+                <div class="fs-0-9rem fw-800 burgundy">
+                  *
+                </div>
               </div>
-              <div class="fs-0-9rem fw-800 burgundy">
-                *
+              <div class="d-row-left ms-10">
+                <input
+                  th:type="${'checkbox'}"
+                  th:id="${'member_agree'}"
+                  th:name="${'member_agree'}"
+                  class="form-check-inline"
+                  th:value="${'1'}"
+                />
+                <label for="member_agree" class="form-check-inline">
+                  약관에 동의합니다.
+                </label>
               </div>
-            </div>
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left ms-10">
-              <input
-                th:type="checkbox"
-                th:id="|member_agree|"
-                th:name="|member_agree|"
-                class="form-check-inline"
-                th:value="|1|"
-              />
-              <label for="member_agree" class="form-check-inline">
-                약관에 동의합니다.
-              </label>
             </div>
           </div>
           <!-- hr -->
@@ -265,8 +274,8 @@
           <div class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <button
-                th:type="|submit|"
-                th:class="|btn btn-dark w-100p|"
+                th:type="${'submit'}"
+                th:class="${'btn btn-dark w-100p'}"
                 th:onclick="|return checkMemberId()|"
               >
                 회원 가입

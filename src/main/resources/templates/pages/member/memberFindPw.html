@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- head -->
@@ -7,15 +8,19 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-user-cog', text1='Member', text2='Find Pw')}" />
+  <th:block th:replace="~{layouts/navigation :: navigation (
+    icon = 'fas fa-user-cog',
+    text1 = ${PAGE},
+    text2 = ${THEME}
+  )}" />
 
   <!-- main -->
-  <main class="container px-30">
+  <main class="container-fluid px-30">
     <div class="row">
-      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
         <!-- form -->
         <form
-          th:method="|POST|"
+          th:method="${'POST'}"
           th:onsubmit="|event.preventDefault(); findMemberPw()|"
         >
           <!-- title -->
@@ -40,11 +45,11 @@
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <input
-                th:type="|text|"
-                th:id="|member_id|"
-                th:name="|member_id|"
-                th:class="|form-control|"
-                th:placeholder="|아이디를 입력하세요|"
+                th:type="${'text'}"
+                th:id="${'member_id'}"
+                th:name="${'member_id'}"
+                th:class="${'form-control'}"
+                th:placeholder="${'아이디를 입력하세요'}"
               />
             </div>
           </div>
@@ -62,11 +67,11 @@
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <input
-                th:type="|text|"
-                th:id="|member_name|"
-                th:name="|member_name|"
-                th:class="|form-control|"
-                th:placeholder="|이름을 입력하세요|"
+                th:type="${'text'}"
+                th:id="${'member_name'}"
+                th:name="${'member_name'}"
+                th:class="${'form-control'}"
+                th:placeholder="${'이름을 입력하세요'}"
               />
             </div>
           </div>
@@ -84,11 +89,11 @@
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <input
-                th:type="|email|"
-                th:id="|member_email|"
-                th:name="|member_email|"
-                th:class="|form-control|"
-                th:placeholder="|이메일을 입력하세요|"
+                th:type="${'email'}"
+                th:id="${'member_email'}"
+                th:name="${'member_email'}"
+                th:class="${'form-control'}"
+                th:placeholder="${'이메일을 입력하세요'}"
               />
             </div>
           </div>
@@ -98,7 +103,7 @@
           <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <button
-                th:type="|submit|"
+                th:type="${'submit'}"
                 class="btn btn-dark w-100p"
               >
                 비밀번호 찾기

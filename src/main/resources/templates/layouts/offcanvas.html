@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- off-canvas -->
@@ -12,7 +13,7 @@
         <div class="off-canvas-links">
           <a
             th:if="${session.member_id == null}"
-            th:href="@{/member/addMember}"
+            th:href="@{|/member/addMember|}"
           >
             <span class="upper-text me-20">
               SignUp
@@ -20,7 +21,7 @@
           </a>
           <a
             th:if="${session.member_id == null}"
-            th:href="@{/member/loginMember}"
+            th:href="@{|/member/loginMember|}"
           >
             <span class="upper-text me-20">
               Login
@@ -28,7 +29,7 @@
           </a>
           <a
             th:if="${session.member_id != null}"
-            th:href="@{/member/getMemberDetails}"
+            th:href="@{|/member/detailMember|}"
           >
             <span class="upper-text me-20">
               MyPage
@@ -36,7 +37,7 @@
           </a>
           <a
             th:if="${session.member_id != null}"
-            th:onclick="logoutMember()"
+            th:onclick="|logoutMember()|"
           >
             <span class="upper-text me-20">
               Logout
@@ -49,44 +50,44 @@
           </span>
           <ul th:if ="${session.member_id == ADMIN}">
             <li>
-              <a th:href="@{https://dashboard.stripe.com/test/dashboard}">
+              <a th:href="@{https://dashboard.stripe.com/test/dashboard|}">
                 AdminPage
               </a>
             </li>
             <li>
-              <a th:href="@{/member/getMemberList}">
+              <a th:href="@{|/member/listMember|}">
                 MemberList
               </a>
             </li>
             <li>
-              <a th:href="@{/product/addProduct}">
+              <a th:href="@{|/product/addProduct|}">
                 AddProduct
               </a>
             </li>
             <li>
-              <a th:href="@{/notice/addNotice}">
+              <a th:href="@{|/notice/addNotice|}">
                 AddNotice
               </a>
             </li>
           </ul>
           <ul th:if ="${session.member_id != ADMIN}">
             <li>
-              <a th:onclick="adminAlert()">
+              <a th:onclick="|adminAlert()|">
                 AdminPage
               </a>
             </li>
             <li>
-              <a th:onclick="adminAlert()">
+              <a th:onclick="|adminAlert()|">
                 MemberList
               </a>
             </li>
             <li>
-              <a th:onclick="adminAlert()">
+              <a th:onclick="|adminAlert()|">
                 AddProduct
               </a>
             </li>
             <li>
-              <a th:onclick="adminAlert()">
+              <a th:onclick="|adminAlert()|">
                 AddNotice
               </a>
             </li>
@@ -99,45 +100,45 @@
       <div class="d-col-left">
         <div
           class="fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30"
-          th:onclick="|location.href='@{/product/getProductList}'|"
+          th:onclick="|location.href='@{/product/listProduct}'|"
         >
           Products
         </div>
         <div
-          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30|"
+          th:class="${'fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30'}"
           th:if="${session.member_id != null}"
-          th:onclick="|location.href='@{/orders/getOrdersList}'|"
+          th:onclick="|location.href='@{/orders/listOrders}'|"
         >
           Orders
         </div>
         <div
-          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30|"
+          th:class="${'fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30'}"
           th:if="${session.member_id == null}"
-          th:onclick="return sessionAlert()"
+          th:onclick="|return sessionAlert()|"
         >
           Orders
         </div>
         <div
-          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30|"
-          th:onclick="|location.href='@{/board/getBoardList}'|"
+          th:class="${'fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30'}"
+          th:onclick="|location.href='@{/board/listBoard}'|"
         >
           Blog
         </div>
         <div
-          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30|"
-          th:onclick="|location.href='@{/notice/getNoticeList}'|"
+          th:class="${'fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30'}"
+          th:onclick="|location.href='@{/notice/listNotice}'|"
         >
           Notice
         </div>
         <div
-          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30|"
-          th:onclick="|location.href='@{/qna/getQnaList}'|"
+          th:class="${'fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30'}"
+          th:onclick="|location.href='@{/qna/listQna}'|"
         >
           QnA
         </div>
         <div
-          th:class="|fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30|"
-          th:onclick="|location.href='@{/contact/getContactList}'|"
+          th:class="${'fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30'}"
+          th:onclick="|location.href='@{/contact/listContact}'|"
         >
           Contact
         </div>
@@ -148,12 +149,12 @@
       <div class="d-col-left">
         <img
           th:src="@{|${STORAGE}/icon/logo.png|}"
-          th:loading="|lazy|"
-          th:alt="|logo|"
-          th:width="|70px|"
-          th:height="|70px|"
-          th:class="|pointer|"
-          th:onclick="|location.href='@{/}'|"
+          th:loading="${'lazy'}"
+          th:alt="${'logo'}"
+          th:width="${'70px'}"
+          th:height="${'70px'}"
+          th:class="${'pointer'}"
+          th:onclick="|goHome()|"
         />
         <div class="fs-1-1rem fw-700 mt-20 mb-20">
           JUNGHQLO

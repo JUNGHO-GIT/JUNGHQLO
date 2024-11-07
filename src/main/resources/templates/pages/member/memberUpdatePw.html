@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- head -->
@@ -7,15 +8,19 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-user-cog', text1='Member', text2='Update Pw')}" />
+  <th:block th:replace="~{layouts/navigation :: navigation (
+    icon = 'fas fa-user-cog',
+    text1 = ${PAGE},
+    text2 = ${THEME}
+  )}" />
 
   <!-- main -->
-  <main class="container px-30">
+  <main class="container-fluid px-30">
     <div class="row">
-      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
         <!-- form -->
         <form
-          th:method="|POST|"
+          th:method="${'POST'}"
           th:onsubmit="|event.preventDefault(); updateMemberPw()|"
         >
           <!-- title -->
@@ -38,11 +43,11 @@
                 </div>
               </div>
               <input
-                th:type="|password|"
-                th:id="|member_pw|"
-                th:name="|member_pw|"
-                th:class="|form-control|"
-                th:placeholder="|변경할 비밀번호를 입력하세요|"
+                th:type="${'password'}"
+                th:id="${'member_pw'}"
+                th:name="${'member_pw'}"
+                th:class="${'form-control'}"
+                th:placeholder="${'변경할 비밀번호를 입력하세요'}"
               />
             </div>
           </div>
@@ -58,11 +63,11 @@
                 </div>
               </div>
               <input
-                th:type="|password|"
-                th:id="|member_pw2|"
-                th:name="|member_pw2|"
-                th:class="|form-control|"
-                th:placeholder="|변경할 비밀번호를 다시 입력하세요|"
+                th:type="${'password'}"
+                th:id="${'member_pw2'}"
+                th:name="${'member_pw2'}"
+                th:class="${'form-control'}"
+                th:placeholder="${'변경할 비밀번호를 다시 입력하세요'}"
               />
             </div>
           </div>
@@ -72,8 +77,8 @@
           <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <button
-                th:type="|submit|"
-                th:class="|btn btn-dark w-100p|"
+                th:type="${'submit'}"
+                th:class="${'btn btn-dark w-100p'}"
               >
                 비밀번호 변경
               </button>

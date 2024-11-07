@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- head -->
@@ -7,7 +8,11 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-question-circle', text1='Contact', text2='Help Center')}" />
+  <th:block th:replace="~{layouts/navigation :: navigation (
+    icon = 'fas fa-map-marker-alt',
+    text1 = ${PAGE},
+    text2 = ${THEME}
+  )}" />
 
   <!-- map -->
   <section class="map">
@@ -16,7 +21,7 @@
   </main>
 
   <!-- main -->
-  <main class="container px-30">
+  <main class="container-fluid px-30">
     <div class="row d-flex justify-content-center">
       <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
         <div class="contact-text">
@@ -67,16 +72,16 @@
           <form>
             <div class="row">
               <div class="col-lg-6">
-                <input th:type="|text|" id="contactName" th:placeholder="|이름" style="caret-color: black()" class="fw-6|" required/>
+                <input th:type="${'text" id="contactName" th:placeholder="이름" style="caret-color: black()" class="fw-6'}" required/>
               </div>
               <div class="col-lg-6">
-                <input th:type="tel" id="contactTel" th:placeholder="|연락처" style="caret-color: black()" class="fw-6|" required/>
+                <input th:type="${'tel" id="contactTel" th:placeholder="연락처" style="caret-color: black()" class="fw-6'}" required/>
               </div>
               <div class="col-lg-6">
-                <input th:type="|email|" id="contactEmail" th:placeholder="|이메일" style="caret-color: black()" class="fw-6|" required/>
+                <input th:type="${'email" id="contactEmail" th:placeholder="이메일" style="caret-color: black()" class="fw-6'}" required/>
               </div>
               <div class="col-lg-6 text-center">
-                <button th:type="|submit|" class="site-btn" onclick="return contactAlert(event)">
+                <button th:type="${'submit" class="site-btn" onclick="return contactAlert(event)'}">
                   상담 신청
                 </button>
               </div>

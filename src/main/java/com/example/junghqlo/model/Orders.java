@@ -1,6 +1,7 @@
 package com.example.junghqlo.model;
 
 import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 import lombok.Data;
 
 @Data
@@ -14,7 +15,11 @@ public class Orders {
   private Integer orders_quantity;
   private Integer orders_totalPrice;
   private String product_imgsUrl;
+
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
   private LocalDateTime orders_date;
+
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
   private LocalDateTime orders_update;
 
   // getter --------------------------------------------------------------------------------------->

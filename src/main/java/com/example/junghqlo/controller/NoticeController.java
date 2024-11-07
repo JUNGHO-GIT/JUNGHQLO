@@ -1,8 +1,6 @@
 package com.example.junghqlo.controller;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,25 +18,23 @@ import com.example.junghqlo.service.NoticeService;
 @RequestMapping("/notice")
 public class NoticeController {
 
-  // 0. constructor injection --------------------------------------------------------------------->
+  // 0. constructor injection ----------------------------------------------------------------------
   private NoticeService noticeService;
   NoticeController(NoticeService noticeService) {
     this.noticeService = noticeService;
   }
 
   // 0. static -------------------------------------------------------------------------------------
-  private static String PAGE = "notice";
-  private static String PAGE_UP = "Notice";
-  private static Notice MODEL = new Notice();
-  private static List<Notice> LIST = new ArrayList<>();
+  private static String page = "notice";
+  private static String PAGE = "Notice";
 
-  // 1. getNoticeList (GET) ----------------------------------------------------------------------->
-  @GetMapping("/getNoticeList")
-  public String getNoticeList (
+  // 1-1. listNotice (GET) -------------------------------------------------------------------------
+  @GetMapping("/listNotice")
+  public String listNotice(
     @ModelAttribute Notice notice,
-    @RequestParam(required=false) String sort,
-    @RequestParam(defaultValue="1") Integer pageNumber,
-    @RequestParam(defaultValue="9") Integer itemsPer,
+    @RequestParam(defaultValue = "default") String sort,
+    @RequestParam(defaultValue = "1") Integer pageNumber,
+    @RequestParam(defaultValue = "9") Integer itemsPer,
     Model model
   ) throws Exception {
 
@@ -65,46 +61,25 @@ public class NoticeController {
       sort="notice_date DESC";
     }
 
-    PageHandler<Notice> page
-    = noticeService.getNoticeList(pageNumber, itemsPer, sort, notice);
-
-    LIST = page.getContent();
+    PageHandler<Notice> pageHandler = (
+      noticeService.listNotice(pageNumber, itemsPer, sort, notice)
+    );
 
     // 모델
     model.addAttribute("sort", sort);
-    model.addAttribute("page", page);
-    model.addAttribute("LIST", LIST);
+    model.addAttribute("pageHandler", pageHandler);
+    model.addAttribute("LIST", pageHandler.getContent());
 
-    return MessageFormat.format("/pages/{0}/{1}List", PAGE, PAGE);
+    return MessageFormat.format("/pages/{0}/{1}List", page, page);
   };
 
-  // 2. getNoticeDetails (GET) -------------------------------------------------------------------->
-  @GetMapping("/getNoticeDetails")
-  public String getNoticeDetails (
-    @ModelAttribute Notice notice,
-    @RequestParam Integer notice_number,
-    HttpSession session,
-    Model model
-  ) throws Exception {
-
-    // 조회수 증가
-    noticeService.updateNoticeCount(notice_number, session);
-    MODEL = noticeService.getNoticeDetails(notice_number);
-
-    // 모델
-    model.addAttribute("MODEL", MODEL);
-    model.addAttribute("member_id", session.getAttribute("member_id"));
-
-    return MessageFormat.format("/pages/{0}/{1}Details", PAGE, PAGE);
-  }
-
-  // 3. searchNotice (GET) ------------------------------------------------------------------------>
+  // 1-2. searchNotice (GET) -----------------------------------------------------------------------
   @GetMapping("/searchNotice")
   public String searchNotice (
     @ModelAttribute Notice notice,
-    @RequestParam(required=false) String sort,
-    @RequestParam(defaultValue="1") Integer pageNumber,
-    @RequestParam(defaultValue="9") Integer itemsPer,
+    @RequestParam(defaultValue = "default") String sort,
+    @RequestParam(defaultValue = "1") Integer pageNumber,
+    @RequestParam(defaultValue = "9") Integer itemsPer,
     @RequestParam String searchType,
     @RequestParam String keyword,
     Model model
@@ -112,7 +87,7 @@ public class NoticeController {
 
     // searchType order
     if (searchType == null || keyword == null) {
-      return MessageFormat.format("redirect:/{0}/get{1}List", PAGE, PAGE_UP);
+      return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
     }
     else if(searchType.equals("title")) {
       searchType="notice_title";
@@ -121,27 +96,46 @@ public class NoticeController {
       searchType="notice_contents";
     }
 
-    PageHandler<Notice> page
-    = noticeService.searchNotice(pageNumber, itemsPer, keyword, searchType, notice);
-
-    LIST = page.getContent();
+    PageHandler<Notice> pageHandler = (
+      noticeService.searchNotice(pageNumber, itemsPer, searchType, keyword, notice)
+    );
 
     // 모델
     model.addAttribute("sort", sort);
-    model.addAttribute("page", page);
-    model.addAttribute("LIST", LIST);
+    model.addAttribute("pageHandler", pageHandler);
+    model.addAttribute("searchType", searchType);
+    model.addAttribute("LIST", pageHandler.getContent());
 
-    return MessageFormat.format("/pages/{0}/{1}Search", PAGE, PAGE);
+    return MessageFormat.format("/pages/{0}/{1}List", page, page);
   }
 
-  // 4. addNotice (GET) --------------------------------------------------------------------------->
+  // 2. detailNotice(GET) --------------------------------------------------------------------------
+  @GetMapping("/detailNotice")
+  public String detailNotice(
+    @ModelAttribute Notice notice,
+    @RequestParam Integer notice_number,
+    HttpSession session,
+    Model model
+  ) throws Exception {
+
+    // 조회수 증가
+    noticeService.updateNoticeCount(notice_number, session);
+
+    // 모델
+    model.addAttribute("MODEL", noticeService.detailNotice(notice_number));
+    model.addAttribute("member_id", session.getAttribute("member_id"));
+
+    return MessageFormat.format("/pages/{0}/{1}Detail", page, page);
+  }
+
+  // 3. addNotice (GET) ----------------------------------------------------------------------------
   @GetMapping("/addNotice")
   public String addNotice() throws Exception {
 
-    return MessageFormat.format("/pages/{0}/{1}Add", PAGE, PAGE);
+    return MessageFormat.format("/pages/{0}/{1}Add", page, page);
   }
 
-  // 4. addNotice (POST) -------------------------------------------------------------------------->
+  // 3. addNotice (POST) ---------------------------------------------------------------------------
   @PostMapping("/addNotice")
   public String addNotice(
     @ModelAttribute Notice notice
@@ -149,25 +143,23 @@ public class NoticeController {
 
     noticeService.addNotice(notice);
 
-    return MessageFormat.format("redirect:/{0}/get{1}List", PAGE, PAGE_UP);
+    return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
   }
 
-  // 5. updateNotice (GET) ------------------------------------------------------------------------>
+  // 4. updateNotice (GET) -------------------------------------------------------------------------
   @GetMapping("/updateNotice")
   public String updateNotice (
     @RequestParam Integer notice_number,
     Model model
   ) throws Exception {
 
-    MODEL = noticeService.getNoticeDetails(notice_number);
-
     // 모델
-    model.addAttribute("MODEL", MODEL);
+    model.addAttribute("MODEL", noticeService.detailNotice(notice_number));
 
-    return MessageFormat.format("/pages/{0}/{1}Update", PAGE, PAGE);
+    return MessageFormat.format("/pages/{0}/{1}Update", page, page);
   }
 
-  // 5. updateNotice (POST) ----------------------------------------------------------------------->
+  // 4. updateNotice (POST) ------------------------------------------------------------------------
   @PostMapping("/updateNotice")
   public String updateNotice (
     @ModelAttribute Notice notice,
@@ -176,10 +168,10 @@ public class NoticeController {
 
     noticeService.updateNotice(notice, existingImage);
 
-    return MessageFormat.format("redirect:/{0}/get{1}List", PAGE, PAGE_UP);
+    return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
   }
 
-  // 5-2. updateLike (GET) ------------------------------------------------------------------------>
+  // 4-2. updateLike (GET) -------------------------------------------------------------------------
   @ResponseBody
   @GetMapping("/updateLike")
   public Integer updateLike (
@@ -189,12 +181,12 @@ public class NoticeController {
 
     noticeService.updateLike(notice_number, session);
 
-    Integer like = noticeService.getNoticeDetails(notice_number).getNotice_like();
+    Integer like = noticeService.detailNotice(notice_number).getNotice_like();
 
     return like;
   }
 
-  // 5-3. updateDislike (GET) --------------------------------------------------------------------->
+  // 4-3. updateDislike (GET) ----------------------------------------------------------------------
   @ResponseBody
   @GetMapping("/updateDislike")
   public Integer updateDislike (
@@ -204,35 +196,27 @@ public class NoticeController {
 
     noticeService.updateDislike(notice_number, session);
 
-    Integer dislike = noticeService.getNoticeDetails(notice_number).getNotice_dislike();
+    Integer dislike = noticeService.detailNotice(notice_number).getNotice_dislike();
 
     return dislike;
   }
 
-  // 6. deleteNotice (GET) ------------------------------------------------------------------------>
-  @GetMapping("/deleteNotice")
-  public String deleteNotice(
-    @ModelAttribute Notice notice,
-    @RequestParam Integer notice_number,
-    Model model
-  ) throws Exception {
-
-    MODEL = noticeService.getNoticeDetails(notice_number);
-
-    // 모델
-    model.addAttribute("MODEL", MODEL);
-
-    return MessageFormat.format("/pages/{0}/{1}Delete", PAGE, PAGE);
-  }
-
-  // 6. deleteNotice (POST) ----------------------------------------------------------------------->
-  @PostMapping("/notice/deleteNotice")
-  public String deleteNotice(
+  // 5. deleteNotice (POST) ------------------------------------------------------------------------
+  @ResponseBody
+  @PostMapping("/deleteNotice")
+  public Integer deleteNotice (
     @RequestParam Integer notice_number
   ) throws Exception {
 
-    noticeService.deleteNotice(notice_number);
+    Integer result = 0;
 
-    return MessageFormat.format("redirect:/{0}/get{1}List", PAGE, PAGE_UP);
+    if (noticeService.deleteNotice(notice_number) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
 }

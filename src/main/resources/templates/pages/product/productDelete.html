@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- head -->
@@ -7,18 +8,22 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-shopping-bag', text1='Shop', text2='Delete')}" />
+  <th:block th:replace="~{layouts/navigation :: navigation (
+    icon = 'fas fa-shopping-bag',
+    text1 = ${PAGE},
+    text2 = ${THEME}
+  )}" />
 
   <!-- main -->
-  <main class="container px-30">
+  <main class="container-fluid px-30">
     <div class="row">
-      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
-    <form th:action="@{/product/deleteProduct}" th:method="|POST|" enctype="multipart/form-data" th:onsubmit="return deleteCheck()">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
+    <form th:action="@{|/product/deleteProduct}" th:method="${'POST" enctype="multipart/form-data" th:onsubmit="|return deleteCheck()'}|">
 
       <!-- hidden -->
-      <input th:type="|hidden|" th:name="|product_number" th:value="${productModel.product_number}" th:id="product_number|"/>
-      <input th:type="|hidden|" th:name="|stripe_id"th:value="${productModel.stripe_id}" th:id="stripe_id|"/>
-      <input th:type="|hidden|" th:name="|stripe_price" th:value="${productModel.stripe_price}" th:id="stripe_price|"/>
+      <input th:type="${'hidden" th:name="|product_number" th:value="{productModel.product_number}" th:id="product_number'}"/>
+      <input th:type="${'hidden" th:name="|stripe_id"th:value="{productModel.stripe_id}" th:id="stripe_id'}"/>
+      <input th:type="${'hidden" th:name="|stripe_price" th:value="{productModel.stripe_price}" th:id="stripe_price'}"/>
 
       <div class="row">
         <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
@@ -31,7 +36,7 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
                 <p class="p">상품명<span>*</span></p>
-                <input th:type="|text|" th:placeholder="|Name" th:name="|product_name" th:id="|product_name|" th:value=|"${productModel.product_name}|" disabled readonly/>
+                <input th:type="${'text" th:placeholder="|Name" th:name="|product_name" th:id="product_name" th:value=|"${productModel.product_name}|'}" disabled readonly/>
               </div>
             </div>
           </div>
@@ -40,7 +45,7 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
                 <p class="p"> 상품 설명<span>*</span></p>
-                <textarea th:placeholder="|Details" th:id="|product_details" th:name="|product_details|" th:text=|"${productModel.product_details}|" disabled readonly>
+                <textarea th:placeholder="${'|Detail" th:id="|product_detail" th:name="product_detail" th:text=|"${productModel.product_detail}|'}" disabled readonly>
                 </textarea>
               </div>
             </div>
@@ -50,21 +55,21 @@
             <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
               <div class="checkout-input">
                 <p class="p"> 상품 가격<span>*</span></p>
-                <input th:type="|text|" th:placeholder="|Price" th:id="|product_price" th:name="|product_price|" th:value=|"${productModel.product_price}|"/>
+                <input th:type="${'text" th:placeholder="|Price" th:id="|product_price" th:name="product_price" th:value=|"${productModel.product_price}|'}"/>
               </div>
             </div>
             <!-- stock -->
             <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
               <div class="checkout-input">
                 <p class="p"> 상품 수량<span>*</span></p>
-                <input th:type="|text|" th:placeholder="|Stock" th:id="|product_stock" th:name="|product_stock|" th:value=|"${productModel.product_stock}|" disabled readonly/>
+                <input th:type="${'text" th:placeholder="|Stock" th:id="|product_stock" th:name="product_stock" th:value=|"${productModel.product_stock}|'}" disabled readonly/>
               </div>
             </div>
             <!-- company -->
             <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
               <div class="checkout-input">
                 <p class="p"> 상품 제조사<span>*</span></p>
-                <input th:type="|text|" th:placeholder="|Company" th:id="|product_company" th:name="|product_company|" th:value=|"${productModel.product_company}|" disabled readonly/>
+                <input th:type="${'text" th:placeholder="|Company" th:id="|product_company" th:name="product_company" th:value=|"${productModel.product_company}|'}" disabled readonly/>
               </div>
             </div>
           </div>
@@ -73,7 +78,7 @@
             <div class="class="col-6 col-sm-3 col-md-3 col-lg-3 col-xl-3">
               <div class="checkout-input">
                 <p class="p">카테고리<span>*</span></p>
-                <select th:id="|product_category" th:name=|"|product_category|" disabled readonly>
+                <select th:id="${'product_category" th:name="|product_category|'}" disabled readonly>
                   <option selected th:text="${productModel.product_category}">
                   </option>
                   <option value="아우터">아우터</option>
@@ -89,7 +94,7 @@
             <div class="class="col-6 col-sm-3 col-md-3 col-lg-3 col-xl-3">
               <div class="checkout-input">
                 <p class="p">원산지<span>*</span></p>
-                <select th:type="|text|" th:placeholder="|Origin" th:id="|product_origin" th:name=|"product_origin|" disabled readonly>
+                <select th:type="${'text" th:placeholder="|Origin" th:id="product_origin" th:name="product_origin|'}" disabled readonly>
                   <option selected th:text="${productModel.product_origin}"></option>
                   <option value="대한민국">대한민국</option>
                   <option value="중국">중국</option>
@@ -104,7 +109,7 @@
                 <div class="previewSelect-group">
                   <p class="p">상품 이미지1<span>*</span></p>
                   <label for="imageFile1">선택</label>
-                  <input th:type="file" th:id="|imageFile1" onchange="junghoPreview(1)" class="imageFile" th:name=|"|product_imgsFile1|" disabled readonly>
+                  <input th:type="${'file" th:id="imageFile1" onchange="junghoPreview(1)" class="imageFile" th:name="|product_imgsFile1|'}" disabled readonly>
                 </div>
               </div>
             </div>
@@ -114,7 +119,7 @@
                 <div class="previewSelect-group">
                   <p class="p">상품 이미지2<span>*</span></p>
                   <label for="imageFile2">선택</label>
-                  <input th:type="file" th:id="|imageFile2" onchange="junghoPreview(2)" class="imageFile" th:name=|"|product_imgsFile2|" disabled readonly>
+                  <input th:type="${'file" th:id="imageFile2" onchange="junghoPreview(2)" class="imageFile" th:name="|product_imgsFile2|'}" disabled readonly>
                 </div>
               </div>
             </div>
@@ -148,9 +153,9 @@
             </div>
             <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
               <div class="previewButton-group">
-                <button class="jungho-button" id="resetButton" th:type="reset"
-                th:onclick="window.location.reload()">새로고침</button>
-                <button class="jungho-button" id="submitButton" th:type="|submit|">
+                <button class="jungho-button" id="resetButton" th:type="${'reset'}"
+                th:onclick="|window.location.reload()|">새로고침</button>
+                <button class="jungho-button" id="submitButton" th:type="${'submit'}">
                 삭제하기</button>
               </div>
             </div>

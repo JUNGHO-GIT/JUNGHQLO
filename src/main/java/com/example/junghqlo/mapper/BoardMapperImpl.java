@@ -10,77 +10,85 @@ import com.example.junghqlo.model.Board;
 @Repository
 public class BoardMapperImpl implements BoardMapper {
 
-  // 0. constructor injection --------------------------------------------------------------------->
+  // 0. constructor injection ----------------------------------------------------------------------
   SqlSessionTemplate sqlSession;
   BoardMapperImpl(SqlSessionTemplate sqlSession) {
-  this.sqlSession = sqlSession;
+    this.sqlSession = sqlSession;
   }
 
-  // 1. getBoardList ------------------------------------------------------------------------------>
+  // 1-1. listBoard -------------------------------------------------------------------------------
   @Override
-  public List<Board> getBoardList(String sort) throws Exception {
+  public List<Board> listBoard(String sort) throws Exception {
 
-    return sqlSession.selectList("getBoardList", sort);
+    return sqlSession.selectList("listBoard", sort);
   }
 
-  // 2. getBoardDetails --------------------------------------------------------------------------->
-  @Override
-  public Board getBoardDetails(Integer board_number) throws Exception {
-
-    return sqlSession.selectOne("getBoardDetails", board_number);
-  }
-
-  // 3. searchBoard ------------------------------------------------------------------------------->
+  // 1-2. searchBoard ------------------------------------------------------------------------------
   @Override
   public List<Board> searchBoard(String searchType, String keyword) throws Exception {
 
-    Map<String, Object> params = new HashMap<>();
-    params.put("searchType", searchType);
-    params.put("keyword", keyword);
+    Map<String, Object> map = new HashMap<>();
+    map.put("searchType", searchType);
+    map.put("keyword", keyword);
 
-    return sqlSession.selectList("searchBoard", params);
+    return sqlSession.selectList("searchBoard", map);
   }
 
-  // 4. addBoard ---------------------------------------------------------------------------------->
+  // 2. detailBoard --------------------------------------------------------------------------------
+  @Override
+  public Board detailBoard(Integer board_number) throws Exception {
+
+    return sqlSession.selectOne("detailBoard", board_number);
+  }
+
+  // 3. addBoard -----------------------------------------------------------------------------------
   @Override
   public void addBoard(Board board) throws Exception {
 
     sqlSession.insert("addBoard", board);
   }
 
-  // 5. updateBoard ------------------------------------------------------------------------------->
+  // 4. updateBoard --------------------------------------------------------------------------------
   @Override
   public void updateBoard(Board board) throws Exception {
 
     sqlSession.update("updateBoard", board);
   }
 
-  // 5-1. updateBoardCount ------------------------------------------------------------------------>
+  // 4-1. updateBoardCount -------------------------------------------------------------------------
   @Override
   public void updateBoardCount(Integer board_number) throws Exception {
 
     sqlSession.update("updateBoardCount", board_number);
   }
 
-  // 5-2. updateLike ------------------------------------------------------------------------------>
+  // 4-2. updateLike -------------------------------------------------------------------------------
   @Override
   public void updateLike(Integer board_number) throws Exception {
 
     sqlSession.update("updateLike", board_number);
   }
 
-  // 5-3. updateDislike --------------------------------------------------------------------------->
+  // 4-3. updateDislike ----------------------------------------------------------------------------
   @Override
   public void updateDislike(Integer board_number) throws Exception {
 
     sqlSession.update("updateDislike", board_number);
   }
 
-  // 6. deleteBoard ------------------------------------------------------------------------------->
+  // 5. deleteBoard --------------------------------------------------------------------------------
   @Override
-  public void deleteBoard(Integer board_number) throws Exception {
+  public Integer deleteBoard(Integer board_number) throws Exception {
 
-    sqlSession.delete("deleteBoard", board_number);
+    Integer result = 0;
+
+    if (sqlSession.delete("deleteBoard", board_number) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
-
 }

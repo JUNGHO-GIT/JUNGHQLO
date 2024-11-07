@@ -11921,16 +11921,44 @@
   transform: scale(1.1) !important;
 }
 
-.ivory {
+.light-yellow {
   color: #F2ECBE !important;
 }
-.bg-ivory {
+.bg-light-yellow {
   background-color: #F2ECBE !important;
+}
+.pointer-light-yellow:hover,
+.pointer-light-yellow.active {
+  cursor: pointer !important;
+  color: #F2ECBE !important;
+  transition: transform 0.1s ease-in-out !important;
+  transform: scale(1.1) !important;
+}
+
+.ivory {
+  color: #d8caba !important;
+}
+.bg-ivory {
+  background-color: #d8caba !important;
 }
 .pointer-ivory:hover,
 .pointer-ivory.active {
   cursor: pointer !important;
-  color: #F2ECBE !important;
+  color: #d8caba !important;
+  transition: transform 0.1s ease-in-out !important;
+  transform: scale(1.1) !important;
+}
+
+.ivory-light {
+  color: #ede7e3 !important;
+}
+.bg-ivory-light {
+  background-color: #ede7e3 !important;
+}
+.pointer-ivory-light:hover,
+.pointer-ivory-light.active {
+  cursor: pointer !important;
+  color: #ede7e3 !important;
   transition: transform 0.1s ease-in-out !important;
   transform: scale(1.1) !important;
 }

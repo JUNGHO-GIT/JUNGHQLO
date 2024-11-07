@@ -120,8 +120,7 @@ function junghoPreview(index) {
     const imgProps = {
       borderRadius: "10px",
       boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
-      padding: "5px",
-      margin: "10px",
+      objectFit: "cover",
     };
     Object.assign(imageBox.style, imgProps);
   }
@@ -135,7 +134,7 @@ function junghoPreview(index) {
     const imgProps = {
       borderRadius: "10px",
       boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
-      backgroundColor: "transparent", // Add this line
+      backgroundColor: "transparent",
     };
     Object.assign(
       imageMiniBox.style, imgProps, {

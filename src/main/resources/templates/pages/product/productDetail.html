@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- head -->
@@ -7,25 +8,29 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-shopping-bag', text1='Shop', text2='Details')}" />
+  <th:block th:replace="~{layouts/navigation :: navigation (
+    icon = 'fas fa-shopping-bag',
+    text1 = ${PAGE},
+    text2 = ${THEME}
+  )}" />
 
   <!-- section -->
   <section class="container" onload="randomSideImage()">
 
     <!-- image -->
-    <div class="product-details-pic">
+    <div class="product-detail-pic">
       <div class="container">
         <div class="row">
           <!-- main -->
           <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-            <div class="product-details-pic-item">
-              <img th:src="@{${productModel.product_imgsUrl1}}" th:id="|product_imgsUrl1" th:name=|"|product_imgsUrl1|"/>
+            <div class="product-detail-pic-item">
+              <img th:src="${'@{${productModel.product_imgsUrl1}}" th:id="product_imgsUrl1" th:name="|product_imgsUrl1|'}"/>
             </div>
           </div>
           <!-- main -->
           <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-            <div class="product-details-pic-item">
-              <img th:src="@{${productModel.product_imgsUrl2}}" th:id="|product_imgsUrl2" th:name=|"|product_imgsUrl2|"/>
+            <div class="product-detail-pic-item">
+              <img th:src="${'@{${productModel.product_imgsUrl2}}" th:id="product_imgsUrl2" th:name="|product_imgsUrl2|'}"/>
             </div>
           </div>
           <!-- vertical  -->
@@ -34,31 +39,31 @@
           </div>
           <!-- detail -->
           <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-            <div class="product-details-text">
+            <div class="product-detail-text">
 
               <!-- form -->
-              <form th:action="@{/orders/addOrders}" th:method="|POST|">
+              <form th:action="@{|/orders/addOrders}" th:method="${'POST'}">
 
                 <!-- hidden -->
-                <input th:type="|hidden|" th:id="|product_number" th:name=|"|product_number|"
+                <input th:type="${'hidden" th:id="product_number" th:name="|product_number|'}"
                 th:value="${productModel.product_number}"/>
-                <input th:type="|hidden|" th:id="|product_name" th:name="|product_name" th:value=|"${productModel.product_name}|"/>
-                <input th:type="|hidden|" th:id="|product_company" th:name="|product_company" th:value=|"${productModel.product_company}|"/>
-                <input th:type="|hidden|" th:id="|product_category" th:name="|product_category" th:value=|"${productModel.product_category}|"/>
-                <input th:type="|hidden|" th:id="|product_price" th:name="|product_price" th:value=|"${productModel.product_price}|"/>
-                <input th:type="|hidden|" th:id="|product_imgsUrl1" th:name="|product_imgsUrl1" th:value=|"${productModel.product_imgsUrl1}|"/>
-                <input th:type="|hidden|" th:id="|product_imgsUrl" th:name="|product_imgsUrl" th:value=|"${productModel.product_imgsUrl1}|"/>
-                <input th:type="|hidden|" th:id="|product_imgsUrl2" th:name="|product_imgsUrl2" th:value=|"${productModel.product_imgsUrl2}|"/>
-                <input th:type="|hidden|" th:id="|product_stock" th:name="|product_stock" th:value=|"${productModel.product_stock}|"/>
+                <input th:type="${'hidden" th:id="|product_name" th:name="product_name" th:value="${productModel.product_name}|'}"/>
+                <input th:type="${'hidden" th:id="|product_company" th:name="product_company" th:value="${productModel.product_company}|'}"/>
+                <input th:type="${'hidden" th:id="|product_category" th:name="product_category" th:value="${productModel.product_category}|'}"/>
+                <input th:type="${'hidden" th:id="|product_price" th:name="product_price" th:value="${productModel.product_price}|'}"/>
+                <input th:type="${'hidden" th:id="|product_imgsUrl1" th:name="product_imgsUrl1" th:value="${productModel.product_imgsUrl1}|'}"/>
+                <input th:type="${'hidden" th:id="|product_imgsUrl" th:name="product_imgsUrl" th:value="${productModel.product_imgsUrl1}|'}"/>
+                <input th:type="${'hidden" th:id="|product_imgsUrl2" th:name="product_imgsUrl2" th:value="${productModel.product_imgsUrl2}|'}"/>
+                <input th:type="${'hidden" th:id="|product_stock" th:name="product_stock" th:value="${productModel.product_stock}|'}"/>
 
                 <!-- name -->
                 <h4>
                   <h5 th:text="${productModel.product_name}"></h5>
                 </h4>
-                <!-- details -->
-                <div class="product-details-tab-content-item">
+                <!-- detail -->
+                <div class="product-detail-tab-content-item">
                   <p class="p">
-                    <h6 th:text="${productModel.product_details}"></h6>
+                    <h6 th:text="${productModel.product_detail}"></h6>
                   </p>
                 </div>
                 <!-- price -->
@@ -73,18 +78,18 @@
                     <th:block th:text="${#numbers.formatInteger(productModel.product_price * 3, 3, 'COMMA')}" />
                   </span>
                 </h3>
-                <div class="product-details-cart-option">
+                <div class="product-detail-cart-option">
                   <div class="ms-n6 mb-2">
                     <!-- quantity -->
                     <div class="quantity">
                       <div class="pro-qty">
-                        <input th:type="|text|" th:id="|orders_quantity" th:name="|orders_quantity" th:value=|"1|"/>
+                        <input th:type="${'text" th:id="|orders_quantity" th:name="orders_quantity" th:value="1|'}"/>
                       </div>
                     </div>
                     <!-- button -->
                     <th:block th:if="${session.member_id} == null">
-                      <button th:type="|button|" class="jungho-button" th:onclick="return sessionAlert()">구매</button>
-                      <button th:type="|button|" class="jungho-button" th:onclick="@{|location.href='/JUNGHQLO/product/getProductList'|}">리스트</button>
+                      <button th:type="${'button" class="jungho-button" th:onclick="|return sessionAlert()'}|">구매</button>
+                      <button th:type="${'button" class="jungho-button" th:onclick="|@{|location.href='/JUNGHQLO/product/listProduct'|}'}|">리스트</button>
                       <br>
                       <br>
                       <div class="jungho-center ms-6 mb-1">
@@ -121,8 +126,8 @@
                       </div>
                     </th:block>
                     <th:block th:if="${session.member_id} != null">
-                      <button th:type="|submit|" class="jungho-button" th:onclick="return ordersCheck()">구매</button>
-                      <button th:type="|button|" class="jungho-button" th:onclick="@{|location.href='/JUNGHQLO/product/getProductList'|}">리스트</button>
+                      <button th:type="${'submit" class="jungho-button" th:onclick="|return ordersCheck()'}|">구매</button>
+                      <button th:type="${'button" class="jungho-button" th:onclick="|@{|location.href='/JUNGHQLO/product/listProduct'|}'}|">리스트</button>
                       <br>
                       <br>
                       <br>
@@ -146,7 +151,7 @@
                           <a class="a2a_button_twitter"></a>
                           <a class="a2a_button_pinterest"></a>
                           <a class="a2a_button_yahoo_mail"></a>
-                          <script th:src="@{https://static.addtoany.com/menu/page.js}"></script>
+                          <script th:src="${'@{https://static.addtoany.com/menu/page.js}'}"></script>
                         </div>
                       </div>
                       <div class="jungho-center ms-6 mb-1">
@@ -163,8 +168,8 @@
                 </div>
                 <!-- button group -->
                 <div class="btn-group mb-n5" th:if="${session.member_id == 'eric4757'}">
-                  <button th:type="|button|" class="jungho-button-admin" th:onclick="|location.href='@{/product/updateProduct(product_number=${productModel.product_number})}'|">수정</button>
-                  <button th:type="|button|" class="jungho-button-admin" th:onclick="|location.href='@{/product/deleteProduct(product_number=${productModel.product_number})}'|">삭제</button>
+                  <button th:type="${'button" class="jungho-button-admin" th:onclick="|location.href='@{/product/updateProduct(product_number=${productModel.product_number})}'|'}">수정</button>
+                  <button th:type="${'button" class="jungho-button-admin" th:onclick="|location.href='@{/product/deleteProduct(product_number=${productModel.product_number})}'|'}">삭제</button>
                 </div>
               </form>
 
@@ -190,7 +195,7 @@
             <ul class="nav nav-tabs" role="tablist">
               <div th:each="i : ${#numbers.sequence(1, 6)}">
                 <li class="nav-item">
-                  <a class="nav-link table-active" th:onclick="randomSideImage()">
+                  <a class="nav-link table-active" th:onclick="|randomSideImage()|">
                     <div class="product-thumb-pic set-bg" ></div>
                   </a>
                 </li>
@@ -200,13 +205,13 @@
         </div>
       </div>
     </div>
-    <!-- details -->
-    <div class="product-details-content">
+    <!-- detail -->
+    <div class="product-detail-content">
       <div class="container">
         <!-- row -->
         <div class="row">
           <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <div class="product-details-tab">
+            <div class="product-detail-tab">
               <ul class="nav nav-tabs" role="tablist">
                 <!-- description -->
                 <li class="nav-item">
@@ -222,57 +227,57 @@
               <div class="tab-content">
                 <!-- description -->
                 <div class="tab-pane active" id="tabs-1" role="tabpanel">
-                  <div class="product-details-tab-content">
+                  <div class="product-detail-tab-content">
                     <div class="row">
                       <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                         <!-- number -->
-                        <div class="product-details-tab-content-item">
+                        <div class="product-detail-tab-content-item">
                           <h5><i class="fas fa-hand-point-up"></i>&nbsp;&nbsp;상품번호</h5>
                           <p th:text="${productModel.product_number}"></p>
                         </div>
                         <!-- name -->
-                        <div class="product-details-tab-content-item">
+                        <div class="product-detail-tab-content-item">
                           <h5><i class="fa fa-cube"></i>&nbsp;&nbsp;상품명</h5>
                           <p th:text="${productModel.product_name}"></p>
                         </div>
                         <!-- category -->
-                        <div class="product-details-tab-content-item">
+                        <div class="product-detail-tab-content-item">
                           <h5><i class="fas fa-clipboard-list"></i>&nbsp;&nbsp;카테고리</h5>
                           <p th:text="${productModel.product_category}"></p>
                         </div>
                       </div>
                       <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                         <!-- company -->
-                        <div class="product-details-tab-content-item">
+                        <div class="product-detail-tab-content-item">
                           <h5><i class="fa fa-building"></i>&nbsp;&nbsp;제조사</h5>
                           <p th:text="${productModel.product_company}"></p>
                         </div>
                         <!-- origin -->
-                        <div class="product-details-tab-content-item">
+                        <div class="product-detail-tab-content-item">
                           <h5><i class="fa fa-map-marker"></i>&nbsp;&nbsp;원산지</h5>
                           <p th:text="${productModel.product_origin}"></p>
                         </div>
                         <!-- price -->
-                        <div class="product-details-tab-content-item">
+                        <div class="product-detail-tab-content-item">
                           <h5><i class="fas fa-won-sign fa-xs"></i>&nbsp;&nbsp;가격</h5>
                           <p th:text="${#numbers.formatInteger(productModel.product_price, 3, 'COMMA')}"></p>
                         </div>
                       </div>
                       <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                         <!-- date -->
-                        <div class="product-details-tab-content-item">
+                        <div class="product-detail-tab-content-item">
                           <h5><i class="far fa-calendar-alt fa-xs"></i>&nbsp;&nbsp;등록일자</h5>
                           <p th:text="${#strings.substring((productModel.product_update != null ? productModel.product_update+'(수정)' : productModel.product_date+'(원글)'), 0, 9)}"></p>
                         </div>
                         <!-- stock -->
-                        <div class="product-details-tab-content-item">
+                        <div class="product-detail-tab-content-item">
                           <h5><i class="fas fa-boxes"></i>&nbsp;&nbsp;재고</h5>
                           <p th:text="${productModel.product_stock}"></p>
                         </div>
-                        <!-- details -->
-                        <div class="product-details-tab-content-item">
+                        <!-- detail -->
+                        <div class="product-detail-tab-content-item">
                           <h5><i class="fas fa-clipboard-list"></i>&nbsp;&nbsp;상세설명</h5>
-                          <p th:text="${#strings.abbreviate(productModel.product_details, 25)}">
+                          <p th:text="${#strings.abbreviate(productModel.product_detail, 25)}">
                           </p>
                         </div>
                       </div>
@@ -281,22 +286,22 @@
                 </div>
                 <!-- information -->
                 <div class="tab-pane" id="tabs-2" role="tabpanel">
-                  <div class="product-details-tab-content">
+                  <div class="product-detail-tab-content">
                     <div class="row">
                       <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                        <div class="product-details-tab-content-item">
+                        <div class="product-detail-tab-content-item">
                         <h5><i class="fa fa-info-circle"></i>&nbsp;상품 정보 제공 고시&nbsp;</h5>
                           <p>
                             상품 정보 제공 고시[전자상거래에 관한 상품정보 제공에 관한 고시] 항목에 의해 등록된 정보입니다. 품질보증기준 관련법규 및 소비자 보호법에 따름 A/S 책임자와 주문후 예상 배송기간	2~3일소요 구매, 교환, 반품, 배송, 설치 등과 관련하여 추가비용, 제한조건 등의 특이사항이 있는 경우 소비자가 전자상거래등에서 소비자 보호에 관한 법률 제 17조 제1항 또는 제3항에 따라 청약철회를 하고 동법 제 18조 제1항 에 따라 청약철회한 물품을 판매자에게 반환하였음에도 불구 하고 결제 대금의 환급이 3영업일을 넘게 지연된 경우, 소비자 는 전자상거래등에서 소비자보호에 관한 법률 제18조 제2항 및 동법 시행령 제21조 2에 따라 지연일수에 대하여 전상법 시행령으로 정하는 이율을 곱하여 산정한 지연이자(“지연배상금”)를 신청할 수 있습니다.
                           </p>
                         </div>
-                        <div class="product-details-tab-content-item">
+                        <div class="product-detail-tab-content-item">
                           <h5><i class="fa fa-info-circle"></i>&nbsp;필수 고시 사항&nbsp;</h5>
                           <p>
                             전자상거래 등에서의 소비자보호법에 관한 법률에 의거하여 미성년자가 물품을 구매하는 경우, 법정대리인이 동의하지 않으면 미성년자 본인 또는 법정대리인이 구매를 취소할 수 있습니다. 등록된 판매 상품과 상품의 내용, 거래 정보 및 가격은 판매자가 등록한 것으로 해당 내용에 대하여 일체의 책임을 지지 않습니다.
                           </p>
                         </div>
-                        <div class="product-details-tab-content-item">
+                        <div class="product-detail-tab-content-item">
                           <h5><i class="fa fa-info-circle"></i>&nbsp;교환 정보&nbsp;</h5>
                           <p>
                             반품/교환 기준 상품 수령 후 7일 이내에 신청하실 수 있습니다. 단, 제품이 표시·광고 내용과 다르거나, 계약과 다르게 이행된 경우는 제품 수령일부터 3개월 이내, 그 사실을 안 날 또는 알 수 있었던 날부터 30일 이내에 교환/반품이 가능합니다. 추가적으로 다음의 경우 해당하는 반품/교환은 신청이 불가능할 수 있습니다.

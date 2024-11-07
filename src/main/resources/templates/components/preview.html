@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- preview-select 1 -->
@@ -5,7 +6,7 @@
     <div class="previewSelect-group">
       <p class="p">상품 이미지1<span>*</span></p>
       <label for="imageFile1">선택</label>
-      <input th:type="file" th:id="|imageFile1" onchange="junghoPreview(1)" class="imageFile"  th:name=|"|${type} + _imgsFile1|"/>
+      <input th:type="${'file" th:id="imageFile1" onchange="junghoPreview(1)" class="imageFile"  th:name="|${type} + _imgsFile1|'}"/>
     </div>
   </section>
 
@@ -14,7 +15,7 @@
     <div class="previewSelect-group">
       <p class="p">상품 이미지2<span>*</span></p>
       <label for="imageFile2">선택</label>
-      <input th:type="file" th:id="|imageFile2" onchange="junghoPreview(2)" class="imageFile" th:name=|"|${type} + _imgsFile2|"/>
+      <input th:type="${'file" th:id="imageFile2" onchange="junghoPreview(2)" class="imageFile" th:name="|${type} + _imgsFile2|'}"/>
     </div>
   </section>
 
@@ -46,9 +47,9 @@
       </div>
       <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
         <div class="previewButton-group">
-          <button class="jungho-button" id="resetButton" th:type="reset">초기화</button>
-          <button class="jungho-button" id="submitButton" th:type="|submit|"
-          th:onclick="return add + ${Type} + ()">등록하기</button>
+          <button class="jungho-button" id="resetButton" th:type="${'reset'}">초기화</button>
+          <button class="jungho-button" id="submitButton" th:type="${'submit'}"
+          th:onclick="|return add + ${Type} + ()|">등록하기</button>
         </div>
       </div>
     </div>

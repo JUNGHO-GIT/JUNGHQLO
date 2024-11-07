@@ -1,6 +1,7 @@
 package com.example.junghqlo.model;
 
 import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 import lombok.Data;
 
@@ -20,7 +21,11 @@ public class Qna {
   private String qna_answer2;
   private MultipartFile qna_imgsFile;
   private String qna_imgsUrl;
+
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
   private LocalDateTime qna_date;
+
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
   private LocalDateTime qna_update;
 
   // getter --------------------------------------------------------------------------------------->

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- head -->
@@ -7,21 +8,25 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-question-circle', text1='Qna', text2='Add')}" />
+  <th:block th:replace="~{layouts/navigation :: navigation (
+    icon = 'fas fa-question-circle',
+    text1 = ${PAGE},
+    text2 = ${THEME}
+  )}" />
 
   <!-- main -->
-  <main class="container px-30">
+  <main class="container-fluid px-30">
     <div class="row">
-      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
-    <form th:action="@{/qna/addQna}" th:method="|POST|" enctype="multipart/form-data">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
+    <form th:action="@{|/qna/addQna}" th:method="${'POST" enctype="multipart/form-data'}">
 
       <!-- hidden -->
-      <input th:type="|hidden|" th:id="|qna_like" th:name="|qna_like" th:value=|"0|"/>
-      <input th:type="|hidden|" th:id="|qna_dislike" th:name="|qna_dislike" th:value=|"0|"/>
-      <input th:type="|hidden|" th:id="|qna_count" th:name="|qna_count" th:value=|"0|"/>
-      <input th:type="|hidden|" th:id="|qna_writer"th:name="|qna_writer" th:value=|"${session.member_id}|"/>
-      <input th:type="|hidden|" th:id="|qna_answer1" th:name="|qna_answer1" th:value=|"0|"/>
-      <input th:type="|hidden|" th:id="|qna_answer2" th:name="|qna_answer2"th:value=|"답변준비중|"/>
+      <input th:type="${'hidden" th:id="|qna_like" th:name="qna_like" th:value="0|'}"/>
+      <input th:type="${'hidden" th:id="|qna_dislike" th:name="qna_dislike" th:value="0|'}"/>
+      <input th:type="${'hidden" th:id="|qna_count" th:name="qna_count" th:value="0|'}"/>
+      <input th:type="${'hidden" th:id="|qna_writer"th:name="qna_writer" th:value="${session.member_id}|'}"/>
+      <input th:type="${'hidden" th:id="|qna_answer1" th:name="qna_answer1" th:value="0|'}"/>
+      <input th:type="${'hidden" th:id="|qna_answer2" th:name="qna_answer2"th:value="답변준비중|'}"/>
 
       <!-- row 1 -->
       <div class="row">
@@ -40,14 +45,14 @@
             <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
               <div class="checkout-input">
                 <p class="p">제목<span>*</span></p>
-                <input th:type="|text|" th:placeholder="|Title"th:name="|qna_title" th:id=|"qna_title|"/>
+                <input th:type="${'text" th:placeholder="|Title"th:name="qna_title" th:id="qna_title|'}"/>
               </div>
             </div>
             <!-- category -->
             <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
               <div class="checkout-input">
                 <p class="p">카테고리<span>*</span></p>
-                <select th:id="|qna_category" th:name=|"|qna_category|">
+                <select th:id="${'qna_category" th:name="|qna_category|'}">
                   <option selected disabled value="">선택</option>
                   <option value="상품문의">상품문의</option>
                   <option value="교환문의">교환문의</option>
@@ -60,11 +65,11 @@
             </div>
           </div>
           <div class="row">
-            <!-- details -->
+            <!-- detail -->
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
                 <p class="p"> 내용 <span>*</span></p>
-                <textarea th:placeholder="|Details" th:id="|qna_contents" th:name=|"qna_contents|"></textarea>
+                <textarea th:placeholder="${'|Detail" th:id="qna_contents" th:name="qna_contents|'}"></textarea>
               </div>
             </div>
           </div>
@@ -74,7 +79,7 @@
               <div class="checkout-input">
                 <div class="previewExisting-group">
                   <p class="p">기존 이미지<span>*</span></p>
-                  <img class="existingMiniBox" id="existingMiniBox" th:src="@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/icon/noimage.png}"/>
+                  <img class="existingMiniBox" id="existingMiniBox" th:src="${'@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/icon/noimage.png}'}"/>
                 </div>
               </div>
             </div>
@@ -83,7 +88,7 @@
               <div class="checkout-input">
                 <div class="previewMini-group">
                   <p class="p"><label for="imageFile1">문의 이미지<span>*</span></label></p>
-                  <input th:type="file" id="imageFile1" onchange="junghoPreview(1)" class="imageFile" name="qna_imgsFile"/>
+                  <input th:type="${'file" id="imageFile1" onchange="junghoPreview(1)" class="imageFile" name="qna_imgsFile'}"/>
                   <div class="imageMiniLoader" id="imageMiniLoader1"></div>
                   <img class="imageMiniBox" id="imageMiniBox1"/>
                 </div>
@@ -108,11 +113,11 @@
             <!-- button -->
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="previewButton-group">
-                <button class="jungho-button" id="resetButton" th:type="reset"
-                th:onclick="window.location.reload()">새로고침</button>
-                <button class="jungho-button" id="submitButton" th:type="|submit|"
-                th:onclick="return addQna()">등록하기</button>
-                <button th:type="|button|" class="jungho-button" th:onclick="|location.href='@{/}'|"> 홈으로 </button>
+                <button class="jungho-button" id="resetButton" th:type="${'reset'}"
+                th:onclick="|window.location.reload()|">새로고침</button>
+                <button class="jungho-button" id="submitButton" th:type="${'submit'}"
+                th:onclick="|return addQna()|">등록하기</button>
+                <button th:type="${'button" class="jungho-button" th:onclick="|location.href='@{/}'|'}"> 홈으로 </button>
               </div>
             </div>
           </div>

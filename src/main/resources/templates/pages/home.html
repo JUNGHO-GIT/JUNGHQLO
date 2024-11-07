@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- head -->
@@ -7,13 +8,13 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- main -->
-  <main class="container">
+  <main class="container-fluid">
 
     <!-- hero -->
     <section class="container hero-slider owl-carousel mb-30">
       <th:block th:each="i : ${#numbers.sequence(1, 2)}">
         <div
-          th:class="|hero-items set-bg|"
+          th:class="${'hero-items set-bg'}"
           th:attr="data-setbg=@{${STORAGE} + '/main/main-' + ${i} + '.png'(i=${i})}"
         >
           <div class="hero-text px-20">
@@ -29,8 +30,8 @@
               A specialist label creating luxury essentials. Ethically crafted with an unwavering commitment to exceptional quality.
             </div>
             <div
-              th:class="|primary-btn|"
-              th:onclick="|location.href='@{/product/getProductList}'|"
+              th:class="${'primary-btn'}"
+              th:onclick="|location.href='@{/product/listProduct}'|"
             >
               <p>Shop now</p>
               <span class="arrow_right"></span>
@@ -41,25 +42,25 @@
     </section>
 
     <!-- product -->
-    <section class="container px-30 mb-30">
+    <section class="container-fluid px-30 mb-30">
       <!-- filter -->
       <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
           <div class="filter-controls d-row-center mb-30">
             <div
-              th:class="|fs-1-5rem fw-700 pointer-burgundy me-4vw active|"
-              th:data-filter="|all|"
-              th:text="|All|"
+              th:class="${'fs-1-5rem fw-700 pointer-burgundy me-4vw active'}"
+              th:data-filter="${'*'}"
+              th:text="${'All'}"
             ></div>
             <div
-              th:class="|fs-1-5rem fw-700 pointer-burgundy me-4vw|"
-              th:data-filter="|.classic|"
-              th:text="|Classic|"
+              th:class="${'fs-1-5rem fw-700 pointer-burgundy me-4vw'}"
+              th:data-filter="${'.classic'}"
+              th:text="${'Classic'}"
             ></div>
             <div
-              th:class="|fs-1-5rem fw-700 pointer-burgundy|"
-              th:data-filter="|.modern|"
-              th:text="|Modern|"
+              th:class="${'fs-1-5rem fw-700 pointer-burgundy'}"
+              th:data-filter="${'.modern'}"
+              th:text="${'Modern'}"
             ></div>
           </div>
         </div>
@@ -75,8 +76,8 @@
                 th:id="|product-item-pic-${i}|"
                 th:name="|product-item-pic-${i}|"
                 th:aria-label="|product-item-pic-${i}|"
-                th:src="@{|${STORAGE}/recommend/recommend-${i}.jpg|(i=${i})}"
-                th:class="|w-100p h-300 radius-2 border-1 shadow-1|"
+                th:src="@{|${STORAGE}/recommend/recommend-${i}.jpg|}"
+                th:class="${'w-100p h-300 radius-2 border-1 shadow-1'}"
               />
             </div>
             <!-- title & theme -->
@@ -89,23 +90,23 @@
               <div class="d-row-right me-20">
                 <div
                   th:if="${iterStat.index} == 0"
-                  th:class="|fs-0-7rem primary me-5 mt-5|"
-                  th:text="|New|"
+                  th:class="${'fs-0-7rem primary me-5 mt-5'}"
+                  th:text="${'New'}"
                 ></div>
                 <div
                   th:if="${iterStat.index} == 1"
-                  th:class="|fs-0-7rem danger me-5 mt-5|"
-                  th:text="|Hot|"
+                  th:class="${'fs-0-7rem danger me-5 mt-5'}"
+                  th:text="${'Hot'}"
                 ></div>
                 <div
                   th:if="${iterStat.index} == 2"
-                  th:class="|fs-0-7rem warning me-5 mt-5|"
-                  th:text="|Sale|"
+                  th:class="${'fs-0-7rem warning me-5 mt-5'}"
+                  th:text="${'Sale'}"
                 ></div>
                 <div
                   th:if="${iterStat.index} == 3"
-                  th:class="|fs-0-7rem success me-5 mt-5|"
-                  th:text="|Best|"
+                  th:class="${'fs-0-7rem success me-5 mt-5'}"
+                  th:text="${'Best'}"
                 ></div>
               </div>
             </div>
@@ -134,8 +135,8 @@
                 th:id="|product-item-pic-${i}|"
                 th:name="|product-item-pic-${i}|"
                 th:aria-label="|product-item-pic-${i}|"
-                th:src="@{|${STORAGE}/recommend/recommend-${i}.jpg|(i=${i})}"
-                th:class="|w-100p h-300 radius-2 border-1 shadow-1|"
+                th:src="@{|${STORAGE}/recommend/recommend-${i}.jpg|}"
+                th:class="${'w-100p h-300 radius-2 border-1 shadow-1'}"
               />
             </div>
             <!-- title & theme -->
@@ -148,23 +149,23 @@
               <div class="d-row-right me-20">
                 <div
                   th:if="${iterStat.index} == 2"
-                  th:class="|fs-0-7rem primary me-5 mt-5|"
-                  th:text="|New|"
+                  th:class="${'fs-0-7rem primary me-5 mt-5'}"
+                  th:text="${'New'}"
                 ></div>
                 <div
                   th:if="${iterStat.index} == 1"
-                  th:class="|fs-0-7rem danger me-5 mt-5|"
-                  th:text="|Hot|"
+                  th:class="${'fs-0-7rem danger me-5 mt-5'}"
+                  th:text="${'Hot'}"
                 ></div>
                 <div
                   th:if="${iterStat.index} == 3"
-                  th:class="|fs-0-7rem warning me-5 mt-5|"
-                  th:text="|Sale|"
+                  th:class="${'fs-0-7rem warning me-5 mt-5'}"
+                  th:text="${'Sale'}"
                 ></div>
                 <div
                   th:if="${iterStat.index} == 0"
-                  th:class="|fs-0-7rem success me-5 mt-5|"
-                  th:text="|Best|"
+                  th:class="${'fs-0-7rem success me-5 mt-5'}"
+                  th:text="${'Best'}"
                 ></div>
               </div>
             </div>
@@ -188,7 +189,7 @@
     </section>
 
     <!-- instagram -->
-    <section class="container px-30">
+    <section class="container-fluid px-30">
       <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
           <div class="instagram-pic">
@@ -197,8 +198,8 @@
                 th:id="|instagram-pic-${i}|"
                 th:name="|instagram-pic-${i}|"
                 th:aria-label="|instagram-pic-${i}|"
-                th:src="@{|${STORAGE}/instagram3/instagram-${i}.jpg|(i=${i})}"
-                th:class="|instagram-pic-item|"
+                th:src="@{|${STORAGE}/instagram3/instagram-${i}.jpg|}"
+                th:class="${'instagram-pic-item'}"
               />
             </th:block>
           </div>

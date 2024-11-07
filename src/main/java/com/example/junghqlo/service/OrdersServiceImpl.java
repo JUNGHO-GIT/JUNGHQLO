@@ -18,17 +18,17 @@ import com.stripe.exception.StripeException;
 @Service
 public class OrdersServiceImpl implements OrdersService {
 
-  // 0. constructor injection --------------------------------------------------------------------->
+  // 0. constructor injection ----------------------------------------------------------------------
   private OrdersMapper ordersMapper;
   OrdersServiceImpl(OrdersMapper ordersMapper) {
     this.ordersMapper = ordersMapper;
   }
 
-  // 1. getOrdersList ----------------------------------------------------------------------------->
+  // 1-1. listOrders ------------------------------------------------------------------------------
   @Override
-  public PageHandler<Orders> getOrdersList(Integer pageNumber, Integer itemsPer, String member_id, String sort, Orders orders) throws Exception {
+  public PageHandler<Orders> listOrders(Integer pageNumber, Integer itemsPer, String member_id, String sort, Orders orders) throws Exception {
 
-    List<Orders> content = ordersMapper.getOrdersList(member_id, sort);
+    List<Orders> content = ordersMapper.listOrders(member_id, sort);
 
     Integer itemsTotal = content.size();
     Integer pageLast = (itemsTotal + itemsPer - 1) / itemsPer;
@@ -59,14 +59,14 @@ public class OrdersServiceImpl implements OrdersService {
     return new PageHandler<>(pageNumber, pageStart, pageEnd, 1, pageLast, itemsPer, itemsTotal, pageContent);
   }
 
-  // 2. getOrdersDetails -------------------------------------------------------------------------->
+  // 2. detailOrders ---------------------------------------------------------------------------
   @Override
-  public Orders getOrdersDetails(Integer orders_number) throws Exception {
+  public Orders detailOrders(Integer orders_number) throws Exception {
 
-    return ordersMapper.getOrdersDetails(orders_number);
+    return ordersMapper.detailOrders(orders_number);
   }
 
-  // 3. searchOrders ------------------------------------------------------------------------------>
+  // 1-2. searchOrders -------------------------------------------------------------------------------
   @Override
   public PageHandler<Orders> searchOrders(Integer pageNumber, Integer itemsPer, String searchType, String keyword, String member_id, Orders orders) throws Exception {
 
@@ -85,14 +85,14 @@ public class OrdersServiceImpl implements OrdersService {
     return new PageHandler<>(pageNumber, pageStart, pageEnd, 1, pageLast, itemsPer, itemsTotal, pageContent);
   }
 
-  // 3-1. getStripePrice -------------------------------------------------------------------------->
+  // 3-1. getStripePrice ---------------------------------------------------------------------------
   @Override
   public String getStripePrice(Integer orders_number) throws StripeException {
 
     return ordersMapper.getStripePrice(orders_number);
   }
 
-  // 4. addOrders --------------------------------------------------------------------------------->
+  // 3. addOrders ----------------------------------------------------------------------------------
   @Override
   public void addOrders(Orders orders) throws Exception {
 
@@ -143,20 +143,29 @@ public class OrdersServiceImpl implements OrdersService {
     ordersMapper.addOrders(orders);
   }
 
-  // 4-2. successOrders 4-3. failOrders 5. updateOrders
+  // 4-2. successOrders 4-3. failOrders 4. updateOrders
 
-  // 5-1. updateOrdersStock ----------------------------------------------------------------------->
+  // 4-1. updateOrdersStock ------------------------------------------------------------------------
   @Override
   public Integer updateProductStock(Integer product_number, Integer product_stock, Integer orders_quantity) throws Exception {
 
     return ordersMapper.updateProductStock(product_number, product_stock, orders_quantity);
   }
 
-  // 6. deleteOrders ------------------------------------------------------------------------------>
+  // 5. deleteOrders -------------------------------------------------------------------------------
   @Override
-  public void deleteOrders(Integer orders_number) {
+  public Integer deleteOrders(Integer orders_number) {
 
-    ordersMapper.deleteOrders(orders_number);
+    Integer result = 0;
+
+    if (ordersMapper.deleteOrders(orders_number) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
 
 }

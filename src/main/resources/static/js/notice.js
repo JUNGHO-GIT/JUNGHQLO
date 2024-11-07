@@ -35,8 +35,6 @@ function updateNotice() {
     getById("notice_contents").focus();
     return false;
   }
-  alert("수정이 완료되었습니다.");
-  window.location.reload();
   return true;
 };
 
@@ -74,14 +72,11 @@ function likeNotice() {
   document.addEventListener('DOMContentLoaded', likeButton);
 
   $.ajax({
-    url: `/JUNGHQLO/notice/updateLike`,
+    url: `/${TITLE}/notice/updateLike`,
     type: "GET",
     data: {
       notice_number: uniqueNumber
     },
-    /**
-    * @param {any} response
-    **/
     success: function(response) {
       if(response == 200) {
         window.location.reload();
@@ -129,14 +124,11 @@ function dislikeNotice() {
   document.addEventListener('DOMContentLoaded', dislikeButton);
 
   $.ajax({
-    url: `/JUNGHQLO/notice/updateDislike`,
+    url: `/${TITLE}/notice/updateDislike`,
     type: "GET",
     data: {
       notice_number: uniqueNumber
     },
-    /**
-    * @param {any} response
-    **/
     success: function(response) {
       if(response == 200) {
         window.location.reload();

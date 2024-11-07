@@ -20,17 +20,17 @@ import com.google.cloud.storage.StorageOptions;
 @Service
 public class QnaServiceImpl implements QnaService {
 
-  // 0. constructor injection --------------------------------------------------------------------->
+  // 0. constructor injection ----------------------------------------------------------------------
   private QnaMapper qnaMapper;
   QnaServiceImpl(QnaMapper qnaMapper) {
   this.qnaMapper = qnaMapper;
   }
 
-  // 1. getQnaList -------------------------------------------------------------------------------->
+  // 1-1. listQna ---------------------------------------------------------------------------------
   @Override
-  public PageHandler<Qna> getQnaList(Integer pageNumber, Integer itemsPer, String sort, Qna qna) throws Exception {
+  public PageHandler<Qna> listQna(Integer pageNumber, Integer itemsPer, String sort, Qna qna) throws Exception {
 
-    List<Qna> content = qnaMapper.getQnaList(sort);
+    List<Qna> content = qnaMapper.listQna(sort);
 
     Integer itemsTotal = content.size();
     Integer pageLast = (itemsTotal + itemsPer - 1) / itemsPer;
@@ -61,14 +61,14 @@ public class QnaServiceImpl implements QnaService {
     return new PageHandler<>(pageNumber, pageStart, pageEnd, 1, pageLast, itemsPer, itemsTotal, pageContent);
   }
 
-  // 2. getQnaDetails ----------------------------------------------------------------------------->
+  // 2. detailQna ------------------------------------------------------------------------------
   @Override
-  public Qna getQnaDetails(Integer qna_number) throws Exception {
+  public Qna detailQna(Integer qna_number) throws Exception {
 
-    return qnaMapper.getQnaDetails(qna_number);
+    return qnaMapper.detailQna(qna_number);
   }
 
-  // 3. searchQna --------------------------------------------------------------------------------->
+  // 1-2. searchQna ----------------------------------------------------------------------------------
   @Override
   public PageHandler<Qna> searchQna(Integer pageNumber, Integer itemsPer, String searchType, String keyword, Qna qna) throws Exception {
 
@@ -102,7 +102,7 @@ public class QnaServiceImpl implements QnaService {
     return new PageHandler<>(pageNumber, pageStart, pageEnd, 1, pageLast, itemsPer, itemsTotal, pageContent);
   }
 
-  // 4. addQna ------------------------------------------------------------------------------------>
+  // 3. addQna -------------------------------------------------------------------------------------
   @Override
   public void addQna(Qna qna) throws Exception {
 
@@ -145,7 +145,7 @@ public class QnaServiceImpl implements QnaService {
     qnaMapper.addQna(qna);
   }
 
-  // 5. updateQna --------------------------------------------------------------------------------->
+  // 4. updateQna ----------------------------------------------------------------------------------
   @Override
   public void updateQna(Qna qna, String existingImage) throws Exception {
 
@@ -187,7 +187,7 @@ public class QnaServiceImpl implements QnaService {
     qnaMapper.updateQna(qna);
   }
 
-  // 5-1. updateQnaCount -------------------------------------------------------------------------->
+  // 4-1. updateQnaCount ---------------------------------------------------------------------------
   @Override
   public void updateQnaCount(Integer qna_number, HttpSession session) throws Exception {
 
@@ -214,7 +214,7 @@ public class QnaServiceImpl implements QnaService {
     }
   }
 
-  // 5-2. updateLike ------------------------------------------------------------------------------>
+  // 4-2. updateLike -------------------------------------------------------------------------------
   @Override
   public void updateLike(Integer qna_number, HttpSession session) throws Exception {
 
@@ -240,7 +240,7 @@ public class QnaServiceImpl implements QnaService {
     }
   }
 
-  // 5-3. updateDislike --------------------------------------------------------------------------->
+  // 4-3. updateDislike ----------------------------------------------------------------------------
   @Override
   public void updateDislike(Integer qna_number, HttpSession session) throws Exception {
 
@@ -267,11 +267,19 @@ public class QnaServiceImpl implements QnaService {
     }
   }
 
-  // 6. deleteQna --------------------------------------------------------------------------------->
+  // 5. deleteQna ----------------------------------------------------------------------------------
   @Override
-  public void deleteQna(Integer qna_number) throws Exception {
+  public Integer deleteQna(Integer qna_number) throws Exception {
 
-    qnaMapper.deleteQna(qna_number);
+    Integer result = 0;
+
+    if (qnaMapper.deleteQna(qna_number) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
-
 }

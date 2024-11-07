@@ -1,8 +1,6 @@
 package com.example.junghqlo.controller;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,29 +18,27 @@ import com.example.junghqlo.service.QnaService;
 @RequestMapping("/qna")
 public class QnaController {
 
-  // 0. constructor injection -------------------------------------------------------------------->
+  // 0. constructor injection ----------------------------------------------------------------------
   private QnaService qnaService;
   QnaController(QnaService qnaService) {
     this.qnaService = qnaService;
   }
 
   // 0. static -------------------------------------------------------------------------------------
-  private static String PAGE = "qna";
-  private static String PAGE_UP = "Qna";
-  private static Qna MODEL = new Qna();
-  private static List<Qna> LIST = new ArrayList<>();
+  private static String page = "qna";
+  private static String PAGE = "Qna";
 
-  // 1. getQnaList (GET) -------------------------------------------------------------------------->
-  @GetMapping("/getQnaList")
-  public String getQnaList (
+  // 1-1. listQna (GET) ----------------------------------------------------------------------------
+  @GetMapping("/listQna")
+  public String listQna(
     @ModelAttribute Qna qna,
-    @RequestParam(required=false) String sort,
-    @RequestParam(defaultValue="1") Integer pageNumber,
-    @RequestParam(defaultValue="9") Integer itemsPer,
+    @RequestParam(defaultValue = "default") String sort,
+    @RequestParam(defaultValue = "1") Integer pageNumber,
+    @RequestParam(defaultValue = "9") Integer itemsPer,
     Model model
   ) throws Exception {
 
-    // sorting order
+    // sort order
     if(sort == null || sort.equals("default")) {
       sort="qna_category IS NOT NULL ORDER BY qna_number DESC";
     }
@@ -65,44 +61,25 @@ public class QnaController {
       sort="qna_category='기타문의'";
     }
 
-    PageHandler<Qna> page = qnaService.getQnaList(pageNumber, itemsPer, sort, qna);
-    LIST = page.getContent();
+    PageHandler<Qna> pageHandler = (
+      qnaService.listQna(pageNumber, itemsPer, sort, qna)
+    );
 
     // 모델
     model.addAttribute("sort", sort);
-    model.addAttribute("page", page);
-    model.addAttribute("LIST", LIST);
+    model.addAttribute("pageHandler", pageHandler);
+    model.addAttribute("LIST", pageHandler.getContent());
 
-    return MessageFormat.format("/pages/{0}/{1}List", PAGE, PAGE);
+    return MessageFormat.format("/pages/{0}/{1}List", page, page);
   };
 
-  // 2. getQnaDetails (GET) ----------------------------------------------------------------------->
-  @GetMapping("/getQnaDetails")
-  public String getQnaDetails(
-    @ModelAttribute Qna qna,
-    @RequestParam Integer qna_number,
-    HttpSession session,
-    Model model
-  ) throws Exception {
-
-    // 조회수 증가
-    qnaService.updateQnaCount(qna_number, session);
-    MODEL = qnaService.getQnaDetails(qna_number);
-
-    // 모델
-    model.addAttribute("MODEL", MODEL);
-    model.addAttribute("member_id", session.getAttribute("member_id"));
-
-    return MessageFormat.format("/pages/{0}/{1}Details", PAGE, PAGE);
-  }
-
-  // 3. searchQna (GET) --------------------------------------------------------------------------->
+  // 1-2. searchQna (GET) ----------------------------------------------------------------------------
   @GetMapping("/searchQna")
   public String searchQna (
     @ModelAttribute Qna qna,
-    @RequestParam(required=false) String sort,
-    @RequestParam(defaultValue="1") Integer pageNumber,
-    @RequestParam(defaultValue="9") Integer itemsPer,
+    @RequestParam(defaultValue = "default") String sort,
+    @RequestParam(defaultValue = "1") Integer pageNumber,
+    @RequestParam(defaultValue = "9") Integer itemsPer,
     @RequestParam String searchType,
     @RequestParam String keyword,
     Model model
@@ -110,7 +87,7 @@ public class QnaController {
 
     // searchType order
     if (searchType == null || keyword == null) {
-      return MessageFormat.format("redirect:/{0}/get{1}List", PAGE, PAGE_UP);
+      return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
     }
     else if(searchType.equals("title")) {
       searchType="qna_title";
@@ -119,26 +96,45 @@ public class QnaController {
       searchType="qna_contents";
     }
 
-    PageHandler<Qna> page
-    = qnaService.searchQna(pageNumber, itemsPer, keyword, searchType, qna);
-    LIST = page.getContent();
+    PageHandler<Qna> pageHandler = (
+      qnaService.searchQna(pageNumber, itemsPer, searchType, keyword, qna)
+    );
 
     // 모델
     model.addAttribute("sort", sort);
-    model.addAttribute("page", page);
-    model.addAttribute("LIST", LIST);
+    model.addAttribute("pageHandler", pageHandler);
+    model.addAttribute("LIST", pageHandler.getContent());
 
-    return MessageFormat.format("/pages/{0}/{1}Search", PAGE, PAGE);
+    return MessageFormat.format("/pages/{0}/{1}List", page, page);
   }
 
-  // 4. addQna (GET) ------------------------------------------------------------------------------>
+  // 2. detailQna(GET) -----------------------------------------------------------------------------
+  @GetMapping("/detailQna")
+  public String detailQna(
+    @ModelAttribute Qna qna,
+    @RequestParam Integer qna_number,
+    HttpSession session,
+    Model model
+  ) throws Exception {
+
+    // 조회수 증가
+    qnaService.updateQnaCount(qna_number, session);
+
+    // 모델
+    model.addAttribute("MODEL", qnaService.detailQna(qna_number));
+    model.addAttribute("member_id", session.getAttribute("member_id"));
+
+    return MessageFormat.format("/pages/{0}/{1}Detail", page, page);
+  }
+
+  // 3. addQna (GET) -------------------------------------------------------------------------------
   @GetMapping("/addQna")
   public String addQna() throws Exception {
 
-    return MessageFormat.format("/pages/{0}/{1}Add", PAGE, PAGE);
+    return MessageFormat.format("/pages/{0}/{1}Add", page, page);
   }
 
-  // 4. addQna (POST) ----------------------------------------------------------------------------->
+  // 3. addQna (POST) ------------------------------------------------------------------------------
   @PostMapping("/addQna")
   public String addQna(
     @ModelAttribute Qna qna
@@ -146,25 +142,23 @@ public class QnaController {
 
     qnaService.addQna(qna);
 
-    return MessageFormat.format("redirect:/{0}/get{1}List", PAGE, PAGE_UP);
+    return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
   }
 
-  // 4. updateQna (GET) --------------------------------------------------------------------------->
+  // 4. updateQna (GET) ----------------------------------------------------------------------------
   @GetMapping("/updateQna")
   public String updateQna (
     @RequestParam Integer qna_number,
     Model model
   ) throws Exception {
 
-    MODEL = qnaService.getQnaDetails(qna_number);
-
     // 모델
-    model.addAttribute("MODEL", MODEL);
+    model.addAttribute("MODEL", qnaService.detailQna(qna_number));
 
-    return MessageFormat.format("/pages/{0}/{1}Update", PAGE, PAGE);
+    return MessageFormat.format("/pages/{0}/{1}Update", page, page);
   }
 
-  // 4. updateQna (POST) -------------------------------------------------------------------------->
+  // 4. updateQna (POST) ---------------------------------------------------------------------------
   @PostMapping("/updateQna")
   public String updateQna (
     @ModelAttribute Qna qna,
@@ -173,10 +167,10 @@ public class QnaController {
 
     qnaService.updateQna(qna, existingImage);
 
-    return MessageFormat.format("redirect:/{0}/get{1}List", PAGE, PAGE_UP);
+    return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
   }
 
-  // 5-2. updateLike (GET) ------------------------------------------------------------------------>
+  // 4-2. updateLike (GET) -------------------------------------------------------------------------
   @ResponseBody
   @GetMapping("/updateLike")
   public Integer updateLike (
@@ -186,12 +180,12 @@ public class QnaController {
 
     qnaService.updateLike(qna_number, session);
 
-    Integer like = qnaService.getQnaDetails(qna_number).getQna_like();
+    Integer like = qnaService.detailQna(qna_number).getQna_like();
 
     return like;
   }
 
-  // 5-3. updateDislike (GET) --------------------------------------------------------------------->
+  // 4-3. updateDislike (GET) ----------------------------------------------------------------------
   @ResponseBody
   @GetMapping("/updateDislike")
   public Integer updateDislike (
@@ -201,35 +195,27 @@ public class QnaController {
 
     qnaService.updateDislike(qna_number, session);
 
-    Integer dislike = qnaService.getQnaDetails(qna_number).getQna_dislike();
+    Integer dislike = qnaService.detailQna(qna_number).getQna_dislike();
 
     return dislike;
   }
 
-  // 5. deleteQna (GET) --------------------------------------------------------------------------->
-  @GetMapping("/deleteQna")
-  public String deleteQna (
-    @RequestParam Integer qna_number,
-    @ModelAttribute Qna qna,
-    Model model
-  ) throws Exception {
-
-    MODEL = qnaService.getQnaDetails(qna_number);
-
-    // 모델
-    model.addAttribute("MODEL", MODEL);
-
-    return MessageFormat.format("/pages/{0}/{1}Delete", PAGE, PAGE);
-  }
-
-  // 5. deleteQna (POST) -------------------------------------------------------------------------->
-  @PostMapping("/deleteQna")
-  public String deleteQna (
+  // 5. deleteProduct (POST) -----------------------------------------------------------------------
+  @ResponseBody
+  @PostMapping("/deleteProduct")
+  public Integer deleteProduct(
     @RequestParam Integer qna_number
   ) throws Exception {
 
-    qnaService.deleteQna(qna_number);
+    Integer result = 0;
 
-    return MessageFormat.format("redirect:/{0}/get{1}List", PAGE, PAGE_UP);
+    if (qnaService.deleteQna(qna_number) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
 }

@@ -20,7 +20,7 @@ import com.stripe.param.checkout.SessionCreateParams.LineItem.AdjustableQuantity
 @Configuration
 public class StripeConfig {
 
-  // 0. api key setting --------------------------------------------------------------------------->
+  // 0. api key setting ----------------------------------------------------------------------------
   @Value("sk_test_51Mg7EfLu8D8MOb5jqTUZrmNVqWma0G6nZx1P266MaS5lSbOLvcqJNvxeXo4Eef9FjDLNjN5JqvblejPQGgALod4d00lkWUpcSw")
   String secretKey;
 
@@ -38,8 +38,8 @@ public class StripeConfig {
     return SessionCreateParams.LineItem.AdjustableQuantity.builder().build();
   }
 
-  // 1. createProduct ----------------------------------------------------------------------------->
-  public Product createProduct(String productName, String productDetails, String productUrl1, String productUrl2) throws StripeException {
+  // 1. createProduct ------------------------------------------------------------------------------
+  public Product createProduct(String productName, String productDetail, String productUrl1, String productUrl2) throws StripeException {
 
     List<String> images = new ArrayList<>();
     images.add(productUrl1);
@@ -47,7 +47,7 @@ public class StripeConfig {
 
     ProductCreateParams.Builder productParamsBuilder = ProductCreateParams.builder()
       .setName(productName)
-      .setDescription(productDetails)
+      .setDescription(productDetail)
       .setActive(true)
       .addAllImage(images);
 
@@ -56,7 +56,7 @@ public class StripeConfig {
     return Product.create(productParams);
   }
 
-  // 2. createPrice ------------------------------------------------------------------------------->
+  // 2. createPrice --------------------------------------------------------------------------------
   public Price createPrice(String productId, Integer productPrice) throws StripeException {
 
     PriceCreateParams priceParams = PriceCreateParams.builder()
@@ -71,8 +71,8 @@ public class StripeConfig {
     return Price.create(priceParams);
   }
 
-  // 3. updateProduct ----------------------------------------------------------------------------->
-  public Product updateProduct (String productId, String productName, String productDetails, String productUrl1, String productUrl2) throws StripeException {
+  // 3. updateProduct ------------------------------------------------------------------------------
+  public Product updateProduct (String productId, String productName, String productDetail, String productUrl1, String productUrl2) throws StripeException {
 
     List<String> images = new ArrayList<>();
     images.add(productUrl1);
@@ -80,7 +80,7 @@ public class StripeConfig {
 
     ProductUpdateParams.Builder productParamsBuilder = ProductUpdateParams.builder()
       .setName(productName)
-      .setDescription(productDetails)
+      .setDescription(productDetail)
       .setActive(true)
       .addAllImage(images);
 
@@ -89,7 +89,7 @@ public class StripeConfig {
     return Product.retrieve(productId).update(productParams);
   }
 
-  // 4. updatePrice ------------------------------------------------------------------------------->
+  // 4. updatePrice --------------------------------------------------------------------------------
   public Price updatePrice(String productId, Integer productPrice) throws StripeException {
 
     PriceCreateParams priceParams = PriceCreateParams.builder()
@@ -109,7 +109,7 @@ public class StripeConfig {
     return Price.create(priceParams);
   }
 
-  // 5. deleteProduct ----------------------------------------------------------------------------->
+  // 5. deleteProduct ------------------------------------------------------------------------------
   public Product deleteProduct(String productId) throws StripeException {
 
     ProductUpdateParams.Builder productParamsBuilder = ProductUpdateParams.builder()
@@ -120,7 +120,7 @@ public class StripeConfig {
     return Product.retrieve(productId).update(productParams);
   }
 
-  // 6. deletePrice ------------------------------------------------------------------------------->
+  // 5. deletePrice --------------------------------------------------------------------------------
   public Price deletePrice(String productId) throws StripeException {
 
     PriceUpdateParams.Builder priceParamsBuilder = PriceUpdateParams.builder()

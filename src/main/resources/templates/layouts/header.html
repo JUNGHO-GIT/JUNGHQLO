@@ -1,7 +1,8 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- header -->
-  <header th:fragment="header" th:class="|container-fluid|">
+  <header th:fragment="header" th:class="${'container-fluid'}">
 
     <!-- loader -->
     <th:block th:replace="~{layouts/loader :: loader}" />
@@ -20,7 +21,7 @@
         <div class="col-10 col-sm-5 col-md-5 col-lg-5 col-xl-5 d-row-right">
           <a
             th:if="${session.member_id == null}"
-            th:href="@{/member/addMember}"
+            th:href="@{|/member/addMember}"
           >
             <span class="upper-text white hover me-20">
               SignUp
@@ -28,7 +29,7 @@
           </a>
           <a
             th:if="${session.member_id == null}"
-            th:href="@{/member/loginMember}"
+            th:href="@{|/member/loginMember|}"
           >
             <span class="upper-text white hover me-20">
               Login
@@ -36,7 +37,7 @@
           </a>
           <a
             th:if="${session.member_id != null}"
-            th:href="@{/member/getMemberDetails}"
+            th:href="@{|/member/detailMember|}"
           >
             <span class="upper-text white hover me-20">
               MyPage
@@ -44,7 +45,7 @@
           </a>
           <a
             th:if="${session.member_id != null}"
-            th:onclick="logoutMember()"
+            th:onclick="|logoutMember()|"
           >
             <span class="upper-text white hover me-20">
               Logout
@@ -56,44 +57,44 @@
             </span>
             <ul th:if ="${session.member_id == ADMIN}">
               <li>
-                <a th:href="@{https://dashboard.stripe.com/test/dashboard}">
+                <a th:href="@{https://dashboard.stripe.com/test/dashboard|}">
                   AdminPage
                 </a>
               </li>
               <li>
-                <a th:href="@{/member/getMemberList}">
+                <a th:href="@{|/member/listMember|}">
                   MemberList
                 </a>
               </li>
               <li>
-                <a th:href="@{/product/addProduct}">
+                <a th:href="@{|/product/addProduct|}">
                   AddProduct
                 </a>
               </li>
               <li>
-                <a th:href="@{/notice/addNotice}">
+                <a th:href="@{|/notice/addNotice|}">
                   AddNotice
                 </a>
               </li>
             </ul>
             <ul th:if ="${session.member_id != ADMIN}">
               <li>
-                <a th:onclick="adminAlert()">
+                <a th:onclick="|adminAlert()|">
                   AdminPage
                 </a>
               </li>
               <li>
-                <a th:onclick="adminAlert()">
+                <a th:onclick="|adminAlert()|">
                   MemberList
                 </a>
               </li>
               <li>
-                <a th:onclick="adminAlert()">
+                <a th:onclick="|adminAlert()|">
                   AddProduct
                 </a>
               </li>
               <li>
-                <a th:onclick="adminAlert()">
+                <a th:onclick="|adminAlert()|">
                   AddNotice
                 </a>
               </li>
@@ -110,57 +111,57 @@
         <div class="col-4 col-sm-2 col-md-2 col-lg-2 col-xl-2">
           <img
             th:src="@{|${STORAGE}/icon/logo.png|}"
-            th:loading="|lazy|"
-            th:alt="|logo|"
-            th:width="|70px|"
-            th:height="|70px|"
-            th:class="|pointer ms-n20|"
-            th:onclick="|location.href='@{/}'|"
+            th:loading="${'lazy'}"
+            th:alt="${'logo'}"
+            th:width="${'70px'}"
+            th:height="${'70px'}"
+            th:class="${'pointer ms-n20'}"
+            th:onclick="|goHome()|"
           />
         </div>
         <!-- menu -->
         <div class="d-none d-sm-block col-sm-10 col-md-10 col-lg-6 col-xl-6">
           <div
-            th:class="|fs-0-9rem fw-700 upper-text pointer-burgundy ls-1 ms-n30 me-2vw|"
-            th:onclick="|location.href='@{/product/getProductList}'|"
+            th:class="${'fs-0-9rem fw-700 upper-text pointer-burgundy ls-1 ms-n30 me-2vw'}"
+            th:onclick="|location.href='@{/product/listProduct}'|"
           >
             Products
           </div>
           <div
-            th:class="|fs-0-9rem fw-700 upper-text pointer-burgundy ls-1 me-2vw|"
+            th:class="${'fs-0-9rem fw-700 upper-text pointer-burgundy ls-1 me-2vw'}"
             th:if="${session.member_id != null}"
-            th:onclick="|location.href='@{/orders/getOrdersList}'|"
+            th:onclick="|location.href='@{/orders/listOrders}'|"
           >
             Orders
           </div>
           <div
-            th:class="|fs-0-9rem fw-700 upper-text pointer-burgundy ls-1 me-2vw|"
+            th:class="${'fs-0-9rem fw-700 upper-text pointer-burgundy ls-1 me-2vw'}"
             th:if="${session.member_id == null}"
-            th:onclick="return sessionAlert()"
+            th:onclick="|return sessionAlert()|"
           >
             Orders
           </div>
           <div
-            th:class="|fs-0-9rem fw-700 upper-text pointer-burgundy ls-1 me-2vw|"
-            th:onclick="|location.href='@{/board/getBoardList}'|"
+            th:class="${'fs-0-9rem fw-700 upper-text pointer-burgundy ls-1 me-2vw'}"
+            th:onclick="|location.href='@{/board/listBoard}'|"
           >
             Blog
           </div>
           <div
-            th:class="|fs-0-9rem fw-700 upper-text pointer-burgundy ls-1 me-2vw|"
-            th:onclick="|location.href='@{/notice/getNoticeList}'|"
+            th:class="${'fs-0-9rem fw-700 upper-text pointer-burgundy ls-1 me-2vw'}"
+            th:onclick="|location.href='@{/notice/listNotice}'|"
           >
             Notice
           </div>
           <div
-            th:class="|fs-0-9rem fw-700 upper-text pointer-burgundy ls-1 me-2vw|"
-            th:onclick="|location.href='@{/qna/getQnaList}'|"
+            th:class="${'fs-0-9rem fw-700 upper-text pointer-burgundy ls-1 me-2vw'}"
+            th:onclick="|location.href='@{/qna/listQna}'|"
           >
             QnA
           </div>
           <div
-            th:class="|fs-0-9rem fw-700 upper-text pointer-burgundy ls-1|"
-            th:onclick="|location.href='@{/contact/getContactList}'|"
+            th:class="${'fs-0-9rem fw-700 upper-text pointer-burgundy ls-1'}"
+            th:onclick="|location.href='@{/contact/listContact}'|"
           >
             Contact
           </div>
@@ -170,22 +171,22 @@
           <form
             id="searchForm"
             class="d-row-center"
-            th:method="|GET|"
-            th:action="@{/product/searchProduct}"
+            th:method="${'GET'}"
+            th:action="@{|/product/searchProduct}"
           >
             <select
-              th:id="|searchType|"
-              th:name="|searchType|"
-              th:class="|form-control me-10|"
+              th:id="${'searchType'}"
+              th:name="${'searchType'}"
+              th:class="${'form-control me-10'}"
             >
               <option value="name">이름</option>
-              <option value="details">상세정보</option>
+              <option value="detail">상세정보</option>
             </select>
             <input
-              th:type="search"
-              th:id="|keyword|"
-              th:name="|keyword|"
-              th:placeholder="|상품 검색|"
+              th:type="${'search'}"
+              th:id="${'keyword'}"
+              th:name="${'keyword'}"
+              th:placeholder="${'상품 검색'}"
               class="form-control w-max150 me-10"
               required
             />
@@ -203,15 +204,15 @@
 
     <!-- hidden -->
     <input
-      th:type="|hidden|"
-      th:id="|sessionId|"
-      th:name="|sessionId|"
+      th:type="${'hidden'}"
+      th:id="${'sessionId'}"
+      th:name="${'sessionId'}"
       th:value="${session.member_id}"
     />
     <input
-      th:type="|hidden|"
-      th:id="|memberNumber|"
-      th:name="|memberNumber|"
+      th:type="${'hidden'}"
+      th:id="${'memberNumber'}"
+      th:name="${'memberNumber'}"
       th:value="${session.member_number}"
     />
 

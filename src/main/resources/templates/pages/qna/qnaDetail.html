@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- head -->
@@ -7,25 +8,29 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-question-circle', text1='Qna', text2='Details')}" />
+  <th:block th:replace="~{layouts/navigation :: navigation (
+    icon = 'fas fa-question-circle',
+    text1 = ${PAGE},
+    text2 = ${THEME}
+  )}" />
 
   <!-- main -->
-  <main class="container px-30">
+  <main class="container-fluid px-30">
     <div class="row">
-      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
     <!-- row -->
     <div class="row d-flex justify-content-center">
       <!-- col -->
       <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <!-- image -->
-        <div class="blog-details-pic">
-          <img th:src="@{${qnaModel.qna_imgsUrl}}"/>
+        <div class="blog-detail-pic">
+          <img th:src="@{|${qnaModel.qna_imgsUrl}|}"/>
         </div>
       </div>
       <!-- col -->
       <div class="col-lg-8">
-        <div class="blog-details-content">
-          <div class="blog-details-quote">
+        <div class="blog-detail-content">
+          <div class="blog-detail-quote">
             <div class="row">
               <div class="col-lg-8 md-8 sm-8">
                 <i class="fa fa-quote-left ms-2"></i>
@@ -38,7 +43,7 @@
                 <div class="jungho-left mt-2">
                   <h6>작성자 : </h6>
                   <p th:text="${qnaModel.qna_writer}" class="p ms-1"></p>
-                  <input th:type="|hidden|" th:id="|writerId" th:name="|writerId" th:value=|"${qnaModel.qna_writer}|"/>
+                  <input th:type="${'hidden" th:id="|writerId" th:name="writerId" th:value="${qnaModel.qna_writer}|'}"/>
                 </div>
                 <!-- date -->
                 <div class="jungho-left mt-2">
@@ -58,22 +63,22 @@
                 <!-- like -->
                 <div class="jungho-left mt-1">
                   <h6>Like : </h6>
-                  <div class="like-container" th:onclick="likeButton()" style="cursor:pointer">
+                  <div class="like-container" th:onclick="likeButton()" style="|cursor:pointer|">
                     <div class="ms-2">
-                      <i class="far fa-thumbs-up" th:id="|likeBtn|"></i>
+                      <i class="far fa-thumbs-up" th:id="${'likeBtn'}"></i>
                       <h6 class="like-count" id="likeCount" th:text="${qnaModel.qna_like}">
                       </h6>
                     </div>
                   </div>
                   <!-- dislike -->
-                  <div class="dislike-container" th:onclick="dislikeButton()" style="cursor:pointer">
+                  <div class="dislike-container" th:onclick="dislikeButton()" style="|cursor:pointer|">
                     <div class="ms-2">
-                      <i class="far fa-thumbs-down mt-1" th:id="|dislikeBtn|"></i>
+                      <i class="far fa-thumbs-down mt-1" th:id="${'dislikeBtn'}"></i>
                       <h6 class="dislike-count" id="dislikeCount" th:text="${qnaModel.qna_dislike}"></h6>
                     </div>
                   </div>
                   <!-- hidden -->
-                  <input th:type="|hidden|" th:id="|uniqueNumber" th:value="${qnaModel.qna_number}" th:name=|"|qna_number|"/>
+                  <input th:type="${'hidden" th:id="|uniqueNumber" th:value="{qnaModel.qna_number}" th:name="|qna_number|'}"/>
                 </div>
               </div>
               <!-- share -->
@@ -101,7 +106,7 @@
           <!-- content -->
           <div class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="blog-details-author mt-3">
+              <div class="blog-detail-author mt-3">
                 <p th:text="${qnaModel.qna_contents}" class="p"></p>
               </div>
             </div>
@@ -109,9 +114,9 @@
           <div class="jungho-horizon mb-4"></div>
           <!-- button -->
           <div class="form-group d-flex justify-content-center">
-            <button class="jungho-button" th:onclick="updateAlert()">수정</button>
-            <button class="jungho-button" th:onclick="deleteAlert()">삭제</button>
-            <button class="jungho-button" th:onclick="@{|location.href='/JUNGHQLO/qna/getQnaList'|}">목록</button>
+            <button class="jungho-button" th:onclick="|getUpdate()|">수정</button>
+            <button class="jungho-button" th:onclick="|getDelete()|">삭제</button>
+            <button class="jungho-button" th:onclick="|@{|location.href='/JUNGHQLO/qna/listQna'|}|">목록</button>
           </div>
         </div>
       </div>

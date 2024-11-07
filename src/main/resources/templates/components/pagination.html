@@ -1,41 +1,69 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 	<!-- pagination -->
-  <section th:fragment="pagination" th:class="|container-fluid|">
+  <section th:fragment="pagination" th:class="${'container-fluid mt-30'}">
     <div class="row">
-      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-        <div class="junghoPagination">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
+        <div class="d-row-center">
           <!-- prev -->
-          <a th:classappend="${page.pageNumber > 1} ? '' : 'disabled'"
-            th:href="${page.pageNumber > 1} ? @{|/${prefix}/get${subfix}List?pageNumber=${page.pageNumber-1}&itemsPer=${page.itemsPer}|} : ''">
-            &laquo;
-          </a>
+          <div
+            th:id="${'prev'}"
+            th:name="${'prev'}"
+            th:class="${'fs-1-6rem fw-700 h-30 w-30 d-center pointer'}"
+            th:classappend="${page.pageNumber > 1} ? 'black' : 'grey'"
+            th:onclick="${page.pageNumber > 1 && page.pageNumber <= page.totalPages} ? |location.href='@{|/${prefix}/list${subfix}?pageNumber=${page.pageNumber-1}&itemsPer=${page.itemsPer}|}'| : ''"
+            th:text="${'&laquo;'}"
+          ></div>
           <!-- number -->
-          <a th:each="pageNumber : ${#numbers.sequence(1, page.totalPages)}"
-            th:classappend="${pageNumber == page.pageNumber}?'active' : ''"
-            th:href="@{|/${prefix}/get${subfix}List?pageNumber=${pageNumber}&itemsPer=${page.itemsPer}|}"
-            th:text="${pageNumber}"></a>
+          <div
+            th:each="pageNumber : ${#numbers.sequence(1, page.totalPages)}"
+            th:id="${'number'}"
+            th:name="${'number'}"
+            th:class="${'fs-1-0rem fw-700 h-30 w-30 border-1 radius-50 d-center pointer ms-2vw me-2vw'}"
+            th:classappend="${pageNumber == page.pageNumber} ? 'bg-black white' : 'bg-white black'"
+            th:onclick="|location.href='@{|/${prefix}/list${subfix}?pageNumber=${pageNumber}&itemsPer=${page.itemsPer}|}'|"
+            th:text="${pageNumber}"
+          ></div>
           <!-- next -->
-          <a th:classappend="${page.pageNumber < page.totalPages} ? '' : 'disabled'"
-            th:href="${page.pageNumber < page.totalPages} ? @{|/${prefix}/get${subfix}List?pageNumber=${page.pageNumber+1}&itemsPer=${page.itemsPer}|} : ''">
-            &raquo;
-          </a>
-        </div>
+          <div
+            th:id="${'next'}"
+            th:name="${'next'}"
+            th:class="${'fs-1-6rem fw-700 h-30 w-30 d-center pointer'}"
+            th:classappend="${page.pageNumber < page.totalPages} ? 'black' : 'grey'"
+            th:onclick="${page.pageNumber < page.totalPages && page.pageNumber >= 1} ? |location.href='@{|/${prefix}/list${subfix}?pageNumber=${page.pageNumber+1}&itemsPer=${page.itemsPer}|}'| : ''"
+            th:text="${'&raquo;'}"
+          ></div>
       </div>
     </div>
   </section>
 
   <!-- fake pagination -->
-  <section th:fragment="fake-pagination" th:class="|container-fluid|">
+  <section th:fragment="fake-pagination" th:class="${'container-fluid mt-30'}">
     <div class="row">
-      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-        <div class="junghoPagination">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
+        <div class="d-row-center">
           <!-- prev -->
-          <a href="" class="disabled">&laquo;</a>
+          <div
+            th:id="${'prev'}"
+            th:name="${'prev'}"
+            th:class="${'fs-1-6rem fw-700 h-30 w-30 d-center pointer'}"
+            th:text="${'&laquo;'}"
+          ></div>
           <!-- number -->
-          <a href="" class="active">1</a>
+          <div
+            th:id="${'number'}"
+            th:name="${'number'}"
+            th:class="${'fs-1-0rem fw-700 h-30 w-30 border-1 radius-50 d-center pointer ms-2vw me-2vw'}"
+            th:text="${'1'}"
+          ></div>
           <!-- next -->
-          <a href="" class="disabled">&raquo;</a>
+          <div
+            th:id="${'next'}"
+            th:name="${'next'}"
+            th:class="${'fs-1-6rem fw-700 h-30 w-30 d-center pointer'}"
+            th:text="${'&raquo;'}"
+          ></div>
         </div>
       </div>
     </div>

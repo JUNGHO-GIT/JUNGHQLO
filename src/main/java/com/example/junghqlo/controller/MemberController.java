@@ -1,8 +1,6 @@
 package com.example.junghqlo.controller;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +19,7 @@ import com.example.junghqlo.service.MemberService;
 @RequestMapping("/member")
 public class MemberController {
 
-  // 0. constructor injection --------------------------------------------------------------------->
+  // 0. constructor injection ----------------------------------------------------------------------
   private MemberService memberService;
   private EmailHandler emailHandler;
   MemberController(MemberService memberService, EmailHandler emailHandler) {
@@ -30,18 +28,16 @@ public class MemberController {
   }
 
   // 0. static -------------------------------------------------------------------------------------
-  private static String PAGE = "member";
-  private static String PAGE_UP = "Member";
-  private static Member MODEL = new Member();
-  private static List<Member> LIST = new ArrayList<>();
+  private static String page = "member";
+  private static String PAGE = "Member";
 
-  // 1. getMemberList (GET) ----------------------------------------------------------------------->
-  @GetMapping("/getMemberList")
-  public String getMemberList(
+  // 1-1. listMember(GET) --------------------------------------------------------------------------
+  @GetMapping("/listMember")
+  public String listMember(
     @ModelAttribute Member member,
-    @RequestParam(required=false) String sort,
-    @RequestParam(defaultValue="1") Integer pageNumber,
-    @RequestParam(defaultValue="9") Integer itemsPer,
+    @RequestParam(defaultValue = "default") String sort,
+    @RequestParam(defaultValue = "1") Integer pageNumber,
+    @RequestParam(defaultValue = "9") Integer itemsPer,
     Model model
   ) throws Exception {
 
@@ -68,58 +64,25 @@ public class MemberController {
       sort="member_date DESC";
     }
 
-    PageHandler<Member> page = memberService.getMemberList(pageNumber, itemsPer, sort, member);
-    LIST = page.getContent();
+    PageHandler<Member> pageHandler = (
+      memberService.listMember(pageNumber, itemsPer, sort, member)
+    );
 
     // 모델
     model.addAttribute("sort", sort);
-    model.addAttribute("page", page);
-    model.addAttribute("LIST", LIST);
+    model.addAttribute("pageHandler", pageHandler);
+    model.addAttribute("LIST", pageHandler.getContent());
 
-    return MessageFormat.format("/pages/{0}/{1}List", PAGE, PAGE);
+    return MessageFormat.format("/pages/{0}/{1}List", page, page);
   };
 
-  // 2. getMemberDetails (GET) -------------------------------------------------------------------->
-  @GetMapping("/getMemberDetails")
-  public String getMemberDetails (
-    @ModelAttribute Member member,
-    HttpSession session,
-    Model model
-  ) throws Exception {
-
-    Integer member_number = (Integer) session.getAttribute("member_number");
-    MODEL = memberService.getMemberDetails(member_number);
-
-    // 모델
-    model.addAttribute("MODEL", MODEL);
-    model.addAttribute("member_id", session.getAttribute("member_id"));
-
-    return MessageFormat.format("/pages/{0}/{1}Details", PAGE, PAGE);
-  }
-
-  // 2-1. viewMemberDetails (GET) ----------------------------------------------------------------->
-  @GetMapping("/viewMemberDetails")
-  public String viewMemberDetails(
-    @ModelAttribute Member member,
-    @RequestParam Integer member_number,
-    Model model
-  ) throws Exception {
-
-    MODEL = memberService.getMemberDetails(member_number);
-
-    // 모델
-    model.addAttribute("MODEL", MODEL);
-
-    return MessageFormat.format("/pages/{0}/{1}Details", PAGE, PAGE);
-  }
-
-  // 3. searchMember (GET) ------------------------------------------------------------------------>
+  // 1-2. searchMember (GET) -----------------------------------------------------------------------
   @GetMapping("/searchMember")
   public String searchMember(
     @ModelAttribute Member member,
-    @RequestParam(required=false) String sort,
-    @RequestParam(defaultValue="1") Integer pageNumber,
-    @RequestParam(defaultValue="9") Integer itemsPer,
+    @RequestParam(defaultValue = "default") String sort,
+    @RequestParam(defaultValue = "1") Integer pageNumber,
+    @RequestParam(defaultValue = "9") Integer itemsPer,
     @RequestParam String searchType,
     @RequestParam String keyword,
     Model model
@@ -127,7 +90,7 @@ public class MemberController {
 
     // searchType order
     if (searchType == null || keyword == null) {
-      return MessageFormat.format("redirect:/{0}/get{1}List", PAGE, PAGE_UP);
+      return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
     }
     else if(searchType.equals("id")) {
       searchType="member_id";
@@ -136,26 +99,42 @@ public class MemberController {
       searchType="member_name";
     }
 
-    PageHandler<Member> page
-      = memberService.searchMember(pageNumber, itemsPer, keyword, searchType, member);
-    LIST = page.getContent();
+    PageHandler<Member> pageHandler = (
+      memberService.searchMember(pageNumber, itemsPer, searchType, keyword, member)
+    );
 
     // 모델
     model.addAttribute("sort", sort);
-    model.addAttribute("page", page);
-    model.addAttribute("LIST", LIST);
+    model.addAttribute("pageHandler", pageHandler);
+    model.addAttribute("LIST", pageHandler.getContent());
 
-    return MessageFormat.format("/pages/{0}/{1}Search", PAGE, PAGE);
+    return MessageFormat.format("/pages/{0}/{1}List", page, page);
   }
 
-  // 3-1. findMemberId (GET) ---------------------------------------------------------------------->
+  // 2. detailMember(GET) --------------------------------------------------------------------------
+  @GetMapping("/detailMember")
+  public String detailMember(
+    @ModelAttribute Member member,
+    @RequestParam Integer member_number,
+    HttpSession session,
+    Model model
+  ) throws Exception {
+
+    // 모델
+    model.addAttribute("MODEL", memberService.detailMember(member_number));
+    model.addAttribute("member_id", session.getAttribute("member_id"));
+
+    return MessageFormat.format("/pages/{0}/{1}Detail", page, page);
+  }
+
+  // 2-1. findMemberId (GET) -----------------------------------------------------------------------
   @GetMapping("/findMemberId")
   public String findMemberId() throws Exception {
 
-    return MessageFormat.format("/pages/{0}/{1}FindId", PAGE, PAGE_UP);
+    return MessageFormat.format("/pages/{0}/{1}FindId", page, page);
   }
 
-  // 3-1. findMemberId (POST) --------------------------------------------------------------------->
+  // 2-1. findMemberId (POST) ----------------------------------------------------------------------
   @ResponseBody
   @PostMapping("/findMemberId")
   public String findMemberId(
@@ -168,18 +147,18 @@ public class MemberController {
       return result;
     }
     else {
-      return "~";
+      return "notExist";
     }
   }
 
-  // 3-2. findMemberPw (GET) ---------------------------------------------------------------------->
+  // 2-2. findMemberPw (GET) -----------------------------------------------------------------------
   @GetMapping("/findMemberPw")
   public String findMemberPw() throws Exception {
 
-    return MessageFormat.format("/pages/{0}/{1}FindPw", PAGE, PAGE_UP);
+    return MessageFormat.format("/pages/{0}/{1}FindPw", page, page);
   }
 
-  // 3-2. findMemberPw (POST) --------------------------------------------------------------------->
+  // 2-2. findMemberPw (POST) ----------------------------------------------------------------------
   @ResponseBody
   @PostMapping("/findMemberPw")
   public String findMemberPw(
@@ -194,18 +173,18 @@ public class MemberController {
       return result;
     }
     else {
-      return "~";
+      return "notExist";
     }
   }
 
-  // 4. addMember (GET) --------------------------------------------------------------------------->
+  // 3. addMember (GET) ----------------------------------------------------------------------------
   @GetMapping("/addMember")
   public String addMember() throws Exception {
 
-    return MessageFormat.format("/pages/{0}/{1}Add", PAGE, PAGE_UP);
+    return MessageFormat.format("/pages/{0}/{1}Signup", page, page);
   }
 
-  // 4. addMember (POST) -------------------------------------------------------------------------->
+  // 3. addMember (POST) ---------------------------------------------------------------------------
   @PostMapping("/addMember")
   public String addMember(
     @ModelAttribute Member member,
@@ -214,54 +193,58 @@ public class MemberController {
 
     memberService.addMember(member);
 
-    return MessageFormat.format("redirect:/{0}/get{1}List", PAGE, PAGE_UP);
+    return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
   }
 
-  // 4-1. checkMemberId (GET) --------------------------------------------------------------------->
+  // 2-3 checkMemberId (GET) ----------------------------------------------------------------------
   @ResponseBody
   @GetMapping("/checkMemberId")
-  public String checkMemberId(
+  public Integer checkMemberId(
     @RequestParam String member_id
   ) throws Exception {
 
-    String result = memberService.checkMemberId(member_id);
+    Integer result = 0;
 
-    if (result == null || result.equals("") || result =="0") {
-      return "fail";
+    if (memberService.checkMemberId(member_id) > 0) {
+      result = 1;
     }
     else {
-      return "success";
+      result = 0;
     }
+
+    return result;
   }
 
-  // 4-2. checkMemberIdPw (GET) ------------------------------------------------------------------->
+  // 2-4 checkMemberIdPw (GET) --------------------------------------------------------------------
   @ResponseBody
   @GetMapping("/checkMemberIdPw")
-  public String checkMemberIdPw(
+  public Integer checkMemberIdPw(
     @ModelAttribute Member member,
     @RequestParam String member_id,
     @RequestParam String member_pw,
     HttpSession session
   ) throws Exception {
 
-    String result = memberService.checkMemberIdPw(member_id, member_pw);
-    Integer member_number = memberService.getMemberNumber(member_id);
+    Integer result = 0;
+    Integer member_number = memberService.numberMember(member_id);
 
-    if (result == null || result.equals("") || result =="0") {
-      return "fail";
-    }
-    else {
+    if (memberService.checkMemberIdPw(member_id, member_pw) > 0) {
       session.setAttribute("member_id", member_id);
       session.setAttribute("member_pw", member_pw);
       session.setAttribute("member_number", member_number);
-      return "success";
+      result = 1;
     }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
 
-  // 4-2. sendEmail (GET) ------------------------------------------------------------------------->
+  // 4-2. sendEmail (GET) --------------------------------------------------------------------------
   @ResponseBody
   @GetMapping("/sendEmail")
-  public String sendEmail(
+  public Integer sendEmail(
     @RequestParam String member_email
   ) throws Exception {
 
@@ -269,63 +252,69 @@ public class MemberController {
     String emailCode = emailHandler.generateCode();
     String receiveEmail = member_email;
 
-    String result = emailHandler.sendEmailCode(receiveEmail, emailCode);
+    Integer result = 0;
 
-    if (result == emailCode) {
-      return "success";
+    if (emailHandler.sendEmailCode(receiveEmail, emailCode).equals(emailCode)) {
+      result = 1;
     }
     else {
-      return "fail";
+      result = 0;
     }
+
+    return result;
   }
 
-  // 4-3. checkEmail (GET) ------------------------------------------------------------------------>
+  // 4-3. checkEmail (GET) -------------------------------------------------------------------------
   @ResponseBody
   @GetMapping("/checkEmail")
-  public String checkEmail(
+  public Integer checkEmail(
     @RequestParam String member_email,
     @RequestParam String email_code
   ) throws Exception {
 
-    Integer result = emailHandler.checkEmailCode(member_email, email_code);
+    Integer result = 0;
 
-    if (result != null && result > 0) {
-      return "success";
+    if (emailHandler.checkEmailCode(member_email, email_code) > 0) {
+      result = 1;
     }
     else {
-      return "fail";
+      result = 0;
     }
+
+    return result;
   }
 
-  // 4-3. loginMember (GET) ----------------------------------------------------------------------->
+  // 4-3. loginMember (GET) ------------------------------------------------------------------------
   @GetMapping("/loginMember")
   public String loginMember() throws Exception {
 
-    return MessageFormat.format("/pages/{0}/{1}Login", PAGE, PAGE_UP);
+    return MessageFormat.format("/pages/{0}/{1}Login", page, page);
   }
 
-  // 4-3. loginMember (POST) ---------------------------------------------------------------------->
+  // 4-3. loginMember (POST) -----------------------------------------------------------------------
   @ResponseBody
-  @PostMapping("/member/loginMember")
-  public String loginMember (
+  @PostMapping("/loginMember")
+  public Integer loginMember(
     @RequestParam String member_id,
     @RequestParam String member_pw,
     HttpSession session
   ) throws Exception {
 
-    String result = memberService.checkMemberIdPw(member_id, member_pw);
+    Integer result = 0;
 
-    if (result == null || result.equals("")) {
-      return "fail";
-    }
-    else {
+    if (memberService.checkMemberIdPw(member_id, member_pw) > 0) {
       session.setAttribute("member_id", member_id);
       session.setAttribute("member_pw", member_pw);
-      return "success";
+      result = 1;
     }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
 
-  // 4-2. logoutMember (GET) ---------------------------------------------------------------------->
+  // 4-2. logoutMember (GET) -----------------------------------------------------------------------
   @ResponseBody
   @GetMapping("/logoutMember")
   public void logoutMember(
@@ -335,22 +324,22 @@ public class MemberController {
     session.invalidate();
   }
 
-  // 5. updateMember (GET) ------------------------------------------------------------------------>
+  // 4. updateMember (GET) -------------------------------------------------------------------------
   @GetMapping("/updateMember")
   public String updateMember(
+    @RequestParam Integer member_number,
     HttpSession session,
     Model model
   ) throws Exception {
 
-    Integer member_number = (Integer) session.getAttribute("member_number");
+    // 모델
+    model.addAttribute("MODEL", memberService.detailMember(member_number));
 
-    model.addAttribute("memberModel", memberService.getMemberDetails(member_number));
-
-    return MessageFormat.format("/pages/{0}/{1}Update", PAGE, PAGE);
+    return MessageFormat.format("/pages/{0}/{1}Update", page, page);
   }
 
-  // 5. updateMember (POST) ----------------------------------------------------------------------->
-  @PostMapping("/member/updateMember")
+  // 4. updateMember (POST) ------------------------------------------------------------------------
+  @PostMapping("/updateMember")
   public String updateMember(
     @ModelAttribute Member member,
     HttpSession session
@@ -358,69 +347,55 @@ public class MemberController {
 
     memberService.updateMember(member);
 
-    return MessageFormat.format("redirect:/", PAGE);
+    return MessageFormat.format("redirect:/", page);
   }
 
-  // 5-1. updateMemberPw (GET) -------------------------------------------------------------------->
+  // 4-1. updateMemberPw (GET) ---------------------------------------------------------------------
   @GetMapping("/updateMemberPw")
   public String updateMemberPw() throws Exception {
 
-    return MessageFormat.format("/pages/{0}/{1}UpdatePw", PAGE, PAGE);
+    return MessageFormat.format("/pages/{0}/{1}UpdatePw", page, page);
   }
 
-  // 5-1. updateMemberPw (POST) ------------------------------------------------------------------->
+  // 4-1. updateMemberPw (POST) --------------------------------------------------------------------
   @ResponseBody
-  @PostMapping("/member/updateMemberPw")
-  public String updateMemberPw (
+  @PostMapping("/updateMemberPw")
+  public Integer updateMemberPw(
+    @RequestParam String member_id,
     @RequestParam String member_pw,
     HttpSession session
   ) throws Exception {
 
-    String member_id = (String) session.getAttribute("member_id");
+    Integer result = 0;
 
-    Integer result = memberService.updateMemberPw(member_id, member_pw);
-
-    if (result == null || result < 0) {
-      return "fail";
+    if (memberService.updateMemberPw(member_id, member_pw) > 0) {
+      result = 1;
     }
     else {
-      return "success";
+      result = 0;
     }
+
+    return result;
   }
 
-  // 6. deleteMember (GET) ------------------------------------------------------------------------>
-  @GetMapping("/deleteMember")
-  public String deleteMember (
-    @RequestParam Integer member_number,
-    @ModelAttribute Member member,
-    Model model
-  ) throws Exception {
-
-    MODEL = memberService.getMemberDetails(member_number);
-
-    // 모델
-    model.addAttribute("MODEL", MODEL);
-
-    return MessageFormat.format("/pages/{0}/{1}Delete", PAGE, PAGE);
-  }
-
-  // 6. deleteMember (POST) ----------------------------------------------------------------------->
+  // 5. deleteMember (POST) ------------------------------------------------------------------------
   @ResponseBody
-  @PostMapping("/member/deleteMember")
-  public String deleteMember (
+  @PostMapping("/deleteMember")
+  public Integer deleteMember(
     @RequestParam String member_name,
     @RequestParam String member_id,
     @RequestParam String member_pw
   ) throws Exception {
 
-    Integer result = memberService.deleteMember(member_name, member_id, member_pw);
+    Integer result = 0;
 
-    if (result == null || result == 0) {
-      return "fail";
+    if (memberService.deleteMember(member_name, member_id, member_pw) > 0) {
+      result = 1;
     }
     else {
-      return "success";
+      result = 0;
     }
-  }
 
+    return result;
+  }
 }

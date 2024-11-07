@@ -6,32 +6,32 @@ import com.example.junghqlo.model.Qna;
 
 public interface QnaService {
 
-  // 1. getQnaList -------------------------------------------------------------------------------->
-  PageHandler<Qna> getQnaList(Integer pageNumber, Integer itemsPer, String sort, Qna qna)
+  // 1-1. listQna ---------------------------------------------------------------------------------
+  PageHandler<Qna> listQna(Integer pageNumber, Integer itemsPer, String sort, Qna qna)
   throws Exception;
 
-  // 2. getQnaDetails ----------------------------------------------------------------------------->
-  Qna getQnaDetails(Integer qna_number) throws Exception;
+  // 2. detailQna ------------------------------------------------------------------------------
+  Qna detailQna(Integer qna_number) throws Exception;
 
-  // 3. searchQna --------------------------------------------------------------------------------->
+  // 1-2. searchQna ----------------------------------------------------------------------------------
   PageHandler<Qna> searchQna(Integer pageNumber, Integer itemsPer, String searchType, String keyword, Qna qna) throws Exception;
 
-  // 4. addQna ------------------------------------------------------------------------------------>
+  // 3. addQna -------------------------------------------------------------------------------------
   void addQna(Qna qna) throws Exception;
 
-  // 5. updateQna --------------------------------------------------------------------------------->
+  // 4. updateQna ----------------------------------------------------------------------------------
   void updateQna(Qna qna, String existingImage) throws Exception;
 
-  // 5-1. updateQnaCount -------------------------------------------------------------------------->
+  // 4-1. updateQnaCount ---------------------------------------------------------------------------
   void updateQnaCount(Integer qna_number, HttpSession session) throws Exception;
 
-  // 5-2. updateLike ------------------------------------------------------------------------------>
+  // 4-2. updateLike -------------------------------------------------------------------------------
   void updateLike(Integer qna_number, HttpSession session) throws Exception;
 
-  // 5-3. updateDislike --------------------------------------------------------------------------->
+  // 4-3. updateDislike ----------------------------------------------------------------------------
   void updateDislike(Integer qna_number, HttpSession session) throws Exception;
 
-  // 6. deleteQna --------------------------------------------------------------------------------->
-  void deleteQna(Integer qna_number) throws Exception;
+  // 5. deleteQna ----------------------------------------------------------------------------------
+  Integer deleteQna(Integer qna_number) throws Exception;
 
 }

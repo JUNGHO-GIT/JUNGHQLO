@@ -11,129 +11,153 @@ import com.example.junghqlo.model.Member;
 @Repository
 public class MemberMapperImpl implements MemberMapper {
 
-  // 0. constructor injection --------------------------------------------------------------------->
+  // 0. constructor injection ----------------------------------------------------------------------
   SqlSessionTemplate sqlSession;
   MemberMapperImpl(SqlSessionTemplate sqlSession) {
-  this.sqlSession = sqlSession;
+    this.sqlSession = sqlSession;
   }
 
-  // 1. getMemberList ----------------------------------------------------------------------------->
+  // 1-1. listMember ------------------------------------------------------------------------------
   @Override
-  public List<Member> getMemberList(String sort) {
+  public List<Member> listMember(String sort) {
 
-    return sqlSession.selectList("getMemberList", sort);
+    return sqlSession.selectList("listMember", sort);
   }
 
-  // 2. getMemberDetails -------------------------------------------------------------------------->
-  @Override
-  public Member getMemberDetails(Integer member_number) {
-
-    return sqlSession.selectOne("getMemberDetails", member_number);
-  }
-
-  // 2-1. getMemberNumber ------------------------------------------------------------------------->
-  @Override
-  public Integer getMemberNumber(String member_id) {
-
-    return sqlSession.selectOne("getMemberNumber", member_id);
-  }
-
-  // 3. searchMember ------------------------------------------------------------------------------>
+  // 1-2. searchMember -----------------------------------------------------------------------------
   @Override
   public List<Member> searchMember(String searchType, String keyword) throws Exception {
 
-    Map<String, Object> params = new HashMap<>();
-    params.put("searchType", searchType);
-    params.put("keyword", keyword);
+    Map<String, Object> map = new HashMap<>();
+    map.put("searchType", searchType);
+    map.put("keyword", keyword);
 
-    return sqlSession.selectList("searchMember", params);
+    return sqlSession.selectList("searchMember", map);
   }
 
-  // 3-1. findMemberId ---------------------------------------------------------------------------->
+  // 2. detailMember -------------------------------------------------------------------------------
+  @Override
+  public Member detailMember(Integer member_number) {
+
+    return sqlSession.selectOne("detailMember", member_number);
+  }
+
+  // 2-1. numberMember -----------------------------------------------------------------------------
+  @Override
+  public Integer numberMember(String member_id) {
+
+    return sqlSession.selectOne("numberMember", member_id);
+  }
+
+  // 2-1. findMemberId -----------------------------------------------------------------------------
   @Override
   public String findMemberId(String member_name, String member_email) {
 
-    Map<String, Object> params = new HashMap<>();
-    params.put("member_name", member_name);
-    params.put("member_email", member_email);
+    Map<String, Object> map = new HashMap<>();
+    map.put("member_name", member_name);
+    map.put("member_email", member_email);
 
-    return sqlSession.selectOne("findMemberId", params);
+    return sqlSession.selectOne("findMemberId", map);
   }
 
-  // 3-2. findMemberPw ---------------------------------------------------------------------------->
+  // 2-2. findMemberPw -----------------------------------------------------------------------------
   @Override
   public String findMemberPw(String member_name, String member_id, String member_email) {
 
-    Map<String, Object> params = new HashMap<>();
-    params.put("member_name", member_name);
-    params.put("member_id", member_id);
-    params.put("member_email", member_email);
+    Map<String, Object> map = new HashMap<>();
+    map.put("member_name", member_name);
+    map.put("member_id", member_id);
+    map.put("member_email", member_email);
 
-    return sqlSession.selectOne("findMemberPw", params);
+    return sqlSession.selectOne("findMemberPw", map);
   }
 
-  // 4. addMember --------------------------------------------------------------------------------->
+  // 2-3 checkMemberId ----------------------------------------------------------------------------
+  @Override
+  public Integer checkMemberId(String member_id) {
+
+    Integer result = 0;
+
+    if ((Integer) sqlSession.selectOne("checkMemberId", member_id) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
+  }
+
+  // 2-4 checkMemberIdPw --------------------------------------------------------------------------
+  @Override
+  public Integer checkMemberIdPw(String member_id, String member_pw) {
+
+    Integer result = 0;
+
+    Map<String, Object> map = new HashMap<>();
+    map.put("member_id", member_id);
+    map.put("member_pw", member_pw);
+
+    if ((Integer) sqlSession.selectOne("checkMemberIdPw", map) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
+  }
+
+  // 3. addMember ----------------------------------------------------------------------------------
   @Override
   public void addMember(Member member) {
 
     sqlSession.insert("addMember", member);
   }
 
-  // 4-1. checkMemberId --------------------------------------------------------------------------->
-  @Override
-  public String checkMemberId(String member_id) {
-
-    return sqlSession.selectOne("checkMemberId", member_id);
-  }
-
-  // 4-2. checkMemberIdPw
-  @Override
-  public String checkMemberIdPw(String member_id, String member_pw) {
-
-    Map<String, Object> params = new HashMap<>();
-    params.put("member_id", member_id);
-    params.put("member_pw", member_pw);
-
-    return sqlSession.selectOne("checkMemberIdPw", params);
-  }
-
-  // 4-3. sendEmail 4-4. checkEmail 4-5. loginMember
-
-  // 4-6. logoutMember ---------------------------------------------------------------------------->
-  @Override
-  public void logoutMember(HttpSession session) {
-
-    session.invalidate();
-  }
-
-  // 5. updateMember ------------------------------------------------------------------------------>
+  // 4. updateMember -------------------------------------------------------------------------------
   @Override
   public void updateMember(Member member) {
 
     sqlSession.update("updateMember", member);
   }
 
-  // 5-1. updateMemberPw -------------------------------------------------------------------------->
+  // 4-1. updateMemberPw ---------------------------------------------------------------------------
   @Override
   public Integer updateMemberPw(String member_id, String member_pw) {
 
-    Map<String, Object> params = new HashMap<>();
-    params.put("member_id", member_id);
-    params.put("member_pw", member_pw);
+    Map<String, Object> map = new HashMap<>();
+    map.put("member_id", member_id);
+    map.put("member_pw", member_pw);
 
-    return sqlSession.selectOne("updateMemberPw", params);
+    return sqlSession.selectOne("updateMemberPw", map);
   }
 
-  // 6. deleteMember ------------------------------------------------------------------------------>
+  // 5. deleteMember -------------------------------------------------------------------------------
   @Override
   public Integer deleteMember(String member_name, String member_id, String member_pw) {
 
-    Map<String, Object> params = new HashMap<>();
-    params.put("member_name", member_name);
-    params.put("member_id", member_id);
-    params.put("member_pw", member_pw);
+    Integer result = 0;
 
-    return sqlSession.selectOne("deleteMember", params);
+    Map<String, Object> map = new HashMap<>();
+    map.put("member_name", member_name);
+    map.put("member_id", member_id);
+    map.put("member_pw", member_pw);
+
+    if (sqlSession.delete("deleteMember", map) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
 
+  // 6. logoutMember -------------------------------------------------------------------------------
+  @Override
+  public void logoutMember(HttpSession session) {
+
+    session.invalidate();
+  }
 }

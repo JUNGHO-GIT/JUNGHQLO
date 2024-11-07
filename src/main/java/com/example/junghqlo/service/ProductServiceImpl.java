@@ -20,7 +20,7 @@ import com.google.cloud.storage.StorageOptions;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-  // 0. constructor injection --------------------------------------------------------------------->
+  // 0. constructor injection ----------------------------------------------------------------------
   private ProductMapper productMapper;
   private StripeConfig stripeConfig;
   ProductServiceImpl(ProductMapper productMapper, StripeConfig stripeConfig) {
@@ -28,11 +28,11 @@ public class ProductServiceImpl implements ProductService {
   this.productMapper = productMapper;
   }
 
-  // 1. getProductList----------------------------------------------------------------------------->
+  // 1-1. listProduct ------------------------------------------------------------------------------
   @Override
-  public PageHandler<Product> getProductList(Integer pageNumber, Integer itemsPer, String sort, Product product) throws Exception {
+  public PageHandler<Product> listProduct(Integer pageNumber, Integer itemsPer, String sort, Product product) throws Exception {
 
-    List<Product> content = productMapper.getProductList(sort);
+    List<Product> content = productMapper.listProduct(sort);
 
     Integer itemsTotal = content.size();
     Integer pageLast = (itemsTotal + itemsPer - 1) / itemsPer;
@@ -63,11 +63,11 @@ public class ProductServiceImpl implements ProductService {
     return new PageHandler<>(pageNumber, pageStart, pageEnd, 1, pageLast, itemsPer, itemsTotal, pageContent);
   }
 
-  // 1-1. getProductCategory ---------------------------------------------------------------------->
+  // 1-1. categoryProduct -----------------------------------------------------------------------
   @Override
-  public PageHandler<Product> getProductCategory(Integer pageNumber, Integer itemsPer, String category, String sort, Product product) throws Exception {
+  public PageHandler<Product> categoryProduct(Integer pageNumber, Integer itemsPer, String category, String sort, Product product) throws Exception {
 
-    List<Product> content = productMapper.getProductCategory(category, sort);
+    List<Product> content = productMapper.categoryProduct(category, sort);
 
     Integer itemsTotal = content.size();
     Integer pageLast = (itemsTotal + itemsPer - 1) / itemsPer;
@@ -98,14 +98,14 @@ public class ProductServiceImpl implements ProductService {
     return new PageHandler<>(pageNumber, pageStart, pageEnd, 1, pageLast, itemsPer, itemsTotal, pageContent);
   }
 
-  // 2. getProductDetails ------------------------------------------------------------------------->
+  // 2. detailProduct --------------------------------------------------------------------------
   @Override
-  public Product getProductDetails(Integer product_number) throws Exception {
+  public Product detailProduct(Integer product_number) throws Exception {
 
-    return productMapper.getProductDetails(product_number);
+    return productMapper.detailProduct(product_number);
   }
 
-  // 3. searchProduct ----------------------------------------------------------------------------->
+  // 1-2. searchProduct ------------------------------------------------------------------------------
   @Override
   public PageHandler<Product> searchProduct(Integer pageNumber, Integer itemsPer, String searchType, String keyword, Product product) throws Exception {
 
@@ -140,9 +140,9 @@ public class ProductServiceImpl implements ProductService {
     return new PageHandler<>(pageNumber, pageStart, pageEnd, 1, pageLast, itemsPer, itemsTotal, pageContent);
   }
 
-  // 4. addProduct -------------------------------------------------------------------------------->
+  // 3. addProduct ---------------------------------------------------------------------------------
   @Override
-  public void addProduct(Product product, String product_name, String product_details, Integer product_price) throws Exception {
+  public void addProduct(Product product, String product_name, String product_detail, Integer product_price) throws Exception {
 
     MultipartFile product_imgsFile1 = product.getProduct_imgsFile1();
     MultipartFile product_imgsFile2 = product.getProduct_imgsFile2();
@@ -201,7 +201,7 @@ public class ProductServiceImpl implements ProductService {
 
       // stripe id, price set
       com.stripe.model.Product stripe_id
-      = stripeConfig.createProduct(product_name, product_details, googleBucketUrl1, googleBucketUrl2);
+      = stripeConfig.createProduct(product_name, product_detail, googleBucketUrl1, googleBucketUrl2);
 
       com.stripe.model.Price stripe_price
       = stripeConfig.createPrice(stripe_id.getId(), product_price);
@@ -215,7 +215,7 @@ public class ProductServiceImpl implements ProductService {
     productMapper.addProduct(product);
   }
 
-  // 5. updateProduct ----------------------------------------------------------------------------->
+  // 4. updateProduct ------------------------------------------------------------------------------
   @Override
   public void updateProduct(Product product, String product_imgsUrl1, String product_imgsUrl2) throws Exception {
 
@@ -283,7 +283,7 @@ public class ProductServiceImpl implements ProductService {
 
     // stripe id, price set
     com.stripe.model.Product stripe_id
-      = stripeConfig.updateProduct(product.getStripe_id(), product.getProduct_name(), product.getProduct_details(), googleBucketUrl1, googleBucketUrl2);
+      = stripeConfig.updateProduct(product.getStripe_id(), product.getProduct_name(), product.getProduct_detail(), googleBucketUrl1, googleBucketUrl2);
 
     com.stripe.model.Price stripe_price
       = stripeConfig.updatePrice(stripe_id.getId(), product.getProduct_price());
@@ -295,19 +295,26 @@ public class ProductServiceImpl implements ProductService {
     productMapper.updateProduct(product);
   }
 
-
-  // 6. deleteProduct ----------------------------------------------------------------------------->
+  // 5. deleteProduct ------------------------------------------------------------------------------
   @Override
-  public void deleteProduct(Integer product_number) throws Exception {
+  public Integer deleteProduct(Integer product_number) throws Exception {
+
+    Integer result = 0;
 
     // 1. get product
-    Product product = getProductDetails(product_number);
+    Product product = detailProduct(product_number);
 
     // 2. delete product in stripe
     stripeConfig.deleteProduct(product.getStripe_id());
     stripeConfig.deletePrice(product.getStripe_price());
 
-    productMapper.deleteProduct(product);
-  }
+    if (productMapper.deleteProduct(product_number) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
 
+    return result;
+  }
 }

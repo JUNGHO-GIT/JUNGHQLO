@@ -16,17 +16,14 @@ function findMemberId() {
   }
 
   $.ajax({
-    url: `/JUNGHQLO/member/findMemberId`,
+    url: `/${TITLE}/member/findMemberId`,
     method: "POST",
     data: {
       member_name: getValue(getById("member_name")),
       member_email: getValue(getById("member_email")),
     },
-    /**
-    * @param {any} response
-    **/
     success: function (response) {
-      if (response == "~") {
+      if (response == "notExist") {
         alert("일치하는 회원정보가 없습니다.");
         window.location.reload();
       }
@@ -63,7 +60,7 @@ function findMemberPw() {
   }
 
   $.ajax({
-    url: `/JUNGHQLO/member/findMemberPw`,
+    url: `/${TITLE}/member/findMemberPw`,
     method: "POST",
     data: {
       member_id: getValue(getById("member_id")),
@@ -74,7 +71,7 @@ function findMemberPw() {
     * @param {any} responseText
     **/
     success: function (responseText) {
-      if (responseText == "~") {
+      if (responseText == "notExist") {
         alert("일치하는 회원정보가 없습니다.");
         window.location.reload();
       }
@@ -166,6 +163,7 @@ function addMember() {
 function checkMemberId() {
 
   if (getValue(getById("member_id")) === "") {
+    alert("아이디를 입력하세요");
     getById("member_id")?.focus();
     return false;
   }
@@ -180,13 +178,13 @@ function checkMemberId() {
   }
 
   $.ajax({
-    url: `/JUNGHQLO/member/checkMemberId?member_id=${getValue(getById("member_id"))}`,
+    url: `/${TITLE}/member/checkMemberId?member_id=${getValue(getById("member_id"))}`,
     method: "GET",
     /**
     * @param {any} responseText
     **/
     success: function (responseText) {
-      if (responseText === "fail") {
+      if (responseText === 0) {
         alert("이미 사용중인 아이디입니다.");
         getById("member_id")?.focus();
         return false;
@@ -230,16 +228,13 @@ function sendEmail() {
   setValue(getById("member_email"), member_email);
 
   $.ajax({
-    url: `/JUNGHQLO/member/sendEmail?member_email=${member_email}`,
+    url: `/${TITLE}/member/sendEmail?member_email=${member_email}`,
     method: "GET",
-    /**
-    * @param {any} response
-    **/
     success: function (response) {
-      if (response === "success") {
+      if (response === 1) {
         alert("인증번호가 전송되었습니다.");
       }
-      else if (response === "fail") {
+      else if (response === 0) {
         alert("인증번호 전송에 실패했습니다.");
         setValue(getById("member_email"), "");
         getById("member_email")?.focus();
@@ -264,13 +259,10 @@ function checkEmail() {
   const member_email = getValue(getById("member_email"));
 
   $.ajax({
-    url: `/JUNGHQLO/member/checkEmail?member_email=${member_email}&email_code=${email_code}`,
+    url: `/${TITLE}/member/checkEmail?member_email=${member_email}&email_code=${email_code}`,
     method: "GET",
-    /**
-    * @param {any} response
-    **/
     success: function (response) {
-      if (response === "success") {
+      if (response === 1) {
         alert("인증번호가 일치합니다.");
         getById("email_button")?.setAttribute("disabled", "true");
         getById("email_verified")?.setAttribute("value", "true");
@@ -306,18 +298,15 @@ function checkMemberIdPw() {
   }
 
   $.ajax({
-    url: `/JUNGHQLO/member/checkMemberIdPw?member_id=${getValue(getById("member_id"))}&member_pw=${getValue(getById("member_pw"))}`,
+    url: `/${TITLE}/member/checkMemberIdPw?member_id=${getValue(getById("member_id"))}&member_pw=${getValue(getById("member_pw"))}`,
     method: "GET",
-    /**
-    * @param {any} response
-    **/
     success: function (response) {
-      if (response === "success") {
+      if (response === 1) {
         alert("로그인 되었습니다.");
         location.href = `/${TITLE}`;
         return true;
       }
-      else if (response === "fail") {
+      else if (response === 0) {
         alert("아이디 또는 비밀번호가 일치하지 않습니다.");
         getById("member_id")?.focus();
         return false;
@@ -336,7 +325,7 @@ function checkMemberIdPw() {
 function logoutMember() {
   if (confirm("로그아웃 하시겠습니까?")) {
     $.ajax({
-      url: `/JUNGHQLO/member/logoutMember`,
+      url: `/${TITLE}/member/logoutMember`,
       method: "GET",
       success: function () {
         alert("로그아웃 되었습니다.");
@@ -418,21 +407,18 @@ function updateMemberPw() {
   }
 
   $.ajax({
-    url: `/JUNGHQLO/member/updateMemberPw`,
+    url: `/${TITLE}/member/updateMemberPw`,
     method: "POST",
     data: {
       member_pw: getValue(getById("member_pw")),
     },
-    /**
-    * @param {any} response
-    **/
     success: function (response) {
-      if (response === "success") {
+      if (response === 1) {
         alert("비밀번호가 변경되었습니다.");
         location.href = `/${TITLE}/member/loginMember`;
         return true;
       }
-      else if (response === "fail") {
+      else if (response === 0) {
         alert("비밀번호 변경에 실패했습니다.");
         window.location.reload();
         return false;
@@ -467,23 +453,20 @@ function deleteMember() {
   }
 
   $.ajax({
-    url: `/JUNGHQLO/member/deleteMember`,
+    url: `/${TITLE}/member/deleteMember`,
     method: "POST",
     data: {
       member_name: getValue(getById("member_name")),
       member_id: getValue(getById("member_id")),
       member_pw: getValue(getById("member_pw")),
     },
-    /**
-    * @param {any} response
-    **/
     success: function (response) {
-      if (response === "fail") {
+      if (response === 0) {
         alert("일치하는 회원정보가 없습니다.");
         window.location.reload();
         return false;
       }
-      else if (response === "success") {
+      else if (response === 1) {
         if (confirm("회원 탈퇴를 하시겠습니까?")) {
           alert("회원 탈퇴 되었습니다.");
           location.href = `/${TITLE}/member/loginMember`;

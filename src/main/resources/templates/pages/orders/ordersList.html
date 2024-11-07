@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- head -->
@@ -7,19 +8,23 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-credit-card', text1='Orders', text2='List')}" />
+  <th:block th:replace="~{layouts/navigation :: navigation (
+    icon = 'fas fa-credit-card',
+    text1 = ${PAGE},
+    text2 = ${THEME}
+  )}" />
 
   <!-- main -->
-  <main class="container px-30">
+  <main class="container-fluid px-30">
     <div class="row">
-      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
     <div class="row mb-3 jungho-inline">
       <!-- sorting -->
       <div class="col-lg-6 col-md-6 col-sm-6 col-6">
         <div class="jungho-left">
           <i class="fas fa-sort-amount-down fa-lg"></i>&nbsp;&nbsp;
-          <form th:action="@{/orders/getOrdersList}" th:method="|GET|" onchange="this.submit()">
-            <select name="sort" class="form-control">
+          <form th:action="@{|/orders/listOrders}" th:method="${'GET" onchange="this.submit()'}">
+            <select name="sort" class="form-control w-50p">
               <option value="default">정렬</option>
               <option value="nameASC">이름순(오름차순)</option>
               <option value="nameDESC">이름순(내림차순)</option>
@@ -33,14 +38,14 @@
       </div>
       <!-- search -->
       <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-        <form id="searchForm" th:method="|GET|" th:action="@{/orders/searchOrders}">
+        <form id="searchForm" th:method="${'GET" th:action="@{|/orders/searchOrders}'}">
           <div class="jungho-right">
-            <select class="ft-5 fw-8 ms-2 searchSelect" th:name="|searchType" th:id="searchType|">
+            <select class="ft-5 fw-8 ms-2 searchSelect" th:name="${'searchType" th:id="searchType'}">
               <option value="name">Name</option>
             </select>
-            <input class="form-control ft-7 fw-7 me-1 searchBar" th:type="search" th:id="|keyword" th:placeholder="|search" th:name=|"keyword|" required/>
-            <i class="fas fa-search fa-lg" th:id="|searchIcon|"></i>
-            <button th:type="|submit|" id="hiddenSubmit" class="hiddenSubmit"></button>
+            <input class="form-control ft-7 fw-7 me-1 searchBar" th:type="${'search" th:id="|keyword" th:placeholder="search" th:name="keyword|'}" required/>
+            <i class="fas fa-search fa-lg" th:id="${'searchIcon'}"></i>
+            <button th:type="${'submit" id="hiddenSubmit" class="hiddenSubmit'}"></button>
           </div>
         </form>
       </div>
@@ -61,17 +66,17 @@
                       </div>
                       <!-- name -->
                       <div class="junghoList-title">
-                        <a th:href="@{|/orders/getOrdersDetails?orders_number=${orders.orders_number}|}" th:text="${orders.product_name}" th:id="|product_name" th:value="${orders.product_name}|"></a>
+                        <a th:href="@{|/orders/detailOrders?orders_number=${orders.orders_number}|}" th:text="${orders.product_name}" th:id="|product_name" th:value="{orders.product_name|}"></a>
                       </div>
                     </div>
                     <!-- quantity -->
                     <div class="junghoList-quantity">
-                      <span th:text="'수량  : ' + ${orders.orders_quantity}" th:id="|orders_quantity" th:value="${orders.orders_quantity}|"></span>
+                      <span th:text="${''수량  : ' + ${orders.orders_quantity}" th:id="|orders_quantity" th:value="{orders.orders_quantity}'}"></span>
                     </div>
                     <!-- price -->
                     <div class="junghoList-price">
                       <i class="fas fa-won-sign fa-xs"></i>&nbsp;
-                      <span  th:text="${#numbers.formatInteger(orders.orders_totalPrice, 3, 'COMMA')}" th:id="|orders_totalPrice" th:value="${orders.orders_totalPrice}|">
+                      <span  th:text="${#numbers.formatInteger(orders.orders_totalPrice, 3, 'COMMA')}" th:id="${'|orders_totalPrice" th:value="{orders.orders_totalPrice}'}">
                       </span>
                     </div>
                     <!-- date -->
@@ -91,8 +96,8 @@
 
   <!-- pagination -->
   <th:block th:replace="~{components/pagination :: pagination (
-    prefix = ${PAGE},
-    suffix = ${PAGE_UP}
+    prefix = ${page},
+    subfix = ${PAGE}
   )}" />
 
   <!-- footer -->

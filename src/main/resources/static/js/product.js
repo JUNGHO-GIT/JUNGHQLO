@@ -35,14 +35,14 @@ function productCheck() {
   }
 
   // 상품 상세 설명은 100글자 이하로 입력
-  if (!getValue(getById("product_details"))) {
+  if (!getValue(getById("product_detail"))) {
     alert("상품 상세 설명을 입력하세요");
-    getById("product_details").focus();
+    getById("product_detail").focus();
     return false;
   }
-  else if (getValue(getById("product_details")).length > 100) {
+  else if (getValue(getById("product_detail")).length > 100) {
     alert("상품 상세 설명은 100글자 이하로 입력하세요");
-    getById("product_details").focus();
+    getById("product_detail").focus();
     return false;
   }
 

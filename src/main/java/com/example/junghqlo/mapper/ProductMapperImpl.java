@@ -10,67 +10,89 @@ import com.example.junghqlo.model.Product;
 @Repository
 public class ProductMapperImpl implements ProductMapper {
 
-  // 0. constructor injection --------------------------------------------------------------------->
+  // 0. constructor injection ----------------------------------------------------------------------
   SqlSessionTemplate sqlSession;
   ProductMapperImpl(SqlSessionTemplate sqlSession) {
-  this.sqlSession = sqlSession;
+    this.sqlSession = sqlSession;
   }
 
-  // 1. getProductList ---------------------------------------------------------------------------->
+  // 1-1. listProduct -----------------------------------------------------------------------------
   @Override
-  public List<Product> getProductList(String sort) throws Exception {
+  public List<Product> listProduct(
+    String sort
+  ) throws Exception {
 
-    return sqlSession.selectList("getProductList", sort);
+    return sqlSession.selectList("listProduct", sort);
   }
 
-  // 1-1. getProductCategory ---------------------------------------------------------------------->
+  // 1-2. searchProduct ----------------------------------------------------------------------------
   @Override
-  public List<Product> getProductCategory(String category, String sort) throws Exception {
+  public List<Product> searchProduct(
+    String searchType,
+    String keyword
+  ) throws Exception {
 
-    Map<String, Object> params = new HashMap<>();
-    params.put("category", category);
-    params.put("sort", sort);
+    Map<String, Object> map = new HashMap<>();
+    map.put("searchType", searchType);
+    map.put("keyword", keyword);
 
-    return sqlSession.selectList("getProductCategory", params);
+    return sqlSession.selectList("searchProduct", map);
   }
 
-  // 2. getProductDetails ------------------------------------------------------------------------->
+  // 1-3. categoryProduct --------------------------------------------------------------------------
   @Override
-  public Product getProductDetails(Integer product_number) throws Exception {
+  public List<Product> categoryProduct(
+    String category,
+    String sort
+  ) throws Exception {
 
-    return sqlSession.selectOne("getProductDetails", product_number);
+    Map<String, Object> map = new HashMap<>();
+    map.put("category", category);
+    map.put("sort", sort);
+
+    return sqlSession.selectList("categoryProduct", map);
   }
 
-  // 3. searchProduct ----------------------------------------------------------------------------->
+  // 2. detailProduct ------------------------------------------------------------------------------
   @Override
-  public List<Product> searchProduct(String searchType, String keyword) throws Exception {
+  public Product detailProduct(
+    Integer product_number
+  ) throws Exception {
 
-    Map<String, Object> params = new HashMap<>();
-    params.put("searchType", searchType);
-    params.put("keyword", keyword);
-
-    return sqlSession.selectList("searchProduct", params);
+    return sqlSession.selectOne("detailProduct", product_number);
   }
 
-  // 4. addProduct -------------------------------------------------------------------------------->
+  // 3. addProduct ---------------------------------------------------------------------------------
   @Override
-  public void addProduct(Product product) throws Exception {
+  public void addProduct(
+    Product product
+  ) throws Exception {
 
     sqlSession.insert("addProduct", product);
   }
 
-  // 5. updateProduct ----------------------------------------------------------------------------->
+  // 4. updateProduct ------------------------------------------------------------------------------
   @Override
-  public void updateProduct(Product product) throws Exception {
+  public void updateProduct(
+    Product product
+  ) throws Exception {
 
     sqlSession.update("updateProduct", product);
   }
 
-  // 6. deleteProduct ----------------------------------------------------------------------------->
+  // 5. deleteProduct ------------------------------------------------------------------------------
   @Override
-  public void deleteProduct(Product product) throws Exception {
+  public Integer deleteProduct(Integer product_number) throws Exception {
 
-    sqlSession.delete("deleteProduct", product);
+    Integer result = 0;
+
+    if (sqlSession.delete("deleteProduct", product_number) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
-
 }

@@ -12,14 +12,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class EmailHandler {
 
-  // 1. 이메일 전송을 위한 mailSender ------------------------------------------------------------->
+  // $1$2$3 $5-----
   JavaMailSender mailSender;
   Map<String, String> emailCodeMap = new HashMap<>();
   EmailHandler(JavaMailSender mailSender) {
     this.mailSender = mailSender;
   }
 
-  // 2. 이메일 인증번호 생성 ---------------------------------------------------------------------->
+  // $1$2$3 $5-----
   public String generateCode() {
 
     Integer length = 6;
@@ -33,7 +33,7 @@ public class EmailHandler {
     return builder.toString();
   }
 
-  // 3. 이메일 인증번호 전송 ---------------------------------------------------------------------->
+  // $1$2$3 $5-----
   public String sendEmailCode(String receiveEmail, String emailCode) throws MessagingException {
 
     MimeMessage message = mailSender.createMimeMessage();
@@ -54,7 +54,7 @@ public class EmailHandler {
     return emailCode;
   }
 
-  // 4. 이메일 인증번호 확인 ---------------------------------------------------------------------->
+  // $1$2$3 $5-----
   public Integer checkEmailCode(String receiveEmail, String inputEmailCode) {
 
     String storedEmailCode = emailCodeMap.get(receiveEmail);

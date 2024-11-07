@@ -20,17 +20,17 @@ import com.google.cloud.storage.StorageOptions;
 @Service
 public class NoticeServiceImpl implements NoticeService {
 
-  // 0. constructor injection --------------------------------------------------------------------->
+  // 0. constructor injection ----------------------------------------------------------------------
   private NoticeMapper noticeMapper;
   NoticeServiceImpl (NoticeMapper noticeMapper) {
-  this.noticeMapper = noticeMapper;
+    this.noticeMapper = noticeMapper;
   }
 
-  // 1. getNoticeList ----------------------------------------------------------------------------->
+  // 1-1. listNotice ------------------------------------------------------------------------------
   @Override
-  public PageHandler<Notice> getNoticeList(Integer pageNumber, Integer itemsPer, String sort, Notice notice) throws Exception {
+  public PageHandler<Notice> listNotice(Integer pageNumber, Integer itemsPer, String sort, Notice notice) throws Exception {
 
-    List<Notice> content = noticeMapper.getNoticeList(sort);
+    List<Notice> content = noticeMapper.listNotice(sort);
     Integer itemsTotal = content.size();
     Integer pageLast = (itemsTotal + itemsPer - 1) / itemsPer;
 
@@ -60,13 +60,7 @@ public class NoticeServiceImpl implements NoticeService {
     return new PageHandler<>(pageNumber, pageStart, pageEnd, 1, pageLast, itemsPer, itemsTotal, pageContent);
   }
 
-  // 2. getNoticeDetails -------------------------------------------------------------------------->
-  @Override
-  public Notice getNoticeDetails(Integer notice_number) throws Exception {
-    return noticeMapper.getNoticeDetails(notice_number);
-  }
-
-  // 3. searchNotice ------------------------------------------------------------------------------>
+  // 1-2. searchNotice -----------------------------------------------------------------------------
   @Override
   public PageHandler<Notice> searchNotice(Integer pageNumber, Integer itemsPer, String searchType, String keyword, Notice notice) throws Exception {
 
@@ -100,7 +94,13 @@ public class NoticeServiceImpl implements NoticeService {
     return new PageHandler<>(pageNumber, pageStart, pageEnd, 1, pageLast, itemsPer, itemsTotal, pageContent);
   }
 
-  // 4. addNotice --------------------------------------------------------------------------------->
+  // 2. detailNotice ---------------------------------------------------------------------------
+  @Override
+  public Notice detailNotice(Integer notice_number) throws Exception {
+    return noticeMapper.detailNotice(notice_number);
+  }
+
+  // 3. addNotice ----------------------------------------------------------------------------------
   @Override
   public void addNotice(Notice notice) throws Exception {
 
@@ -141,7 +141,7 @@ public class NoticeServiceImpl implements NoticeService {
     noticeMapper.addNotice(notice);
   }
 
-  // 5. updateNotice ------------------------------------------------------------------------------>
+  // 4. updateNotice -------------------------------------------------------------------------------
   @Override
     public void updateNotice(Notice notice, String existingImage) throws Exception {
 
@@ -182,7 +182,7 @@ public class NoticeServiceImpl implements NoticeService {
     noticeMapper.updateNotice(notice);
   }
 
-  // 5-1. updateNoticeCount ----------------------------------------------------------------------->
+  // 4-1. updateNoticeCount ------------------------------------------------------------------------
   @Override
   public void updateNoticeCount(Integer notice_number, HttpSession session) throws Exception {
 
@@ -209,7 +209,7 @@ public class NoticeServiceImpl implements NoticeService {
     }
   }
 
-  // 5-2. updateLike ------------------------------------------------------------------------------>
+  // 4-2. updateLike -------------------------------------------------------------------------------
   @Override
   public void updateLike(Integer notice_number, HttpSession session) throws Exception {
 
@@ -235,7 +235,7 @@ public class NoticeServiceImpl implements NoticeService {
     }
   }
 
-  // 5-3. updateDislike --------------------------------------------------------------------------->
+  // 4-3. updateDislike ----------------------------------------------------------------------------
   @Override
   public void updateDislike(Integer notice_number, HttpSession session) throws Exception {
 
@@ -262,10 +262,19 @@ public class NoticeServiceImpl implements NoticeService {
     }
   }
 
-  // 6. deleteNotice ------------------------------------------------------------------------------>
+  // 5. deleteNotice -------------------------------------------------------------------------------
   @Override
-  public void deleteNotice(Integer notice_number) throws Exception {
+  public Integer deleteNotice(Integer notice_number) throws Exception {
 
-    noticeMapper.deleteNotice(notice_number);
-  }
-}
+    Integer result = 0;
+
+    if (noticeMapper.deleteNotice(notice_number) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
+  };
+};

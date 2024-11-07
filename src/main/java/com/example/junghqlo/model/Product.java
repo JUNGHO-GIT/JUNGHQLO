@@ -1,6 +1,7 @@
 package com.example.junghqlo.model;
 
 import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 import lombok.Data;
 
@@ -10,7 +11,7 @@ public class Product {
   // fields --------------------------------------------------------------------------------------->
   private Integer product_number;
   private String product_name;
-  private String product_details;
+  private String product_detail;
   private Integer product_price;
   private Integer product_stock;
   private String product_company;
@@ -20,11 +21,15 @@ public class Product {
   private MultipartFile product_imgsFile2;
   private String product_imgsUrl1;
   private String product_imgsUrl2;
-  private LocalDateTime product_date;
-  private LocalDateTime product_update;
   // stripe
   private String stripe_id;
   private String stripe_price;
+
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+  private LocalDateTime product_date;
+
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+  private LocalDateTime product_update;
 
   // getter --------------------------------------------------------------------------------------->
   public Integer getProduct_number() {
@@ -33,8 +38,8 @@ public class Product {
   public String getProduct_name() {
     return this.product_name;
   }
-  public String getProduct_details() {
-    return this.product_details;
+  public String getProduct_detail() {
+    return this.product_detail;
   }
   public Integer getProduct_price() {
     return this.product_price;
@@ -83,8 +88,8 @@ public class Product {
   public void setProduct_name(String product_name) {
     this.product_name = product_name;
   }
-  public void setProduct_details(String product_details) {
-    this.product_details = product_details;
+  public void setProduct_detail(String product_detail) {
+    this.product_detail = product_detail;
   }
   public void setProduct_price(Integer product_price) {
     this.product_price = product_price;

@@ -10,29 +10,23 @@ import com.example.junghqlo.model.Orders;
 @Repository
 public class OrdersMapperImpl implements OrdersMapper {
 
-  // 0. constructor injection --------------------------------------------------------------------->
+  // 0. constructor injection ----------------------------------------------------------------------
   SqlSessionTemplate sqlSession;
   OrdersMapperImpl(SqlSessionTemplate sqlSession) {
-  this.sqlSession = sqlSession;
+    this.sqlSession = sqlSession;
   }
 
-  // 1. getOrdersList ----------------------------------------------------------------------------->
-  public List<Orders> getOrdersList(String member_id, String sort) {
+  // 1-1. listOrders ------------------------------------------------------------------------------
+  public List<Orders> listOrders(String member_id, String sort) {
 
     Map<String, String> map = new HashMap<>();
     map.put("member_id", member_id);
     map.put("sort", sort);
 
-    return sqlSession.selectList("getOrdersList", map);
+    return sqlSession.selectList("listOrders", map);
   }
 
-  // 2. getOrdersDetails -------------------------------------------------------------------------->
-  public Orders getOrdersDetails(Integer orders_number) {
-
-    return sqlSession.selectOne("getOrdersDetails", orders_number);
-  }
-
-  // 3. searchOrders ------------------------------------------------------------------------------>
+  // 1-2. searchOrders -----------------------------------------------------------------------------
   public List<Orders> searchOrders(String searchType, String keyword, String member_id)
   throws Exception {
 
@@ -44,23 +38,34 @@ public class OrdersMapperImpl implements OrdersMapper {
     return sqlSession.selectList("searchOrders", map);
   }
 
-  // 3. getStripePrice ---------------------------------------------------------------------------->
+  // 2-1. detailOrders -----------------------------------------------------------------------------
+  public Orders detailOrders(Integer orders_number) {
+
+    return sqlSession.selectOne("detailOrders", orders_number);
+  }
+
+  // 2-2. getStripePrice ---------------------------------------------------------------------------
   @Override
   public String getStripePrice(Integer product_number) {
 
     return sqlSession.selectOne("getStripePrice", product_number);
   }
 
-  // 4. addOrders --------------------------------------------------------------------------------->
+  // 3. addOrders ----------------------------------------------------------------------------------
   @Override
   public void addOrders(Orders orders) {
 
     sqlSession.insert("addOrders", orders);
   }
 
-  // 4-2. successOrders 4-3. failOrders 5. updateOrders
+  // 4-1. updateOrders -----------------------------------------------------------------------------
+  @Override
+  public void updateOrders(Orders orders) {
 
-  // 5-1. updateProductStock ---------------------------------------------------------------------->
+    sqlSession.update("updateOrders", orders);
+  }
+
+  // 4-2. updateProductStock -----------------------------------------------------------------------
   @Override
   public Integer updateProductStock(Integer product_number, Integer product_stock, Integer orders_quantity) {
 
@@ -72,11 +77,19 @@ public class OrdersMapperImpl implements OrdersMapper {
     return sqlSession.update("updateProductStock", map);
   }
 
-  // 6. deleteOrders ------------------------------------------------------------------------------>
+  // 5. deleteOrders -------------------------------------------------------------------------------
   @Override
-  public void deleteOrders(Integer orders_number) {
+  public Integer deleteOrders(Integer orders_number) {
 
-    sqlSession.delete("deleteOrders", orders_number);
+    Integer result = 0;
+
+    if (sqlSession.delete("deleteOrders", orders_number) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
-
 }

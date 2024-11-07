@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- head -->
@@ -7,21 +8,25 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-chalkboard-teacher', text1='Blog', text2='Update')}" />
+  <th:block th:replace="~{layouts/navigation :: navigation (
+    icon = 'fas fa-chalkboard-teacher',
+    text1 = ${PAGE},
+    text2 = ${THEME}
+  )}" />
 
   <!-- main -->
-  <main class="container px-30">
+  <main class="container-fluid px-30">
     <div class="row">
-      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
-    <form th:action="@{/board/updateBoard}" th:method="|POST|" enctype="multipart/form-data">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
+    <form th:action="@{|/board/updateBoard}" th:method="${'POST" enctype="multipart/form-data'}">
 
       <!-- hidden -->
-      <input th:type="|hidden|" th:name="|board_number" th:value="${boardModel.board_number}" th:id="board_number|" readonly/>
-      <input th:type="|hidden|" th:name="|board_writer" th:value="${boardModel.board_writer}" th:id="board_writer|" readonly/>
-      <input th:type="|hidden|" th:name="|board_count" th:value="${boardModel.board_count}" th:id="board_count|" readonly/>
-      <input th:type="|hidden|" th:name="|board_like" th:value="${boardModel.board_like}" th:id="board_like|" readonly/>
-      <input th:type="|hidden|" th:name="|board_dislike" th:value="${boardModel.board_dislike}" th:id="board_dislike|" readonly/>
-      <input th:type="|hidden|" th:name="|board_imgsUrl" th:value="${boardModel.board_imgsUrl}" th:id="board_imgsUrl|" readonly/>
+      <input th:type="${'hidden" th:name="|board_number" th:value="{boardModel.board_number}" th:id="board_number'}" readonly/>
+      <input th:type="${'hidden" th:name="|board_writer" th:value="{boardModel.board_writer}" th:id="board_writer'}" readonly/>
+      <input th:type="${'hidden" th:name="|board_count" th:value="{boardModel.board_count}" th:id="board_count'}" readonly/>
+      <input th:type="${'hidden" th:name="|board_like" th:value="{boardModel.board_like}" th:id="board_like'}" readonly/>
+      <input th:type="${'hidden" th:name="|board_dislike" th:value="{boardModel.board_dislike}" th:id="board_dislike'}" readonly/>
+      <input th:type="${'hidden" th:name="|board_imgsUrl" th:value="{boardModel.board_imgsUrl}" th:id="board_imgsUrl'}" readonly/>
 
       <div class="row">
         <div class="col-lg-6 col-md-6">
@@ -31,7 +36,7 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
                 <p class="p">제목<span>*</span></p>
-                <input th:type="|text|" th:placeholder="|Title" th:name="|board_title" th:value="${boardModel.board_title}" th:id=|"board_title|"/>
+                <input th:type="${'text" th:placeholder="|Title" th:name="|board_title" th:value="{boardModel.board_title}" th:id="board_title|'}"/>
               </div>
             </div>
           </div>
@@ -40,7 +45,7 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
                 <p class="p">내용<span>*</span></p>
-                <textarea th:placeholder="|Contents" th:id="|board_contents" th:name="|board_contents|" th:text=|"${boardModel.board_contents}|">
+                <textarea th:placeholder="${'|Contents" th:id="|board_contents" th:name="board_contents" th:text=|"${boardModel.board_contents}|'}">
                 </textarea>
               </div>
             </div>
@@ -50,18 +55,18 @@
             <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
               <div class="checkout-input">
               <p class="p">기존 이미지<span>*</span></p>
-              <img th:src="${boardModel.board_imgsUrl}" style="width: 150px; height: 150px; border-radius: 10px; box-shadow: 0px 10px 10px rgba(0, 0.5, 0.5, 0.5)()" th:id="|existingImage" th:name="|existingImage" th:value=|"existingImage|"/>
+              <img th:src="${boardModel.board_imgsUrl}" style="width: 150px; height: 150px; border-radius: 10px; box-shadow: 0px 10px 10px rgba(0, 0.5, 0.5, 0.5)()" th:id="${'|existingImage" th:name="existingImage" th:value="existingImage|'}"/>
               </div>
             </div>
             <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
               <div class="checkout-input">
                 <p class="p"> 게시물 이미지<span>*</span></p>
                 <label for="imageFile">선택하기</label>
-                <input th:type="file" th:id="|imageFile" th:name="|board_imgsFile"   style="display:none" class="imageFile" oninput=|"junghoPreview()|"/>
+                <input th:type="${'file" th:id="|imageFile" th:name="board_imgsFile"   style="display:none" class="imageFile" oninput="junghoPreview()|'}"/>
               </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3 mt-3">
-              <button th:type="|submit|" th:onclick="return updateCheck()" class="jungho-button">
+              <button th:type="${'submit" th:onclick="return updateCheck()" class="|jungho-button'}|">
               수정하기
               </button>
             </div>
@@ -72,8 +77,8 @@
           <div class="preview">
             <div class="border-dark justify-content-center">
               <h4 class="order-title mb-4"><i class="fa fa-spinner"></i>&nbsp;Preview</h4>
-              <div class="imageLoader" th:id="|imageLoader|"></div>
-              <img class="imageBox" th:id="|imageBox|"/>
+              <div class="imageLoader" th:id="${'imageLoader'}"></div>
+              <img class="imageBox" th:id="${'imageBox'}"/>
             </div>
           </div>
         </div>

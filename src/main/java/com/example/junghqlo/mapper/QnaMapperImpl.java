@@ -10,77 +10,102 @@ import com.example.junghqlo.model.Qna;
 @Repository
 public class QnaMapperImpl implements QnaMapper {
 
-  // 0. constructor injection --------------------------------------------------------------------->
+  // 0. constructor injection ----------------------------------------------------------------------
   SqlSessionTemplate sqlSession;
   QnaMapperImpl(SqlSessionTemplate sqlSession) {
-  this.sqlSession = sqlSession;
+    this.sqlSession = sqlSession;
   }
 
-  // 1. getQnaList -------------------------------------------------------------------------------->
+  // 1-1. listQna ---------------------------------------------------------------------------------
   @Override
-  public List<Qna> getQnaList(String sort) throws Exception {
+  public List<Qna> listQna(
+    String sort
+  ) throws Exception {
 
-    return sqlSession.selectList("getQnaList", sort);
+    return sqlSession.selectList("listQna", sort);
   }
 
-  // 2. getQnaDetails ----------------------------------------------------------------------------->
+  // 1-2. searchQna -------------------------------------------------------------------------------
   @Override
-  public Qna getQnaDetails(Integer qnd_number) throws Exception {
+  public List<Qna> searchQna(
+    String searchType,
+    String keyword
+  ) throws Exception {
 
-    return sqlSession.selectOne("getQnaDetails", qnd_number);
+    Map<String, Object> map = new HashMap<>();
+    map.put("searchType", searchType);
+    map.put("keyword", keyword);
+
+    return sqlSession.selectList("searchQna", map);
   }
 
-  // 3. searchQna --------------------------------------------------------------------------------->
+  // 2. detailQna ----------------------------------------------------------------------------------
   @Override
-  public List<Qna> searchQna(String searchType, String keyword) throws Exception {
+  public Qna detailQna(
+    Integer qna_number
+  ) throws Exception {
 
-    Map<String, Object> params = new HashMap<>();
-    params.put("searchType", searchType);
-    params.put("keyword", keyword);
-
-    return sqlSession.selectList("searchQna", params);
+    return sqlSession.selectOne("detailQna", qna_number);
   }
 
-  // 4. addQna ------------------------------------------------------------------------------------>
+  // 3. addQna -------------------------------------------------------------------------------------
   @Override
-  public void addQna(Qna qna) throws Exception {
+  public void addQna(
+    Qna qna
+  ) throws Exception {
 
     sqlSession.insert("addQna", qna);
   }
 
-  // 5. updateQna --------------------------------------------------------------------------------->
+  // 4. updateQna ----------------------------------------------------------------------------------
   @Override
-  public void updateQna(Qna qna) throws Exception {
+  public void updateQna(
+    Qna qna
+  ) throws Exception {
 
     sqlSession.update("updateQna", qna);
   }
 
-  // 5-1. updateQnaCount ----------------------------------------------------------------------->
+  // 4-1. updateQnaCount ------------------------------------------------------------------------
   @Override
-  public void updateQnaCount(Integer qna_number) throws Exception {
+  public void updateQnaCount(
+    Integer qna_number
+  ) throws Exception {
 
     sqlSession.update("updateQnaCount", qna_number);
   }
 
-  // 5-2. updateLike ------------------------------------------------------------------------------>
+  // 4-2. updateLike -------------------------------------------------------------------------------
   @Override
-  public void updateLike(Integer qna_number) throws Exception {
+  public void updateLike(
+    Integer qna_number
+  ) throws Exception {
 
     sqlSession.update("updateQnaLike", qna_number);
   }
 
-  // 5-3. updateDislike --------------------------------------------------------------------------->
+  // 4-3. updateDislike ----------------------------------------------------------------------------
   @Override
-  public void updateDislike(Integer qna_number) throws Exception {
+  public void updateDislike(
+    Integer qna_number
+  ) throws Exception {
 
     sqlSession.update("updateQnaDislike", qna_number);
   }
 
-  // 6. deleteQna --------------------------------------------------------------------------------->
+  // 5. deleteQna ----------------------------------------------------------------------------------
   @Override
-  public void deleteQna(Integer qnd_number) throws Exception {
+  public Integer deleteQna(Integer qnd_number) throws Exception {
 
-    sqlSession.delete("deleteQna", qnd_number);
+    Integer result = 0;
+
+    if (sqlSession.delete("deleteQna", qnd_number) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
-
 }

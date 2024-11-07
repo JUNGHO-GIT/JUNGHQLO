@@ -1,6 +1,7 @@
 package com.example.junghqlo.model;
 
 import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 import lombok.Data;
 
@@ -17,7 +18,11 @@ public class Notice {
   private Integer notice_dislike;
   private MultipartFile notice_imgsFile;
   private String notice_imgsUrl;
+
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
   private LocalDateTime notice_date;
+
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
   private LocalDateTime notice_update;
 
   // getter --------------------------------------------------------------------------------------->

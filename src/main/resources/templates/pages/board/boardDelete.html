@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- head -->
@@ -7,17 +8,21 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-chalkboard-teacher', text1='Blog', text2='Delete')}" />
+  <th:block th:replace="~{layouts/navigation :: navigation (
+    icon = 'fas fa-chalkboard-teacher',
+    text1 = ${PAGE},
+    text2 = ${THEME}
+  )}" />
 
   <!-- main -->
-  <main class="container px-30">
+  <main class="container-fluid px-30">
     <div class="row">
-      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
-    <form th:action="@{/board/deleteBoard}" th:method="|POST|" enctype="multipart/form-data">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
+    <form th:action="@{|/board/deleteBoard}" th:method="${'POST" enctype="multipart/form-data'}">
 
       <!-- hidden -->
-      <input th:type="|hidden|" th:name="|board_number" th:value="${boardModel.board_number}" th:id="board_number|"/>
-      <input th:type="|hidden|" th:name="|board_writer" th:value="${boardModel.board_writer}" th:id="board_writer|" disabled readonly>
+      <input th:type="${'hidden" th:name="|board_number" th:value="{boardModel.board_number}" th:id="board_number'}"/>
+      <input th:type="${'hidden" th:name="|board_writer" th:value="{boardModel.board_writer}" th:id="board_writer'}" disabled readonly>
 
       <div class="row">
         <div class="col-lg-6 col-md-6">
@@ -30,7 +35,7 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
                 <p class="p">제목<span>*</span></p>
-                <input th:type="|text|" th:placeholder="|Title" th:name="|board_title" th:value="${boardModel.board_title}" th:id=|"board_title|" disabled readonly>
+                <input th:type="${'text" th:placeholder="|Title" th:name="|board_title" th:value="{boardModel.board_title}" th:id="board_title|'}" disabled readonly>
               </div>
             </div>
           </div>
@@ -39,7 +44,7 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="checkout-input">
                 <p class="p">내용<span>*</span></p>
-                <textarea th:placeholder="|Contents" th:id="|board_contents" th:name="|board_contents|" th:text=|"${boardModel.board_contents}|" disabled readonly>
+                <textarea th:placeholder="${'|Contents" th:id="|board_contents" th:name="board_contents" th:text=|"${boardModel.board_contents}|'}" disabled readonly>
                 </textarea>
               </div>
             </div>
@@ -49,7 +54,7 @@
             <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
               <div class="checkout-input">
               <p class="p">기존 이미지<span>*</span></p>
-              <img th:src="${boardModel.board_imgsUrl}" style="width: 150px; height: 150px; border-radius: 10px; box-shadow: 0px 10px 10px rgba(0, 0.5, 0.5, 0.5)()" th:id="|existingImage" th:name="|existingImage" th:value=|"existingImage|"
+              <img th:src="${boardModel.board_imgsUrl}" style="width: 150px; height: 150px; border-radius: 10px; box-shadow: 0px 10px 10px rgba(0, 0.5, 0.5, 0.5)()" th:id="${'|existingImage" th:name="existingImage" th:value="existingImage|'}"
               readonly/>
               </div>
             </div>
@@ -57,11 +62,11 @@
               <div class="checkout-input">
                 <p class="p"> 게시물 이미지<span>*</span></p>
                 <label for="board_imgsFile">선택하기</label>
-                <input th:type="file" th:id="|board_imgsFile" th:name="|board_imgsFile"  style="display:none" class="imageFile" oninput=|"junghoPreview()|" readonly disabled/>
+                <input th:type="${'file" th:id="|board_imgsFile" th:name="board_imgsFile"  style="display:none" class="imageFile" oninput="junghoPreview()|'}" readonly disabled/>
               </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3 mt-3">
-              <button th:type="|submit|" th:onclick="return deleteCheck()" class="jungho-button">
+              <button th:type="${'submit" th:onclick="return deleteCheck()" class="|jungho-button'}|">
               삭제하기
               </button>
             </div>
@@ -72,8 +77,8 @@
           <div class="preview">
             <div class="border-dark justify-content-center">
               <h4 class="order-title mb-4"><i class="fa fa-spinner"></i>&nbsp;Preview</h4>
-              <div class="imageLoader" th:id="|imageLoader|"></div>
-              <img class="imageBox" th:id="|imageBox|"/>
+              <div class="imageLoader" th:id="${'imageLoader'}"></div>
+              <img class="imageBox" th:id="${'imageBox'}"/>
             </div>
           </div>
         </div>

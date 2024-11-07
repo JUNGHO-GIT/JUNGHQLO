@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+  <!-- head -->
+  <th:block th:replace="~{layouts/head :: head}" />
+
+  <!-- header -->
+  <th:block th:replace="~{layouts/header :: header}" />
+
+  <!-- navigation -->
+  <th:block th:replace="~{layouts/navigation :: navigation (
+    icon = 'fas fa-bell',
+    text1 = ${PAGE},
+    text2 = ${THEME}
+  )}" />
+
+  <!-- main -->
+  <main class="container-fluid px-30">
+    <div class="row">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
+        <!-- form -->
+        <form
+          th:method="${'GET'}"
+          th:class="${'empty-form'}"
+          th:onsubmit="|event.preventDefault()|"
+        >
+          <!-- detail -->
+          <div class="row mb-20">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="border-1 radius-2 shadow-1 px-20 py-40">
+                <!-- title -->
+                <div class="row">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-center">
+                      <div
+                        th:id="${'notice_title'}"
+                        th:name="${'notice_title'}"
+                        th:value="${MODEL['notice_title']}"
+                        th:text="${MODEL['notice_title']}"
+                        th:class="${'fs-1-8rem fw-800 light-black'}"
+                      >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- hr -->
+                <hr class="mt-30 mb-30 bg-burgundy h-1" />
+                <!-- image -->
+                <div class="row">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-center">
+                    <img
+                      th:src="${MODEL['notice_imgsUrl']}"
+                      th:alt="${MODEL['notice_title']}"
+                      th:class="${'w-70p object-cover'}"
+                    />
+                  </div>
+                </div>
+                <!-- hr -->
+                <hr class="mt-30 mb-30 bg-grey h-1" />
+                <!-- content -->
+                <div class="row">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <textarea
+                      th:id="${'notice_contents'}"
+                      th:name="${'notice_contents'}"
+                      th:text="${MODEL['notice_contents']}"
+                      th:class="${'form-control fs-1-2rem fw-400 h-40vh border-0 lh-1-7'}"
+                    ></textarea>
+                  </div>
+                </div>
+                <!-- hr -->
+                <hr class="mt-30 mb-30 bg-grey h-1" />
+                <!-- like && dislike && count -->
+                <div class="row mb-30">
+                  <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-row-left">
+                    <div class="d-row-center me-1vw">
+                      <i th:class="${'fa fa-thumbs-up fs-1-0rem me-10 navy'}"></i>
+                      <div
+                        th:id="${'notice_like'}"
+                        th:name="${'notice_like'}"
+                        th:value="${MODEL['notice_like']}"
+                        th:text="${MODEL['notice_like']}"
+                        th:class="${'fs-1-0rem fw-600 dark'}"
+                      >
+                      </div>
+                    </div>
+                    <div class="d-row-center ms-1vw">
+                      <i th:class="${'fa fa-thumbs-down fs-1-0rem me-10 burgundy'}"></i>
+                      <div
+                        th:id="${'notice_dislike'}"
+                        th:name="${'notice_dislike'}"
+                        th:value="${MODEL['notice_dislike']}"
+                        th:text="${MODEL['notice_dislike']}"
+                        th:class="${'fs-1-0rem fw-600 dark'}"
+                      >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                    <div class="d-row-right">
+                      <i th:class="${'fa fa-eye fs-1-0rem me-10 secondary'}"></i>
+                      <div
+                        th:id="${'notice_count'}"
+                        th:name="${'notice_count'}"
+                        th:value="${MODEL['notice_count']}"
+                        th:text="${MODEL['notice_count']}"
+                        th:class="${'fs-1-0rem fw-600 dark'}"
+                      >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- date && writer -->
+                <div class="row">
+                  <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="d-row-left">
+                      <i th:class="${'fa fa-calendar fs-1-0rem me-10'}"></i>
+                      <div
+                        th:id="${'notice_date'}"
+                        th:name="${'notice_date'}"
+                        th:value="${MODEL['notice_date']}"
+                        th:class="${'fs-1-0rem fw-600 dark'}"
+                        th:text="${#strings.substring((MODEL['notice_update'] != null ? MODEL['notice_update'] : MODEL['notice_date']), 0, 10)}"
+                      >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="d-row-right">
+                      <i th:class="${'fa fa-user fs-1-0rem me-10'}"></i>
+                      <div
+                        th:id="${'notice_writer'}"
+                        th:name="${'notice_writer'}"
+                        th:value="${MODEL['notice_writer']}"
+                        th:text="${MODEL['notice_writer']}"
+                        th:class="${'fs-1-0rem fw-600 dark'}"
+                      >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- hr -->
+          <hr class="mt-20 mb-20" />
+          <!-- button -->
+          <div class="row d-row-center">
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+              <button
+                th:type="${'button'}"
+                th:class="${'btn btn-dark w-90p'}"
+                th:onclick="|goUpdate()|"
+              >
+                수정
+              </button>
+            </div>
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+              <button
+                th:type="${'button'}"
+                th:class="${'btn btn-danger w-90p'}"
+                th:onclick="|getDelete()|"
+              >
+                삭제
+              </button>
+            </div>
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+              <button
+                th:type="${'button'}"
+                th:class="${'btn btn-secondary w-90p'}"
+                th:onclick="|location.href='@{|/${page}/list${PAGE}|}'|"
+              >
+                목록
+              </button>
+            </div>
+          </div>
+          <!-- hidden -->
+          <div class="hidden-wrapper">
+            <input
+              th:type="${'hidden'}"
+              th:id="${'sessionId'}"
+              th:name="${'sessionId'}"
+              th:value="${session.member_id}"
+            />
+            <input
+              th:type="${'hidden'}"
+              th:id="${'writerId'}"
+              th:name="${'writerId'}"
+              th:value="${MODEL['notice_writer']}"
+            />
+            <input
+              th:type="${'hidden'}"
+              th:id="${'uniqueNumber'}"
+              th:name="${'notice_number'}"
+              th:value="${MODEL['notice_number']}"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- fake pagination -->
+  <th:block th:replace="~{components/pagination :: fake-pagination}" />
+
+  <!-- footer -->
+  <th:block th:replace="~{layouts/footer :: footer}" />
+
+</html>

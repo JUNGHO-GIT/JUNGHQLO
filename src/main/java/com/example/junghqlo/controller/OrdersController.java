@@ -3,8 +3,6 @@ package com.example.junghqlo.controller;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +25,7 @@ import com.stripe.param.checkout.SessionCreateParams;
 @RequestMapping("/orders")
 public class OrdersController {
 
-  // 0. constructor injection --------------------------------------------------------------------->
+  // 0. constructor injection ----------------------------------------------------------------------
   private OrdersService ordersService;
   private ProductService productService;
   OrdersController(OrdersService ordersService, ProductService productService) {
@@ -36,22 +34,21 @@ public class OrdersController {
   }
 
   // 0. static -------------------------------------------------------------------------------------
-  private static String PAGE = "orders";
-  private static String PAGE_UP = "Orders";
-  private static Orders MODEL = new Orders();
-  private static List<Orders> LIST = new ArrayList<>();
+  private static String page = "orders";
+  private static String PAGE = "Orders";
 
-  // 1. getOrdersList (GET) ----------------------------------------------------------------------->
-  @GetMapping("/getOrdersList")
-  public String getOrdersList (
-    @RequestParam(required=false) String sort,
-    @RequestParam(defaultValue="1") Integer pageNumber,
-    @RequestParam(defaultValue="9") Integer itemsPer,
-    Model model,
-    Orders orders,
-    HttpSession session
+  // 1-1. listOrders (GET) -------------------------------------------------------------------------
+  @GetMapping("/listOrders")
+  public String listOrders(
+    @ModelAttribute Orders orders,
+    @RequestParam(defaultValue = "default") String sort,
+    @RequestParam(defaultValue = "1") Integer pageNumber,
+    @RequestParam(defaultValue = "9") Integer itemsPer,
+    HttpSession session,
+    Model model
   ) throws Exception {
 
+    // sort order
     if (sort == null || sort.equals("default")) {
       sort="orders_number DESC";
     }
@@ -75,80 +72,82 @@ public class OrdersController {
     }
 
     String member_id = (String) session.getAttribute("member_id");
-
-    PageHandler<Orders> page
-    = ordersService.getOrdersList(pageNumber, itemsPer, member_id, sort,  orders);
-
-    LIST = page.getContent();
+    PageHandler<Orders> pageHandler = (
+      ordersService.listOrders(pageNumber, itemsPer, member_id, sort, orders)
+    );
 
     // 주문내역이 있는경우
-    if (LIST != null && LIST.size() > 0) {
+    if (pageHandler.getContent() != null) {
       model.addAttribute("sort", sort);
-      model.addAttribute("page", page);
-      model.addAttribute("LIST", LIST);
-      return MessageFormat.format("/pages/{0}/{1}List", PAGE, PAGE);
+      model.addAttribute("pageHandler", pageHandler);
+      model.addAttribute("LIST", pageHandler.getContent());
+      return MessageFormat.format("/pages/{0}/{1}List", page, page);
     }
 
     // 주문내역이 없는경우
     else {
-      return MessageFormat.format("/pages/{0}/{1}ListEmpty", PAGE, PAGE);
+      return MessageFormat.format("/pages/{0}/{1}ListEmpty", page, page);
     }
   }
 
-  // 2. getOrdersDetails (GET) -------------------------------------------------------------------->
-  @GetMapping("/getOrdersDetails")
-  public String getOrdersDetails (
-    @ModelAttribute Orders orders,
-    @RequestParam Integer orders_number,
-    HttpSession session,
-    Model model
-  ) throws Exception {
-
-    MODEL = ordersService.getOrdersDetails(orders_number);
-
-    // 모델
-    model.addAttribute("MODEL", MODEL);
-    model.addAttribute("member_id", session.getAttribute("member_id"));
-
-    return MessageFormat.format("/pages/{0}/{1}Details", PAGE, PAGE);
-  }
-
-  // 3. searchOrders (GET) ------------------------------------------------------------------------>
+  // 1-2. searchOrders (GET) -----------------------------------------------------------------------
   @GetMapping("/searchOrders")
   public String searchOrders(
     @ModelAttribute Orders orders,
-    @RequestParam(required=false) String sort,
-    @RequestParam(defaultValue="1") Integer pageNumber,
-    @RequestParam(defaultValue="9") Integer itemsPer,
+    @RequestParam(defaultValue = "default") String sort,
+    @RequestParam(defaultValue = "1") Integer pageNumber,
+    @RequestParam(defaultValue = "9") Integer itemsPer,
     @RequestParam String searchType,
     @RequestParam String keyword,
     HttpSession session,
     Model model
   ) throws Exception {
 
+    // searchType order
     if (searchType == null || keyword == null) {
-      return MessageFormat.format("redirect:/{0}/get{1}List", PAGE, PAGE_UP);
+      return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
     }
     else if(searchType.equals("name")) {
       searchType="product_name";
     }
 
     String member_id = (String) session.getAttribute("member_id");
-
-    PageHandler<Orders> page
-    = ordersService.searchOrders(pageNumber, itemsPer, keyword, searchType, member_id, orders);
-
-    LIST = page.getContent();
+    PageHandler<Orders> pageHandler = (
+      ordersService.searchOrders(pageNumber, itemsPer, searchType, keyword, member_id, orders)
+    );
 
     // 모델
     model.addAttribute("sort", sort);
-    model.addAttribute("page", page);
-    model.addAttribute("LIST", LIST);
+    model.addAttribute("pageHandler", pageHandler);
+    model.addAttribute("LIST", pageHandler.getContent());
 
-    return MessageFormat.format("/pages/{0}/{1}Search", PAGE, PAGE);
+    return MessageFormat.format("/pages/{0}/{1}List", page, page);
   }
 
-  // 4. addOrders (POST) -------------------------------------------------------------------------->
+  // 2. detailOrders(GET) --------------------------------------------------------------------------
+  @GetMapping("/detailOrders")
+  public String detailOrders(
+    @ModelAttribute Orders orders,
+    @RequestParam Integer orders_number,
+    HttpSession session,
+    Model model
+  ) throws Exception {
+
+    // 모델
+    model.addAttribute("MODEL", ordersService.detailOrders(orders_number));
+    model.addAttribute("member_id", session.getAttribute("member_id"));
+
+    return MessageFormat.format("/pages/{0}/{1}Detail", page, page);
+  }
+
+  // 3. addOrders (GET) ----------------------------------------------------------------------------
+  @GetMapping("/addOrders")
+  public String addOrders() throws Exception {
+
+    return MessageFormat.format("/pages/{0}/{1}Add", page, page);
+  }
+
+  // 3. addOrders (POST) ---------------------------------------------------------------------------
   @PostMapping("/addOrders")
   public RedirectView addOrders (
     @ModelAttribute Orders orders,
@@ -164,7 +163,7 @@ public class OrdersController {
     String member_id = (String) httpSession.getAttribute("member_id");
 
     // 전체 금액 계산
-    Product product = productService.getProductDetails(product_number);
+    Product product = productService.detailProduct(product_number);
     Integer totalPrice = product.getProduct_price() * orders_quantity.intValue();
 
     // orders 객체에 값 삽입
@@ -209,7 +208,7 @@ public class OrdersController {
     return new RedirectView(session.getUrl());
   }
 
-  // 4-2. successOrders (GET) -------------------------------------------------------------------->
+  // 4-2. successOrders (GET) ----------------------------------------------------------------------
   @GetMapping("/successOrders")
   public String successOrders (
     @RequestParam String session_id,
@@ -247,14 +246,14 @@ public class OrdersController {
       Integer.parseInt(orders_quantity)
     );
 
-    return MessageFormat.format("/pages/{0}/{1}Success", PAGE, PAGE);
+    return MessageFormat.format("/pages/{0}/{1}Success", page, page);
   }
 
-  // 4-3. failOrders (GET) ------------------------------------------------------------------------>
+  // 4-3. failOrders (GET) -------------------------------------------------------------------------
   @GetMapping("/failOrders")
   public String failOrders () throws Exception {
 
-    return MessageFormat.format("/pages/{0}/{1}Fail", PAGE, PAGE);
+    return MessageFormat.format("/pages/{0}/{1}Fail", page, page);
   }
 
 }

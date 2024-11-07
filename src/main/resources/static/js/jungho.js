@@ -13,7 +13,6 @@
       element && (element.innerText = numberWithCommas(randomPrice));
     });
   }
-
   document.addEventListener("DOMContentLoaded", function() {
     const priceIds = Array.from({ length: 8 }, (_, i) => `price-${i + 1}`);
     setRandomPrice(priceIds);
@@ -46,92 +45,10 @@ function adminAlert() {
   return false;
 };
 
-/** ----------------------------------------------------------------------------------------------->
-* @desc 수정 알림
-**/
-function updateAlert() {
-
-  const sessionId = getValue(getById("sessionId"));
-  const writerId = getValue(getById("writerId"));
-  const uniqueNumber = getValue(getById("uniqueNumber"));
-  const subFix = getName(getById("uniqueNumber"));
-
-  const preFix1 = subFix.split("_")[0];
-  const preFix2 = preFix1.charAt(0).toUpperCase() + preFix1.slice(1);
-
-  if (sessionId != writerId || sessionId == null) {
-    alert("본인만 수정 가능합니다.");
-    return false;
-  }
-  else {
-    location.href = (
-      `/JUNGHQLO/${preFix1}/update${preFix2}?${preFix1}_number=${uniqueNumber}`
-    );
-    return true;
-  }
-};
-
-/** ----------------------------------------------------------------------------------------------->
-* @desc 수정 확인
-**/
-function updateCheck() {
-  const userConfirm = confirm("정말 수정하시겠습니까?");
-  if (userConfirm == true) {
-    return true;
-  }
-  else {
-    alert("수정이 취소되었습니다.");
-    return false;
-  }
-};
-
-/** ----------------------------------------------------------------------------------------------->
-* @desc 삭제 알림
-**/
-function deleteAlert() {
-
-  const sessionId = getValue(getById("sessionId"));
-  const writerId = getValue(getById("writerId"));
-  const uniqueNumber = getValue(getById("uniqueNumber"));
-  const subFix = getName(getById("uniqueNumber"));
-
-  const preFix1 = subFix.split("_")[0];
-  const preFix2 = preFix1.charAt(0).toUpperCase() + preFix1.slice(1);
-
-  if (sessionId != writerId || sessionId == null) {
-    alert("본인만 삭제 가능합니다.");
-    return false;
-  }
-  else {
-    location.href = (
-      `/JUNGHQLO/${preFix1}/delete${preFix2}?${preFix1}_number=${uniqueNumber}`
-    );
-    return true;
-  }
-};
-
-/** ----------------------------------------------------------------------------------------------->
-* @desc 삭제 확인
-**/
-function deleteCheck() {
-  const userConfirm = confirm("정말 삭제하시겠습니까?");
-  if (userConfirm == true) {
-    return true;
-  }
-  else {
-    alert("삭제가 취소되었습니다.");
-    window.history.back();
-    return false;
-  }
-};
-
 /** ---------------------------------------------------------------------------------------------->
 * @desc 랜덤 이미지
 **/
 function randomSideImage() {
-  /**
-  * @param {HTMLElement} element
-  **/
   function setImageURL(element) {
     let usedValues = [0];
     let randomValue = Math.random() * 35 + 1;
@@ -144,7 +61,7 @@ function randomSideImage() {
     }
     usedValues.push(intValue);
 
-    finalImageUrl = `https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/product/all/product-${intValue}.jpg`;
+    finalImageUrl = `${STORAGE}/product/all/product-${intValue}.jpg`;
 
     const bgElement = element.getElementsByClassName('set-bg')[0];
     if (bgElement instanceof HTMLElement) {
@@ -193,11 +110,8 @@ function likeButton() {
   document.addEventListener('DOMContentLoaded', likeButton);
 
   $.ajax({
-    url: `/JUNGHQLO/${preFix1}/updateLike?${preFix1}_number=${uniqueNumber}`,
+    url: `/${TITLE}/${preFix1}/updateLike?${preFix1}_number=${uniqueNumber}`,
     type: "GET",
-    /**
-    * @param {any} response
-    **/
     success: function(response) {
       if(response == 200) {
         window.location.reload();
@@ -243,11 +157,8 @@ function dislikeButton() {
   document.addEventListener('DOMContentLoaded', dislikeButton);
 
   $.ajax({
-    url: `/JUNGHQLO/${preFix1}/updateDislike?${preFix1}_number=${uniqueNumber}`,
+    url: `/${TITLE}/${preFix1}/updateDislike?${preFix1}_number=${uniqueNumber}`,
     type: "GET",
-    /**
-    * @param {any} response
-    **/
     success: function(response) {
       if(response == 200) {
         window.location.reload();
@@ -259,7 +170,7 @@ function dislikeButton() {
   });
 };
 
-// 0. slider -------------------------------------------------------------------------------------->
+// 0. slider ---------------------------------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", function() {
   $('.slider').slick({
     infinite: true,
@@ -273,7 +184,7 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 
-// 0. searchForm ---------------------------------------------------------------------------------->
+// 0. searchForm -----------------------------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", function() {
   const searchIcon = document.getElementById("searchIcon");
   const hiddenSubmit = document.getElementById("hiddenSubmit");

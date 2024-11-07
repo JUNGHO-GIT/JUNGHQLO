@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- head -->
@@ -7,17 +8,21 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-user-cog', text1='Member', text2='Details')}" />
+  <th:block th:replace="~{layouts/navigation :: navigation (
+    icon = 'fas fa-user-cog',
+    text1 = ${PAGE},
+    text2 = ${THEME}
+  )}" />
 
   <!-- main -->
-  <main class="container px-30">
+  <main class="container-fluid px-30">
     <div class="row">
-      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
         <!-- hidden -->
         <input
-          th:type="|hidden|"
-          th:name="|member_number|"
-          th:id="|member_number|"
+          th:type="${'hidden'}"
+          th:name="${'member_number'}"
+          th:id="${'member_number'}"
           th:value="${memberModel.member_number}"
         />
         <!-- title -->
@@ -41,12 +46,12 @@
             </div>
             <input
               readonly
-              th:type="|text|"
-              th:name="|member_id|"
-              th:id="|member_id|"
-              th:placeholder="|ID|"
+              th:type="${'text'}"
+              th:name="${'member_id'}"
+              th:id="${'member_id'}"
+              th:placeholder="${'ID'}"
               th:value="${memberModel.member_id}"
-              th:class="|form-control|"
+              th:class="${'form-control'}"
             />
           </div>
         </div>
@@ -63,11 +68,11 @@
             </div>
             <input
               readonly
-              th:type="|password|"
-              th:id="|member_pw|"
-              th:name="|member_pw|"
+              th:type="${'password'}"
+              th:id="${'member_pw'}"
+              th:name="${'member_pw'}"
               th:value="${memberModel.member_pw}"
-              th:class="|form-control|"
+              th:class="${'form-control'}"
             />
           </div>
         </div>
@@ -84,11 +89,11 @@
             </div>
             <input
               readonly
-              th:type="|text|"
-              th:id="|member_name|"
-              th:name="|member_name|"
+              th:type="${'text'}"
+              th:id="${'member_name'}"
+              th:name="${'member_name'}"
               th:value="${memberModel.member_name}"
-              th:class="|form-control|"
+              th:class="${'form-control'}"
             />
           </div>
         </div>
@@ -105,11 +110,11 @@
             </div>
             <input
               readonly
-              th:type="|text|"
-              th:id="|member_phone|"
-              th:name="|member_phone|"
+              th:type="${'text'}"
+              th:id="${'member_phone'}"
+              th:name="${'member_phone'}"
               th:value="${memberModel.member_phone}"
-              th:class="|form-control|"
+              th:class="${'form-control'}"
             />
           </div>
         </div>
@@ -126,11 +131,11 @@
             </div>
             <input
               readonly
-              th:type="|email|"
-              th:name="|email_front|"
-              th:id="|email_front|"
+              th:type="${'email'}"
+              th:name="${'email_front'}"
+              th:id="${'email_front'}"
               th:value="${memberModel.member_email}"
-              th:class="|form-control|"
+              th:class="${'form-control'}"
             />
           </div>
         </div>
@@ -147,11 +152,11 @@
             </div>
             <input
               readonly
-              th:type="|text|"
-              th:name="|member_date|"
-              th:id="|member_date|"
+              th:type="${'text'}"
+              th:name="${'member_date'}"
+              th:id="${'member_date'}"
               th:value="${memberModel.member_update != null ? memberModel.member_update+'(수정)' : memberModel.member_date+'(최초)'}"
-              th:class="|form-control|"
+              th:class="${'form-control'}"
             />
           </div>
         </div>
@@ -168,11 +173,11 @@
             </div>
             <input
               readonly
-              th:type="|text|"
-              th:name="|member_address1|"
-              th:id="|member_address1|"
+              th:type="${'text'}"
+              th:name="${'member_address1'}"
+              th:id="${'member_address1'}"
               th:value="${memberModel.member_address1}"
-              th:class="|form-control|"
+              th:class="${'form-control'}"
             />
           </div>
         </div>
@@ -189,11 +194,11 @@
             </div>
             <input
               readonly
-              th:type="|text|"
-              th:name="|member_address2|"
-              th:id="|member_address2|"
+              th:type="${'text'}"
+              th:name="${'member_address2'}"
+              th:id="${'member_address2'}"
               th:value="${memberModel.member_address2}"
-              th:class="|form-control|"
+              th:class="${'form-control'}"
             />
           </div>
         </div>
@@ -204,7 +209,7 @@
           <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-row-right">
             <div
               class="fs-0-9rem fw-700 light-black hover"
-              th:onclick="'location.href=\'' + @{/member/updateMember} + '\''"
+              th:onclick="|'location.href=\'' + @{/member/updateMember} + '\''|"
             >
               회원정보 수정
             </div>
@@ -212,7 +217,7 @@
           <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-row-center">
             <div
               class="fs-0-9rem fw-700 light-black hover"
-              th:onclick="'location.href=\'' + @{/member/updateMemberPw} + '\''"
+              th:onclick="|'location.href=\'' + @{/member/updateMemberPw} + '\''|"
             >
               비밀번호 수정
             </div>
@@ -220,7 +225,7 @@
           <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-row-left">
             <div
               class="fs-0-9rem fw-700 burgundy hover"
-              th:onclick="'location.href=\'' + @{/member/deleteMember?member_number={member_number}(member_number=${memberModel.member_number})} + '\''"
+              th:onclick="|'location.href=\'' + @{/member/deleteMember?member_number={member_number}(member_number=${memberModel.member_number})} + '\''|"
             >
               회원 탈퇴
             </div>

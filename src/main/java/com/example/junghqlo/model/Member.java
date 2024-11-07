@@ -1,6 +1,7 @@
 package com.example.junghqlo.model;
 
 import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 import lombok.Data;
 
 @Data
@@ -16,9 +17,13 @@ public class Member {
 	private String member_address1;
 	private String member_address2;
 	private Integer member_agree;
-  private LocalDateTime member_date;
-  private LocalDateTime member_update;
   private String email_code;
+
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+  private LocalDateTime member_date;
+
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+  private LocalDateTime member_update;
 
   // getter --------------------------------------------------------------------------------------->
   public String getMember_phone() {

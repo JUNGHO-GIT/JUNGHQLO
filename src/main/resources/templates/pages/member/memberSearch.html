@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- head -->
@@ -7,12 +8,16 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-user-cog', text1='Member', text2='Search')}" />
+  <th:block th:replace="~{layouts/navigation :: navigation (
+    icon = 'fas fa-user-cog',
+    text1 = ${PAGE},
+    text2 = ${THEME}
+  )}" />
 
   <!-- main -->
-  <main class="container px-30">
+  <main class="container-fluid px-30">
     <div class="row">
-      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
         <!-- title -->
         <div class="row d-row-center mb-20">
           <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -25,16 +30,16 @@
         <div class="row mb-20">
           <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
             <form
-              th:method="|GET|"
-              th:action="@{/member/getMemberList}"
+              th:method="${'GET'}"
+              th:action="@{|/member/listMember}"
               th:onchange="|this.submit()|"
-              th:class="|d-row-left w-90p|"
+              th:class="${'d-row-left w-90p'}"
             >
               <i
-                th:id="|sortIcon|"
-                th:class="|fas fa-sort-amount-down fa-lg me-10|"
+                th:id="${'sortIcon'}"
+                th:class="${'fas fa-sort-amount-down fa-lg me-10'}"
               ></i>
-              <select name="sort" class="form-control">
+              <select name="sort" class="form-control w-50p">
                 <option value="default">정렬</option>
                 <option value="idASC">아이디순(오름차순)</option>
                 <option value="idDESC">아이디순(내림차순)</option>
@@ -47,31 +52,31 @@
           </div>
           <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
             <form
-              th:id="|searchForm|"
-              th:method="|GET|"
-              th:action="@{/member/searchMember}"
-              th:class="|d-row-right|"
+              th:id="${'searchForm'}"
+              th:method="${'GET'}"
+              th:action="@{|/member/searchMember}"
+              th:class="${'d-row-right'}"
             >
               <select class="form-control" name="searchType">
                 <option value="id">아이디</option>
                 <option value="name">이름</option>
               </select>
               <input
-                th:type="|search|"
-                th:id="|keyword|"
-                th:name="|keyword|"
-                th:placeholder="|search|"
-                th:class="|form-control ms-10|"
+                th:type="${'search'}"
+                th:id="${'keyword'}"
+                th:name="${'keyword'}"
+                th:placeholder="${'search'}"
+                th:class="${'form-control ms-10'}"
               />
               <i
-                th:id="|searchIcon|"
-                th:class="|fas fa-search fa-lg ms-10|"
+                th:id="${'searchIcon'}"
+                th:class="${'fas fa-search fa-lg ms-10 pointer'}"
               ></i>
               <button
-                th:type="|submit|"
-                th:id="|hiddenSubmit|"
-                th:name="|hiddenSubmit|"
-                th:class="|hiddenSubmit d-none|"
+                th:type="${'submit'}"
+                th:id="${'hiddenSubmit'}"
+                th:name="${'hiddenSubmit'}"
+                th:class="${'hiddenSubmit d-none'}"
               ></button>
             </form>
           </div>
@@ -85,26 +90,26 @@
                 <div class="d-row-left w-100p mb-20">
                   <img
                     th:src="@{|${STORAGE}/icon/logo.png|}"
-                    th:loading="|lazy|"
-                    th:alt="|logo|"
-                    th:width="|30px|"
-                    th:height="|30px|"
-                    th:class="|radius-2 me-10|"
+                    th:loading="${'lazy'}"
+                    th:alt="${'logo'}"
+                    th:width="${'30px'}"
+                    th:height="${'30px'}"
+                    th:class="${'radius-2 me-10'}"
                   />
                   <div
-                    th:id="|member_name|"
-                    th:name="|member_name|"
+                    th:id="${'member_name'}"
+                    th:name="${'member_name'}"
                     th:value="${member.member_name}"
-                    th:class="|fs-1-2rem fw-700 burgundy hover|"
-                    th:onclick="|location.href='@{/member/viewMemberDetails(member_number=${member.member_number})}'|"
+                    th:class="${'fs-1-2rem fw-700 burgundy hover'}"
+                    th:onclick="|location.href='@{/member/detailMember(member_number=${member.member_number})}'|"
                     th:text="${member.member_name}"
                   >
                   </div>
                   <div
-                    th:id="|member_number|"
-                    th:name="|member_number|"
+                    th:id="${'member_number'}"
+                    th:name="${'member_number'}"
                     th:value="${member.member_number}"
-                    th:class="|fs-0-9rem fw-600 grey ms-auto|"
+                    th:class="${'fs-0-9rem fw-600 grey ms-auto'}"
                     th:text="${member.member_number}"
                   >
                   </div>
@@ -112,66 +117,66 @@
                 <!-- ID -->
                 <div class="d-row-left w-100p mb-10">
                   <div
-                    th:id="|member_id|"
-                    th:name="|member_id|"
+                    th:id="${'member_id'}"
+                    th:name="${'member_id'}"
                     th:value="${member.member_id}"
-                    th:class="|fs-0-9rem fw-600 light-black|"
-                    th:text="'-   ' + ${member.member_id}"
+                    th:class="${'fs-0-9rem fw-600 light-black'}"
+                    th:text="${''-   ' + ${member.member_id}'}"
                   >
                   </div>
                 </div>
                 <!-- PW -->
                 <div class="d-row-left w-100p mb-10">
                   <div
-                    th:id="|member_pw|"
-                    th:name="|member_pw|"
+                    th:id="${'member_pw'}"
+                    th:name="${'member_pw'}"
                     th:value="${member.member_pw}"
-                    th:class="|fs-0-9rem fw-600 light-black|"
-                    th:text="'-   ' + ${member.member_pw}"
+                    th:class="${'fs-0-9rem fw-600 light-black'}"
+                    th:text="${''-   ' + ${member.member_pw}'}"
                   >
                   </div>
                 </div>
                 <!-- email -->
                 <div class="d-row-left w-100p mb-10">
                   <div
-                    th:id="|member_email|"
-                    th:name="|member_email|"
+                    th:id="${'member_email'}"
+                    th:name="${'member_email'}"
                     th:value="${member.member_email}"
-                    th:class="|fs-0-9rem  fw-600 light-black|"
-                    th:text="'-   ' + ${member.member_email}"
+                    th:class="${'fs-0-9rem  fw-600 light-black'}"
+                    th:text="${''-   ' + ${member.member_email}'}"
                   >
                   </div>
                 </div>
                 <!-- phone -->
                 <div class="d-row-left w-100p mb-10">
                   <div
-                    th:id="|member_phone|"
-                    th:name="|member_phone|"
+                    th:id="${'member_phone'}"
+                    th:name="${'member_phone'}"
                     th:value="${member.member_phone}"
-                    th:class="|fs-0-9rem fw-600 light-black|"
-                    th:text="'-   ' + ${member.member_phone}"
+                    th:class="${'fs-0-9rem fw-600 light-black'}"
+                    th:text="${''-   ' + ${member.member_phone}'}"
                   >
                   </div>
                 </div>
                 <!-- address 1 -->
                 <div class="d-row-left w-100p mb-10">
                   <div
-                    th:id="|member_address1|"
-                    th:name="|member_address1|"
+                    th:id="${'member_address1'}"
+                    th:name="${'member_address1'}"
                     th:value="${member.member_address1}"
-                    th:class="|fs-0-9rem fw-600 light-black|"
-                    th:text="'-   ' + ${member.member_address1}"
+                    th:class="${'fs-0-9rem fw-600 light-black'}"
+                    th:text="${''-   ' + ${member.member_address1}'}"
                   >
                   </div>
                 </div>
                 <!-- address 2 -->
                 <div class="d-row-left w-100p mb-10">
                   <div
-                    th:id="|member_address2|"
-                    th:name="|member_address2|"
+                    th:id="${'member_address2'}"
+                    th:name="${'member_address2'}"
                     th:value="${member.member_address2}"
-                    th:class="|fs-0-9rem fw-600 light-black|"
-                    th:text="'-   ' + ${member.member_address2}"
+                    th:class="${'fs-0-9rem fw-600 light-black'}"
+                    th:text="${''-   ' + ${member.member_address2}'}"
                   >
                   </div>
                 </div>
@@ -185,8 +190,8 @@
         <div class="row d-row-center">
           <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
             <button
-              th:type="|button|"
-              th:class="|btn btn-dark w-90p|"
+              th:type="${'button'}"
+              th:class="${'btn btn-dark w-90p'}"
               th:onclick="|location.href='@{/member/addMember}'|"
             >
               회원 추가
@@ -194,9 +199,9 @@
           </div>
           <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
             <button
-              th:type="|button|"
-              th:class="|btn btn-dark w-90p|"
-              th:onclick="|location.href='@{/}'|"
+              th:type="${'button'}"
+              th:class="${'btn btn-dark w-90p'}"
+              th:onclick="|goHome()|"
             >
               홈으로
             </button>
@@ -208,8 +213,8 @@
 
   <!-- pagination -->
   <th:block th:replace="~{components/pagination :: pagination (
-    prefix = ${PAGE},
-    suffix = ${PAGE_UP}
+    prefix = ${page},
+    subfix = ${PAGE}
   )}" />
 
   <!-- footer -->

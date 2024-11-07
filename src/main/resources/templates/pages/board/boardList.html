@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- head -->
@@ -7,19 +8,23 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (icon='fas fa-chalkboard-teacher', text1='Blog', text2='List')}" />
+  <th:block th:replace="~{layouts/navigation :: navigation (
+    icon = 'fas fa-chalkboard-teacher',
+    text1 = ${PAGE},
+    text2 = ${THEME}
+  )}" />
 
   <!-- main -->
-  <main class="container px-30">
+  <main class="container-fluid px-30">
     <div class="row">
-      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
     <div class="row mb-3 jungho-inline">
       <!-- sorting -->
       <div class="col-lg-6 col-md-6 col-sm-6 col-6">
         <div class="jungho-left">
           <i class="fas fa-sort-amount-down fa-lg"></i>&nbsp;&nbsp;
-          <form th:action="@{/board/getBoardList}" th:method="@{GET}" onchange="this.submit()">
-            <select name="sort" class="form-control">
+          <form th:action="@{|/board/listBoard}" th:method="${'@{GET}" onchange="this.submit()'}">
+            <select name="sort" class="form-control w-50p">
               <option value="default">정렬</option>
               <option value="titleASC">제목순(오름차순)</option>
               <option value="titleDESC">제목순(내림차순)</option>
@@ -33,15 +38,15 @@
       </div>
       <!-- search -->
       <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-        <form id="searchForm" th:method="@{GET}" th:action="@{/board/searchBoard}">
+        <form id="searchForm" th:method="${'@{GET}" th:action="@{|/board/searchBoard}'}">
           <div class="jungho-right">
-            <select class="ft-5 fw-8 ms-2 searchSelect" th:name="|@{searchType}" th:id="@{searchType}|">
+            <select class="ft-5 fw-8 ms-2 searchSelect" th:name="${'@{searchType}" th:id="@{searchType}'}">
               <option value="title">제목</option>
               <option value="contents">내용</option>
             </select>
-            <input class="form-control ft-7 fw-7 me-1 searchBar" th:type="@{search}" th:id="|@{keyword}" th:placeholder="|search" th:name=|"@{keyword}|" required/>
-            <i class="fas fa-search fa-lg" th:id="|@{searchIcon}|"></i>
-            <button th:type="@{submit}" id="hiddenSubmit" class="hiddenSubmit"></button>
+            <input class="form-control ft-7 fw-7 me-1 searchBar" th:type="${'@{search}" th:id="|@{keyword}" th:placeholder="search" th:name="@{keyword}|'}" required/>
+            <i class="fas fa-search fa-lg" th:id="${'@{searchIcon}'}"></i>
+            <button th:type="${'@{submit}" id="hiddenSubmit" class="hiddenSubmit'}"></button>
           </div>
         </form>
       </div>
@@ -54,7 +59,7 @@
         <div class="col-lg-4 col-md-6 col-sm-6">
           <div class="blog-item">
             <!-- image -->
-            <div class="blog-item-pic set-bg" th:attr="@{data-setbg=@{${board.board_imgsUrl}}}"></div>
+            <div class="blog-item-pic set-bg" th:attr="${'@{data-setbg=@{${board.board_imgsUrl}}}'}"></div>
             <div class="blog-item-text">
               <div style="display: flex; justify-content: space-between; align-items: center()">
                 <!-- date -->
@@ -66,14 +71,14 @@
                 <div style="text-align: center">
                   <p class="p me-n4">
                     <i class="fa fa-eye"></i>
-                    <th:block th:text="${board.board_count}" th:id="|@{board_count}" th:value="${board.board_count}|" />
+                    <th:block th:text="${board.board_count}" th:id="${'|@{board_count}" th:value="{board.board_count}'}" />
                   </p>
                 </div>
               </div>
 
               <!-- title -->
               <div style="display: flex; justify-content: space-between; align-items: center()">
-                <h5 th:id="|@{board_title}" th:value="@{board_title}" th:text="${#strings.abbreviate(board.board_title, 18)}|"></h5>
+                <h5 th:id="${'|@{board_title}" th:value="@{board_title}" th:text="{#strings.abbreviate(board.board_title, 18)}'}"></h5>
                 <!-- like -->
                 <div style="display: flex">
                   <div style="text-align: center">
@@ -87,7 +92,7 @@
                 </div>
               </div>
               <!-- click read more -->
-              <a th:href="@{|/board/getBoardDetails?board_number=${board.board_number}|}">
+              <a th:href="@{|/board/detailBoard?board_number=${board.board_number}||}">
               Read More</a>
             </div>
           </div>
@@ -98,10 +103,10 @@
     <!-- board button -->
     <div class="col-lg-12 md-12 sm-12">
       <div class="jungho-center">
-        <button th:type="@{button}" class="jungho-button" th:if="${session.member_id != null}" th:onclick="@{'location.href=\'' + @{/board/addBoard} + '\''}">
+        <button th:type="${'@{button}" class="jungho-button" th:if="${session.member_id != null}" th:onclick="|@{'location.href=\'' + @{/board/addBoard} + '\''}'}|">
           작성하기
         </button>
-        <button th:type="@{button}" class="jungho-button" th:if="${session.member_id == null}" th:onclick="@{return sessionAlert()}">
+        <button th:type="${'@{button}" class="jungho-button" th:if="${session.member_id == null}" th:onclick="|@{return sessionAlert()}'}|">
           작성하기
         </button>
       </div>
@@ -110,8 +115,8 @@
 
   <!-- pagination -->
   <th:block th:replace="~{components/pagination :: pagination (
-    prefix = ${PAGE},
-    suffix = ${PAGE_UP}
+    prefix = ${page},
+    subfix = ${PAGE}
   )}" />
 
   <!-- footer -->
