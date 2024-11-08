@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import com.stripe.exception.StripeException;
 import com.example.junghqlo.model.Orders;
 import com.example.junghqlo.handler.LocalDateTimeTypeHandler;
 
@@ -18,47 +19,47 @@ public interface OrdersMapper {
   // 0. result mapping -----------------------------------------------------------------------------
   @Results ({
     @Result (
-      property="orders_number",
-      column="orders_number",
-      id=true
+      property = "orders_number",
+      column = "orders_number",
+      id = true
     ),
     @Result (
-      property="product_number",
-      column="product_number"
+      property = "product_number",
+      column = "product_number"
     ),
     @Result (
-      property="product_name",
-      column="product_name"
+      property = "product_name",
+      column = "product_name"
     ),
     @Result (
-      property="member_id",
-      column="member_id"
+      property = "member_id",
+      column = "member_id"
     ),
     @Result (
-      property="orders_quantity",
-      column="orders_quantity"
+      property = "orders_quantity",
+      column = "orders_quantity"
     ),
     @Result (
-      property="orders_totalPrice",
-      column="orders_totalPrice"
+      property = "orders_totalPrice",
+      column = "orders_totalPrice"
     ),
     @Result (
-      property="product_imgsUrl",
-      column="product_imgsUrl"
+      property = "product_imgsUrl",
+      column = "product_imgsUrl"
     ),
     @Result (
-      property="orders_date",
-      column="orders_date",
-      typeHandler=LocalDateTimeTypeHandler.class
+      property = "orders_date",
+      column = "orders_date",
+      typeHandler = LocalDateTimeTypeHandler.class
     ),
     @Result (
-      property="orders_update",
-      column="orders_update",
-      typeHandler=LocalDateTimeTypeHandler.class
+      property = "orders_update",
+      column = "orders_update",
+      typeHandler = LocalDateTimeTypeHandler.class
     )
   })
 
-  // 1-1. listOrders -------------------------------------------------------------------------------
+  // 1. listOrders ---------------------------------------------------------------------------------
   @Select(
     """
     SELECT
@@ -66,31 +67,16 @@ public interface OrdersMapper {
     FROM
       orders
     WHERE
-      member_id=#{member_id}
+      member_id = #{member_id}
+    AND
+      ${type} LIKE CONCAT('%', #{keyword}, '%')
     ORDER BY
       ${sort}
     """
   )
   List<Orders> listOrders(
-    @Param("member_id") String member_id,
-    @Param("sort") String sort
-  ) throws Exception;
-
-  // 1-2. searchOrders -----------------------------------------------------------------------------
-  @Select(
-    """
-    SELECT
-      *
-    FROM
-      orders
-    WHERE
-      (${keyword} LIKE CONCAT('%', #{searchType}, '%'))
-    AND
-      member_id=#{member_id}
-    """
-  )
-  List<Orders> searchOrders(
-    @Param("searchType") String searchType,
+    @Param("sort") String sort,
+    @Param("type") String type,
     @Param("keyword") String keyword,
     @Param("member_id") String member_id
   ) throws Exception;
@@ -103,12 +89,12 @@ public interface OrdersMapper {
     FROM
       orders
     WHERE
-      orders_number=#{orders_number}
+      orders_number = #{orders_number}
     """
   )
   Orders detailOrders(
     Integer orders_number
-  );
+  ) throws Exception;
 
   // 2-2. getStripePrice ---------------------------------------------------------------------------
   @Select(
@@ -118,12 +104,12 @@ public interface OrdersMapper {
     FROM
       product
     WHERE
-      product_number=#{product_number}
+      product_number = #{product_number}
     """
   )
   String getStripePrice(
-    Integer product_number
-  );
+    Integer orders_number
+  ) throws StripeException;
 
   // 3. addOrders ----------------------------------------------------------------------------------
   @Insert(
@@ -159,14 +145,14 @@ public interface OrdersMapper {
     UPDATE
       orders
     SET
-      orders_quantity=#{orders_quantity},
-      orders_totalPrice=#{orders_totalPrice},
-      orders_update=NOW()
+      orders_quantity = #{orders_quantity},
+      orders_totalPrice = #{orders_totalPrice},
+      orders_update = NOW()
     WHERE
-      orders_number=#{orders_number}
+      orders_number = #{orders_number}
     """
   )
-  Integer updateOrders(
+  void updateOrders(
     Orders orders
   ) throws Exception;
 
@@ -176,16 +162,16 @@ public interface OrdersMapper {
     UPDATE
       product
     SET
-      product_stock=product_stock-#{orders_quantity}
+      product_stock = product_stock - #{orders_quantity}
     WHERE
-      product_number=#{product_number}
+      product_number = #{product_number}
     """
   )
-  Integer updateProductStock(
+  void updateProductStock(
     Integer product_number,
     Integer product_stock,
     Integer orders_quantity
-  );
+  ) throws Exception;
 
   // 5. deleteOrders -------------------------------------------------------------------------------
   @Delete(
@@ -193,10 +179,10 @@ public interface OrdersMapper {
     DELETE FROM
       orders
     WHERE
-      orders_number=#{orders_number}
+      orders_number = #{orders_number}
     """
   )
   Integer deleteOrders(
     Integer orders_number
-  );
+  ) throws Exception;
 }

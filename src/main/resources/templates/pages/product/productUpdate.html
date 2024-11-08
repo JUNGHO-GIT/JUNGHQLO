@@ -16,7 +16,7 @@
 
   <!-- main -->
   <main class="container-fluid px-30">
-    <div class="row">
+    <div class="row d-row-center">
       <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
     <form th:action="@{|/product/updateProduct}" th:method="${'POST" enctype="multipart/form-data" th:onsubmit="|return updateCheck()'}|">
 
@@ -170,7 +170,7 @@
                 <button class="jungho-button" id="resetButton" th:type="${'reset'}"
                 th:onclick="|window.location.reload()|">새로고침</button>
                 <button class="jungho-button" id="submitButton" th:type="${'submit'}"
-                th:onclick="|return updateProduct()|">수정하기</button>
+                th:onclick="|return updateProduct()|">수정</button>
                 <button th:type="${'button" class="jungho-button" th:onclick="|location.href='@{/}'|'}"> 홈으로 </button>
               </div>
             </div>

@@ -14,6 +14,9 @@ import com.example.junghqlo.handler.PageHandler;
 import com.example.junghqlo.model.Qna;
 import com.example.junghqlo.service.QnaService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Controller
 @RequestMapping("/qna")
 public class QnaController {
@@ -25,88 +28,116 @@ public class QnaController {
   }
 
   // 0. static -------------------------------------------------------------------------------------
+  Logger logger = LoggerFactory.getLogger(this.getClass());
   private static String page = "qna";
   private static String PAGE = "Qna";
 
-  // 1-1. listQna (GET) ----------------------------------------------------------------------------
+  // 1. listQna (GET) ----------------------------------------------------------------------------
   @GetMapping("/listQna")
   public String listQna(
     @ModelAttribute Qna qna,
-    @RequestParam(defaultValue = "default") String sort,
+    @RequestParam(defaultValue = "all") String sort,
+    @RequestParam(defaultValue = "all") String category,
+    @RequestParam(defaultValue = "title") String type,
+    @RequestParam(defaultValue = "") String keyword,
     @RequestParam(defaultValue = "1") Integer pageNumber,
     @RequestParam(defaultValue = "9") Integer itemsPer,
     Model model
   ) throws Exception {
 
-    // sort order
-    if(sort == null || sort.equals("default")) {
-      sort="qna_category IS NOT NULL ORDER BY qna_number DESC";
+    // 1. Sort handling
+    String sortHandler = "";
+    if (sort == null || sort.equals("all")) {
+      sort = "qna_date DESC";
+      sortHandler = "all";
     }
-    else if(sort.equals("goods")) {
-      sort="qna_category='상품문의'";
+    else if (sort.equals("nameASC")) {
+      sort = "qna_title ASC";
+      sortHandler = "nameASC";
     }
-    else if(sort.equals("exchange")) {
-      sort="qna_category='교환/반품'";
+    else if (sort.equals("nameDESC")) {
+      sort = "qna_title DESC";
+      sortHandler = "nameDESC";
     }
-    else if(sort.equals("refund")) {
-      sort="qna_category='환불문의'";
+    else if (sort.equals("dateASC")) {
+      sort = "qna_date ASC";
+      sortHandler = "dateASC";
     }
-    else if(sort.equals("payment")) {
-      sort="qna_category='결제문의'";
-    }
-    else if(sort.equals("delivery")) {
-      sort="qna_category='배송문의'";
-    }
-    else if(sort.equals("etc")) {
-      sort="qna_category='기타문의'";
+    else if (sort.equals("dateDESC")) {
+      sort = "qna_date DESC";
+      sortHandler = "dateDESC";
     }
 
+    // 2. Category handling
+    String categoryHandler = "";
+    if (category == null || category.equals("all")) {
+      category = "qna_category IS NOT NULL";
+      categoryHandler = "all";
+    }
+    else if (category.equals("goods")) {
+      category = "qna_category = 'goods'";
+      categoryHandler = "goods";
+    }
+    else if (category.equals("exchange")) {
+      category = "qna_category = 'exchange'";
+      categoryHandler = "exchange";
+    }
+    else if (category.equals("refund")) {
+      category = "qna_category = 'refund'";
+      categoryHandler = "refund";
+    }
+    else if (category.equals("payment")) {
+      category = "qna_category = 'payment'";
+      categoryHandler = "payment";
+    }
+    else if (category.equals("delivery")) {
+      category = "qna_category = 'delivery'";
+      categoryHandler = "delivery";
+    }
+    else if (category.equals("etc")) {
+      category = "qna_category = 'etc'";
+      categoryHandler = "etc";
+    }
+
+    // 3. Type handling
+    String typeHandler = "";
+    if (type == null || keyword == null) {
+      return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
+    }
+    else if (type.equals("all")) {
+      type = "qna_title OR qna_contents";
+      typeHandler = "all";
+    }
+    else if (type.equals("title")) {
+      type = "qna_title";
+      typeHandler = "title";
+    }
+    else if (type.equals("contents")) {
+      type = "qna_contents";
+      typeHandler = "contents";
+    }
+
+    // 4. Keyword handling
+    String keywordHandler = "";
+    if (keyword != null) {
+      keywordHandler = keyword;
+    }
+
+    // 5. Page handling
     PageHandler<Qna> pageHandler = (
-      qnaService.listQna(pageNumber, itemsPer, sort, qna)
+      qnaService.listQna(pageNumber, itemsPer, sort, category, type, keyword, qna)
     );
 
     // 모델
-    model.addAttribute("sort", sort);
+    model.addAttribute("sortHandler", sortHandler);
+    model.addAttribute("categoryHandler", categoryHandler);
+    model.addAttribute("typeHandler", typeHandler);
+    model.addAttribute("keywordHandler", keywordHandler);
     model.addAttribute("pageHandler", pageHandler);
     model.addAttribute("LIST", pageHandler.getContent());
 
     return MessageFormat.format("/pages/{0}/{1}List", page, page);
   };
-
-  // 1-2. searchQna (GET) ----------------------------------------------------------------------------
-  @GetMapping("/searchQna")
-  public String searchQna (
-    @ModelAttribute Qna qna,
-    @RequestParam(defaultValue = "default") String sort,
-    @RequestParam(defaultValue = "1") Integer pageNumber,
-    @RequestParam(defaultValue = "9") Integer itemsPer,
-    @RequestParam String searchType,
-    @RequestParam String keyword,
-    Model model
-  ) throws Exception {
-
-    // searchType order
-    if (searchType == null || keyword == null) {
-      return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
-    }
-    else if(searchType.equals("title")) {
-      searchType="qna_title";
-    }
-    else if(searchType.equals("contents")) {
-      searchType="qna_contents";
-    }
-
-    PageHandler<Qna> pageHandler = (
-      qnaService.searchQna(pageNumber, itemsPer, searchType, keyword, qna)
-    );
-
-    // 모델
-    model.addAttribute("sort", sort);
-    model.addAttribute("pageHandler", pageHandler);
-    model.addAttribute("LIST", pageHandler.getContent());
-
-    return MessageFormat.format("/pages/{0}/{1}List", page, page);
-  }
 
   // 2. detailQna(GET) -----------------------------------------------------------------------------
   @GetMapping("/detailQna")
@@ -118,7 +149,7 @@ public class QnaController {
   ) throws Exception {
 
     // 조회수 증가
-    qnaService.updateQnaCount(qna_number, session);
+    qnaService.updateCount(qna_number, session);
 
     // 모델
     model.addAttribute("MODEL", qnaService.detailQna(qna_number));
@@ -145,7 +176,7 @@ public class QnaController {
     return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
   }
 
-  // 4. updateQna (GET) ----------------------------------------------------------------------------
+  // 4-1. updateQna (GET) --------------------------------------------------------------------------
   @GetMapping("/updateQna")
   public String updateQna (
     @RequestParam Integer qna_number,
@@ -158,7 +189,7 @@ public class QnaController {
     return MessageFormat.format("/pages/{0}/{1}Update", page, page);
   }
 
-  // 4. updateQna (POST) ---------------------------------------------------------------------------
+  // 4-1. updateQna (POST) -------------------------------------------------------------------------
   @PostMapping("/updateQna")
   public String updateQna (
     @ModelAttribute Qna qna,

@@ -9700,8 +9700,6 @@
 .pb-99 {padding-bottom: 99px !important;}
 .pb-100 {padding-bottom: 100px !important;}
 
-
-
 /* 5-4. padding (vh) ******************************************************************************/
 .ps-0vw {padding-left: 0vw !important;}
 .ps-1vw {padding-left: 1vw !important;}
@@ -12207,6 +12205,12 @@
 }
 .readonly {
   caret-color: transparent !important;
+}
+.disabled {
+  pointer-events: none !important;
+  cursor: not-allowed !important;
+  caret-color: transparent !important;
+  background-color: #f1f1f1 !important;
 }
 .upper {
   text-transform: uppercase !important;

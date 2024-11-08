@@ -9,109 +9,271 @@
 
   <!-- navigation -->
   <th:block th:replace="~{layouts/navigation :: navigation (
-    icon = 'fas fa-question-circle',
+    icon = 'fas fa-bell',
     text1 = ${PAGE},
     text2 = ${THEME}
   )}" />
 
   <!-- main -->
   <main class="container-fluid px-30">
-    <div class="row">
+    <div class="row d-row-center">
       <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
-    <form th:action="@{|/qna/updateQna}" th:method="${'POST" enctype="multipart/form-data'}">
-
-      <!-- hidden -->
-      <input th:type="${'hidden" th:name="|qna_number" th:value="{qnaModel.qna_number}" th:id="qna_number'}"/>
-      <input th:type="${'hidden" th:name="|qna_writer" th:value="{qnaModel.qna_writer}" th:id="qna_writer'}"/>
-      <input th:type="${'hidden" th:name="|qna_count" th:value="{qnaModel.qna_count}" th:id="qna_count'}"/>
-      <input th:type="${'hidden" th:name="|qna_like" th:value="{qnaModel.qna_like}" th:id="qna_like'}"/>
-      <input th:type="${'hidden" th:name="|qna_dislike" th:value="{qnaModel.qna_dislike}" th:id="qna_dislike'}"/>
-      <input th:type="${'hidden" th:name="|qna_imgsUrl" th:value="{qnaModel.qna_imgsUrl}" th:id="qna_imgsUrl'}"/>
-
-      <div class="row">
-        <div class="col-lg-6 col-md-6">
-
-          <div class="row d-row-center mb-20">
+        <!-- form -->
+        <form
+          th:method="${'POST'}"
+          th:action="@{|/${page}/update${PAGE}|}"
+          th:enctype="${'multipart/form-data'}"
+        >
+          <!-- detail -->
+          <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="fs-1-8rem fw-800 light-black">게시물 수정</h6>
-          <!-- name -->
-          <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="checkout-input">
-                <p class="p">제목<span>*</span></p>
-                <input th:type="${'text" th:placeholder="|Title" th:name="|qna_title" th:value="{qnaModel.qna_title}" th:id="qna_title|'}"/>
+              <div class="border-1 radius-2 shadow-1 px-20 py-40">
+                <!-- title -->
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800 me-5">
+                        제목
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy">
+                        *
+                      </div>
+                    </div>
+                    <div class="d-row-left">
+                      <input
+                        th:type="${'text'}"
+                        th:id="${'qna_title'}"
+                        th:name="${'qna_title'}"
+                        th:class="${'form-control'}"
+                        th:value="${MODEL['qna_title']}"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- category -->
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800 me-5">
+                        카테고리
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy">
+                        *
+                      </div>
+                    </div>
+                    <div class="d-row-left w-100p">
+                      <select
+                        th:id="${'qna_category'}"
+                        th:name="${'qna_category'}"
+                        th:class="${'form-control'}"
+                      >
+                        <option value="goods" th:selected="${MODEL['qna_category'] == 'goods'}">
+                          상품 문의
+                        </option>
+                        <option value="exchange" th:selected="${MODEL['qna_category'] == 'exchange'}">
+                          교환 문의
+                        </option>
+                        <option value="refund" th:selected="${MODEL['qna_category'] == 'refund'}">
+                          환불 문의
+                        </option>
+                        <option value="payment" th:selected="${MODEL['qna_category'] == 'payment'}">
+                          결제 문의
+                        </option>
+                        <option value="delivery" th:selected="${MODEL['qna_category'] == 'delivery'}">
+                          배송 문의
+                        </option>
+                        <option value="etc" th:selected="${MODEL['qna_category'] == 'etc'}">
+                          기타 문의
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <!-- content -->
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800 light-black">
+                        내용
+                      </div>
+                      <div class="fs-0-6rem fw-800 burgundy">
+                        *
+                      </div>
+                    </div>
+                    <div class="d-row-left">
+                      <textarea
+                        th:id="${'qna_contents'}"
+                        th:name="${'qna_contents'}"
+                        th:class="${'form-control h-20vh border-1 lh-1-7'}"
+                        th:value="${MODEL['qna_contents']}"
+                        th:text="${MODEL['qna_contents']}"
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+                <!-- status -->
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800 light-black">
+                        답변 상태
+                      </div>
+                      <div class="fs-0-6rem fw-800 burgundy">
+                        *
+                      </div>
+                    </div>
+                    <div class="d-row-left w-100p">
+                      <input
+                        th:type="${'text'}"
+                        th:id="${'qna_answer2'}"
+                        th:name="${'qna_answer2'}"
+                        th:class="${'form-control disabled'}"
+                        th:value="${MODEL['qna_answer2']}"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- hr -->
+                <hr class="mt-20 mb-20" />
+                <!-- image -->
+                <div class="row">
+                  <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="d-row-center mb-10">
+                      <div class="fs-0-9rem fw-800 light-black">
+                        기존 이미지
+                      </div>
+                      <div class="fs-0-6rem fw-800 burgundy">
+                        *
+                      </div>
+                    </div>
+                    <div class="d-row-center">
+                      <img
+                        th:id="${'existingImage'}"
+                        th:name="${'existingImage'}"
+                        th:class="${'w-100 h-100 radius-2 shadow-1'}"
+                        th:value="${'existingImage'}"
+                        th:src="@{|${MODEL['qna_imgsUrl']}|}"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="d-row-center mb-10">
+                      <div class="fs-0-9rem fw-800 light-black">
+                        게시물 이미지
+                      </div>
+                      <div class="fs-0-6rem fw-800 burgundy">
+                        <label
+                          th:id="${'imageLabel'}"
+                          th:name="${'imageLabel'}"
+                          th:class="${'ms-10'}"
+                          th:for="${'imageFile'}"
+                        >
+                          선택하기
+                        </label>
+                      </div>
+                    </div>
+                    <div class="d-row-center">
+                      <input
+                        th:type="${'file'}"
+                        th:id="${'imageFile'}"
+                        th:name="${'qna_imgsFile'}"
+                        th:class="${'qna_imgsFile d-none'}"
+                        th:onchange="|junghoPreview()|"
+                      />
+                      <div
+                        th:id="${'imageLoader'}"
+                        th:name="${'imageLoader'}"
+                        th:class="${'imageLoader'}"
+                      >
+                      </div>
+                      <img
+                        th:id="${'imageBox'}"
+                        th:name="${'imageBox'}"
+                        th:class="${'imageBox w-100 h-100 radius-2 shadow-1'}"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <!-- content -->
-          <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="checkout-input">
-                <p class="p">내용<span>*</span></p>
-                <textarea th:placeholder="${'|Contents" th:id="|qna_contents" th:name="qna_contents" th:text=|"${qnaModel.qna_contents}|'}">
-                </textarea>
-              </div>
+          <!-- hr -->
+          <hr class="mt-20 mb-20" />
+          <!-- button -->
+          <div class="row d-row-center">
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+              <button
+                th:type="${'submit'}"
+                th:class="${'btn btn-dark w-90p'}"
+                th:onclick="|return updateQna()|"
+              >
+                수정
+              </button>
             </div>
-          </div>
-          <!-- status -->
-          <div class="row">
-            <div class="col-lg-5">
-              <div class="checkout-input">
-                <p class="p">답변상태<span>*</span></p>
-                <input th:type="${'hidden" th:name="|qna_answer1" th:id="qna_answer1" th:value="${qnaModel.qna_answer1}|'}" readonly/>
-                <input th:type="${'text" th:name="|qna_answer2" th:id="qna_answer2" th:value="${qnaModel.qna_answer2}|'}" readonly/>
-              </div>
-            </div>
-            <!-- category -->
-            <div class="col-lg-3">
-              <div class="checkout-input">
-                <p class="p">카테고리<span>*</span></p>
-                <select th:type="${'text" th:id="qna_category" th:name="|qna_category|'}" required>
-                  <option selected th:text="${qnaModel.qna_category}"></option>
-                  <option value="상품문의">상품문의</option>
-                  <option value="교환문의">교환문의</option>
-                  <option value="환불문의">환불문의</option>
-                  <option value="결제문의">결제문의</option>
-                  <option value="배송문의">배송문의</option>
-                  <option value="기타문의">기타문의</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-              <div class="checkout-input">
-                <p class="p"> 게시물 이미지<span>*</span></p>
-                <label for="imageFile">선택하기</label>
-                <input th:type="${'file" th:id="|imageFile" th:name="qna_imgsFile"  style="display:none" class="imageFile" oninput="junghoPreview()|'}"/>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <!-- image -->
-            <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
-              <div class="checkout-input">
-              <p class="p">기존 이미지<span>*</span></p>
-              <img th:src="${qnaModel.qna_imgsUrl}" style="width: 150px; height: 150px; border-radius: 10px; box-shadow: 0px 10px 10px rgba(0, 0.5, 0.5, 0.5)()" th:id="${'|existingImage" th:name="existingImage" th:value="existingImage|'}"/>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-3 mt-3">
-              <button th:type="${'submit" th:onclick="return updateCheck()" class="|jungho-button'}|">
-              수정하기
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+              <button
+                th:type="${'button'}"
+                th:class="${'btn btn-dark w-90p'}"
+                th:onclick="|return goHome()|"
+              >
+                홈으로
               </button>
             </div>
           </div>
-        </div>
-        <!-- preview -->
-        <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-          <div class="preview">
-            <div class="border-dark justify-content-center">
-              <h4 class="order-title mb-4"><i class="fa fa-spinner"></i>&nbsp;Preview</h4>
-              <div class="imageLoader" th:id="${'imageLoader'}"></div>
-              <img class="imageBox" th:id="${'imageBox'}"/>
-            </div>
+          <!-- hidden -->
+          <div class="hidden-wrapper">
+            <input
+              th:type="${'hidden'}"
+              th:id="${'qna_number'}"
+              th:name="${'qna_number'}"
+              th:value="${MODEL['qna_number']}"
+            />
+            <input
+              th:type="${'hidden'}"
+              th:id="${'qna_answer1'}"
+              th:name="${'qna_answer1'}"
+              th:value="${MODEL['qna_answer1']}"
+            />
+            <input
+              th:type="${'hidden'}"
+              th:id="${'qna_writer'}"
+              th:name="${'qna_writer'}"
+              th:value="${MODEL['qna_writer']}"
+            />
+            <input
+              th:type="${'hidden'}"
+              th:id="${'qna_count'}"
+              th:name="${'qna_count'}"
+              th:value="${MODEL['qna_count']}"
+            />
+            <input
+              th:type="${'hidden'}"
+              th:id="${'qna_like'}"
+              th:name="${'qna_like'}"
+              th:value="${MODEL['qna_like']}"
+            />
+            <input
+              th:type="${'hidden'}"
+              th:id="${'qna_dislike'}"
+              th:name="${'qna_dislike'}"
+              th:value="${MODEL['qna_dislike']}"
+            />
+            <input
+              th:type="${'hidden'}"
+              th:id="${'qna_date'}"
+              th:name="${'qna_date'}"
+              th:value="${MODEL['qna_date']}"
+            />
+            <input
+              th:type="${'hidden'}"
+              th:id="${'qna_imgsUrl'}"
+              th:name="${'qna_imgsUrl'}"
+              th:value="${MODEL['qna_imgsUrl']}"
+            />
           </div>
-        </div>
+        </form>
       </div>
-    </form>
+    </div>
   </main>
 
   <!-- footer -->

@@ -19,71 +19,56 @@ public interface BoardMapper {
   // 0. result mapping -----------------------------------------------------------------------------
   @Results ({
     @Result (
-      property="board_number",
-      column="board_number",
-      id=true
+      property = "board_number",
+      column = "board_number",
+      id = true
     ),
     @Result (
-      property="board_title",
-      column="board_title"
+      property = "board_title",
+      column = "board_title"
     ),
     @Result (
-      property="board_contents",
-      column="board_contents"
+      property = "board_contents",
+      column = "board_contents"
     ),
     @Result (
-      property="board_writer",
-      column="board_writer"
+      property = "board_writer",
+      column = "board_writer"
     ),
     @Result (
-      property="board_count",
-      column="board_count"
+      property = "board_count",
+      column = "board_count"
     ),
     @Result (
-      property="board_like",
-      column="board_like"
+      property = "board_like",
+      column = "board_like"
     ),
     @Result (
-      property="board_dislike",
-      column="board_dislike"
+      property = "board_dislike",
+      column = "board_dislike"
     ),
     @Result (
-      property="board_imgsFile",
-      column="board_imgsFile",
-      typeHandler=MultipartFileHandler.class
+      property = "board_imgsFile",
+      column = "board_imgsFile",
+      typeHandler = MultipartFileHandler.class
     ),
     @Result (
-      property="board_imgsUrl",
-      column="board_imgsUrl"
+      property = "board_imgsUrl",
+      column = "board_imgsUrl"
     ),
     @Result (
-      property="board_date",
-      column="board_date",
-      typeHandler=LocalDateTimeTypeHandler.class
+      property = "board_date",
+      column = "board_date",
+      typeHandler = LocalDateTimeTypeHandler.class
     ),
     @Result (
-      property="board_update",
-      column="board_update",
-      typeHandler=LocalDateTimeTypeHandler.class
+      property = "board_update",
+      column = "board_update",
+      typeHandler = LocalDateTimeTypeHandler.class
     )
   })
 
-  // 1-1. listBoard --------------------------------------------------------------------------------
-  @Select(
-    """
-    SELECT
-      *
-    FROM
-      board
-    ORDER BY
-      ${sort}
-    """
-  )
-  List<Board> listBoard(
-    @Param("sort") String sort
-  ) throws Exception;
-
-  // 1-2. searchBoard ------------------------------------------------------------------------------
+  // 1. listBoard ---------------------------------------------------------------------------------
   @Select(
     """
     SELECT
@@ -91,11 +76,14 @@ public interface BoardMapper {
     FROM
       board
     WHERE
-      ${keyword} LIKE CONCAT('%', #{searchType}, '%')
+      ${type} LIKE CONCAT('%', #{keyword}, '%')
+    ORDER BY
+      ${sort}
     """
   )
-  List<Board> searchBoard(
-    @Param("searchType") String searchType,
+  List<Board> listBoard(
+    @Param("sort") String sort,
+    @Param("type") String type,
     @Param("keyword") String keyword
   ) throws Exception;
 
@@ -107,7 +95,7 @@ public interface BoardMapper {
     FROM
       board
     WHERE
-      board_number=#{board_number}
+      board_number = #{board_number}
     """
   )
   Board detailBoard(
@@ -136,7 +124,7 @@ public interface BoardMapper {
       #{board_count},
       #{board_like},
       #{board_dislike},
-      #{board_imgsFile, typeHandler=MultipartFileHandler},
+      #{board_imgsFile, typeHandler = MultipartFileHandler},
       #{board_imgsUrl},
       NOW()
     )
@@ -146,68 +134,68 @@ public interface BoardMapper {
     Board board
   ) throws Exception;
 
-  // 4. updateBoard --------------------------------------------------------------------------------
+  // 4-1. updateBoard ------------------------------------------------------------------------------
   @Update(
     """
     UPDATE
       board
     SET
-      board_title=#{board_title},
-      board_contents=#{board_contents},
-      board_writer=#{board_writer},
-      board_count=#{board_count},
-      board_like=#{board_like},
-      board_dislike=#{board_dislike},
-      board_imgsFile=#{board_imgsFile, typeHandler=MultipartFileHandler},
-      board_imgsUrl=#{board_imgsUrl},
-      board_update=NOW()
+      board_title = #{board_title},
+      board_contents = #{board_contents},
+      board_writer = #{board_writer},
+      board_count = #{board_count},
+      board_like = #{board_like},
+      board_dislike = #{board_dislike},
+      board_imgsFile = #{board_imgsFile, typeHandler= MultipartFileHandler},
+      board_imgsUrl = #{board_imgsUrl},
+      board_update = NOW()
     WHERE
-      board_number=#{board_number}
+      board_number = #{board_number}
     """
   )
   void updateBoard(
     Board board
   ) throws Exception;
 
-  // 4-1. updateBoardCount -------------------------------------------------------------------------
+  // 4-2. updateCount ------------------------------------------------------------------------------
   @Update(
     """
     UPDATE
       board
     SET
-      board_count=board_count+1
+      board_count = board_count + 1
     WHERE
-      board_number=#{board_number}
+      board_number = #{board_number}
     """
   )
-  void updateBoardCount(
+  void updateCount(
     Integer board_number
   ) throws Exception;
 
-  // 4-2. updateLike -------------------------------------------------------------------------------
+  // 4-3. updateLike -------------------------------------------------------------------------------
   @Update(
     """
     UPDATE
       board
     SET
-      board_like=board_like+1
+      board_like = board_like + 1
     WHERE
-      board_number=#{board_number}
+      board_number = #{board_number}
     """
   )
   void updateLike(
     Integer board_number
   ) throws Exception;
 
-  // 4-3. updateDislike ----------------------------------------------------------------------------
+  // 4-4. updateDislike ----------------------------------------------------------------------------
   @Update(
     """
     UPDATE
       board
     SET
-      board_dislike=board_dislike+1
+      board_dislike = board_dislike + 1
     WHERE
-      board_number=#{board_number}
+      board_number = #{board_number}
     """
   )
   void updateDislike(
@@ -220,7 +208,7 @@ public interface BoardMapper {
     DELETE FROM
       board
     WHERE
-      board_number=#{board_number}
+      board_number = #{board_number}
     """
   )
   Integer deleteBoard(

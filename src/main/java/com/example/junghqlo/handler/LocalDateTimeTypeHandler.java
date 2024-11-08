@@ -18,28 +18,26 @@ public class LocalDateTimeTypeHandler extends BaseTypeHandler<LocalDateTime> {
 
   private ZoneId zoneId = ZoneId.systemDefault();
 
+  // 1. override setNonNullParameter ---------------------------------------------------------------
   @Override
   public void setNonNullParameter(PreparedStatement ps, int i, LocalDateTime parameter, JdbcType jdbcType) throws SQLException {
     ps.setObject(i, parameter.atZone(zoneId).toOffsetDateTime());
   }
-
   @Override
   public LocalDateTime getNullableResult(ResultSet rs, String columnName) throws SQLException {
     return toLocalDateTime(rs.getObject(columnName));
   }
-
   @Override
   public LocalDateTime getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
     return toLocalDateTime(rs.getObject(columnIndex));
   }
-
   @Override
   public LocalDateTime getNullableResult(CallableStatement cs, int columnIndex)
   throws SQLException {
     return toLocalDateTime(cs.getObject(columnIndex));
   }
 
-  // convert to LocalDateTime
+  // 2. convert to LocalDateTime -------------------------------------------------------------------
   private LocalDateTime toLocalDateTime(Object object) {
     if (object == null) {
       return null;

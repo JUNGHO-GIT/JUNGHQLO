@@ -16,80 +16,20 @@
 
   <!-- main -->
   <main class="container-fluid px-30">
-    <div class="row">
+    <div class="row d-row-center">
       <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
-        <!-- title -->
-        <div class="row d-row-center mb-20">
-          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <div class="fs-1-8rem fw-800 light-black">
-              QnA
-            </div>
-          </div>
-        </div>
-        <!-- sort & search -->
-        <div class="row mb-20">
-          <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-            <form
-              th:method="${'GET'}"
-              th:action="@{|/${page}/list${PAGE}|}"
-              th:onchange="|this.submit()|"
-              th:class="${'d-row-left w-90p'}"
-            >
-              <i
-                th:id="${'sortIcon'}"
-                th:class="${'fas fa-sort-amount-down fa-lg me-10'}"
-              ></i>
-              <select name="sort" class="form-control w-50p">
-                <option value="default">정렬</option>
-                <option value="titleASC">제목순(오름차순)</option>
-                <option value="titleDESC">제목순(내림차순)</option>
-                <option value="countASC">조회수낮은순</option>
-                <option value="countDESC">조회수높은순</option>
-                <option value="dateASC">오래된순</option>
-                <option value="dateDESC">최신순</option>
-              </select>
-            </form>
-          </div>
-          <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-            <form
-              th:id="${'searchForm'}"
-              th:method="${'GET'}"
-              th:action="@{${'/'+page+'/search'+PAGE}}"
-              th:class="${'d-row-right'}"
-            >
-              <select class="form-control" name="searchType">
-                <option value="title">제목</option>
-                <option value="contents">내용</option>
-              </select>
-              <input
-                th:type="${'search'}"
-                th:id="${'keyword'}"
-                th:name="${'keyword'}"
-                th:placeholder="${'search'}"
-                th:class="${'form-control'}"
-              />
-              <i
-                th:id="${'searchIcon'}"
-                th:class="${'fas fa-search fa-lg ms-10 pointer'}"
-              ></i>
-              <button
-                th:type="${'submit'}"
-                th:id="${'hiddenSubmit'}"
-                th:name="${'hiddenSubmit'}"
-                th:class="${'hiddenSubmit d-none'}"
-              ></button>
-            </form>
-          </div>
-        </div>
-        <!-- notice list -->
+        <!-- list -->
         <div class="row">
           <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <th:block th:each="LIST: ${LIST}">
-              <div class="d-col-center border-1 radius-2 shadow-1 p-30 mb-20">
+              <div
+                th:class="${'border-1 radius-2 shadow-1 p-30'}"
+                th:classappend="${LISTStat.last ? '' : 'mb-20'}"
+              >
                 <!-- logo + title -->
                 <div class="d-row-left w-100p mb-20">
                   <img
-                    th:src="@{|${STORAGE}/icon/logo.png|}"
+                    th:src="@{|${LIST['qna_imgsUrl']}|}"
                     th:loading="${'lazy'}"
                     th:alt="${'logo'}"
                     th:width="${'30px'}"
@@ -97,19 +37,29 @@
                     th:class="${'radius-2 me-10'}"
                   />
                   <div
-                    th:id="${'|${page}_title|'}"
-                    th:name="${'|${page}_title|'}"
-                    th:value="${'|${LIST[page + '_title']}|'}"
-                    th:text="${'|${LIST[page + '_title']}|'}"
+                    th:id="${'qna_title'}"
+                    th:name="${'qna_title'}"
+                    th:value="${LIST['qna_title']}"
+                    th:text="${#strings.abbreviate(LIST['qna_title'], 20)}"
                     th:class="${'fs-1-2rem fw-700 burgundy hover'}"
-                    th:onclick="|location.href='@{|/${page}/detail${PAGE}?${page}_number=${LIST[page + '_number']}|}'|"
+                    th:onclick="|location.href='@{|/${page}/detail${PAGE}?qna_number=${LIST['qna_number']}|}'|"
                   >
                   </div>
                   <div
-                    th:id="${'|${page}_number|'}"
-                    th:name="${'|${page}_number|'}"
-                    th:value="${'|${LIST[page + '_number']}|'}"
-                    th:text="${'|${LIST[page + '_number']}|'}"
+                    th:id="${'qna_category'}"
+                    th:name="${'qna_category'}"
+                    th:value="${LIST['qna_category']}"
+                    th:class="${'fs-1-0rem fw-600 grey ms-10 me-auto'}"
+                    th:text="${
+                      LIST['qna_category'] == 'goods' ? '상품 문의' : LIST['qna_category'] == 'exchange' ? '교환 문의' : LIST['qna_category'] == 'refund' ? '환불 문의' : LIST['qna_category'] == 'payment' ? '결제 문의' : LIST['qna_category'] == 'delivery' ? '배송 문의' : '기타 문의'
+                    }"
+                  >
+                  </div>
+                  <div
+                    th:id="${'qna_number'}"
+                    th:name="${'qna_number'}"
+                    th:value="${LIST['qna_number']}"
+                    th:text="${LIST['qna_number']}"
                     th:class="${'fs-0-9rem fw-600 grey ms-auto'}"
                   >
                   </div>
@@ -117,10 +67,10 @@
                 <!-- contents -->
                 <div class="d-row-left w-100p mb-30">
                   <div
-                    th:id="${'|${page}_contents|'}"
-                    th:name="${'|${page}_contents|'}"
-                    th:value="${'|${LIST[page + '_contents']}|'}"
-                    th:text="${'|${#strings.abbreviate(LIST[page + '_contents'], 40)}|'}"
+                    th:id="${'qna_contents'}"
+                    th:name="${'qna_contents'}"
+                    th:value="${LIST['qna_contents']}"
+                    th:text="${#strings.abbreviate(LIST['qna_contents'], 40)}"
                     th:class="${'fs-0-9rem fw-600 light-black'}"
                   >
                   </div>
@@ -130,21 +80,21 @@
                   <div class="d-row-center">
                     <i th:class="${'fa fa-calendar fs-0-7rem me-10'}"></i>
                     <div
-                      th:id="${'|${page}_date|'}"
-                      th:name="${'|${page}_date|'}"
-                      th:value="${'|${LIST[page + '_date']}|'}"
-                      th:text="${'|${#strings.substring((LIST[page + '_update'] != null ? LIST[page + '_update'] : LIST[page + '_date']), 0, 10)}|'}"
+                      th:id="${'qna_date'}"
+                      th:name="${'qna_date'}"
+                      th:value="${LIST['qna_date']}"
                       th:class="${'fs-0-9rem fw-600 dark'}"
+                      th:text="${#strings.substring((LIST['qna_update'] != null ? LIST['qna_update'] : LIST['qna_date']), 0, 10)}"
                     >
                     </div>
                   </div>
                   <div class="d-row-center">
                     <i th:class="${'fa fa-eye fs-0-7rem me-10'}"></i>
                     <div
-                      th:id="${'|${page}_count|'}"
-                      th:name="${'|${page}_count|'}"
-                      th:value="${'|${LIST[page + '_count']}|'}"
-                      th:text="${'|${LIST[page + '_count']}|'}"
+                      th:id="${'qna_count'}"
+                      th:name="${'qna_count'}"
+                      th:value="${LIST['qna_count']}"
+                      th:text="${LIST['qna_count']}"
                       th:class="${'fs-0-9rem fw-600 dark'}"
                     >
                     </div>
@@ -155,7 +105,168 @@
           </div>
         </div>
         <!-- hr -->
-        <hr class="mt-20 mb-20" />
+        <hr
+          th:id="${'hr'}"
+          th:name="${'hr'}"
+          th:class="${'mt-20 mb-20'}"
+        />
+        <!-- sort & search -->
+        <div class="row">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <form
+              th:method="${'GET'}"
+              th:id="${'arrangeForm'}"
+              th:name="${'arrangeForm'}"
+              th:action="@{|/${page}/list${PAGE}|}"
+              th:class="${'w-100p'}"
+            >
+              <div class="d-row-between mb-20">
+                <!-- sort -->
+                <div class="d-row-center w-47p">
+                  <select
+                    th:id="${'sort'}"
+                    th:name="${'sort'}"
+                    th:class="${'form-control'}"
+                  >
+                    <option
+                      th:value="${'all'}"
+                      th:selected="${sortHandler == 'all'}"
+                      th:text="${'전체'}"
+                    >
+                    </option>
+                    <option
+                      th:value="${'nameDESC'}"
+                      th:selected="${sortHandler == 'nameDESC'}"
+                      th:text="${'제목순(내림차순)'}"
+                    >
+                    </option>
+                    <option
+                      th:value="${'nameASC'}"
+                      th:selected="${sortHandler == 'nameASC'}"
+                      th:text="${'제목순(오름차순)'}"
+                    >
+                    </option>
+                    <option
+                      th:value="${'dateDESC'}"
+                      th:selected="${sortHandler == 'dateDESC'}"
+                      th:text="${'최신순'}"
+                    >
+                    </option>
+                    <option
+                      th:value="${'dateASC'}"
+                      th:selected="${sortHandler == 'dateASC'}"
+                      th:text="${'오래된순'}"
+                    >
+                    </option>
+                  </select>
+                </div>
+                <!-- category -->
+                <div class="d-row-center w-47p">
+                  <select
+                    th:id="${'category'}"
+                    th:name="${'category'}"
+                    th:class="${'form-control'}"
+                  >
+                    <option
+                      th:value="${'all'}"
+                      th:selected="${categoryHandler == 'all'}"
+                      th:text="${'전체'}"
+                    >
+                    </option>
+                    <option
+                      th:value="${'goods'}"
+                      th:selected="${categoryHandler == 'goods'}"
+                      th:text="${'상품 문의'}"
+                    >
+                    </option>
+                    <option
+                      th:value="${'exchange'}"
+                      th:selected="${categoryHandler == 'exchange'}"
+                      th:text="${'교환 문의'}"
+                    >
+                    </option>
+                    <option
+                      th:value="${'refund'}"
+                      th:selected="${categoryHandler == 'refund'}"
+                      th:text="${'환불 문의'}"
+                    >
+                    </option>
+                    <option
+                      th:value="${'payment'}"
+                      th:selected="${categoryHandler == 'payment'}"
+                      th:text="${'결제 문의'}"
+                    >
+                    </option>
+                    <option
+                      th:value="${'delivery'}"
+                      th:selected="${categoryHandler == 'delivery'}"
+                      th:text="${'배송 문의'}"
+                    >
+                    </option>
+                    <option
+                      th:value="${'etc'}"
+                      th:selected="${categoryHandler == 'etc'}"
+                      th:text="${'기타 문의'}"
+                    >
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="d-row-between">
+                <!-- search type -->
+                <div class="d-row-center w-25p">
+                  <select
+                    th:id="${'type'}"
+                    th:name="${'type'}"
+                    th:class="${'form-control'}"
+                  >
+                    <option
+                      th:value="${'all'}"
+                      th:selected="${typeHandler == 'all'}"
+                      th:text="${'전체'}"
+                    >
+                    </option>
+                    <option
+                      th:value="${'title'}"
+                      th:selected="${typeHandler == 'title'}"
+                      th:text="${'제목'}"
+                    >
+                    </option>
+                    <option
+                      th:value="${'contents'}"
+                      th:selected="${typeHandler == 'contents'}"
+                      th:text="${'내용'}"
+                    >
+                  </select>
+                </div>
+                <!-- search input -->
+                <div class="d-row-center w-70p p-relative">
+                  <input
+                    th:type="${'search'}"
+                    th:id="${'keyword'}"
+                    th:name="${'keyword'}"
+                    th:value="${keywordHandler}"
+                    th:placeholder="${'search'}"
+                    th:class="${'form-control p-relative pe-4vw'}"
+                  />
+                  <i
+                    th:id="${'searchIcon'}"
+                    th:name="${'searchIcon'}"
+                    th:class="${'fas fa-search fa-lg pointer p-absolute'}"
+                    th:style="${'top: 50%; right: 10px; transform: translateY(-50%);'}"
+                    th:onclick="|document.getElementById('arrangeForm').submit()|"
+                  ></i>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- hr -->
+        <hr
+          th:id="${'hr'}"
+          th:name="${'hr'}"
+          th:class="${'mt-20 mb-20'}"
+        />
         <!-- button -->
         <div class="row d-row-center">
           <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
@@ -163,17 +274,17 @@
               th:type="${'button'}"
               th:class="${'btn btn-dark w-90p'}"
               th:if="${session.member_id != null}"
-              th:onclick="|location.href='| + @{${'/' + page + '/add' + PAGE}} + |'|"
+              th:onclick="|location.href='@{|/${page}/add${PAGE}|}'|"
             >
-              QnA 추가
+              등록하기
             </button>
             <button
               th:type="${'button'}"
               th:class="${'btn btn-dark w-90p'}"
               th:if="${session.member_id == null}"
-              th:onclick="|return sessionAlert()|"
+              th:onclick="|sessionAlert()|"
             >
-              QnA 추가
+              등록하기
             </button>
           </div>
           <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">

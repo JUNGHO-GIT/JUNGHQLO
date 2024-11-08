@@ -16,7 +16,7 @@
 
   <!-- main -->
   <main class="container-fluid px-30">
-    <div class="row">
+    <div class="row d-row-center">
       <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
         <!-- title -->
         <div class="row d-row-center mb-20">
@@ -30,7 +30,7 @@
         <div class="row mb-20">
           <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
             <form
-              th:method="${'GET'}"
+              th:method="${'POST'}"
               th:action="@{|/member/listMember}"
               th:onchange="|this.submit()|"
               th:class="${'d-row-left w-90p'}"
@@ -40,7 +40,7 @@
                 th:class="${'fas fa-sort-amount-down fa-lg me-10'}"
               ></i>
               <select name="sort" class="form-control w-50p">
-                <option value="default">정렬</option>
+                <option value="all">정렬</option>
                 <option value="idASC">아이디순(오름차순)</option>
                 <option value="idDESC">아이디순(내림차순)</option>
                 <option value="nameASC">이름순(내림차순)</option>
@@ -52,12 +52,12 @@
           </div>
           <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
             <form
+              th:method="${'POST'}"
               th:id="${'searchForm'}"
-              th:method="${'GET'}"
               th:action="@{|/member/searchMember}"
               th:class="${'d-row-right'}"
             >
-              <select class="form-control" name="searchType">
+              <select class="form-control" name="type">
                 <option value="id">아이디</option>
                 <option value="name">이름</option>
               </select>

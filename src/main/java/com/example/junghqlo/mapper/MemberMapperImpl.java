@@ -17,41 +17,28 @@ public class MemberMapperImpl implements MemberMapper {
     this.sqlSession = sqlSession;
   }
 
-  // 1-1. listMember ------------------------------------------------------------------------------
+  // 1. listMember ------------------------------------------------------------------------------
   @Override
-  public List<Member> listMember(String sort) {
-
-    return sqlSession.selectList("listMember", sort);
-  }
-
-  // 1-2. searchMember -----------------------------------------------------------------------------
-  @Override
-  public List<Member> searchMember(String searchType, String keyword) throws Exception {
+  public List<Member> listMember(
+    String sort,
+    String type,
+    String keyword
+  ) throws Exception {
 
     Map<String, Object> map = new HashMap<>();
-    map.put("searchType", searchType);
+    map.put("sort", sort);
+    map.put("type", type);
     map.put("keyword", keyword);
 
-    return sqlSession.selectList("searchMember", map);
+    return sqlSession.selectList("listMember", map);
   }
 
-  // 2. detailMember -------------------------------------------------------------------------------
+  // 1-3. findMemberId -----------------------------------------------------------------------------
   @Override
-  public Member detailMember(Integer member_number) {
-
-    return sqlSession.selectOne("detailMember", member_number);
-  }
-
-  // 2-1. numberMember -----------------------------------------------------------------------------
-  @Override
-  public Integer numberMember(String member_id) {
-
-    return sqlSession.selectOne("numberMember", member_id);
-  }
-
-  // 2-1. findMemberId -----------------------------------------------------------------------------
-  @Override
-  public String findMemberId(String member_name, String member_email) {
+  public String findMemberId(
+    String member_name,
+    String member_email
+  ) throws Exception {
 
     Map<String, Object> map = new HashMap<>();
     map.put("member_name", member_name);
@@ -60,9 +47,13 @@ public class MemberMapperImpl implements MemberMapper {
     return sqlSession.selectOne("findMemberId", map);
   }
 
-  // 2-2. findMemberPw -----------------------------------------------------------------------------
+  // 1-4. findMemberPw -----------------------------------------------------------------------------
   @Override
-  public String findMemberPw(String member_name, String member_id, String member_email) {
+  public String findMemberPw(
+    String member_name,
+    String member_id,
+    String member_email
+  ) throws Exception {
 
     Map<String, Object> map = new HashMap<>();
     map.put("member_name", member_name);
@@ -72,9 +63,29 @@ public class MemberMapperImpl implements MemberMapper {
     return sqlSession.selectOne("findMemberPw", map);
   }
 
+  // 2-1. detailMember -----------------------------------------------------------------------------
+  @Override
+  public Member detailMember(
+    Integer member_number
+  ) throws Exception {
+
+    return sqlSession.selectOne("detailMember", member_number);
+  }
+
+  // 2-2. getMemberNumber --------------------------------------------------------------------------
+  @Override
+  public Integer getMemberNumber(
+    String member_id
+  ) throws Exception {
+
+    return sqlSession.selectOne("getMemberNumber", member_id);
+  }
+
   // 2-3 checkMemberId ----------------------------------------------------------------------------
   @Override
-  public Integer checkMemberId(String member_id) {
+  public Integer checkMemberId(
+    String member_id
+  ) throws Exception {
 
     Integer result = 0;
 
@@ -90,7 +101,10 @@ public class MemberMapperImpl implements MemberMapper {
 
   // 2-4 checkMemberIdPw --------------------------------------------------------------------------
   @Override
-  public Integer checkMemberIdPw(String member_id, String member_pw) {
+  public Integer checkMemberIdPw(
+    String member_id,
+    String member_pw
+  ) throws Exception {
 
     Integer result = 0;
 
@@ -108,23 +122,30 @@ public class MemberMapperImpl implements MemberMapper {
     return result;
   }
 
-  // 3. addMember ----------------------------------------------------------------------------------
+  // 3-1. addMember --------------------------------------------------------------------------------
   @Override
-  public void addMember(Member member) {
+  public void addMember(
+    Member member
+  ) throws Exception {
 
     sqlSession.insert("addMember", member);
   }
 
-  // 4. updateMember -------------------------------------------------------------------------------
+  // 4-1. updateMember -----------------------------------------------------------------------------
   @Override
-  public void updateMember(Member member) {
+  public void updateMember(
+    Member member
+  ) throws Exception {
 
     sqlSession.update("updateMember", member);
   }
 
-  // 4-1. updateMemberPw ---------------------------------------------------------------------------
+  // 4-2. updateMemberPw ---------------------------------------------------------------------------
   @Override
-  public Integer updateMemberPw(String member_id, String member_pw) {
+  public Integer updateMemberPw(
+    String member_id,
+    String member_pw
+  ) throws Exception {
 
     Map<String, Object> map = new HashMap<>();
     map.put("member_id", member_id);
@@ -135,7 +156,11 @@ public class MemberMapperImpl implements MemberMapper {
 
   // 5. deleteMember -------------------------------------------------------------------------------
   @Override
-  public Integer deleteMember(String member_name, String member_id, String member_pw) {
+  public Integer deleteMember(
+    String member_name,
+    String member_id,
+    String member_pw
+  ) throws Exception {
 
     Integer result = 0;
 
@@ -156,7 +181,9 @@ public class MemberMapperImpl implements MemberMapper {
 
   // 6. logoutMember -------------------------------------------------------------------------------
   @Override
-  public void logoutMember(HttpSession session) {
+  public void logoutMember(
+    HttpSession session
+  ) throws Exception {
 
     session.invalidate();
   }

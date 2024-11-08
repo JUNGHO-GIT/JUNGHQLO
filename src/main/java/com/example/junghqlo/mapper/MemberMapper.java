@@ -19,128 +19,86 @@ public interface MemberMapper {
   // 0. result mapping -----------------------------------------------------------------------------
   @Results ({
     @Result (
-      property="member_number",
-      column="member_number",
-      id=true
+      property = "member_number",
+      column = "member_number",
+      id = true
     ),
     @Result (
-      property="member_id",
-      column="member_id"
+      property = "member_id",
+      column = "member_id"
     ),
     @Result (
-      property="member_pw",
-      column="member_pw"
+      property = "member_pw",
+      column = "member_pw"
     ),
     @Result (
-      property="member_name",
-      column="member_name"
+      property = "member_name",
+      column = "member_name"
     ),
     @Result (
-      property="member_phone",
-      column="member_phone"
+      property = "member_phone",
+      column = "member_phone"
     ),
     @Result (
-      property="member_email",
-      column="member_email"
+      property = "member_email",
+      column = "member_email"
     ),
     @Result (
-      property="member_address1",
-      column="member_address1"
+      property = "member_address1",
+      column = "member_address1"
     ),
     @Result (
-      property="member_address2",
-      column="member_address2"
+      property = "member_address2",
+      column = "member_address2"
     ),
     @Result (
-      property="member_agree",
-      column="member_agree"
+      property = "member_agree",
+      column = "member_agree"
     ),
     @Result (
-      property="member_agree",
-      column="member_agree"
+      property = "member_agree",
+      column = "member_agree"
     ),
     @Result (
-      property="member_date",
-      column="member_date",
+      property = "member_date",
+      column = "member_date",
       typeHandler = LocalDateTimeTypeHandler.class
     ),
     @Result (
-      property="member_update",
-      column="member_update",
+      property = "member_update",
+      column = "member_update",
       typeHandler = LocalDateTimeTypeHandler.class
     ),
     @Result (
-      property="email_code",
-      column="email_code"
+      property = "email_code",
+      column = "email_code"
     ),
     @Result (
-      property="email_code",
-      column="email_code"
+      property = "email_code",
+      column = "email_code"
     ),
   })
 
-  // 1-1. listMember -------------------------------------------------------------------------------
+  // 1. listMember ---------------------------------------------------------------------------------
   @Select(
     """
     SELECT
       *
     FROM
       member
+    WHERE
+      ${type} LIKE CONCAT('%', #{keyword}, '%')
     ORDER BY
       ${sort}
     """
   )
   List<Member> listMember(
-    @Param("sort") String sort
-  ) throws Exception;
-
-  // 1-2. searchMember -----------------------------------------------------------------------------
-  @Select(
-    """
-    SELECT
-      *
-    FROM
-      member
-    WHERE
-      ${keyword} LIKE CONCAT('%', #{searchType}, '%')
-    """
-  )
-  List<Member> searchMember(
-    @Param("searchType") String searchType,
+    @Param("sort") String sort,
+    @Param("type") String type,
     @Param("keyword") String keyword
   ) throws Exception;
 
-  // 2. detailMember--------------------------------------------------------------------------------
-  @Select(
-    """
-    SELECT
-      *
-    FROM
-      member
-    WHERE
-      member_number=#{member_number}
-    """
-  )
-  Member detailMember(
-    @Param("member_number") Integer member_number
-  ) throws Exception;
-
-  // 2-1. numberMember -----------------------------------------------------------------------------
-  @Select(
-    """
-    SELECT
-      member_number
-    FROM
-      member
-    WHERE
-      member_id=#{member_id}
-    """
-  )
-  Integer numberMember(
-    @Param("member_id") String member_id
-  ) throws Exception;
-
-  // 2-1. findMemberId -----------------------------------------------------------------------------
+  // 1-3. findMemberId -----------------------------------------------------------------------------
   @Select(
     """
     SELECT
@@ -148,9 +106,9 @@ public interface MemberMapper {
     FROM
       member
     WHERE
-      member_name=#{member_name}
+      member_name = #{member_name}
       AND
-      member_email=#{member_email}
+      member_email = #{member_email}
     """
   )
   String findMemberId(
@@ -158,7 +116,7 @@ public interface MemberMapper {
     @Param("member_email") String member_email
   ) throws Exception;
 
-  // 2-2. findMemberPw -----------------------------------------------------------------------------
+  // 1-4. findMemberPw -----------------------------------------------------------------------------
   @Select(
     """
     SELECT
@@ -166,11 +124,11 @@ public interface MemberMapper {
     FROM
       member
     WHERE
-      member_id=#{member_id}
+      member_id = #{member_id}
       AND
-      member_name=#{member_name}
+      member_name = #{member_name}
       AND
-      member_email=#{member_email}
+      member_email = #{member_email}
     """
   )
   String findMemberPw(
@@ -179,7 +137,37 @@ public interface MemberMapper {
     @Param("member_email") String member_email
   ) throws Exception;
 
-  // 2-3 checkMemberId ----------------------------------------------------------------------------
+  // 2-1. detailMember -----------------------------------------------------------------------------
+  @Select(
+    """
+    SELECT
+      *
+    FROM
+      member
+    WHERE
+      member_number = #{member_number}
+    """
+  )
+  Member detailMember(
+    @Param("member_number") Integer member_number
+  ) throws Exception;
+
+  // 2-2. getMemberNumber --------------------------------------------------------------------------
+  @Select(
+    """
+    SELECT
+      member_number
+    FROM
+      member
+    WHERE
+      member_id = #{member_id}
+    """
+  )
+  Integer getMemberNumber(
+    @Param("member_id") String member_id
+  ) throws Exception;
+
+  // 2-3 checkMemberId -----------------------------------------------------------------------------
   @Select(
     """
     SELECT
@@ -212,7 +200,7 @@ public interface MemberMapper {
     @Param("member_pw") String member_pw
   ) throws Exception;
 
-  // 3. addMember ----------------------------------------------------------------------------------
+  // 3-1. addMember --------------------------------------------------------------------------------
   @Insert(
     """
     INSERT INTO
@@ -246,38 +234,38 @@ public interface MemberMapper {
     Member member
   ) throws Exception;
 
-  // 4. updateMember ------------------------------------------------------------------------------
+  // 4-1. updateMember -----------------------------------------------------------------------------
   @Update(
     """
     UPDATE
       member
     SET
-      member_id=#{member_id},
-      member_pw=#{member_pw},
-      member_name=#{member_name},
-      member_phone=#{member_phone},
-      member_email=#{member_email},
-      member_address1=#{member_address1},
-      member_address2=#{member_address2},
-      member_agree=#{member_agree},
-      member_update=NOW()
+      member_id = #{member_id},
+      member_pw = #{member_pw},
+      member_name = #{member_name},
+      member_phone = #{member_phone},
+      member_email = #{member_email},
+      member_address1 = #{member_address1},
+      member_address2 = #{member_address2},
+      member_agree = #{member_agree},
+      member_update = NOW()
     WHERE
-      member_id=#{member_id}
+      member_id = #{member_id}
     """
   )
   void updateMember(
     Member member
   ) throws Exception;
 
-  // 4-1. updateMemberPw --------------------------------------------------------------------------
+  // 4-2. updateMemberPw ---------------------------------------------------------------------------
   @Update(
     """
     UPDATE
       member
     SET
-      member_pw=#{member_pw}
+      member_pw = #{member_pw}
     WHERE
-      member_id=#{member_id}
+      member_id = #{member_id}
     """
   )
   Integer updateMemberPw(
@@ -291,11 +279,11 @@ public interface MemberMapper {
     DELETE FROM
       member
     WHERE
-      member_name=#{member_name}
+      member_name = #{member_name}
     AND
-      member_id=#{member_id}
+      member_id = #{member_id}
     AND
-      member_pw=#{member_pw}
+      member_pw = #{member_pw}
     """
   )
   Integer deleteMember(

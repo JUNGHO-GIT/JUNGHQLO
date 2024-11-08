@@ -16,7 +16,7 @@
 
   <!-- main -->
   <main class="container-fluid px-30">
-    <div class="row">
+    <div class="row d-row-center">
       <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
     <div class="row mb-3 jungho-inline">
       <!-- sorting -->
@@ -25,7 +25,7 @@
           <i class="fas fa-sort-amount-down fa-lg"></i>&nbsp;&nbsp;
           <form th:action="@{|/orders/listOrders}" th:method="${'GET" onchange="this.submit()'}">
             <select name="sort" class="form-control w-50p">
-              <option value="default">정렬</option>
+              <option value="all">정렬</option>
               <option value="nameASC">이름순(오름차순)</option>
               <option value="nameDESC">이름순(내림차순)</option>
               <option value="priceASC">가격낮은순</option>
@@ -40,7 +40,7 @@
       <div class="col-lg-6 col-md-6 col-sm-6 col-6">
         <form id="searchForm" th:method="${'GET" th:action="@{|/orders/searchOrders}'}">
           <div class="jungho-right">
-            <select class="ft-5 fw-8 ms-2 searchSelect" th:name="${'searchType" th:id="searchType'}">
+            <select class="ft-5 fw-8 ms-2 searchSelect" th:name="${'type" th:id="type'}">
               <option value="name">Name</option>
             </select>
             <input class="form-control ft-7 fw-7 me-1 searchBar" th:type="${'search" th:id="|keyword" th:placeholder="search" th:name="keyword|'}" required/>

@@ -40,4 +40,5 @@ target/
 # folders
 .settings/
 .vscode/
+**META-INF/**
 

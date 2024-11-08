@@ -21,6 +21,7 @@ public class Product {
   private MultipartFile product_imgsFile2;
   private String product_imgsUrl1;
   private String product_imgsUrl2;
+
   // stripe
   private String stripe_id;
   private String stripe_price;

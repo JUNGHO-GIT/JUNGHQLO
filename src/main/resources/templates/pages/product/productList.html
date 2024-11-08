@@ -161,7 +161,7 @@
               <i class="fas fa-sort-amount-down fa-lg"></i>&nbsp;&nbsp;
               <form th:action="@{|/product/listProduct}" th:method="${'GET" onchange="this.submit()" th:id="searchForm'}">
                 <select name="sort" class="form-control w-50p">
-                  <option value="default">정렬</option>
+                  <option value="all">정렬</option>
                   <option value="nameASC">이름순(오름차순)</option>
                   <option value="nameDESC">이름순(내림차순)</option>
                   <option value="priceASC">가격낮은순</option>
@@ -176,7 +176,7 @@
           <div class="col-lg-6 col-md-6 col-sm-6 col-6">
             <form id="searchForm" th:method="${'GET" th:action="@{|/product/searchProduct}'}">
               <div class="jungho-right">
-                <select class="ft-5 fw-8 ms-2 searchSelect" th:name="${'searchType" th:id="searchType'}">
+                <select class="ft-5 fw-8 ms-2 searchSelect" th:name="${'type" th:id="type'}">
                   <option value="name">Name</option>
                   <option value="detail">Detail</option>
                 </select>

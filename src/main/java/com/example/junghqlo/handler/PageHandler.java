@@ -17,8 +17,17 @@ public class PageHandler<T> {
   private List<T> content;
 
   // constructor ---------------------------------------------------------------------------------->
-  public PageHandler(Integer pageNumber, Integer pageStart, Integer pageEnd, Integer pageFirst, Integer pageLast,Integer itemsPer, Integer itemsTotal, List<T> content) {
-  this.pageNumber = pageNumber;
+  public PageHandler(
+    Integer pageNumber,
+    Integer pageStart,
+    Integer pageEnd,
+    Integer pageFirst,
+    Integer pageLast,
+    Integer itemsPer,
+    Integer itemsTotal,
+    List<T> content
+  ) {
+    this.pageNumber = pageNumber;
     this.pageStart = pageStart;
     this.pageEnd = pageEnd;
     this.pageFirst = pageFirst;

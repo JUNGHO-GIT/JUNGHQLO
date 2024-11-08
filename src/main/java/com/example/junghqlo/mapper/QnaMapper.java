@@ -19,68 +19,68 @@ public interface QnaMapper {
   // 0. result mapping -----------------------------------------------------------------------------
   @Results ({
     @Result (
-      property="qna_number",
-      column="qna_number",
-      id=true
+      property = "qna_number",
+      column = "qna_number",
+      id = true
     ),
     @Result (
-      property="qna_title",
-      column="qna_title"
+      property = "qna_title",
+      column = "qna_title"
     ),
     @Result (
-      property="qna_contents",
-      column="qna_contents"
+      property = "qna_contents",
+      column = "qna_contents"
     ),
     @Result (
-      property="qna_writer",
-      column="qna_writer"
+      property = "qna_writer",
+      column = "qna_writer"
     ),
     @Result (
-      property="qna_category",
-      column="qna_category"
+      property = "qna_category",
+      column = "qna_category"
     ),
     @Result (
-      property="qna_count",
-      column="qna_count"
+      property = "qna_count",
+      column = "qna_count"
     ),
     @Result (
-      property="qna_like",
-      column="qna_like"
+      property = "qna_like",
+      column = "qna_like"
     ),
     @Result (
-      property="qna_dislike",
-      column="qna_dislike"
+      property = "qna_dislike",
+      column = "qna_dislike"
     ),
     @Result (
-      property="qna_answer1",
-      column="qna_answer1"
+      property = "qna_answer1",
+      column = "qna_answer1"
     ),
     @Result (
-      property="qna_answer2",
-      column="qna_answer2"
+      property = "qna_answer2",
+      column = "qna_answer2"
     ),
     @Result (
-      property="qna_imgsFile",
-      column="qna_imgsFile",
-      typeHandler=MultipartFileHandler.class
+      property = "qna_imgsFile",
+      column = "qna_imgsFile",
+      typeHandler = MultipartFileHandler.class
     ),
     @Result (
-      property="qna_imgsUrl",
-      column="qna_imgsUrl"
+      property = "qna_imgsUrl",
+      column = "qna_imgsUrl"
     ),
     @Result (
-      property="qna_date",
-      column="qna_date",
-      typeHandler=LocalDateTimeTypeHandler.class
+      property = "qna_date",
+      column = "qna_date",
+      typeHandler = LocalDateTimeTypeHandler.class
     ),
     @Result (
-      property="qna_update",
-      column="qna_update",
-      typeHandler=LocalDateTimeTypeHandler.class
+      property = "qna_update",
+      column = "qna_update",
+      typeHandler = LocalDateTimeTypeHandler.class
     )
   })
 
-  // 1-1. listQna ----------------------------------------------------------------------------------
+  // 1. listQna ----------------------------------------------------------------------------------
   @Select(
     """
     SELECT
@@ -88,26 +88,17 @@ public interface QnaMapper {
     FROM
       qna
     WHERE
+      ${category}
+    AND
+      ${type} LIKE CONCAT('%', #{keyword}, '%')
+    ORDER BY
       ${sort}
     """
   )
   List<Qna> listQna(
-    @Param("sort") String sort
-  ) throws Exception;
-
-  // 1-2. searchQna --------------------------------------------------------------------------------
-  @Select(
-    """
-    SELECT
-      *
-    FROM
-      qna
-    WHERE
-      ${keyword} LIKE CONCAT('%', #{searchType}, '%')
-    """
-  )
-  List<Qna> searchQna(
-    @Param("searchType") String searchType,
+    @Param("sort") String sort,
+    @Param("category") String category,
+    @Param("type") String type,
     @Param("keyword") String keyword
   ) throws Exception;
 
@@ -119,7 +110,7 @@ public interface QnaMapper {
     FROM
       qna
     WHERE
-      qna_number=#{qna_number}
+      qna_number = #{qna_number}
     """
   )
   Qna detailQna(
@@ -154,7 +145,7 @@ public interface QnaMapper {
       #{qna_dislike},
       #{qna_answer1},
       #{qna_answer2},
-      #{qna_imgsFile, typeHandler=MultipartFileHandler},
+      #{qna_imgsFile, typeHandler = MultipartFileHandler},
       #{qna_imgsUrl},
       NOW()
     )
@@ -170,34 +161,34 @@ public interface QnaMapper {
     UPDATE
       qna
     SET
-      qna_title=#{qna_title},
-      qna_contents=#{qna_contents},
-      qna_category=#{qna_category},
-      qna_answer1=#{qna_answer1},
-      qna_answer2=#{qna_answer2},
-      qna_imgsFile=#{qna_imgsFile, typeHandler=MultipartFileHandler},
-      qna_imgsUrl=#{qna_imgsUrl},
-      qna_update=NOW()
+      qna_title = #{qna_title},
+      qna_contents = #{qna_contents},
+      qna_category = #{qna_category},
+      qna_answer1 = #{qna_answer1},
+      qna_answer2 = #{qna_answer2},
+      qna_imgsFile = #{qna_imgsFile, typeHandler = MultipartFileHandler},
+      qna_imgsUrl = #{qna_imgsUrl},
+      qna_update = NOW()
     WHERE
-      qna_number=#{qna_number}
+      qna_number = #{qna_number}
     """
   )
   void updateQna(
     Qna qna
   ) throws Exception;
 
-  // 4-2. updateQnaCount ---------------------------------------------------------------------------
+  // 4-2. updateCount ------------------------------------------------------------------------------
   @Update(
     """
     UPDATE
       qna
     SET
-      qna_count=qna_count+1
+      qna_count = qna_count + 1
     WHERE
-      qna_number=#{qna_number}
+      qna_number = #{qna_number}
     """
   )
-  void updateQnaCount(
+  void updateCount(
     Integer qna_number
   ) throws Exception;
 
@@ -207,9 +198,9 @@ public interface QnaMapper {
     UPDATE
       qna
     SET
-      qna_like=qna_like+1
+      qna_like = qna_like + 1
     WHERE
-      qna_number=#{qna_number}
+      qna_number = #{qna_number}
     """
   )
   void updateLike(
@@ -222,9 +213,9 @@ public interface QnaMapper {
     UPDATE
       qna
     SET
-      qna_dislike=qna_dislike+1
+      qna_dislike = qna_dislike + 1
     WHERE
-      qna_number=#{qna_number}
+      qna_number = #{qna_number}
     """
   )
   void updateDislike(
@@ -237,11 +228,10 @@ public interface QnaMapper {
     DELETE FROM
       qna
     WHERE
-      qna_number=#{qna_number}
+      qna_number = #{qna_number}
     """
   )
   Integer deleteQna(
     Integer qna_number
   ) throws Exception;
-
 }

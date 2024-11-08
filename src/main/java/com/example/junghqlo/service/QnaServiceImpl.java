@@ -23,24 +23,30 @@ public class QnaServiceImpl implements QnaService {
   // 0. constructor injection ----------------------------------------------------------------------
   private QnaMapper qnaMapper;
   QnaServiceImpl(QnaMapper qnaMapper) {
-  this.qnaMapper = qnaMapper;
+    this.qnaMapper = qnaMapper;
   }
 
-  // 1-1. listQna ---------------------------------------------------------------------------------
+  // 1. listQna ---------------------------------------------------------------------------------
   @Override
-  public PageHandler<Qna> listQna(Integer pageNumber, Integer itemsPer, String sort, Qna qna) throws Exception {
+  public PageHandler<Qna> listQna(
+    Integer pageNumber,
+    Integer itemsPer,
+    String sort,
+    String category,
+    String type,
+    String keyword,
+    Qna qna
+  ) throws Exception {
 
-    List<Qna> content = qnaMapper.listQna(sort);
+    List<Qna> content = qnaMapper.listQna(sort, category, type, keyword);
 
     Integer itemsTotal = content.size();
     Integer pageLast = (itemsTotal + itemsPer - 1) / itemsPer;
 
-    // Ensure the pageNumber is greater than 0
     if (pageNumber <= 0) {
       pageNumber = 1;
     }
 
-    // Ensure the pageNumber does not exceed pageLast, only if pageLast is greater than 0
     if (pageLast > 0 && pageNumber > pageLast) {
       pageNumber = pageLast;
     }
@@ -50,7 +56,6 @@ public class QnaServiceImpl implements QnaService {
 
     List<Qna> pageContent;
 
-    // If pageStart is greater than or equal to itemsTotal, set pageContent to an empty list
     if (pageStart >= itemsTotal) {
       pageContent = new ArrayList<>();
     }
@@ -63,48 +68,18 @@ public class QnaServiceImpl implements QnaService {
 
   // 2. detailQna ------------------------------------------------------------------------------
   @Override
-  public Qna detailQna(Integer qna_number) throws Exception {
+  public Qna detailQna(
+    Integer qna_number
+  ) throws Exception {
 
     return qnaMapper.detailQna(qna_number);
   }
 
-  // 1-2. searchQna ----------------------------------------------------------------------------------
-  @Override
-  public PageHandler<Qna> searchQna(Integer pageNumber, Integer itemsPer, String searchType, String keyword, Qna qna) throws Exception {
-
-    List<Qna> content = qnaMapper.searchQna(searchType, keyword);
-    Integer itemsTotal = content.size();
-    Integer pageLast = (itemsTotal + itemsPer - 1) / itemsPer;
-
-    // Ensure the pageNumber is greater than 0
-    if (pageNumber <= 0) {
-      pageNumber = 1;
-    }
-
-    // Ensure the pageNumber does not exceed pageLast, only if pageLast is greater than 0
-    if (pageLast > 0 && pageNumber > pageLast) {
-      pageNumber = pageLast;
-    }
-
-    Integer pageStart = (pageNumber - 1) * itemsPer;
-    Integer pageEnd = Math.min(pageStart + itemsPer, itemsTotal);
-
-    List<Qna> pageContent;
-
-    // If pageStart is greater than or equal to itemsTotal, set pageContent to an empty list
-    if (pageStart >= itemsTotal) {
-      pageContent = new ArrayList<>();
-    }
-    else {
-      pageContent = content.subList(pageStart, pageEnd);
-    }
-
-    return new PageHandler<>(pageNumber, pageStart, pageEnd, 1, pageLast, itemsPer, itemsTotal, pageContent);
-  }
-
   // 3. addQna -------------------------------------------------------------------------------------
   @Override
-  public void addQna(Qna qna) throws Exception {
+  public void addQna(
+    Qna qna
+  ) throws Exception {
 
     MultipartFile qna_imgsFile = qna.getQna_imgsFile();
 
@@ -145,9 +120,12 @@ public class QnaServiceImpl implements QnaService {
     qnaMapper.addQna(qna);
   }
 
-  // 4. updateQna ----------------------------------------------------------------------------------
+  // 4-1. updateQna --------------------------------------------------------------------------------
   @Override
-  public void updateQna(Qna qna, String existingImage) throws Exception {
+  public void updateQna(
+    Qna qna,
+    String existingImage
+  ) throws Exception {
 
     MultipartFile qna_imgsFile = qna.getQna_imgsFile();
 
@@ -187,17 +165,21 @@ public class QnaServiceImpl implements QnaService {
     qnaMapper.updateQna(qna);
   }
 
-  // 4-1. updateQnaCount ---------------------------------------------------------------------------
+  // 4-2. updateCount ------------------------------------------------------------------------------
   @Override
-  public void updateQnaCount(Integer qna_number, HttpSession session) throws Exception {
+  public void updateCount(
+    Integer qna_number,
+    HttpSession session
+  ) throws Exception {
 
     // 최초로 조회수를 올린 경우
     if (session.getAttribute("member_id") != null) {
       long update_time = 0;
 
       // 최근에 조회수를 올린 시간 검색
-      String qnaViewKey
-     ="update_qna_view" + qna_number + "_" + session.getAttribute("member_id");
+      String qnaViewKey = (
+        "update_qna_view" + qna_number + "_" + session.getAttribute("member_id")
+      );
 
       if (session.getAttribute(qnaViewKey) != null) {
         update_time = (long)session.getAttribute(qnaViewKey);
@@ -206,7 +188,7 @@ public class QnaServiceImpl implements QnaService {
 
       // 일정 시간이 경과한 후 조회수 증가 처리 (하루에 한번만 조회수 증가)
       if (current_time - update_time > 24 * 60 * 60 * 1000) {
-        qnaMapper.updateQnaCount(qna_number);
+        qnaMapper.updateCount(qna_number);
 
         // 조회수 증가 처리 시간 저장
         session.setAttribute(qnaViewKey, current_time);
@@ -214,17 +196,22 @@ public class QnaServiceImpl implements QnaService {
     }
   }
 
-  // 4-2. updateLike -------------------------------------------------------------------------------
+  // 4-3. updateLike -------------------------------------------------------------------------------
   @Override
-  public void updateLike(Integer qna_number, HttpSession session) throws Exception {
+  public void updateLike(
+    Integer qna_number,
+    HttpSession session
+  ) throws Exception {
 
     // 최초로 좋아요를 누른 경우
     if (session.getAttribute("member_id") != null) {
       long update_time = 0;
 
       // 최근에 좋아요를 누른 시간 검색
-      String qnaLikeKey
-     ="update_qna_like" + qna_number + "_" + session.getAttribute("member_id");
+      String qnaLikeKey = (
+        "update_qna_like" + qna_number + "_" + session.getAttribute("member_id")
+      );
+
       if (session.getAttribute(qnaLikeKey) != null) {
         update_time = (long) session.getAttribute(qnaLikeKey);
       }
@@ -240,17 +227,21 @@ public class QnaServiceImpl implements QnaService {
     }
   }
 
-  // 4-3. updateDislike ----------------------------------------------------------------------------
+  // 4-4. updateDislike ----------------------------------------------------------------------------
   @Override
-  public void updateDislike(Integer qna_number, HttpSession session) throws Exception {
+  public void updateDislike(
+    Integer qna_number,
+    HttpSession session
+  ) throws Exception {
 
     // 최초로 싫어요를 누른 경우
     if (session.getAttribute("member_id") != null) {
       long update_time = 0;
 
       // 최근에 싫어요를 누른 시간 검색
-      String qnaDislikeKey
-     ="update_qna_dislike" + qna_number + "_" + session.getAttribute("member_id");
+      String qnaDislikeKey = (
+        "update_qna_dislike" + qna_number + "_" + session.getAttribute("member_id")
+      );
 
       if (session.getAttribute(qnaDislikeKey) != null) {
         update_time = (long) session.getAttribute(qnaDislikeKey);
@@ -269,7 +260,9 @@ public class QnaServiceImpl implements QnaService {
 
   // 5. deleteQna ----------------------------------------------------------------------------------
   @Override
-  public Integer deleteQna(Integer qna_number) throws Exception {
+  public Integer deleteQna(
+    Integer qna_number
+  ) throws Exception {
 
     Integer result = 0;
 

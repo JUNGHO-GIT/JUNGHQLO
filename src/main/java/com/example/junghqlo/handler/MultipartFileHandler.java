@@ -21,6 +21,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 @MappedTypes(MultipartFile.class)
 public class MultipartFileHandler extends BaseTypeHandler<MultipartFile> {
 
+  // 1. setNonNullParameter ------------------------------------------------------------------------
   public void setNonNullParameter(PreparedStatement ps, int i, MultipartFile parameter, JdbcType jdbcType) throws SQLException {
     try {
       ps.setBlob(i, new javax.sql.rowset.serial.SerialBlob(parameter.getBytes()));
@@ -30,18 +31,21 @@ public class MultipartFileHandler extends BaseTypeHandler<MultipartFile> {
     }
   }
 
+  // 2. getNullableResult --------------------------------------------------------------------------
   @Override
   public MultipartFile getNullableResult(ResultSet rs, String columnName) throws SQLException {
     Blob blob = rs.getBlob(columnName);
     return blobToMultipartFile(blob);
   }
 
+  // 3. getNullableResult --------------------------------------------------------------------------
   @Override
   public MultipartFile getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
     Blob blob = rs.getBlob(columnIndex);
     return blobToMultipartFile(blob);
   }
 
+  // 4. getNullableResult --------------------------------------------------------------------------
   @Override
   public MultipartFile getNullableResult(CallableStatement cs, int columnIndex)
   throws SQLException {
@@ -49,7 +53,7 @@ public class MultipartFileHandler extends BaseTypeHandler<MultipartFile> {
     return blobToMultipartFile(blob);
   }
 
-  // MultipartFile -> Blob
+  // 5. blobToMultipartFile ------------------------------------------------------------------------
   private MultipartFile blobToMultipartFile(Blob blob) throws SQLException {
     if (blob == null) {
       return null;
@@ -57,7 +61,7 @@ public class MultipartFileHandler extends BaseTypeHandler<MultipartFile> {
     try {
       byte[] bytes = blob.getBytes(1, (int) blob.length());
       String fileName = UUID.randomUUID().toString();
-      String contentType="application/octet-stream";
+      String contentType = "application/octet-stream";
       DiskFileItemFactory factory = new DiskFileItemFactory();
       DiskFileItem fileItem = (DiskFileItem) factory.createItem("file", contentType, false, fileName);
       try (OutputStream os = fileItem.getOutputStream()) {

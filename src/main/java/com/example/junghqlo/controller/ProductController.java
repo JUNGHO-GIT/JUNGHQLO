@@ -28,129 +28,119 @@ public class ProductController {
   private static String page = "product";
   private static String PAGE = "Product";
 
-  // 1-1. listProduct (GET) ------------------------------------------------------------------------
+  // 1. listProduct (GET) --------------------------------------------------------------------------
   @GetMapping("/listProduct")
   public String listProduct(
     @ModelAttribute Product product,
-    @RequestParam(defaultValue = "default") String sort,
+    @RequestParam(defaultValue = "all") String sort,
+    @RequestParam(defaultValue = "all") String category,
+    @RequestParam(defaultValue = "title") String type,
+    @RequestParam(defaultValue = "") String keyword,
     @RequestParam(defaultValue = "1") Integer pageNumber,
     @RequestParam(defaultValue = "9") Integer itemsPer,
     Model model
   ) throws Exception {
 
-    // sort order
-    if (sort == null || sort.equals("default")) {
-      sort="RAND()";
+    // 1. Sort handling
+    String sortHandler = "";
+    if (sort == null || sort.equals("all")) {
+      sort = "product_date DESC";
+      sortHandler = "all";
     }
     else if (sort.equals("nameASC")) {
-      sort="product_name ASC";
+      sort = "product_name ASC";
+      sortHandler = "nameASC";
     }
     else if (sort.equals("nameDESC")) {
-      sort="product_name DESC";
+      sort = "product_name DESC";
+      sortHandler = "nameDESC";
     }
     else if (sort.equals("priceASC")) {
-      sort="product_price ASC";
+      sort = "product_price ASC";
+      sortHandler = "priceASC";
     }
     else if (sort.equals("priceDESC")) {
-      sort="product_price DESC";
+      sort = "product_price DESC";
+      sortHandler = "priceDESC";
     }
     else if (sort.equals("dateASC")) {
-      sort="product_date ASC";
+      sort = "product_date ASC";
+      sortHandler = "dateASC";
     }
     else if (sort.equals("dateDESC")) {
-      sort="product_date DESC";
+      sort = "product_date DESC";
+      sortHandler = "dateDESC";
     }
 
-    PageHandler<Product> pageHandler = (
-      productService.listProduct(pageNumber, itemsPer, sort, product)
+    // 2. Category handling
+    String categoryHandler = "";
+    if (category == null || category.equals("all")) {
+      category = "product_category IS NOT NULL";
+      categoryHandler = "all";
+    }
+    else if (category.equals("outer")) {
+      category = "product_category = 'outer'";
+      categoryHandler = "outer";
+    }
+    else if (category.equals("top")) {
+      category = "product_category = 'top'";
+      categoryHandler = "top";
+    }
+    else if (category.equals("bottom")) {
+      category = "product_category = 'bottom'";
+      categoryHandler = "bottom";
+    }
+    else if (category.equals("bag")) {
+      category = "product_category = 'bag'";
+      categoryHandler = "bag";
+    }
+    else if (category.equals("shoes")) {
+      category = "product_category = 'shoes'";
+      categoryHandler = "shoes";
+    }
+    else if (category.equals("acc")) {
+      category = "product_category = 'acc'";
+      categoryHandler = "acc";
+    }
+
+    // 3. Type handling
+    String typeHandler = "";
+    if (type == null || keyword == null) {
+      return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
+    }
+    else if (type.equals("all")) {
+      type = "product_name OR product_detail";
+      typeHandler = "all";
+    }
+    else if (type.equals("name")) {
+      type = "product_name";
+      typeHandler = "name";
+    }
+    else if (type.equals("detail")) {
+      type = "product_detail";
+      typeHandler = "detail";
+    }
+
+    // 4. Keyword handling
+    String keywordHandler = "";
+    if (keyword != null) {
+      keywordHandler = keyword;
+    }
+
+    PageHandler<Product> pageHandler = productService.listProduct(
+      pageNumber, itemsPer, sort, category, type, keyword, product
     );
 
     // 모델
-    model.addAttribute("sort", sort);
+    model.addAttribute("sortHandler", sortHandler);
+    model.addAttribute("categoryHandler", categoryHandler);
+    model.addAttribute("typeHandler", typeHandler);
+    model.addAttribute("keywordHandler", keywordHandler);
     model.addAttribute("pageHandler", pageHandler);
     model.addAttribute("LIST", pageHandler.getContent());
 
     return MessageFormat.format("/pages/{0}/{1}List", page, page);
   };
-
-  // 1-2. searchProduct (GET) ----------------------------------------------------------------------
-  @GetMapping("/searchProduct")
-  public String searchProduct(
-    @ModelAttribute Product product,
-    @RequestParam(defaultValue = "default") String sort,
-    @RequestParam(defaultValue = "1") Integer pageNumber,
-    @RequestParam(defaultValue = "9") Integer itemsPer,
-    @RequestParam String searchType,
-    @RequestParam String keyword,
-    Model model
-  ) throws Exception {
-
-    // searchType order
-    if (searchType == null || keyword == null) {
-      return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
-    }
-    else if (searchType.equals("name")) {
-      searchType="product_name";
-    }
-    else if (searchType.equals("detail")) {
-      searchType="product_detail";
-    }
-
-    PageHandler<Product> pageHandler = (
-      productService.searchProduct(pageNumber, itemsPer, searchType, keyword, product)
-    );
-
-    // 모델
-    model.addAttribute("sort", sort);
-    model.addAttribute("pageHandler", pageHandler);
-    model.addAttribute("LIST", pageHandler.getContent());
-
-    return MessageFormat.format("/pages/{0}/{1}List", page, page);
-  }
-
-  // 1-1. categoryProduct (GET) -----------------------------------------------------------------
-  @GetMapping("/categoryProduct")
-  public String categoryProduct(
-    @ModelAttribute Product product,
-    @RequestParam(defaultValue = "default") String sort,
-    @RequestParam(defaultValue = "1") Integer pageNumber,
-    @RequestParam(defaultValue = "9") Integer itemsPer,
-    @RequestParam String category,
-    Model model
-  ) throws Exception {
-
-    sort="product_number DESC";
-    // category order
-    if (category.equals("outer")) {
-      category="'아우터'";
-    }
-    else if (category.equals("top")) {
-      category="'상의'";
-    }
-    else if (category.equals("bottom")) {
-      category="'하의'";
-    }
-    else if (category.equals("bag")) {
-      category="'가방'";
-    }
-    else if (category.equals("shoes")) {
-      category="'신발'";
-    }
-    else if (category.equals("acc")) {
-      category="'악세서리'";
-    }
-
-    PageHandler<Product> pageHandler = (
-      productService.categoryProduct(pageNumber, itemsPer, category, sort, product)
-    );
-
-    // 모델
-    model.addAttribute("sort", sort);
-    model.addAttribute("pageHandler", pageHandler);
-    model.addAttribute("LIST", pageHandler.getContent());
-
-    return MessageFormat.format("/pages/{0}/{1}List", page, page);
-  }
 
   // 2. detailProduct(GET) -------------------------------------------------------------------------
   @GetMapping("/detailProduct")
@@ -184,7 +174,7 @@ public class ProductController {
     @RequestParam Integer product_price
   ) throws Exception {
 
-    productService.addProduct(product, product_name, product_detail, product_price);
+    productService.addProduct(product_name, product_detail, product_price, product);
 
     return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
   }
@@ -210,7 +200,7 @@ public class ProductController {
     @RequestParam String product_imgsUrl2
   ) throws Exception {
 
-    productService.updateProduct(product, product_imgsUrl1, product_imgsUrl2);
+    productService.updateProduct(product_imgsUrl1, product_imgsUrl2, product);
 
     return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
   }

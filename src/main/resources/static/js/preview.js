@@ -8,17 +8,12 @@
 
 function junghoPreview(index) {
 
-  if(index == '' || index == null) {
-    index = '';
-  }
+  const imageFile = getById(`imageFile${index || ""}`);
+  const imageBox = getById("imageBox");
+  const imageLoader = getById("imageLoader");
 
-  // variables (getElement는 document.getElementById를 간략화한 함수) ----------------------------->
-  const getElement = (id) => document.getElementById(id);
-  const imageFile = getElement(`imageFile${index}`);
-  const imageBox = getElement("imageBox");
-  const imageLoader = getElement("imageLoader");
-  const imageMiniBox = getElement(`imageMiniBox${index}`);
-  const imageMiniLoader = getElement(`imageMiniLoader${index}`);
+  const imageMiniBox = getById(`imageMiniBox${index || ""}`);
+  const imageMiniLoader = getById(`imageMiniLoader${index || ""}`);
 
   // processImageFiles(이미지 파일을 선택했을 때의 이벤트를 처리) --------------------------------->
   function processImageFiles() {
@@ -78,8 +73,17 @@ function junghoPreview(index) {
       const imageDimensions = {maxWidth, maxHeight, width, height, offsetX, offsetY,};
       renderImageOnCanvas(canvas, ctx, image, imageDimensions);
       const dataUrl = canvas.toDataURL();
-      setImageBox(imageBox, dataUrl, imageLoader);
-      setImageBoxMini(imageMiniBox, dataUrl, file.name, imageBox, getElement("imageMiniLoader" + index));
+
+      // 1. 일반 이미지 박스만 있는 경우
+      if (!index) {
+        setImageBox(imageBox, dataUrl, imageLoader);
+        return;
+      }
+      // 2. 미니 이미지 박스가 있는 경우
+      else {
+        setImageBox(imageBox, dataUrl, imageLoader);
+        setImageBoxMini(imageMiniBox, dataUrl, file.name, imageBox, imageMiniLoader);
+      }
     };
     image.src = src;
   }

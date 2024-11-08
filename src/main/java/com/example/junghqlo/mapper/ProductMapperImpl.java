@@ -16,41 +16,22 @@ public class ProductMapperImpl implements ProductMapper {
     this.sqlSession = sqlSession;
   }
 
-  // 1-1. listProduct -----------------------------------------------------------------------------
+  // 1. listProduct --------------------------------------------------------------------------------
   @Override
   public List<Product> listProduct(
-    String sort
-  ) throws Exception {
-
-    return sqlSession.selectList("listProduct", sort);
-  }
-
-  // 1-2. searchProduct ----------------------------------------------------------------------------
-  @Override
-  public List<Product> searchProduct(
-    String searchType,
+    String sort,
+    String category,
+    String type,
     String keyword
   ) throws Exception {
 
     Map<String, Object> map = new HashMap<>();
-    map.put("searchType", searchType);
+    map.put("sort", sort);
+    map.put("category", category);
+    map.put("type", type);
     map.put("keyword", keyword);
 
-    return sqlSession.selectList("searchProduct", map);
-  }
-
-  // 1-3. categoryProduct --------------------------------------------------------------------------
-  @Override
-  public List<Product> categoryProduct(
-    String category,
-    String sort
-  ) throws Exception {
-
-    Map<String, Object> map = new HashMap<>();
-    map.put("category", category);
-    map.put("sort", sort);
-
-    return sqlSession.selectList("categoryProduct", map);
+    return sqlSession.selectList("listProduct", map);
   }
 
   // 2. detailProduct ------------------------------------------------------------------------------
@@ -82,7 +63,9 @@ public class ProductMapperImpl implements ProductMapper {
 
   // 5. deleteProduct ------------------------------------------------------------------------------
   @Override
-  public Integer deleteProduct(Integer product_number) throws Exception {
+  public Integer deleteProduct(
+    Integer product_number
+  ) throws Exception {
 
     Integer result = 0;
 

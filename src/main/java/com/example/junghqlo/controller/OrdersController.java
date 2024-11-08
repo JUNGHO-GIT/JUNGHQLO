@@ -37,48 +37,87 @@ public class OrdersController {
   private static String page = "orders";
   private static String PAGE = "Orders";
 
-  // 1-1. listOrders (GET) -------------------------------------------------------------------------
+  // 1. listOrders (GET) ---------------------------------------------------------------------------
   @GetMapping("/listOrders")
   public String listOrders(
     @ModelAttribute Orders orders,
-    @RequestParam(defaultValue = "default") String sort,
+    @RequestParam(defaultValue = "all") String sort,
+    @RequestParam(defaultValue = "all") String type,
+    @RequestParam(defaultValue = "") String keyword,
     @RequestParam(defaultValue = "1") Integer pageNumber,
     @RequestParam(defaultValue = "9") Integer itemsPer,
     HttpSession session,
     Model model
   ) throws Exception {
 
-    // sort order
-    if (sort == null || sort.equals("default")) {
-      sort="orders_number DESC";
+    // 1. Sort handling
+    String sortHandler = "";
+    if (sort == null || sort.equals("all")) {
+      sort = "orders_number DESC";
+      sortHandler = "all";
     }
     else if(sort.equals("nameASC")) {
-      sort="product_name ASC";
+      sort = "product_name ASC";
+      sortHandler = "nameASC";
     }
     else if(sort.equals("nameDESC")) {
-      sort="product_name DESC";
+      sort = "product_name DESC";
+      sortHandler = "nameDESC";
     }
     else if(sort.equals("priceASC")) {
-      sort="orders_totalPrice ASC";
+      sort = "orders_totalPrice ASC";
+      sortHandler = "priceASC";
     }
     else if(sort.equals("priceDESC")) {
-      sort="orders_totalPrice DESC";
+      sort = "orders_totalPrice DESC";
+      sortHandler = "priceDESC";
     }
     else if(sort.equals("dateASC")) {
-      sort="orders_date ASC";
+      sort = "orders_date ASC";
+      sortHandler = "dateASC";
     }
     else if(sort.equals("dateDESC")) {
-      sort="orders_date DESC";
+      sort = "orders_date DESC";
+      sortHandler = "dateDESC";
     }
 
+    // 3. Type handling
+    String typeHandler = "";
+    if (type == null || keyword == null) {
+      return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
+    }
+    else if (type.equals("all")) {
+      type = "product_name OR product_category";
+      typeHandler = "all";
+    }
+    else if (type.equals("name")) {
+      type = "product_name";
+      typeHandler = "name";
+    }
+    else if (type.equals("category")) {
+      type = "product_category";
+      typeHandler = "category";
+    }
+
+    // 4. Keyword handling
+    String keywordHandler = "";
+    if (keyword != null) {
+      keywordHandler = keyword;
+    }
+
+    // *. member_id 세션값 가져오기
     String member_id = (String) session.getAttribute("member_id");
+
+    // 5. Page handling
     PageHandler<Orders> pageHandler = (
-      ordersService.listOrders(pageNumber, itemsPer, member_id, sort, orders)
+      ordersService.listOrders(pageNumber, itemsPer, sort, type, keyword, member_id, orders)
     );
 
     // 주문내역이 있는경우
     if (pageHandler.getContent() != null) {
-      model.addAttribute("sort", sort);
+      model.addAttribute("sortHandler", sortHandler);
+      model.addAttribute("typeHandler", typeHandler);
+      model.addAttribute("keywordHandler", keywordHandler);
       model.addAttribute("pageHandler", pageHandler);
       model.addAttribute("LIST", pageHandler.getContent());
       return MessageFormat.format("/pages/{0}/{1}List", page, page);
@@ -88,40 +127,6 @@ public class OrdersController {
     else {
       return MessageFormat.format("/pages/{0}/{1}ListEmpty", page, page);
     }
-  }
-
-  // 1-2. searchOrders (GET) -----------------------------------------------------------------------
-  @GetMapping("/searchOrders")
-  public String searchOrders(
-    @ModelAttribute Orders orders,
-    @RequestParam(defaultValue = "default") String sort,
-    @RequestParam(defaultValue = "1") Integer pageNumber,
-    @RequestParam(defaultValue = "9") Integer itemsPer,
-    @RequestParam String searchType,
-    @RequestParam String keyword,
-    HttpSession session,
-    Model model
-  ) throws Exception {
-
-    // searchType order
-    if (searchType == null || keyword == null) {
-      return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
-    }
-    else if(searchType.equals("name")) {
-      searchType="product_name";
-    }
-
-    String member_id = (String) session.getAttribute("member_id");
-    PageHandler<Orders> pageHandler = (
-      ordersService.searchOrders(pageNumber, itemsPer, searchType, keyword, member_id, orders)
-    );
-
-    // 모델
-    model.addAttribute("sort", sort);
-    model.addAttribute("pageHandler", pageHandler);
-    model.addAttribute("LIST", pageHandler.getContent());
-
-    return MessageFormat.format("/pages/{0}/{1}List", page, page);
   }
 
   // 2. detailOrders(GET) --------------------------------------------------------------------------

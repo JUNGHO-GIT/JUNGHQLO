@@ -27,65 +27,25 @@ public class BoardServiceImpl implements BoardService {
     this.boardMapper = boardMapper;
   }
 
-  // 1-1. listBoard -------------------------------------------------------------------------------
+  // 1. listBoard -------------------------------------------------------------------------------
   @Override
   public PageHandler<Board> listBoard(
-    @ModelAttribute Board board,
     Integer pageNumber,
     Integer itemsPer,
-    String sort
-  ) throws Exception {
-
-    List<Board> content = boardMapper.listBoard(sort);
-
-    Integer itemsTotal = content.size();
-    Integer pageLast = (itemsTotal + itemsPer - 1) / itemsPer;
-
-    // Ensure the pageNumber is greater than 0
-    if (pageNumber <= 0) {
-      pageNumber = 1;
-    }
-
-    // Ensure the pageNumber does not exceed pageLast, only if pageLast is greater than 0
-    if (pageLast > 0 && pageNumber > pageLast) {
-      pageNumber = pageLast;
-    }
-
-    Integer pageStart = (pageNumber - 1) * itemsPer;
-    Integer pageEnd = Math.min(pageStart + itemsPer, itemsTotal);
-
-    List<Board> pageContent;
-
-    // If pageStart is greater than or equal to itemsTotal, set pageContent to an empty list
-    if (pageStart >= itemsTotal) {
-      pageContent = new ArrayList<>();
-    }
-    else {
-      pageContent = content.subList(pageStart, pageEnd);
-    }
-    return new PageHandler<>(pageNumber, pageStart, pageEnd, 1, pageLast, itemsPer, itemsTotal, pageContent);
-  }
-
-  // 1-2. searchBoard ------------------------------------------------------------------------------
-  @Override
-  public PageHandler<Board> searchBoard(
-    Integer pageNumber,
-    Integer itemsPer,
-    String searchType,
+    String sort,
+    String type,
     String keyword,
     Board board
   ) throws Exception {
 
-    List<Board> content = boardMapper.searchBoard(searchType, keyword);
+    List<Board> content = boardMapper.listBoard(sort, type, keyword);
     Integer itemsTotal = content.size();
     Integer pageLast = (itemsTotal + itemsPer - 1) / itemsPer;
 
-    // Ensure the pageNumber is greater than 0
     if (pageNumber <= 0) {
       pageNumber = 1;
     }
 
-    // Ensure the pageNumber does not exceed pageLast, only if pageLast is greater than 0
     if (pageLast > 0 && pageNumber > pageLast) {
       pageNumber = pageLast;
     }
@@ -95,14 +55,12 @@ public class BoardServiceImpl implements BoardService {
 
     List<Board> pageContent;
 
-    // If pageStart is greater than or equal to itemsTotal, set pageContent to an empty list
     if (pageStart >= itemsTotal) {
       pageContent = new ArrayList<>();
     }
     else {
       pageContent = content.subList(pageStart, pageEnd);
     }
-
     return new PageHandler<>(pageNumber, pageStart, pageEnd, 1, pageLast, itemsPer, itemsTotal, pageContent);
   }
 
@@ -118,7 +76,7 @@ public class BoardServiceImpl implements BoardService {
   // 3. addBoard -----------------------------------------------------------------------------------
   @Override
   public void addBoard(
-    @ModelAttribute Board board,
+    @ModelAttribute Board board
   ) throws Exception {
 
     MultipartFile board_imgsFile = board.getBoard_imgsFile();
@@ -215,8 +173,9 @@ public class BoardServiceImpl implements BoardService {
       long update_time = 0;
 
       // 최근에 조회수를 올린 시간 검색
-      String boardViewKey
-     ="update_board_view" + board_number + "_" + session.getAttribute("member_id");
+      String boardViewKey = (
+        "update_board_view" + board_number + "_" + session.getAttribute("member_id")
+      );
 
       if (session.getAttribute(boardViewKey) != null) {
         update_time = (long)session.getAttribute(boardViewKey);
@@ -245,8 +204,9 @@ public class BoardServiceImpl implements BoardService {
       long update_time = 0;
 
       // 최근에 좋아요를 누른 시간 검색
-      String boardLikeKey
-     ="update_board_like" + board_number + "_" + session.getAttribute("member_id");
+      String boardLikeKey = (
+        "update_board_like" + board_number + "_" + session.getAttribute("member_id")
+      );
 
       if (session.getAttribute(boardLikeKey) != null) {
         update_time = (long)session.getAttribute(boardLikeKey);
@@ -275,8 +235,9 @@ public class BoardServiceImpl implements BoardService {
       long update_time = 0;
 
       // 최근에 싫어요를 누른 시간 검색
-      String boardDislikeKey
-     ="update_board_dislike" + board_number + "_" + session.getAttribute("member_id");
+      String boardDislikeKey = (
+        "update_board_dislike" + board_number + "_" + session.getAttribute("member_id")
+      );
 
       if (session.getAttribute(boardDislikeKey) != null) {
         update_time = (long)session.getAttribute(boardDislikeKey);

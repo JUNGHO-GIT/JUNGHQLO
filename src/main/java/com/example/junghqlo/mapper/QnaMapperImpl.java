@@ -16,27 +16,22 @@ public class QnaMapperImpl implements QnaMapper {
     this.sqlSession = sqlSession;
   }
 
-  // 1-1. listQna ---------------------------------------------------------------------------------
+  // 1. listQna ------------------------------------------------------------------------------------
   @Override
   public List<Qna> listQna(
-    String sort
-  ) throws Exception {
-
-    return sqlSession.selectList("listQna", sort);
-  }
-
-  // 1-2. searchQna -------------------------------------------------------------------------------
-  @Override
-  public List<Qna> searchQna(
-    String searchType,
+    String sort,
+    String category,
+    String type,
     String keyword
   ) throws Exception {
 
     Map<String, Object> map = new HashMap<>();
-    map.put("searchType", searchType);
+    map.put("sort", sort);
+    map.put("category", category);
+    map.put("type", type);
     map.put("keyword", keyword);
 
-    return sqlSession.selectList("searchQna", map);
+    return sqlSession.selectList("listQna", map);
   }
 
   // 2. detailQna ----------------------------------------------------------------------------------
@@ -66,13 +61,13 @@ public class QnaMapperImpl implements QnaMapper {
     sqlSession.update("updateQna", qna);
   }
 
-  // 4-1. updateQnaCount ------------------------------------------------------------------------
+  // 4-1. updateCount ------------------------------------------------------------------------------
   @Override
-  public void updateQnaCount(
+  public void updateCount(
     Integer qna_number
   ) throws Exception {
 
-    sqlSession.update("updateQnaCount", qna_number);
+    sqlSession.update("updateCount", qna_number);
   }
 
   // 4-2. updateLike -------------------------------------------------------------------------------
@@ -95,11 +90,13 @@ public class QnaMapperImpl implements QnaMapper {
 
   // 5. deleteQna ----------------------------------------------------------------------------------
   @Override
-  public Integer deleteQna(Integer qnd_number) throws Exception {
+  public Integer deleteQna(
+    Integer qna_number
+  ) throws Exception {
 
     Integer result = 0;
 
-    if (sqlSession.delete("deleteQna", qnd_number) > 0) {
+    if (sqlSession.delete("deleteQna", qna_number) > 0) {
       result = 1;
     }
     else {

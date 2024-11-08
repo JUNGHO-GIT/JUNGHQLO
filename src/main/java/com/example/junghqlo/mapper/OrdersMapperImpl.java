@@ -6,6 +6,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 import com.example.junghqlo.model.Orders;
+import com.stripe.exception.StripeException;
 
 @Repository
 public class OrdersMapperImpl implements OrdersMapper {
@@ -16,70 +17,79 @@ public class OrdersMapperImpl implements OrdersMapper {
     this.sqlSession = sqlSession;
   }
 
-  // 1-1. listOrders ------------------------------------------------------------------------------
-  public List<Orders> listOrders(String member_id, String sort) {
+  // 1. listOrders ------------------------------------------------------------------------------
+  public List<Orders> listOrders(
+    String sort,
+    String type,
+    String keyword,
+    String member_id
+  ) throws Exception {
 
     Map<String, String> map = new HashMap<>();
-    map.put("member_id", member_id);
     map.put("sort", sort);
+    map.put("type", type);
+    map.put("keyword", keyword);
+    map.put("member_id", member_id);
 
     return sqlSession.selectList("listOrders", map);
   }
 
-  // 1-2. searchOrders -----------------------------------------------------------------------------
-  public List<Orders> searchOrders(String searchType, String keyword, String member_id)
-  throws Exception {
-
-    Map<String, String> map = new HashMap<>();
-    map.put("searchType", searchType);
-    map.put("keyword", keyword);
-    map.put("member_id", member_id);
-
-    return sqlSession.selectList("searchOrders", map);
-  }
-
   // 2-1. detailOrders -----------------------------------------------------------------------------
-  public Orders detailOrders(Integer orders_number) {
+  public Orders detailOrders(
+    Integer orders_number
+  ) throws Exception {
 
     return sqlSession.selectOne("detailOrders", orders_number);
   }
 
   // 2-2. getStripePrice ---------------------------------------------------------------------------
   @Override
-  public String getStripePrice(Integer product_number) {
+  public String getStripePrice(
+    Integer product_number
+  ) throws StripeException {
 
     return sqlSession.selectOne("getStripePrice", product_number);
   }
 
   // 3. addOrders ----------------------------------------------------------------------------------
   @Override
-  public void addOrders(Orders orders) {
+  public void addOrders(
+    Orders orders
+  ) throws Exception {
 
     sqlSession.insert("addOrders", orders);
   }
 
   // 4-1. updateOrders -----------------------------------------------------------------------------
   @Override
-  public void updateOrders(Orders orders) {
+  public void updateOrders(
+    Orders orders
+  ) throws Exception {
 
     sqlSession.update("updateOrders", orders);
   }
 
   // 4-2. updateProductStock -----------------------------------------------------------------------
   @Override
-  public Integer updateProductStock(Integer product_number, Integer product_stock, Integer orders_quantity) {
+  public void updateProductStock(
+    Integer product_number,
+    Integer product_stock,
+    Integer orders_quantity
+  ) throws Exception {
 
     Map<String, Object> map = new HashMap<>();
     map.put("product_number", product_number);
     map.put("product_stock", product_stock);
     map.put("orders_quantity", orders_quantity);
 
-    return sqlSession.update("updateProductStock", map);
+    sqlSession.update("updateProductStock", map);
   }
 
   // 5. deleteOrders -------------------------------------------------------------------------------
   @Override
-  public Integer deleteOrders(Integer orders_number) {
+  public Integer deleteOrders(
+    Integer orders_number
+  ) throws Exception {
 
     Integer result = 0;
 

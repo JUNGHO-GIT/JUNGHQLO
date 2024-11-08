@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import com.example.junghqlo.handler.PageHandler;
 import com.example.junghqlo.mapper.NoticeMapper;
@@ -26,20 +27,25 @@ public class NoticeServiceImpl implements NoticeService {
     this.noticeMapper = noticeMapper;
   }
 
-  // 1-1. listNotice ------------------------------------------------------------------------------
+  // 1. listNotice ---------------------------------------------------------------------------------
   @Override
-  public PageHandler<Notice> listNotice(Integer pageNumber, Integer itemsPer, String sort, Notice notice) throws Exception {
+  public PageHandler<Notice> listNotice(
+    Integer pageNumber,
+    Integer itemsPer,
+    String sort,
+    String type,
+    String keyword,
+    Notice notice
+  ) throws Exception {
 
-    List<Notice> content = noticeMapper.listNotice(sort);
+    List<Notice> content = noticeMapper.listNotice(sort, type, keyword);
     Integer itemsTotal = content.size();
     Integer pageLast = (itemsTotal + itemsPer - 1) / itemsPer;
 
-    // Ensure the pageNumber is greater than 0
     if (pageNumber <= 0) {
       pageNumber = 1;
     }
 
-    // Ensure the pageNumber does not exceed pageLast, only if pageLast is greater than 0
     if (pageLast > 0 && pageNumber > pageLast) {
       pageNumber = pageLast;
     }
@@ -49,60 +55,29 @@ public class NoticeServiceImpl implements NoticeService {
 
     List<Notice> pageContent;
 
-    // If pageStart is greater than or equal to itemsTotal, set pageContent to an empty list
     if (pageStart >= itemsTotal) {
       pageContent = new ArrayList<>();
     }
     else {
       pageContent = content.subList(pageStart, pageEnd);
     }
-
     return new PageHandler<>(pageNumber, pageStart, pageEnd, 1, pageLast, itemsPer, itemsTotal, pageContent);
   }
 
-  // 1-2. searchNotice -----------------------------------------------------------------------------
+  // 2. detailNotice -------------------------------------------------------------------------------
   @Override
-  public PageHandler<Notice> searchNotice(Integer pageNumber, Integer itemsPer, String searchType, String keyword, Notice notice) throws Exception {
+  public Notice detailNotice(
+    Integer notice_number
+  ) throws Exception {
 
-    List<Notice> content = noticeMapper.searchNotice(searchType, keyword);
-    Integer itemsTotal = content.size();
-    Integer pageLast = (itemsTotal + itemsPer - 1) / itemsPer;
-
-    // Ensure the pageNumber is greater than 0
-    if (pageNumber <= 0) {
-      pageNumber = 1;
-    }
-
-    // Ensure the pageNumber does not exceed pageLast, only if pageLast is greater than 0
-    if (pageLast > 0 && pageNumber > pageLast) {
-      pageNumber = pageLast;
-    }
-
-    Integer pageStart = (pageNumber - 1) * itemsPer;
-    Integer pageEnd = Math.min(pageStart + itemsPer, itemsTotal);
-
-    List<Notice> pageContent;
-
-    // If pageStart is greater than or equal to itemsTotal, set pageContent to an empty list
-    if (pageStart >= itemsTotal) {
-      pageContent = new ArrayList<>();
-    }
-    else {
-      pageContent = content.subList(pageStart, pageEnd);
-    }
-
-    return new PageHandler<>(pageNumber, pageStart, pageEnd, 1, pageLast, itemsPer, itemsTotal, pageContent);
-  }
-
-  // 2. detailNotice ---------------------------------------------------------------------------
-  @Override
-  public Notice detailNotice(Integer notice_number) throws Exception {
     return noticeMapper.detailNotice(notice_number);
   }
 
   // 3. addNotice ----------------------------------------------------------------------------------
   @Override
-  public void addNotice(Notice notice) throws Exception {
+  public void addNotice(
+    @ModelAttribute Notice notice
+  ) throws Exception {
 
     MultipartFile notice_imgsFile = notice.getNotice_imgsFile();
     String googleFileName;
@@ -141,9 +116,12 @@ public class NoticeServiceImpl implements NoticeService {
     noticeMapper.addNotice(notice);
   }
 
-  // 4. updateNotice -------------------------------------------------------------------------------
+  // 4-1. updateNotice -----------------------------------------------------------------------------
   @Override
-    public void updateNotice(Notice notice, String existingImage) throws Exception {
+  public void updateNotice(
+    @ModelAttribute Notice notice,
+    String existingImage
+  ) throws Exception {
 
     MultipartFile notice_imgsFile = notice.getNotice_imgsFile();
 
@@ -182,17 +160,21 @@ public class NoticeServiceImpl implements NoticeService {
     noticeMapper.updateNotice(notice);
   }
 
-  // 4-1. updateNoticeCount ------------------------------------------------------------------------
+  // 4-2. updateCount ------------------------------------------------------------------------------
   @Override
-  public void updateNoticeCount(Integer notice_number, HttpSession session) throws Exception {
+  public void updateCount(
+    Integer notice_number,
+    HttpSession session
+  ) throws Exception {
 
     // 최초로 조회수를 올린 경우
     if (session.getAttribute("member_id") != null) {
       long update_time = 0;
 
       // 최근에 조회수를 올린 시간 검색
-      String noticeViewKey
-     ="update_notice_view" + notice_number + "_" + session.getAttribute("member_id");
+      String noticeViewKey = (
+        "update_notice_view" + notice_number + "_" + session.getAttribute("member_id")
+      );
 
       if (session.getAttribute(noticeViewKey) != null) {
         update_time = (long)session.getAttribute(noticeViewKey);
@@ -201,7 +183,7 @@ public class NoticeServiceImpl implements NoticeService {
 
       // 일정 시간이 경과한 후 조회수 증가 처리 (하루에 한번만 조회수 증가)
       if (current_time - update_time > 24 * 60 * 60 * 1000) {
-        noticeMapper.updateNoticeCount(notice_number);
+        noticeMapper.updateCount(notice_number);
 
         // 조회수 증가 처리 시간 저장
         session.setAttribute(noticeViewKey, current_time);
@@ -209,17 +191,22 @@ public class NoticeServiceImpl implements NoticeService {
     }
   }
 
-  // 4-2. updateLike -------------------------------------------------------------------------------
+  // 4-3. updateLike -------------------------------------------------------------------------------
   @Override
-  public void updateLike(Integer notice_number, HttpSession session) throws Exception {
+  public void updateLike(
+    Integer notice_number,
+    HttpSession session
+  ) throws Exception {
 
     // 최초로 좋아요를 누른 경우
     if (session.getAttribute("member_id") != null) {
       long update_time = 0;
 
       // 최근에 좋아요를 누른 시간 검색
-      String noticeLikeKey
-     ="update_notice_like" + notice_number + "_" + session.getAttribute("member_id");
+      String noticeLikeKey = (
+        "update_notice_like" + notice_number + "_" + session.getAttribute("member_id")
+      );
+
       if (session.getAttribute(noticeLikeKey) != null) {
         update_time = (long) session.getAttribute(noticeLikeKey);
       }
@@ -235,17 +222,21 @@ public class NoticeServiceImpl implements NoticeService {
     }
   }
 
-  // 4-3. updateDislike ----------------------------------------------------------------------------
+  // 4-4. updateDislike ----------------------------------------------------------------------------
   @Override
-  public void updateDislike(Integer notice_number, HttpSession session) throws Exception {
+  public void updateDislike(
+    Integer notice_number,
+    HttpSession session
+  ) throws Exception {
 
     // 최초로 싫어요를 누른 경우
     if (session.getAttribute("member_id") != null) {
       long update_time = 0;
 
       // 최근에 싫어요를 누른 시간 검색
-      String noticeDislikeKey
-     ="update_notice_dislike" + notice_number + "_" + session.getAttribute("member_id");
+      String noticeDislikeKey = (
+        "update_notice_dislike" + notice_number + "_" + session.getAttribute("member_id")
+      );
 
       if (session.getAttribute(noticeDislikeKey) != null) {
         update_time = (long) session.getAttribute(noticeDislikeKey);
@@ -264,7 +255,9 @@ public class NoticeServiceImpl implements NoticeService {
 
   // 5. deleteNotice -------------------------------------------------------------------------------
   @Override
-  public Integer deleteNotice(Integer notice_number) throws Exception {
+  public Integer deleteNotice(
+    Integer notice_number
+  ) throws Exception {
 
     Integer result = 0;
 

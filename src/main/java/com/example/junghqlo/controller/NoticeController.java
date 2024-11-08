@@ -28,86 +28,87 @@ public class NoticeController {
   private static String page = "notice";
   private static String PAGE = "Notice";
 
-  // 1-1. listNotice (GET) -------------------------------------------------------------------------
+  // 1. listNotice (GET) ---------------------------------------------------------------------------
   @GetMapping("/listNotice")
   public String listNotice(
     @ModelAttribute Notice notice,
-    @RequestParam(defaultValue = "default") String sort,
+    @RequestParam(defaultValue = "all") String sort,
+    @RequestParam(defaultValue = "title") String type,
+    @RequestParam(defaultValue = "") String keyword,
     @RequestParam(defaultValue = "1") Integer pageNumber,
     @RequestParam(defaultValue = "9") Integer itemsPer,
     Model model
   ) throws Exception {
 
-    // sort order
-    if (sort == null || sort.equals("default")) {
-      sort="notice_number DESC";
+    // 1. Sort handling
+    String sortHandler = "";
+    if (sort == null || sort.equals("all")) {
+      sort = "notice_number DESC";
+      sortHandler = "all";
     }
     else if(sort.equals("titleASC")) {
-      sort="notice_title ASC";
+      sort = "notice_title ASC";
+      sortHandler = "titleASC";
     }
     else if(sort.equals("titleDESC")) {
-      sort="notice_title DESC";
+      sort = "notice_title DESC";
+      sortHandler = "titleDESC";
     }
     else if(sort.equals("countASC")) {
-      sort="notice_count ASC";
+      sort = "notice_count ASC";
+      sortHandler = "countASC";
     }
     else if(sort.equals("countDESC")) {
-      sort="notice_count DESC";
+      sort = "notice_count DESC";
+      sortHandler = "countDESC";
     }
     else if(sort.equals("dateASC")) {
-      sort="notice_date ASC";
+      sort = "notice_date ASC";
+      sortHandler = "dateASC";
     }
     else if(sort.equals("dateDESC")) {
-      sort="notice_date DESC";
+      sort = "notice_date DESC";
+      sortHandler = "dateDESC";
     }
 
+    // 3. Type handling
+    String typeHandler = "";
+    if (type == null || keyword == null) {
+      return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
+    }
+    else if (type.equals("all")) {
+      type = "notice_title OR notice_contents";
+      typeHandler = "all";
+    }
+    else if (type.equals("title")) {
+      type = "notice_title";
+      typeHandler = "title";
+    }
+    else if (type.equals("contents")) {
+      type = "notice_contents";
+      typeHandler = "contents";
+    }
+
+    // 4. Keyword handling
+    String keywordHandler = "";
+    if (keyword != null) {
+      keywordHandler = keyword;
+    }
+
+    // 5. Page handling
     PageHandler<Notice> pageHandler = (
-      noticeService.listNotice(pageNumber, itemsPer, sort, notice)
+      noticeService.listNotice(pageNumber, itemsPer, sort, type, keyword, notice)
     );
 
     // 모델
-    model.addAttribute("sort", sort);
+    model.addAttribute("sortHandler", sortHandler);
+    model.addAttribute("typeHandler", typeHandler);
+    model.addAttribute("keywordHandler", keywordHandler);
     model.addAttribute("pageHandler", pageHandler);
     model.addAttribute("LIST", pageHandler.getContent());
 
     return MessageFormat.format("/pages/{0}/{1}List", page, page);
   };
-
-  // 1-2. searchNotice (GET) -----------------------------------------------------------------------
-  @GetMapping("/searchNotice")
-  public String searchNotice (
-    @ModelAttribute Notice notice,
-    @RequestParam(defaultValue = "default") String sort,
-    @RequestParam(defaultValue = "1") Integer pageNumber,
-    @RequestParam(defaultValue = "9") Integer itemsPer,
-    @RequestParam String searchType,
-    @RequestParam String keyword,
-    Model model
-  ) throws Exception {
-
-    // searchType order
-    if (searchType == null || keyword == null) {
-      return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
-    }
-    else if(searchType.equals("title")) {
-      searchType="notice_title";
-    }
-    else if(searchType.equals("contents")) {
-      searchType="notice_contents";
-    }
-
-    PageHandler<Notice> pageHandler = (
-      noticeService.searchNotice(pageNumber, itemsPer, searchType, keyword, notice)
-    );
-
-    // 모델
-    model.addAttribute("sort", sort);
-    model.addAttribute("pageHandler", pageHandler);
-    model.addAttribute("searchType", searchType);
-    model.addAttribute("LIST", pageHandler.getContent());
-
-    return MessageFormat.format("/pages/{0}/{1}List", page, page);
-  }
 
   // 2. detailNotice(GET) --------------------------------------------------------------------------
   @GetMapping("/detailNotice")
@@ -119,7 +120,7 @@ public class NoticeController {
   ) throws Exception {
 
     // 조회수 증가
-    noticeService.updateNoticeCount(notice_number, session);
+    noticeService.updateCount(notice_number, session);
 
     // 모델
     model.addAttribute("MODEL", noticeService.detailNotice(notice_number));
@@ -146,7 +147,7 @@ public class NoticeController {
     return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
   }
 
-  // 4. updateNotice (GET) -------------------------------------------------------------------------
+  // 4-1. updateNotice (GET) -----------------------------------------------------------------------
   @GetMapping("/updateNotice")
   public String updateNotice (
     @RequestParam Integer notice_number,
@@ -159,7 +160,7 @@ public class NoticeController {
     return MessageFormat.format("/pages/{0}/{1}Update", page, page);
   }
 
-  // 4. updateNotice (POST) ------------------------------------------------------------------------
+  // 4-1. updateNotice (POST) ----------------------------------------------------------------------
   @PostMapping("/updateNotice")
   public String updateNotice (
     @ModelAttribute Notice notice,

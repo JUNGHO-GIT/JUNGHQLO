@@ -19,123 +19,96 @@ public interface ProductMapper {
   // 0. result mapping -----------------------------------------------------------------------------
   @Results ({
     @Result (
-      property="product_number",
-      column="product_number",
-      id=true
+      property = "product_number",
+      column = "product_number",
+      id = true
     ),
     @Result (
-      property="product_name",
-      column="product_name"
+      property = "product_name",
+      column = "product_name"
     ),
     @Result (
-      property="product_detail",
-      column="product_detail"
+      property = "product_detail",
+      column = "product_detail"
     ),
     @Result (
-      property="product_price",
-      column="product_price"
+      property = "product_price",
+      column = "product_price"
     ),
     @Result (
-      property="product_stock",
-      column="product_stock"
+      property = "product_stock",
+      column = "product_stock"
     ),
     @Result (
-      property="product_company",
-      column="product_company"
+      property = "product_company",
+      column = "product_company"
     ),
     @Result (
-      property="product_category",
-      column="product_category"
+      property = "product_category",
+      column = "product_category"
     ),
     @Result (
-      property="product_origin",
-      column="product_origin"
+      property = "product_origin",
+      column = "product_origin"
     ),
     @Result (
-      property="product_imgsFile1",
-      column="product_imgsFile1",
-      typeHandler=MultipartFileHandler.class
+      property = "product_imgsFile1",
+      column = "product_imgsFile1",
+      typeHandler = MultipartFileHandler.class
     ),
     @Result (
-      property="product_imgsFile2",
-      column="product_imgsFile2",
-      typeHandler=MultipartFileHandler.class
+      property = "product_imgsFile2",
+      column = "product_imgsFile2",
+      typeHandler = MultipartFileHandler.class
     ),
     @Result (
-      property="product_imgsUrl1",
-      column="product_imgsUrl1"
+      property = "product_imgsUrl1",
+      column = "product_imgsUrl1"
     ),
     @Result (
-      property="product_imgsUrl2",
-      column="product_imgsUrl2"
+      property = "product_imgsUrl2",
+      column = "product_imgsUrl2"
     ),
     @Result (
-      property="product_date",
-      column="product_date",
-      typeHandler=LocalDateTimeTypeHandler.class
+      property = "stripe_id",
+      column = "stripe_id"
     ),
     @Result (
-      property="product_update",
-      column="product_update",
-      typeHandler=LocalDateTimeTypeHandler.class
+      property = "stripe_price",
+      column = "stripe_price"
     ),
     @Result (
-      property="stripe_id",
-      column="stripe_id"
+      property = "product_date",
+      column = "product_date",
+      typeHandler = LocalDateTimeTypeHandler.class
     ),
     @Result (
-      property="stripe_price",
-      column="stripe_price"
-    )
+      property = "product_update",
+      column = "product_update",
+      typeHandler = LocalDateTimeTypeHandler.class
+    ),
   })
 
-  // 1-1. listProduct ------------------------------------------------------------------------------
+  // 1. listProduct --------------------------------------------------------------------------------
   @Select(
     """
     SELECT
       *
     FROM
       product
+    WHERE
+      ${category}
+    AND
+      ${type} LIKE CONCAT('%', #{keyword}, '%')
     ORDER BY
       ${sort}
     """
   )
   List<Product> listProduct(
-    @Param("sort") String sort
-  ) throws Exception;
-
-  // 1-2. searchProduct ----------------------------------------------------------------------------
-  @Select(
-    """
-    SELECT
-      *
-    FROM
-      product
-    WHERE
-      ${keyword} LIKE CONCAT('%', #{searchType}, '%')
-    """
-  )
-  List<Product> searchProduct(
-    @Param("searchType") String searchType,
-    @Param("keyword") String keyword
-  ) throws Exception;
-
-  // 1-3. categoryProduct --------------------------------------------------------------------------
-  @Select(
-    """
-    SELECT
-      *
-    FROM
-      product
-    WHERE
-      product_category=#{category}
-    ORDER BY
-      ${sort}
-    """
-  )
-  List<Product> categoryProduct(
+    @Param("sort") String sort,
     @Param("category") String category,
-    @Param("sort") String sort
+    @Param("type") String type,
+    @Param("keyword") String keyword
   ) throws Exception;
 
   // 2. detailProduct ------------------------------------------------------------------------------
@@ -146,7 +119,7 @@ public interface ProductMapper {
     FROM
       product
     WHERE
-      product_number=#{product_number}
+      product_number = #{product_number}
     """
   )
   Product detailProduct(
@@ -183,8 +156,8 @@ public interface ProductMapper {
         #{product_company},
         #{product_category},
         #{product_origin},
-        #{product_imgsFile1, typeHandler=MultipartFileHandler},
-        #{product_imgsFile2, typeHandler=MultipartFileHandler},
+        #{product_imgsFile1, typeHandler = MultipartFileHandler},
+        #{product_imgsFile2, typeHandler = MultipartFileHandler},
         #{product_imgsUrl1},
         #{product_imgsUrl2},
         NOW(),
@@ -203,22 +176,22 @@ public interface ProductMapper {
     UPDATE
       product
     SET
-      product_name=#{product_name},
-      product_detail=#{product_detail},
-      product_price=#{product_price},
-      product_stock=#{product_stock},
-      product_company=#{product_company},
-      product_category=#{product_category},
-      product_origin=#{product_origin},
-      product_imgsFile1=#{product_imgsFile1, typeHandler=MultipartFileHandler},
-      product_imgsFile2=#{product_imgsFile2, typeHandler=MultipartFileHandler},
-      product_imgsUrl1=#{product_imgsUrl1},
-      product_imgsUrl2=#{product_imgsUrl2},
-      product_update=NOW(),
-      stripe_id=#{stripe_id},
-      stripe_price=#{stripe_price}
+      product_name = #{product_name},
+      product_detail = #{product_detail},
+      product_price = #{product_price},
+      product_stock = #{product_stock},
+      product_company = #{product_company},
+      product_category = #{product_category},
+      product_origin = #{product_origin},
+      product_imgsFile1 = #{product_imgsFile1, typeHandler = MultipartFileHandler},
+      product_imgsFile2 = #{product_imgsFile2, typeHandler = MultipartFileHandler},
+      product_imgsUrl1 = #{product_imgsUrl1},
+      product_imgsUrl2 = #{product_imgsUrl2},
+      product_update = NOW(),
+      stripe_id = #{stripe_id},
+      stripe_price = #{stripe_price}
     WHERE
-      product_number=#{product_number}
+      product_number = #{product_number}
     """
   )
   void updateProduct(
@@ -231,7 +204,7 @@ public interface ProductMapper {
     DELETE FROM
       product
     WHERE
-      product_number=#{product_number}
+      product_number = #{product_number}
     """
   )
   Integer deleteProduct(

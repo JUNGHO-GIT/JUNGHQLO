@@ -16,69 +16,81 @@ public class BoardMapperImpl implements BoardMapper {
     this.sqlSession = sqlSession;
   }
 
-  // 1-1. listBoard -------------------------------------------------------------------------------
+  // 1. listBoard ----------------------------------------------------------------------------------
   @Override
-  public List<Board> listBoard(String sort) throws Exception {
-
-    return sqlSession.selectList("listBoard", sort);
-  }
-
-  // 1-2. searchBoard ------------------------------------------------------------------------------
-  @Override
-  public List<Board> searchBoard(String searchType, String keyword) throws Exception {
+  public List<Board> listBoard(
+    String sort,
+    String type,
+    String keyword
+  ) throws Exception {
 
     Map<String, Object> map = new HashMap<>();
-    map.put("searchType", searchType);
+    map.put("sort", sort);
+    map.put("type", type);
     map.put("keyword", keyword);
 
-    return sqlSession.selectList("searchBoard", map);
+    return sqlSession.selectList("listBoard", map);
   }
 
   // 2. detailBoard --------------------------------------------------------------------------------
   @Override
-  public Board detailBoard(Integer board_number) throws Exception {
+  public Board detailBoard(
+    Integer board_number
+  ) throws Exception {
 
     return sqlSession.selectOne("detailBoard", board_number);
   }
 
   // 3. addBoard -----------------------------------------------------------------------------------
   @Override
-  public void addBoard(Board board) throws Exception {
+  public void addBoard(
+    Board board
+  ) throws Exception {
 
     sqlSession.insert("addBoard", board);
   }
 
-  // 4. updateBoard --------------------------------------------------------------------------------
+  // 4-1. updateBoard ------------------------------------------------------------------------------
   @Override
-  public void updateBoard(Board board) throws Exception {
+  public void updateBoard(
+    Board board
+  ) throws Exception {
 
     sqlSession.update("updateBoard", board);
   }
 
-  // 4-1. updateBoardCount -------------------------------------------------------------------------
+  // 4-2. updateCount -------------------------------------------------------------------------
   @Override
-  public void updateBoardCount(Integer board_number) throws Exception {
+  public void updateCount(
+    Integer board_number
+  ) throws Exception {
 
-    sqlSession.update("updateBoardCount", board_number);
+    sqlSession.update("updateCount", board_number);
   }
 
-  // 4-2. updateLike -------------------------------------------------------------------------------
+  // 4-3. updateLike -------------------------------------------------------------------------------
   @Override
-  public void updateLike(Integer board_number) throws Exception {
+  public void updateLike(
+    Integer board_number
+  ) throws Exception {
 
     sqlSession.update("updateLike", board_number);
   }
 
-  // 4-3. updateDislike ----------------------------------------------------------------------------
+  // 4-4. updateDislike ----------------------------------------------------------------------------
   @Override
-  public void updateDislike(Integer board_number) throws Exception {
+  public void updateDislike(
+    Integer board_number
+  ) throws Exception {
 
     sqlSession.update("updateDislike", board_number);
   }
 
   // 5. deleteBoard --------------------------------------------------------------------------------
   @Override
-  public Integer deleteBoard(Integer board_number) throws Exception {
+  public Integer deleteBoard(
+    Integer board_number
+  ) throws Exception {
 
     Integer result = 0;
 

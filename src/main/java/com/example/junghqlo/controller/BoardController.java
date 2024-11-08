@@ -28,80 +28,82 @@ public class BoardController {
   private static String page = "board";
   private static String PAGE = "Board";
 
-  // 1-1. listBoard (GET) --------------------------------------------------------------------------
+  // 1. listBoard (GET) --------------------------------------------------------------------------
   @GetMapping("/listBoard")
   public String listBoard(
     @ModelAttribute Board board,
-    @RequestParam(defaultValue = "default") String sort,
+    @RequestParam(defaultValue = "all") String sort,
+    @RequestParam(defaultValue = "title") String type,
+    @RequestParam(defaultValue = "") String keyword,
     @RequestParam(defaultValue = "1") Integer pageNumber,
     @RequestParam(defaultValue = "9") Integer itemsPer,
     Model model
   ) throws Exception {
 
-    // sort order
-    if(sort == null || sort.equals("default")) {
-      sort="board_number DESC";
+    // 1. Sort handling
+    String sortHandler = "";
+    if (sort == null || sort.equals("all")) {
+      sort = "board_number DESC";
+      sortHandler = "all";
     }
-    else if(sort.equals("titleASC")) {
-      sort="board_title ASC";
+    else if (sort.equals("titleASC")) {
+      sort = "board_title ASC";
+      sortHandler = "titleASC";
     }
-    else if(sort.equals("titleDESC")) {
-      sort="board_title DESC";
+    else if (sort.equals("titleDESC")) {
+      sort = "board_title DESC";
+      sortHandler = "titleDESC";
     }
-    else if(sort.equals("countASC")) {
-      sort="board_count ASC";
+    else if (sort.equals("countASC")) {
+      sort = "board_count ASC";
+      sortHandler = "countASC";
     }
-    else if(sort.equals("countDESC")) {
-      sort="board_count DESC";
+    else if (sort.equals("countDESC")) {
+      sort = "board_count DESC";
+      sortHandler = "countDESC";
     }
-    else if(sort.equals("dateASC")) {
-      sort="board_date ASC";
+    else if (sort.equals("dateASC")) {
+      sort = "board_date ASC";
+      sortHandler = "dateASC";
     }
-    else if(sort.equals("dateDESC")) {
-      sort="board_date DESC";
+    else if (sort.equals("dateDESC")) {
+      sort = "board_date DESC";
+      sortHandler = "dateDESC";
     }
 
-    PageHandler<Board> pageHandler = (
-      boardService.listBoard(pageNumber, itemsPer, sort, board)
-    );
-
-    // 모델
-    model.addAttribute("sort", sort);
-    model.addAttribute("pageHandler", pageHandler);
-    model.addAttribute("LIST", pageHandler.getContent());
-
-    return MessageFormat.format("/pages/{0}/{1}List", page, page);
-  };
-
-  // 1-2. searchBoard (GET) ------------------------------------------------------------------------
-  @GetMapping("/searchBoard")
-  public String searchBoard(
-    @ModelAttribute Board board,
-    @RequestParam(defaultValue = "default") String sort,
-    @RequestParam(defaultValue = "1") Integer pageNumber,
-    @RequestParam(defaultValue = "9") Integer itemsPer,
-    @RequestParam String searchType,
-    @RequestParam String keyword,
-    Model model
-  ) throws Exception {
-
-    // searchType order
-    if (searchType == null || keyword == null) {
+    // 3. Type handling
+    String typeHandler = "";
+    if (type == null || keyword == null) {
       return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
     }
-    else if (searchType.equals("title")) {
-      searchType="board_title";
+    else if (type.equals("all")) {
+      type = "board_title OR board_contents";
+      typeHandler = "all";
     }
-    else if (searchType.equals("contents")) {
-      searchType="board_contents";
+    else if (type.equals("title")) {
+      type = "board_title";
+      typeHandler = "title";
+    }
+    else if (type.equals("contents")) {
+      type = "board_contents";
+      typeHandler = "contents";
     }
 
+    // 4. Keyword handling
+    String keywordHandler = "";
+    if (keyword != null) {
+      keywordHandler = keyword;
+    }
+
+    // 5. Page handling
     PageHandler<Board> pageHandler = (
-      boardService.searchBoard(pageNumber, itemsPer, searchType, keyword, board)
+      boardService.listBoard(pageNumber, itemsPer, sort, type, keyword, board)
     );
 
     // 모델
-    model.addAttribute("sort", sort);
+    model.addAttribute("sortHandler", sortHandler);
+    model.addAttribute("typeHandler", typeHandler);
+    model.addAttribute("keywordHandler", keywordHandler);
     model.addAttribute("pageHandler", pageHandler);
     model.addAttribute("LIST", pageHandler.getContent());
 
@@ -118,7 +120,7 @@ public class BoardController {
   ) throws Exception {
 
     // 조회수 증가
-    boardService.updateBoardCount(board_number, session);
+    boardService.updateCount(board_number, session);
 
     // 모델
     model.addAttribute("MODEL", boardService.detailBoard(board_number));
@@ -145,7 +147,7 @@ public class BoardController {
     return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
   }
 
-  // 4. updateBoard (GET) --------------------------------------------------------------------------
+  // 4-1. updateBoard (GET) ------------------------------------------------------------------------
   @GetMapping("/updateBoard")
   public String updateBoard(
     @RequestParam Integer board_number,
@@ -158,7 +160,7 @@ public class BoardController {
     return MessageFormat.format("/pages/{0}/{1}Update", page, page);
   }
 
-  // 4. updateBoard (POST) -------------------------------------------------------------------------
+  // 4-1. updateBoard (POST) -----------------------------------------------------------------------
   @PostMapping("/updateBoard")
   public String updateBoard (
     @ModelAttribute Board board,

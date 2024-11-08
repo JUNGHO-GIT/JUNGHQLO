@@ -1,23 +1,19 @@
 package com.example.junghqlo.service;
 
+import javax.servlet.http.HttpSession;
 import com.example.junghqlo.handler.PageHandler;
 import com.example.junghqlo.model.Board;
 
 public interface BoardService {
 
-  // 1-1. listBoard --------------------------------------------------------------------------------
+  // 1. listBoard ----------------------------------------------------------------------------------
   PageHandler<Board> listBoard(
     Integer pageNumber,
     Integer itemsPer,
-    String sort
-  ) throws Exception;
-
-  // 1-2. searchBoard ------------------------------------------------------------------------------
-  PageHandler<Board> searchBoard(
-    Integer pageNumber,
-    Integer itemsPer,
-    String searchType,
-    String keyword
+    String sort,
+    String type,
+    String keyword,
+    Board board
   ) throws Exception;
 
   // 2. detailBoard --------------------------------------------------------------------------------
@@ -38,17 +34,20 @@ public interface BoardService {
 
   // 4-2. updateCount ------------------------------------------------------------------------------
   void updateCount(
-    Integer board_number
+    Integer board_number,
+    HttpSession session
   ) throws Exception;
 
   // 4-3. updateLike -------------------------------------------------------------------------------
   void updateLike(
-    Integer board_number
+    Integer board_number,
+    HttpSession session
   ) throws Exception;
 
   // 4-4. updateDislike ----------------------------------------------------------------------------
   void updateDislike(
-    Integer board_number
+    Integer board_number,
+    HttpSession session
   ) throws Exception;
 
   // 5. deleteBoard --------------------------------------------------------------------------------

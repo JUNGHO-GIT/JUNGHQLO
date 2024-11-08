@@ -24,21 +24,27 @@ public class OrdersServiceImpl implements OrdersService {
     this.ordersMapper = ordersMapper;
   }
 
-  // 1-1. listOrders ------------------------------------------------------------------------------
+  // 1. listOrders ---------------------------------------------------------------------------------
   @Override
-  public PageHandler<Orders> listOrders(Integer pageNumber, Integer itemsPer, String member_id, String sort, Orders orders) throws Exception {
+  public PageHandler<Orders> listOrders(
+    Integer pageNumber,
+    Integer itemsPer,
+    String sort,
+    String type,
+    String keyword,
+    String member_id,
+    Orders orders
+  ) throws Exception {
 
-    List<Orders> content = ordersMapper.listOrders(member_id, sort);
+    List<Orders> content = ordersMapper.listOrders(sort, type, keyword, member_id);
 
     Integer itemsTotal = content.size();
     Integer pageLast = (itemsTotal + itemsPer - 1) / itemsPer;
 
-    // Ensure the pageNumber is greater than 0
     if (pageNumber <= 0) {
       pageNumber = 1;
     }
 
-    // Ensure the pageNumber does not exceed pageLast, only if pageLast is greater than 0
     if (pageLast > 0 && pageNumber > pageLast) {
       pageNumber = pageLast;
     }
@@ -48,7 +54,6 @@ public class OrdersServiceImpl implements OrdersService {
 
     List<Orders> pageContent;
 
-    // If pageStart is greater than or equal to itemsTotal, set pageContent to an empty list
     if (pageStart >= itemsTotal) {
       pageContent = new ArrayList<>();
     }
@@ -59,42 +64,29 @@ public class OrdersServiceImpl implements OrdersService {
     return new PageHandler<>(pageNumber, pageStart, pageEnd, 1, pageLast, itemsPer, itemsTotal, pageContent);
   }
 
-  // 2. detailOrders ---------------------------------------------------------------------------
+  // 2. detailOrders -------------------------------------------------------------------------------
   @Override
-  public Orders detailOrders(Integer orders_number) throws Exception {
+  public Orders detailOrders(
+    Integer orders_number
+  ) throws Exception {
 
     return ordersMapper.detailOrders(orders_number);
   }
 
-  // 1-2. searchOrders -------------------------------------------------------------------------------
+  // 2-1. getStripePrice ---------------------------------------------------------------------------
   @Override
-  public PageHandler<Orders> searchOrders(Integer pageNumber, Integer itemsPer, String searchType, String keyword, String member_id, Orders orders) throws Exception {
-
-    List<Orders> content = ordersMapper.searchOrders(searchType, keyword, member_id);
-    Integer itemsTotal = content.size();
-    Integer pageLast = (itemsTotal + itemsPer - 1) / itemsPer;
-    Integer pageStart = (pageNumber - 1) * itemsPer;
-    Integer pageEnd = Math.min(pageStart + itemsPer, itemsTotal);
-
-    if (pageNumber <= 0) {
-      pageNumber = 1;
-    }
-
-    List<Orders> pageContent = content.subList(pageStart, pageEnd);
-
-    return new PageHandler<>(pageNumber, pageStart, pageEnd, 1, pageLast, itemsPer, itemsTotal, pageContent);
-  }
-
-  // 3-1. getStripePrice ---------------------------------------------------------------------------
-  @Override
-  public String getStripePrice(Integer orders_number) throws StripeException {
+  public String getStripePrice(
+    Integer orders_number
+  ) throws StripeException {
 
     return ordersMapper.getStripePrice(orders_number);
   }
 
   // 3. addOrders ----------------------------------------------------------------------------------
   @Override
-  public void addOrders(Orders orders) throws Exception {
+  public void addOrders(
+    Orders orders
+  ) throws Exception {
 
     String product_imgsUrl = orders.getProduct_imgsUrl();
 
@@ -143,18 +135,22 @@ public class OrdersServiceImpl implements OrdersService {
     ordersMapper.addOrders(orders);
   }
 
-  // 4-2. successOrders 4-3. failOrders 4. updateOrders
-
-  // 4-1. updateOrdersStock ------------------------------------------------------------------------
+  // 4-1. updateProductStock -----------------------------------------------------------------------
   @Override
-  public Integer updateProductStock(Integer product_number, Integer product_stock, Integer orders_quantity) throws Exception {
+  public void updateProductStock(
+    Integer product_number,
+    Integer product_stock,
+    Integer orders_quantity
+  ) throws Exception {
 
-    return ordersMapper.updateProductStock(product_number, product_stock, orders_quantity);
+    ordersMapper.updateProductStock(product_number, product_stock, orders_quantity);
   }
 
   // 5. deleteOrders -------------------------------------------------------------------------------
   @Override
-  public Integer deleteOrders(Integer orders_number) {
+  public Integer deleteOrders(
+    Integer orders_number
+  ) throws Exception {
 
     Integer result = 0;
 

@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class CommonController {
 
-	// home main page
+	// home ------------------------------------------------------------------------------------------
 	@GetMapping("/")
 	public String home() throws Exception {
 		return "/pages/home";
   }
 
-  // contact
+  // contact ---------------------------------------------------------------------------------------
   @GetMapping("/contact")
   public String contact() throws Exception {
     return "/pages/contact/contact";

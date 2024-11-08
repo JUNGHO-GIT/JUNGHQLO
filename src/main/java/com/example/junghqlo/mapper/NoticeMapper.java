@@ -19,71 +19,56 @@ public interface NoticeMapper {
   // 0. result mapping -----------------------------------------------------------------------------
   @Results ({
     @Result (
-      property="notice_number",
-      column="notice_number",
-      id=true
+      property = "notice_number",
+      column = "notice_number",
+      id = true
     ),
     @Result (
-      property="notice_title",
-      column="notice_title"
+      property = "notice_title",
+      column = "notice_title"
     ),
     @Result (
-      property="notice_contents",
-      column="notice_contents"
+      property = "notice_contents",
+      column = "notice_contents"
     ),
     @Result (
-      property="notice_writer",
-      column="notice_writer"
+      property = "notice_writer",
+      column = "notice_writer"
     ),
     @Result (
-      property="notice_count",
-      column="notice_count"
+      property = "notice_count",
+      column = "notice_count"
     ),
     @Result (
-      property="notice_like",
-      column="notice_like"
+      property = "notice_like",
+      column = "notice_like"
     ),
     @Result (
-      property="notice_dislike",
-      column="notice_dislike"
+      property = "notice_dislike",
+      column = "notice_dislike"
     ),
     @Result (
-      property="notice_imgsFile",
-      column="notice_imgsFile",
-      typeHandler=MultipartFileHandler.class
+      property = "notice_imgsFile",
+      column = "notice_imgsFile",
+      typeHandler = MultipartFileHandler.class
     ),
     @Result (
-      property="notice_imgsUrl",
-      column="notice_imgsUrl"
+      property = "notice_imgsUrl",
+      column = "notice_imgsUrl"
     ),
     @Result (
-      property="notice_date",
-      column="notice_date",
-      typeHandler=LocalDateTimeTypeHandler.class
+      property = "notice_date",
+      column = "notice_date",
+      typeHandler = LocalDateTimeTypeHandler.class
     ),
     @Result (
-      property="notice_update",
-      column="notice_update",
-      typeHandler=LocalDateTimeTypeHandler.class
+      property = "notice_update",
+      column = "notice_update",
+      typeHandler = LocalDateTimeTypeHandler.class
     )
   })
 
-  // 1-1. listNotice -------------------------------------------------------------------------------
-  @Select(
-    """
-    SELECT
-      *
-    FROM
-      notice
-    ORDER BY
-      ${sort}
-    """
-  )
-  List<Notice> listNotice(
-    @Param("sort") String sort
-  ) throws Exception;
-
-  // 1-2. searchNotice -----------------------------------------------------------------------------
+  // 1. listNotice ---------------------------------------------------------------------------------
   @Select(
     """
     SELECT
@@ -91,11 +76,14 @@ public interface NoticeMapper {
     FROM
       notice
     WHERE
-      ${keyword} LIKE CONCAT('%', #{searchType}, '%')
+      ${type} LIKE CONCAT('%', #{keyword}, '%')
+    ORDER BY
+      ${sort}
     """
   )
-  List<Notice> searchNotice(
-    @Param("searchType") String searchType,
+  List<Notice> listNotice(
+    @Param("sort") String sort,
+    @Param("type") String type,
     @Param("keyword") String keyword
   ) throws Exception;
 
@@ -107,7 +95,7 @@ public interface NoticeMapper {
     FROM
       notice
     WHERE
-      notice_number=#{notice_number}
+      notice_number = #{notice_number}
     """
   )
   Notice detailNotice(
@@ -136,7 +124,7 @@ public interface NoticeMapper {
       #{notice_count},
       #{notice_like},
       #{notice_dislike},
-      #{notice_imgsFile, typeHandler=MultipartFileHandler},
+      #{notice_imgsFile, typeHandler = MultipartFileHandler},
       #{notice_imgsUrl},
       NOW()
     )
@@ -152,35 +140,35 @@ public interface NoticeMapper {
     UPDATE
       notice
     SET
-      notice_title=#{notice_title},
-      notice_contents=#{notice_contents},
-      notice_writer=#{notice_writer},
-      notice_count=#{notice_count},
-      notice_like=#{notice_like},
-      notice_dislike=#{notice_dislike},
-      notice_imgsFile=#{notice_imgsFile, typeHandler=MultipartFileHandler},
-      notice_imgsUrl=#{notice_imgsUrl},
-      notice_update=NOW()
+      notice_title = #{notice_title},
+      notice_contents = #{notice_contents},
+      notice_writer = #{notice_writer},
+      notice_count = #{notice_count},
+      notice_like = #{notice_like},
+      notice_dislike = #{notice_dislike},
+      notice_imgsFile = #{notice_imgsFile, typeHandler = MultipartFileHandler},
+      notice_imgsUrl = #{notice_imgsUrl},
+      notice_update = NOW()
     WHERE
-      notice_number=#{notice_number}
+      notice_number = #{notice_number}
     """
   )
   void updateNotice(
     Notice notice
   ) throws Exception;
 
-  // 4-1. updateNoticeCount ------------------------------------------------------------------------
+  // 4-1. updateCount ------------------------------------------------------------------------------
   @Update(
     """
     UPDATE
       notice
     SET
-      notice_count=notice_count+1
+      notice_count = notice_count + 1
     WHERE
-      notice_number=#{notice_number}
+      notice_number = #{notice_number}
     """
   )
-  void updateNoticeCount(
+  void updateCount(
     Integer notice_number
   ) throws Exception;
 
@@ -190,9 +178,9 @@ public interface NoticeMapper {
     UPDATE
       notice
     SET
-      notice_like=notice_like+1
+      notice_like = notice_like + 1
     WHERE
-      notice_number=#{notice_number}
+      notice_number = #{notice_number}
     """
   )
   void updateLike(
@@ -205,9 +193,9 @@ public interface NoticeMapper {
     UPDATE
       notice
     SET
-      notice_dislike=notice_dislike+1
+      notice_dislike = notice_dislike + 1
     WHERE
-      notice_number=#{notice_number}
+      notice_number = #{notice_number}
     """
   )
   void updateDislike(
@@ -220,7 +208,7 @@ public interface NoticeMapper {
     DELETE FROM
       notice
     WHERE
-      notice_number=#{notice_number}
+      notice_number = #{notice_number}
     """
   )
   Integer deleteNotice(

@@ -12,14 +12,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class EmailHandler {
 
-  // $1$2$3 $5-----
+  // 0. constructor injection ----------------------------------------------------------------------
   JavaMailSender mailSender;
   Map<String, String> emailCodeMap = new HashMap<>();
   EmailHandler(JavaMailSender mailSender) {
     this.mailSender = mailSender;
   }
 
-  // $1$2$3 $5-----
+  // 1. generateCode -------------------------------------------------------------------------------
   public String generateCode() {
 
     Integer length = 6;
@@ -33,7 +33,7 @@ public class EmailHandler {
     return builder.toString();
   }
 
-  // $1$2$3 $5-----
+  // 2. sendEmailCode ------------------------------------------------------------------------------
   public String sendEmailCode(String receiveEmail, String emailCode) throws MessagingException {
 
     MimeMessage message = mailSender.createMimeMessage();
@@ -54,7 +54,7 @@ public class EmailHandler {
     return emailCode;
   }
 
-  // $1$2$3 $5-----
+  // 3. checkEmailCode -----------------------------------------------------------------------------
   public Integer checkEmailCode(String receiveEmail, String inputEmailCode) {
 
     String storedEmailCode = emailCodeMap.get(receiveEmail);

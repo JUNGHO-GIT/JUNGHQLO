@@ -24,25 +24,31 @@ public class ProductServiceImpl implements ProductService {
   private ProductMapper productMapper;
   private StripeConfig stripeConfig;
   ProductServiceImpl(ProductMapper productMapper, StripeConfig stripeConfig) {
-  this.stripeConfig = stripeConfig;
-  this.productMapper = productMapper;
+    this.stripeConfig = stripeConfig;
+    this.productMapper = productMapper;
   }
 
-  // 1-1. listProduct ------------------------------------------------------------------------------
+  // 1. listProduct ------------------------------------------------------------------------------
   @Override
-  public PageHandler<Product> listProduct(Integer pageNumber, Integer itemsPer, String sort, Product product) throws Exception {
+  public PageHandler<Product> listProduct(
+    Integer pageNumber,
+    Integer itemsPer,
+    String sort,
+    String category,
+    String type,
+    String keyword,
+    Product product
+  ) throws Exception {
 
-    List<Product> content = productMapper.listProduct(sort);
+    List<Product> content = productMapper.listProduct(sort, category, type, keyword);
 
     Integer itemsTotal = content.size();
     Integer pageLast = (itemsTotal + itemsPer - 1) / itemsPer;
 
-    // Ensure the pageNumber is greater than 0
     if (pageNumber <= 0) {
       pageNumber = 1;
     }
 
-    // Ensure the pageNumber does not exceed pageLast, only if pageLast is greater than 0
     if (pageLast > 0 && pageNumber > pageLast) {
       pageNumber = pageLast;
     }
@@ -52,42 +58,6 @@ public class ProductServiceImpl implements ProductService {
 
     List<Product> pageContent;
 
-    // If pageStart is greater than or equal to itemsTotal, set pageContent to an empty list
-    if (pageStart >= itemsTotal) {
-      pageContent = new ArrayList<>();
-    }
-    else {
-      pageContent = content.subList(pageStart, pageEnd);
-    }
-
-    return new PageHandler<>(pageNumber, pageStart, pageEnd, 1, pageLast, itemsPer, itemsTotal, pageContent);
-  }
-
-  // 1-1. categoryProduct -----------------------------------------------------------------------
-  @Override
-  public PageHandler<Product> categoryProduct(Integer pageNumber, Integer itemsPer, String category, String sort, Product product) throws Exception {
-
-    List<Product> content = productMapper.categoryProduct(category, sort);
-
-    Integer itemsTotal = content.size();
-    Integer pageLast = (itemsTotal + itemsPer - 1) / itemsPer;
-
-    // Ensure the pageNumber is greater than 0
-    if (pageNumber <= 0) {
-      pageNumber = 1;
-    }
-
-    // Ensure the pageNumber does not exceed pageLast, only if pageLast is greater than 0
-    if (pageLast > 0 && pageNumber > pageLast) {
-      pageNumber = pageLast;
-    }
-
-    Integer pageStart = (pageNumber - 1) * itemsPer;
-    Integer pageEnd = Math.min(pageStart + itemsPer, itemsTotal);
-
-    List<Product> pageContent;
-
-    // If pageStart is greater than or equal to itemsTotal, set pageContent to an empty list
     if (pageStart >= itemsTotal) {
       pageContent = new ArrayList<>();
     }
@@ -100,49 +70,21 @@ public class ProductServiceImpl implements ProductService {
 
   // 2. detailProduct --------------------------------------------------------------------------
   @Override
-  public Product detailProduct(Integer product_number) throws Exception {
+  public Product detailProduct(
+    Integer product_number
+  ) throws Exception {
 
     return productMapper.detailProduct(product_number);
   }
 
-  // 1-2. searchProduct ------------------------------------------------------------------------------
-  @Override
-  public PageHandler<Product> searchProduct(Integer pageNumber, Integer itemsPer, String searchType, String keyword, Product product) throws Exception {
-
-    List<Product> content = productMapper.searchProduct(searchType, keyword);
-
-    Integer itemsTotal = content.size();
-    Integer pageLast = (itemsTotal + itemsPer - 1) / itemsPer;
-
-    // Ensure the pageNumber is greater than 0
-    if (pageNumber <= 0) {
-      pageNumber = 1;
-    }
-
-    // Ensure the pageNumber does not exceed pageLast, only if pageLast is greater than 0
-    if (pageLast > 0 && pageNumber > pageLast) {
-      pageNumber = pageLast;
-    }
-
-    Integer pageStart = (pageNumber - 1) * itemsPer;
-    Integer pageEnd = Math.min(pageStart + itemsPer, itemsTotal);
-
-    List<Product> pageContent;
-
-    // If pageStart is greater than or equal to itemsTotal, set pageContent to an empty list
-    if (pageStart >= itemsTotal) {
-      pageContent = new ArrayList<>();
-    }
-    else {
-      pageContent = content.subList(pageStart, pageEnd);
-    }
-
-    return new PageHandler<>(pageNumber, pageStart, pageEnd, 1, pageLast, itemsPer, itemsTotal, pageContent);
-  }
-
   // 3. addProduct ---------------------------------------------------------------------------------
   @Override
-  public void addProduct(Product product, String product_name, String product_detail, Integer product_price) throws Exception {
+  public void addProduct(
+    String product_name,
+    String product_detail,
+    Integer product_price,
+    Product product
+  ) throws Exception {
 
     MultipartFile product_imgsFile1 = product.getProduct_imgsFile1();
     MultipartFile product_imgsFile2 = product.getProduct_imgsFile2();
@@ -217,7 +159,11 @@ public class ProductServiceImpl implements ProductService {
 
   // 4. updateProduct ------------------------------------------------------------------------------
   @Override
-  public void updateProduct(Product product, String product_imgsUrl1, String product_imgsUrl2) throws Exception {
+  public void updateProduct(
+    String product_imgsUrl1,
+    String product_imgsUrl2,
+    Product product
+  ) throws Exception {
 
     MultipartFile product_imgsFile1 = product.getProduct_imgsFile1();
     MultipartFile product_imgsFile2 = product.getProduct_imgsFile2();
@@ -297,9 +243,9 @@ public class ProductServiceImpl implements ProductService {
 
   // 5. deleteProduct ------------------------------------------------------------------------------
   @Override
-  public Integer deleteProduct(Integer product_number) throws Exception {
-
-    Integer result = 0;
+  public Integer deleteProduct(
+    Integer product_number
+  ) throws Exception {
 
     // 1. get product
     Product product = detailProduct(product_number);
@@ -307,6 +253,8 @@ public class ProductServiceImpl implements ProductService {
     // 2. delete product in stripe
     stripeConfig.deleteProduct(product.getStripe_id());
     stripeConfig.deletePrice(product.getStripe_price());
+
+    Integer result = 0;
 
     if (productMapper.deleteProduct(product_number) > 0) {
       result = 1;

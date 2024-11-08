@@ -20,31 +20,33 @@ public class GlobalAttributeConfig {
   @Value("${storage}")
   private String STORAGE;
 
+  // 1. addAttributes ------------------------------------------------------------------------------
   @ModelAttribute
   public void addAttributes(
     HttpServletRequest request,
     Model model
-  ) {
+  ) throws Exception {
+
     // URI에서 파트들을 추출
-    String uri = request.getRequestURI().split(";")[0]; // ';' 이후 문자열 제거
+    String uri = request.getRequestURI().split(";")[0];
     String[] uriParts = uri.split("/");
     String page = (uriParts.length > 2) ? uriParts[2] : "";
-    String pageUp = !page.isEmpty() ? Character.toUpperCase(page.charAt(0)) + page.substring(1) : "";
+    String pageUp =!page.isEmpty() ? Character.toUpperCase(page.charAt(0)) + page.substring(1) : "";
     String theme = (uriParts.length > 3) ? uriParts[3] : "";
 
     // ex. listBoard -> List
     if (theme.contains(pageUp)) {
-        String modifiedTheme = theme.replace(pageUp, "");
-        if (!modifiedTheme.isEmpty()) {
-            theme = modifiedTheme.substring(0, 1).toUpperCase() + modifiedTheme.substring(1);
-        } else {
-            theme = "";
-        }
-    } else {
+      String modifiedTheme = theme.replace(pageUp, "");
+      if (!modifiedTheme.isEmpty()) {
+        theme = modifiedTheme.substring(0, 1).toUpperCase() + modifiedTheme.substring(1);
+      }
+      else {
         theme = "";
+      }
     }
-
-
+    else {
+      theme = "";
+    }
     model.addAttribute("TITLE", TITLE);
     model.addAttribute("ADMIN", ADMIN);
     model.addAttribute("STORAGE", STORAGE);
@@ -55,4 +57,3 @@ public class GlobalAttributeConfig {
     model.addAttribute("THEME", theme);
   }
 }
-

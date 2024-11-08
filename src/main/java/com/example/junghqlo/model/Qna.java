@@ -19,8 +19,8 @@ public class Qna {
   private Integer qna_dislike;
   private boolean qna_answer1;
   private String qna_answer2;
-  private MultipartFile qna_imgsFile;
   private String qna_imgsUrl;
+  private MultipartFile qna_imgsFile;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
   private LocalDateTime qna_date;
@@ -53,9 +53,6 @@ public class Qna {
   public Integer getQna_dislike() {
     return this.qna_dislike;
   }
-  public LocalDateTime getQna_date() {
-    return this.qna_date;
-  }
   public MultipartFile getQna_imgsFile() {
     return this.qna_imgsFile;
   }
@@ -67,6 +64,9 @@ public class Qna {
   }
   public String getQna_answer2() {
     return this.qna_answer2;
+  }
+  public LocalDateTime getQna_date() {
+    return this.qna_date;
   }
   public LocalDateTime getQna_update() {
     return this.qna_update;
@@ -97,9 +97,6 @@ public class Qna {
   public void setQna_dislike(Integer qna_dislike) {
     this.qna_dislike = qna_dislike;
   }
-  public void setQna_date(LocalDateTime qna_date) {
-    this.qna_date = qna_date;
-  }
   public void setQna_imgsFile(MultipartFile qna_imgsFile) {
     this.qna_imgsFile = qna_imgsFile;
   }
@@ -112,8 +109,10 @@ public class Qna {
   public void setQna_answer2(String qna_answer2) {
     this.qna_answer2 = qna_answer2;
   }
+  public void setQna_date(LocalDateTime qna_date) {
+    this.qna_date = qna_date;
+  }
   public void setQna_update(LocalDateTime qna_update) {
     this.qna_update = qna_update;
   }
-
 }

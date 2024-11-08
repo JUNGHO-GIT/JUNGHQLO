@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- header -->
-  <header th:fragment="header" th:class="${'container-fluid'}">
+  <header th:fragment="header" class="container-fluid px-0">
 
     <!-- loader -->
     <th:block th:replace="~{layouts/loader :: loader}" />
@@ -11,8 +11,8 @@
     <th:block th:replace="~{layouts/offcanvas :: offcanvas}" />
 
     <!-- container 1 -->
-    <div class="container bg-black">
-      <div class="row p-20">
+    <div class="container bg-black p-20">
+      <div class="row row-d-center">
         <div class="d-none d-sm-block col-sm-7 col-md-7 col-lg-7 col-xl-7">
           <span class="fs-0-9rem fw-400 white">
             Free shipping, 30-day return or refund guarantee.
@@ -105,8 +105,8 @@
     </div>
 
     <!-- container 2 -->
-    <div class="container bg-white">
-      <div class="row d-row-center p-10">
+    <div class="container bg-white p-10">
+      <div class="row d-row-center">
         <!-- logo -->
         <div class="col-4 col-sm-2 col-md-2 col-lg-2 col-xl-2">
           <img
@@ -175,8 +175,8 @@
             th:action="@{|/product/searchProduct}"
           >
             <select
-              th:id="${'searchType'}"
-              th:name="${'searchType'}"
+              th:id="${'type'}"
+              th:name="${'type'}"
               th:class="${'form-control me-10'}"
             >
               <option value="name">이름</option>
