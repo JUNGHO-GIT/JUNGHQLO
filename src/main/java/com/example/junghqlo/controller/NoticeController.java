@@ -1,6 +1,7 @@
 package com.example.junghqlo.controller;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,15 +11,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import com.example.junghqlo.handler.PageHandler;
 import com.example.junghqlo.model.Notice;
 import com.example.junghqlo.service.NoticeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller
 @RequestMapping("/notice")
 public class NoticeController {
 
   // 0. constructor injection ----------------------------------------------------------------------
+  Logger logger = LoggerFactory.getLogger(this.getClass());
   private NoticeService noticeService;
   NoticeController(NoticeService noticeService) {
     this.noticeService = noticeService;
@@ -46,21 +51,13 @@ public class NoticeController {
       sort = "notice_number DESC";
       sortHandler = "all";
     }
-    else if(sort.equals("titleASC")) {
+    else if (sort.equals("titleASC")) {
       sort = "notice_title ASC";
       sortHandler = "titleASC";
     }
-    else if(sort.equals("titleDESC")) {
+    else if (sort.equals("titleDESC")) {
       sort = "notice_title DESC";
       sortHandler = "titleDESC";
-    }
-    else if(sort.equals("countASC")) {
-      sort = "notice_count ASC";
-      sortHandler = "countASC";
-    }
-    else if(sort.equals("countDESC")) {
-      sort = "notice_count DESC";
-      sortHandler = "countDESC";
     }
     else if(sort.equals("dateASC")) {
       sort = "notice_date ASC";
@@ -129,23 +126,38 @@ public class NoticeController {
     return MessageFormat.format("/pages/{0}/{1}Detail", page, page);
   }
 
-  // 3. addNotice (GET) ----------------------------------------------------------------------------
-  @GetMapping("/addNotice")
-  public String addNotice() throws Exception {
+  // 3. saveNotice (GET) ----------------------------------------------------------------------------
+  @GetMapping("/saveNotice")
+  public String saveNotice() throws Exception {
 
-    return MessageFormat.format("/pages/{0}/{1}Add", page, page);
+    return MessageFormat.format("/pages/{0}/{1}Save", page, page);
   }
 
-  // 3. addNotice (POST) ---------------------------------------------------------------------------
-  @PostMapping("/addNotice")
-  public String addNotice(
-    @ModelAttribute Notice notice
+  // 3. saveNotice (POST) ---------------------------------------------------------------------------
+  @ResponseBody
+  @PostMapping("/saveNotice")
+  public Integer saveNotice(
+    @ModelAttribute Notice notice,
+    @RequestParam(required = false) ArrayList<MultipartFile> imgsFile
   ) throws Exception {
 
-    noticeService.addNotice(notice);
+    // imgsFile이 null이면 빈 리스트로 초기화
+    if (imgsFile == null) {
+      imgsFile = new ArrayList<>();
+    }
 
-    return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
+    Integer result = 0;
+
+    if (noticeService.saveNotice(notice, imgsFile) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
+
 
   // 4-1. updateNotice (GET) -----------------------------------------------------------------------
   @GetMapping("/updateNotice")
@@ -154,22 +166,34 @@ public class NoticeController {
     Model model
   ) throws Exception {
 
-    // 모델
     model.addAttribute("MODEL", noticeService.detailNotice(notice_number));
 
     return MessageFormat.format("/pages/{0}/{1}Update", page, page);
   }
 
   // 4-1. updateNotice (POST) ----------------------------------------------------------------------
+  @ResponseBody
   @PostMapping("/updateNotice")
-  public String updateNotice (
+  public Integer updateNotice (
     @ModelAttribute Notice notice,
-    @RequestParam("notice_imgsUrl") String existingImage
+    @RequestParam(required = false) ArrayList<MultipartFile> imgsFile
   ) throws Exception {
 
-    noticeService.updateNotice(notice, existingImage);
+    // imgsFile이 null이면 빈 리스트로 초기화
+    if (imgsFile == null) {
+      imgsFile = new ArrayList<>();
+    }
 
-    return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
+    Integer result = 0;
+
+    if (noticeService.updateNotice(notice, imgsFile) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
 
   // 4-2. updateLike (GET) -------------------------------------------------------------------------

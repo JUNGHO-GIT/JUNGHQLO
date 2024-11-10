@@ -131,13 +131,13 @@ public class MemberServiceImpl implements MemberService {
     return result;
   }
 
-  // 3. addMember ----------------------------------------------------------------------------------
+  // 3. saveMember ----------------------------------------------------------------------------------
   @Override
-  public void addMember(
+  public void saveMember(
     Member member
   ) throws Exception {
 
-    memberMapper.addMember(member);
+    memberMapper.saveMember(member);
   }
 
   // 4-1. updateMember -----------------------------------------------------------------------------

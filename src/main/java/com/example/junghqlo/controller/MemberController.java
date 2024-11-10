@@ -224,21 +224,21 @@ public class MemberController {
     return result;
   }
 
-  // 3-1. addMember (GET) --------------------------------------------------------------------------
-  @GetMapping("/addMember")
-  public String addMember() throws Exception {
+  // 3-1. saveMember (GET) --------------------------------------------------------------------------
+  @GetMapping("/saveMember")
+  public String saveMember() throws Exception {
 
     return MessageFormat.format("/pages/{0}/{1}Signup", page, page);
   }
 
-  // 3-1. addMember (POST) -------------------------------------------------------------------------
-  @PostMapping("/addMember")
-  public String addMember(
+  // 3-1. saveMember (POST) -------------------------------------------------------------------------
+  @PostMapping("/saveMember")
+  public String saveMember(
     @ModelAttribute Member member,
     Model model
   ) throws Exception {
 
-    memberService.addMember(member);
+    memberService.saveMember(member);
 
     return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
   }

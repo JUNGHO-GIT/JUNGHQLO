@@ -8,83 +8,209 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (
-    icon = 'fas fa-chalkboard-teacher',
-    text1 = ${PAGE},
-    text2 = ${THEME}
-  )}" />
+  <th:block th:replace="~{layouts/navigation :: navigation}" />
 
   <!-- main -->
-  <main class="container-fluid px-30">
+  <section class="container-fluid px-30">
     <div class="row d-row-center">
       <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
-    <form th:action="@{|/board/updateBoard}" th:method="${'POST" enctype="multipart/form-data'}">
-
-      <!-- hidden -->
-      <input th:type="${'hidden" th:name="|board_number" th:value="{boardModel.board_number}" th:id="board_number'}" readonly/>
-      <input th:type="${'hidden" th:name="|board_writer" th:value="{boardModel.board_writer}" th:id="board_writer'}" readonly/>
-      <input th:type="${'hidden" th:name="|board_count" th:value="{boardModel.board_count}" th:id="board_count'}" readonly/>
-      <input th:type="${'hidden" th:name="|board_like" th:value="{boardModel.board_like}" th:id="board_like'}" readonly/>
-      <input th:type="${'hidden" th:name="|board_dislike" th:value="{boardModel.board_dislike}" th:id="board_dislike'}" readonly/>
-      <input th:type="${'hidden" th:name="|board_imgsUrl" th:value="{boardModel.board_imgsUrl}" th:id="board_imgsUrl'}" readonly/>
-
-      <div class="row">
-        <div class="col-lg-6 col-md-6">
-          <h6 class="checkout-title">게시물 수정</h6>
-          <!-- name -->
-          <div class="row">
+        <!-- form -->
+        <form
+          th:method="${'POST'}"
+          th:action="@{|/${page}/update${PAGE}|}"
+          th:enctype="${'multipart/form-data'}"
+        >
+          <!-- detail -->
+          <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="checkout-input">
-                <p class="p">제목<span>*</span></p>
-                <input th:type="${'text" th:placeholder="|Title" th:name="|board_title" th:value="{boardModel.board_title}" th:id="board_title|'}"/>
+              <div class="border-1 radius-2 shadow-1 px-20 py-40">
+                <!-- title -->
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800">
+                        제목
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy ms-5">
+                        *
+                      </div>
+                    </div>
+                    <div class="d-row-left">
+                      <input
+                        th:type="${'text'}"
+                        th:id="${'board_title'}"
+                        th:name="${'board_title'}"
+                        th:class="${'form-control'}"
+                        th:value="${MODEL['board_title']}"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- content -->
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800 light-black">
+                        내용
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy ms-5">
+                        *
+                      </div>
+                    </div>
+                    <div class="d-row-left">
+                      <textarea
+                        th:id="${'board_contents'}"
+                        th:name="${'board_contents'}"
+                        th:class="${'form-control h-20vh border-1 lh-1-7'}"
+                        th:value="${MODEL['board_contents']}"
+                        th:text="${MODEL['board_contents']}"
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+                <!-- hr -->
+                <hr
+                	th:id="${'hr'}"
+                	th:name="${'hr'}"
+                	th:class="${'mt-20 mb-20'}"
+                />
+                <!-- image -->
+                <div class="row">
+                  <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="d-row-center mb-10">
+                      <div class="fs-0-9rem fw-800 light-black">
+                        기존 이미지
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy ms-5">
+                        *
+                      </div>
+                    </div>
+                    <div class="d-row-center">
+                      <img
+                        th:id="${'existingImage'}"
+                        th:name="${'existingImage'}"
+                        th:class="${'w-100 h-100 radius-2 shadow-1'}"
+                        th:src="@{|${MODEL['board_imgsUrl']}|}"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="d-row-center mb-10">
+                      <div class="fs-0-9rem fw-800 light-black">
+                        게시물 이미지
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy ms-5">
+                        <label
+                          th:id="${'imgsLabel'}"
+                          th:name="${'imgsLabel'}"
+                          th:class="${'ms-10'}"
+                          th:for="${'imgsFile'}"
+                        >
+                          선택하기
+                        </label>
+                      </div>
+                    </div>
+                    <div class="d-row-center">
+                      <input
+                        th:type="${'file'}"
+                        th:id="${'imgsFile'}"
+                        th:name="${'board_imgsFile'}"
+                        th:class="${'board_imgsFile d-none'}"
+                        th:onchange="|junghoPreview()|"
+                      />
+                      <div
+                        th:id="${'imgsLoader'}"
+                        th:name="${'imgsLoader'}"
+                        th:class="${'imgsLoader'}"
+                      >
+                      </div>
+                      <img
+                        th:id="${'imgsBox'}"
+                        th:name="${'imgsBox'}"
+                        th:class="${'imgsBox w-100 h-100 radius-2 shadow-1'}"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <!-- content -->
-          <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="checkout-input">
-                <p class="p">내용<span>*</span></p>
-                <textarea th:placeholder="${'|Contents" th:id="|board_contents" th:name="board_contents" th:text=|"${boardModel.board_contents}|'}">
-                </textarea>
-              </div>
+          <!-- hr -->
+          <hr
+          	th:id="${'hr'}"
+          	th:name="${'hr'}"
+          	th:class="${'mt-20 mb-20'}"
+          />
+          <!-- button -->
+          <div class="row d-row-center">
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+              <button
+                th:type="${'submit'}"
+                th:class="${'btn btn-dark w-90p'}"
+                th:onclick="|return updateBoard()|"
+              >
+                수정
+              </button>
             </div>
-          </div>
-          <!-- image -->
-          <div class="row">
-            <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
-              <div class="checkout-input">
-              <p class="p">기존 이미지<span>*</span></p>
-              <img th:src="${boardModel.board_imgsUrl}" style="width: 150px; height: 150px; border-radius: 10px; box-shadow: 0px 10px 10px rgba(0, 0.5, 0.5, 0.5)()" th:id="${'|existingImage" th:name="existingImage" th:value="existingImage|'}"/>
-              </div>
-            </div>
-            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-              <div class="checkout-input">
-                <p class="p"> 게시물 이미지<span>*</span></p>
-                <label for="imageFile">선택하기</label>
-                <input th:type="${'file" th:id="|imageFile" th:name="board_imgsFile"   style="display:none" class="imageFile" oninput="junghoPreview()|'}"/>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-3 mt-3">
-              <button th:type="${'submit" th:onclick="return updateCheck()" class="|jungho-button'}|">
-              수정
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+              <button
+                th:type="${'button'}"
+                th:class="${'btn btn-dark w-90p'}"
+                th:onclick="|return goHome()|"
+              >
+                홈으로
               </button>
             </div>
           </div>
-        </div>
-        <!-- preview -->
-        <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-          <div class="preview">
-            <div class="border-dark justify-content-center">
-              <h4 class="order-title mb-4"><i class="fa fa-spinner"></i>&nbsp;Preview</h4>
-              <div class="imageLoader" th:id="${'imageLoader'}"></div>
-              <img class="imageBox" th:id="${'imageBox'}"/>
-            </div>
+          <!-- hidden -->
+          <div class="hidden-wrapper">
+            <input
+              th:type="${'hidden'}"
+              th:id="${'board_number'}"
+              th:name="${'board_number'}"
+              th:value="${MODEL['board_number']}"
+            />
+            <input
+              th:type="${'hidden'}"
+              th:id="${'board_writer'}"
+              th:name="${'board_writer'}"
+              th:value="${MODEL['board_writer']}"
+            />
+            <input
+              th:type="${'hidden'}"
+              th:id="${'board_count'}"
+              th:name="${'board_count'}"
+              th:value="${MODEL['board_count']}"
+            />
+            <input
+              th:type="${'hidden'}"
+              th:id="${'board_like'}"
+              th:name="${'board_like'}"
+              th:value="${MODEL['board_like']}"
+            />
+            <input
+              th:type="${'hidden'}"
+              th:id="${'board_dislike'}"
+              th:name="${'board_dislike'}"
+              th:value="${MODEL['board_dislike']}"
+            />
+            <input
+              th:type="${'hidden'}"
+              th:id="${'board_date'}"
+              th:name="${'board_date'}"
+              th:value="${MODEL['board_date']}"
+            />
+            <input
+              th:type="${'hidden'}"
+              th:id="${'board_imgsUrl'}"
+              th:name="${'board_imgsUrl'}"
+              th:value="${MODEL['board_imgsUrl']}"
+            />
           </div>
-        </div>
+        </form>
       </div>
-    </form>
-  </main>
+    </div>
+  </section>
 
   <!-- footer -->
   <th:block th:replace="~{layouts/footer :: footer}" />

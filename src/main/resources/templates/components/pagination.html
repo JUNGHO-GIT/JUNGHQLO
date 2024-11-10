@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 	<!-- pagination -->
-  <section th:fragment="pagination" class="container-fluid mt-30">
+  <section th:fragment="pagination" class="container-fluid px-30">
     <div class="row d-row-center">
       <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
         <div class="d-row-center">
@@ -12,7 +12,7 @@
               th:id="${'prev'}"
               th:name="${'prev'}"
               th:class="${'fs-1-6rem fw-700 h-30 w-30 d-center black pointer'}"
-              th:onclick="|location.href='@{|/${prefix}/list${subfix}?pageNumber=${pageHandler.pageNumber-1}&itemsPer=${pageHandler.itemsPer}|}'|"
+              th:onclick="|location.href='@{|/${page}/list${PAGE}?pageNumber=${pageHandler.pageNumber-1}&itemsPer=${pageHandler.itemsPer}|}'|"
               th:text="${'&laquo;'}"
             ></div>
           </th:block>
@@ -39,7 +39,7 @@
                 th:id="${'number'}"
                 th:name="${'number'}"
                 th:class="${'fs-1-0rem fw-700 h-30 w-30 border-1 radius-50 d-center ms-1vw me-1vw bg-white black pointer'}"
-                th:onclick="|location.href='@{|/${prefix}/list${subfix}?pageNumber=${pageNumber}&itemsPer=${pageHandler.itemsPer}|}'|"
+                th:onclick="|location.href='@{|/${page}/list${PAGE}?pageNumber=${pageNumber}&itemsPer=${pageHandler.itemsPer}|}'|"
                 th:text="${pageNumber}"
               ></div>
             </th:block>
@@ -50,7 +50,7 @@
               th:id="${'next'}"
               th:name="${'next'}"
               th:class="${'fs-1-6rem fw-700 h-30 w-30 d-center black pointer'}"
-              th:onclick="|location.href='@{|/${prefix}/list${subfix}?pageNumber=${pageHandler.pageNumber+1}&itemsPer=${pageHandler.itemsPer}|}'|"
+              th:onclick="|location.href='@{|/${page}/list${PAGE}?pageNumber=${pageHandler.pageNumber+1}&itemsPer=${pageHandler.itemsPer}|}'|"
               th:text="${'&raquo;'}"
             ></div>
           </th:block>

@@ -111,7 +111,7 @@ public interface OrdersMapper {
     Integer orders_number
   ) throws StripeException;
 
-  // 3. addOrders ----------------------------------------------------------------------------------
+  // 3. saveOrders ----------------------------------------------------------------------------------
   @Insert(
     """
     INSERT INTO
@@ -135,7 +135,7 @@ public interface OrdersMapper {
     )
     """
   )
-  void addOrders(
+  void saveOrders(
     Orders orders
   ) throws Exception;
 

@@ -2,7 +2,6 @@ package com.example.junghqlo.model;
 
 import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.multipart.MultipartFile;
 import lombok.Data;
 
 @Data
@@ -17,10 +16,7 @@ public class Product {
   private String product_company;
   private String product_category;
   private String product_origin;
-  private MultipartFile product_imgsFile1;
-  private MultipartFile product_imgsFile2;
-  private String product_imgsUrl1;
-  private String product_imgsUrl2;
+  private String product_imgsUrl;
 
   // stripe
   private String stripe_id;
@@ -57,17 +53,8 @@ public class Product {
   public String getProduct_origin() {
     return this.product_origin;
   }
-  public MultipartFile getProduct_imgsFile1() {
-    return this.product_imgsFile1;
-  }
-  public MultipartFile getProduct_imgsFile2() {
-    return this.product_imgsFile2;
-  }
-  public String getProduct_imgsUrl1() {
-    return this.product_imgsUrl1;
-  }
-  public String getProduct_imgsUrl2() {
-    return this.product_imgsUrl2;
+  public String getProduct_imgsUrl() {
+    return this.product_imgsUrl;
   }
   public LocalDateTime getProduct_date() {
     return this.product_date;
@@ -107,17 +94,8 @@ public class Product {
   public void setProduct_origin(String product_origin) {
     this.product_origin = product_origin;
   }
-  public void setProduct_imgsFile1(MultipartFile product_imgsFile1) {
-    this.product_imgsFile1 = product_imgsFile1;
-  }
-  public void setProduct_imgsFile2(MultipartFile product_imgsFile2) {
-    this.product_imgsFile2 = product_imgsFile2;
-  }
-  public void setProduct_imgsUrl1(String product_imgsUrl1) {
-    this.product_imgsUrl1 = product_imgsUrl1;
-  }
-  public void setProduct_imgsUrl2(String product_imgsUrl2) {
-    this.product_imgsUrl2 = product_imgsUrl2;
+  public void setProduct_imgsUrl(String product_imgsUrl) {
+    this.product_imgsUrl = product_imgsUrl;
   }
   public void setProduct_date(LocalDateTime product_date) {
 		this.product_date = product_date;

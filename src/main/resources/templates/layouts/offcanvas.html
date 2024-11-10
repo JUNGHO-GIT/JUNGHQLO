@@ -13,7 +13,7 @@
         <div class="off-canvas-links">
           <a
             th:if="${session.member_id == null}"
-            th:href="@{|/member/addMember|}"
+            th:href="@{|/member/saveMember|}"
           >
             <span class="upper-text me-20">
               SignUp
@@ -60,13 +60,13 @@
               </a>
             </li>
             <li>
-              <a th:href="@{|/product/addProduct|}">
-                AddProduct
+              <a th:href="@{|/product/saveProduct|}">
+                SaveProduct
               </a>
             </li>
             <li>
-              <a th:href="@{|/notice/addNotice|}">
-                AddNotice
+              <a th:href="@{|/notice/saveNotice|}">
+                SaveNotice
               </a>
             </li>
           </ul>
@@ -83,12 +83,12 @@
             </li>
             <li>
               <a th:onclick="|adminAlert()|">
-                AddProduct
+                SaveProduct
               </a>
             </li>
             <li>
               <a th:onclick="|adminAlert()|">
-                AddNotice
+                SaveNotice
               </a>
             </li>
           </ul>
@@ -122,7 +122,7 @@
           th:class="${'fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30'}"
           th:onclick="|location.href='@{/board/listBoard}'|"
         >
-          Blog
+            Board
         </div>
         <div
           th:class="${'fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30'}"
@@ -154,7 +154,7 @@
           th:width="${'70px'}"
           th:height="${'70px'}"
           th:class="${'pointer'}"
-          th:onclick="|goHome()|"
+          th:onclick="|return goHome()|"
         />
         <div class="fs-1-1rem fw-700 mt-20 mb-20">
           JUNGHQLO

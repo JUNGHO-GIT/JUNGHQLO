@@ -2,6 +2,7 @@ package com.example.junghqlo.service;
 
 import com.example.junghqlo.handler.PageHandler;
 import com.example.junghqlo.model.Product;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface ProductService {
 
@@ -21,19 +22,16 @@ public interface ProductService {
     Integer product_number
   ) throws Exception;
 
-  // 3. addProduct ---------------------------------------------------------------------------------
-  void addProduct(
-    String product_name,
-    String product_detail,
-    Integer product_price,
-    Product product
+  // 3. saveProduct ---------------------------------------------------------------------------------
+  Integer saveProduct(
+    Product product,
+    MultipartFile[] imgsFile
   ) throws Exception;
 
   // 4. updateProduct ------------------------------------------------------------------------------
-  void updateProduct(
-    String product_imgsUrl1,
-    String product_imgsUrl2,
-    Product product
+  Integer updateProduct(
+    Product product,
+    MultipartFile[] imgsFile
   ) throws Exception;
 
   // 5. deleteProduct ------------------------------------------------------------------------------

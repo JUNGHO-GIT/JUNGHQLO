@@ -8,20 +8,16 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (
-    icon = 'fas fa-map-marker-alt',
-    text1 = ${PAGE},
-    text2 = ${THEME}
-  )}" />
+  <th:block th:replace="~{layouts/navigation :: navigation}" />
 
   <!-- map -->
   <section class="map">
     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12650.019124063203!2d126.96497476224326!3d37.56672970000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca2f332cb082b%3A0xe92b70ac420cf0a8!2z7ISc7Jq47Yq567OE7Iuc7LKt!5e0!3m2!1sko!2skr!4v1684723235393!5m2!1sko!2skr" width="600" height="450" style="border:0()" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
     </iframe>
-  </main>
+  </section>
 
   <!-- main -->
-  <main class="container-fluid px-30">
+  <section class="container-fluid px-30">
     <div class="row d-flex justify-content-center">
       <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
         <div class="contact-text">
@@ -91,7 +87,7 @@
       </div>
       <br/>
     </div>
-  </main>
+  </section>
 
   <!-- footer -->
   <th:block th:replace="~{layouts/footer :: footer}" />

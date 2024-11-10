@@ -10,7 +10,6 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import com.example.junghqlo.model.Product;
-import com.example.junghqlo.handler.MultipartFileHandler;
 import com.example.junghqlo.handler.LocalDateTimeTypeHandler;
 
 @Mapper
@@ -52,22 +51,8 @@ public interface ProductMapper {
       column = "product_origin"
     ),
     @Result (
-      property = "product_imgsFile1",
-      column = "product_imgsFile1",
-      typeHandler = MultipartFileHandler.class
-    ),
-    @Result (
-      property = "product_imgsFile2",
-      column = "product_imgsFile2",
-      typeHandler = MultipartFileHandler.class
-    ),
-    @Result (
-      property = "product_imgsUrl1",
-      column = "product_imgsUrl1"
-    ),
-    @Result (
-      property = "product_imgsUrl2",
-      column = "product_imgsUrl2"
+      property = "product_imgsUrl",
+      column = "product_imgsUrl"
     ),
     @Result (
       property = "stripe_id",
@@ -126,7 +111,7 @@ public interface ProductMapper {
     Integer product_number
   ) throws Exception;
 
-  // 3. addProduct ---------------------------------------------------------------------------------
+  // 3. saveProduct ---------------------------------------------------------------------------------
   @Insert(
     """
     INSERT INTO
@@ -139,35 +124,30 @@ public interface ProductMapper {
         product_company,
         product_category,
         product_origin,
-        product_imgsFile1,
-        product_imgsFile2,
-        product_imgsUrl1,
-        product_imgsUrl2,
+        product_imgsUrl,
         product_date,
         stripe_id,
         stripe_price
       )
     VALUES
       (
-        #{product_name},
-        #{product_detail},
-        #{product_price},
-        #{product_stock},
-        #{product_company},
-        #{product_category},
-        #{product_origin},
-        #{product_imgsFile1, typeHandler = MultipartFileHandler},
-        #{product_imgsFile2, typeHandler = MultipartFileHandler},
-        #{product_imgsUrl1},
-        #{product_imgsUrl2},
+        #{product.product_name},
+        #{product.product_detail},
+        #{product.product_price},
+        #{product.product_stock},
+        #{product.product_company},
+        #{product.product_category},
+        #{product.product_origin},
+        #{imgsUrl},
         NOW(),
-        #{stripe_id},
-        #{stripe_price}
+        #{product.stripe_id},
+        #{product.stripe_price}
       )
     """
   )
-  void addProduct(
-    Product product
+  Integer saveProduct(
+    @Param("product") Product product,
+    @Param("imgsUrl") String imgsUrl
   ) throws Exception;
 
   // 4. updateProduct ------------------------------------------------------------------------------
@@ -176,26 +156,24 @@ public interface ProductMapper {
     UPDATE
       product
     SET
-      product_name = #{product_name},
-      product_detail = #{product_detail},
-      product_price = #{product_price},
-      product_stock = #{product_stock},
-      product_company = #{product_company},
-      product_category = #{product_category},
-      product_origin = #{product_origin},
-      product_imgsFile1 = #{product_imgsFile1, typeHandler = MultipartFileHandler},
-      product_imgsFile2 = #{product_imgsFile2, typeHandler = MultipartFileHandler},
-      product_imgsUrl1 = #{product_imgsUrl1},
-      product_imgsUrl2 = #{product_imgsUrl2},
+      product_name = #{product.product_name},
+      product_detail = #{product.product_detail},
+      product_price = #{product.product_price},
+      product_stock = #{product.product_stock},
+      product_company = #{product.product_company},
+      product_category = #{product.product_category},
+      product_origin = #{product.product_origin},
+      product_imgsUrl = #{imgsUrl},
       product_update = NOW(),
-      stripe_id = #{stripe_id},
-      stripe_price = #{stripe_price}
+      stripe_id = #{product.stripe_id},
+      stripe_price = #{product.stripe_price}
     WHERE
       product_number = #{product_number}
     """
   )
-  void updateProduct(
-    Product product
+  Integer updateProduct(
+    @Param("product") Product product,
+    @Param("imgsUrl") String imgsUrl
   ) throws Exception;
 
   // 5. deleteProduct ------------------------------------------------------------------------------

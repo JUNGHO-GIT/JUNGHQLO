@@ -51,13 +51,13 @@ public class OrdersMapperImpl implements OrdersMapper {
     return sqlSession.selectOne("getStripePrice", product_number);
   }
 
-  // 3. addOrders ----------------------------------------------------------------------------------
+  // 3. saveOrders ----------------------------------------------------------------------------------
   @Override
-  public void addOrders(
+  public void saveOrders(
     Orders orders
   ) throws Exception {
 
-    sqlSession.insert("addOrders", orders);
+    sqlSession.insert("saveOrders", orders);
   }
 
   // 4-1. updateOrders -----------------------------------------------------------------------------

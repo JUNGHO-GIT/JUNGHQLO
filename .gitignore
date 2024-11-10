@@ -20,12 +20,6 @@ target/
 *.iml
 *.ipr
 
-### VS Code ###
-.vscode/
-.settings/
-target/
-.mvn/
-
 # files
 *.properties
 *.log
@@ -38,7 +32,6 @@ target/
 *.cmd
 
 # folders
-.settings/
-.vscode/
 **META-INF/**
-
+target/
+.mvn/

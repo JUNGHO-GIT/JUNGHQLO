@@ -8,11 +8,7 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (
-    icon = 'fas fa-shopping-bag',
-    text1 = ${PAGE},
-    text2 = ${THEME}
-  )}" />
+  <th:block th:replace="~{layouts/navigation :: navigation}" />
 
   <!-- section -->
   <section class="container" onload="randomSideImage()">
@@ -42,7 +38,7 @@
             <div class="product-detail-text">
 
               <!-- form -->
-              <form th:action="@{|/orders/addOrders}" th:method="${'POST'}">
+              <form th:action="@{|/orders/saveOrders}" th:method="${'POST'}">
 
                 <!-- hidden -->
                 <input th:type="${'hidden" th:id="product_number" th:name="|product_number|'}"
@@ -317,7 +313,7 @@
         </div>
       </div>
     </div>
-  </main>
+  </section>
 
   <!-- fake pagination -->
   <th:block th:replace="components/pagination :: fake-pagination" />

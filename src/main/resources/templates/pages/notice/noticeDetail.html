@@ -8,21 +8,17 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (
-    icon = 'fas fa-bell',
-    text1 = ${PAGE},
-    text2 = ${THEME}
-  )}" />
+  <th:block th:replace="~{layouts/navigation :: navigation}" />
 
   <!-- main -->
-  <main class="container-fluid px-30">
+  <section class="container-fluid px-30">
     <div class="row d-row-center">
       <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
         <!-- form -->
         <form
-          th:method="${'GET'}"
-          th:class="${'empty-form'}"
-          th:onsubmit="|event.preventDefault()|"
+          th:id="${'formData'}"
+          th:name="${'formData'}"
+          th:class="${'formData'}"
         >
           <!-- detail -->
           <div class="row mb-20">
@@ -35,7 +31,6 @@
                       <div
                         th:id="${'notice_title'}"
                         th:name="${'notice_title'}"
-                        th:value="${MODEL['notice_title']}"
                         th:text="${MODEL['notice_title']}"
                         th:class="${'fs-1-8rem fw-800 light-black'}"
                       >
@@ -47,11 +42,13 @@
                 <hr class="mt-30 mb-30 bg-burgundy h-1" />
                 <!-- image -->
                 <div class="row">
-                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-center">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-col-center">
                     <img
-                      th:src="${MODEL['notice_imgsUrl']}"
-                      th:alt="${MODEL['notice_title']}"
-                      th:class="${'w-70p object-cover'}"
+                      th:each="image : ${#strings.arraySplit(MODEL['notice_imgsUrl'], ',')}"
+                      th:src="@{|${STORAGE}/${page}/${image}|}"
+                      th:loading="${'lazy'}"
+                      th:alt="${'image'}"
+                      th:class="${'w-50p w-max200 h-auto'}"
                     />
                   </div>
                 </div>
@@ -78,7 +75,6 @@
                       <div
                         th:id="${'notice_like'}"
                         th:name="${'notice_like'}"
-                        th:value="${MODEL['notice_like']}"
                         th:text="${MODEL['notice_like']}"
                         th:class="${'fs-1-0rem fw-600 dark'}"
                       >
@@ -89,7 +85,6 @@
                       <div
                         th:id="${'notice_dislike'}"
                         th:name="${'notice_dislike'}"
-                        th:value="${MODEL['notice_dislike']}"
                         th:text="${MODEL['notice_dislike']}"
                         th:class="${'fs-1-0rem fw-600 dark'}"
                       >
@@ -102,7 +97,6 @@
                       <div
                         th:id="${'notice_count'}"
                         th:name="${'notice_count'}"
-                        th:value="${MODEL['notice_count']}"
                         th:text="${MODEL['notice_count']}"
                         th:class="${'fs-1-0rem fw-600 dark'}"
                       >
@@ -118,7 +112,6 @@
                       <div
                         th:id="${'notice_date'}"
                         th:name="${'notice_date'}"
-                        th:value="${MODEL['notice_date']}"
                         th:class="${'fs-1-0rem fw-600 dark'}"
                         th:text="${#strings.substring((MODEL['notice_update'] != null ? MODEL['notice_update'] : MODEL['notice_date']), 0, 10)}"
                       >
@@ -131,7 +124,6 @@
                       <div
                         th:id="${'notice_writer'}"
                         th:name="${'notice_writer'}"
-                        th:value="${MODEL['notice_writer']}"
                         th:text="${MODEL['notice_writer']}"
                         th:class="${'fs-1-0rem fw-600 dark'}"
                       >
@@ -139,69 +131,40 @@
                     </div>
                   </div>
                 </div>
+                <!-- hidden -->
+                <div class="hidden-wrapper">
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'notice_number'}"
+                    th:name="${'notice_number'}"
+                    th:value="${MODEL['notice_number']}"
+                  />
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'sessionId'}"
+                    th:name="${'sessionId'}"
+                    th:value="${session.member_id}"
+                  />
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'writerId'}"
+                    th:name="${'writerId'}"
+                    th:value="${MODEL['notice_writer']}"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <!-- hr -->
-          <hr class="mt-20 mb-20" />
-          <!-- button -->
-          <div class="row d-row-center">
-            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-              <button
-                th:type="${'button'}"
-                th:class="${'btn btn-dark w-90p'}"
-                th:onclick="|goUpdate()|"
-              >
-                수정
-              </button>
-            </div>
-            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-              <button
-                th:type="${'button'}"
-                th:class="${'btn btn-danger w-90p'}"
-                th:onclick="|getDelete()|"
-              >
-                삭제
-              </button>
-            </div>
-            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-              <button
-                th:type="${'button'}"
-                th:class="${'btn btn-secondary w-90p'}"
-                th:onclick="|location.href='@{|/${page}/list${PAGE}|}'|"
-              >
-                목록
-              </button>
-            </div>
-          </div>
-          <!-- hidden -->
-          <div class="hidden-wrapper">
-            <input
-              th:type="${'hidden'}"
-              th:id="${'sessionId'}"
-              th:name="${'sessionId'}"
-              th:value="${session.member_id}"
-            />
-            <input
-              th:type="${'hidden'}"
-              th:id="${'writerId'}"
-              th:name="${'writerId'}"
-              th:value="${MODEL['notice_writer']}"
-            />
-            <input
-              th:type="${'hidden'}"
-              th:id="${'uniqueNumber'}"
-              th:name="${'notice_number'}"
-              th:value="${MODEL['notice_number']}"
-            />
           </div>
         </form>
       </div>
     </div>
-  </main>
+  </section>
 
-  <!-- fake pagination -->
-  <th:block th:replace="~{components/pagination :: fake-pagination}" />
+  <!-- hr -->
+  <th:block th:replace="~{components/divider :: divider}" />
+
+  <!-- button -->
+  <th:block th:replace="~{components/button :: button}" />
 
   <!-- footer -->
   <th:block th:replace="~{layouts/footer :: footer}" />

@@ -41,22 +41,50 @@ public class BoardMapperImpl implements BoardMapper {
     return sqlSession.selectOne("detailBoard", board_number);
   }
 
-  // 3. addBoard -----------------------------------------------------------------------------------
+  // 3. saveBoard -----------------------------------------------------------------------------------
   @Override
-  public void addBoard(
-    Board board
+  public Integer saveBoard(
+    Board board,
+    String imgsUrl
   ) throws Exception {
 
-    sqlSession.insert("addBoard", board);
+    Map<String, Object> map = new HashMap<>();
+    map.put("board", board);
+    map.put("imgsUrl", imgsUrl);
+
+    Integer result = 0;
+
+    if (sqlSession.insert("saveBoard", map) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
 
   // 4-1. updateBoard ------------------------------------------------------------------------------
   @Override
-  public void updateBoard(
-    Board board
+  public Integer updateBoard(
+    Board board,
+    String imgsUrl
   ) throws Exception {
 
-    sqlSession.update("updateBoard", board);
+    Map<String, Object> map = new HashMap<>();
+    map.put("board", board);
+    map.put("imgsUrl", imgsUrl);
+
+    Integer result = 0;
+
+    if (sqlSession.update("updateBoard", map) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
 
   // 4-2. updateCount -------------------------------------------------------------------------

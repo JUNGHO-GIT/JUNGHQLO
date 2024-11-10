@@ -43,22 +43,50 @@ public class ProductMapperImpl implements ProductMapper {
     return sqlSession.selectOne("detailProduct", product_number);
   }
 
-  // 3. addProduct ---------------------------------------------------------------------------------
+  // 3. saveProduct ---------------------------------------------------------------------------------
   @Override
-  public void addProduct(
-    Product product
+  public Integer saveProduct(
+    Product product,
+    String imgsUrl
   ) throws Exception {
 
-    sqlSession.insert("addProduct", product);
+    Map<String, Object> map = new HashMap<>();
+    map.put("product", product);
+    map.put("imgsUrl", imgsUrl);
+
+    Integer result = 0;
+
+    if (sqlSession.insert("saveProduct", map) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
 
   // 4. updateProduct ------------------------------------------------------------------------------
   @Override
-  public void updateProduct(
-    Product product
+  public Integer updateProduct(
+    Product product,
+    String imgsUrl
   ) throws Exception {
 
-    sqlSession.update("updateProduct", product);
+    Map<String, Object> map = new HashMap<>();
+    map.put("product", product);
+    map.put("imgsUrl", imgsUrl);
+
+    Integer result = 0;
+
+    if (sqlSession.update("updateProduct", map) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
 
   // 5. deleteProduct ------------------------------------------------------------------------------

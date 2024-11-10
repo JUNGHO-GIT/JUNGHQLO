@@ -10,7 +10,6 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import com.example.junghqlo.model.Board;
-import com.example.junghqlo.handler.MultipartFileHandler;
 import com.example.junghqlo.handler.LocalDateTimeTypeHandler;
 
 @Mapper
@@ -46,11 +45,6 @@ public interface BoardMapper {
     @Result (
       property = "board_dislike",
       column = "board_dislike"
-    ),
-    @Result (
-      property = "board_imgsFile",
-      column = "board_imgsFile",
-      typeHandler = MultipartFileHandler.class
     ),
     @Result (
       property = "board_imgsUrl",
@@ -102,7 +96,7 @@ public interface BoardMapper {
     Integer board_number
   ) throws Exception;
 
-  // 3. addBoard -----------------------------------------------------------------------------------
+  // 3. saveBoard -----------------------------------------------------------------------------------
   @Insert(
     """
     INSERT INTO
@@ -113,25 +107,24 @@ public interface BoardMapper {
         board_count,
         board_like,
         board_dislike,
-        board_imgsFile,
         board_imgsUrl,
         board_date
       )
     VALUES (
-      #{board_title},
-      #{board_contents},
-      #{board_writer},
-      #{board_count},
-      #{board_like},
-      #{board_dislike},
-      #{board_imgsFile, typeHandler = MultipartFileHandler},
-      #{board_imgsUrl},
+      #{board.board_title},
+      #{board.board_contents},
+      #{board.board_writer},
+      #{board.board_count},
+      #{board.board_like},
+      #{board.board_dislike},
+      #{imgsUrl},
       NOW()
     )
     """
   )
-  void addBoard(
-    Board board
+  Integer saveBoard(
+    @Param("board") Board board,
+    @Param("imgsUrl") String imgsUrl
   ) throws Exception;
 
   // 4-1. updateBoard ------------------------------------------------------------------------------
@@ -140,21 +133,21 @@ public interface BoardMapper {
     UPDATE
       board
     SET
-      board_title = #{board_title},
-      board_contents = #{board_contents},
-      board_writer = #{board_writer},
-      board_count = #{board_count},
-      board_like = #{board_like},
-      board_dislike = #{board_dislike},
-      board_imgsFile = #{board_imgsFile, typeHandler= MultipartFileHandler},
-      board_imgsUrl = #{board_imgsUrl},
+      board_title = #{board.board_title},
+      board_contents = #{board.board_contents},
+      board_writer = #{board.board_writer},
+      board_count = #{board.board_count},
+      board_like = #{board.board_like},
+      board_dislike = #{board.board_dislike},
+      board_imgsUrl = #{imgsUrl},
       board_update = NOW()
     WHERE
-      board_number = #{board_number}
+      board_number = #{board.board_number}
     """
   )
-  void updateBoard(
-    Board board
+  Integer updateBoard(
+    @Param("board") Board board,
+    @Param("imgsUrl") String imgsUrl
   ) throws Exception;
 
   // 4-2. updateCount ------------------------------------------------------------------------------

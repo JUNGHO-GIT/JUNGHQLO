@@ -8,14 +8,10 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (
-    icon = 'fas fa-user-cog',
-    text1 = ${PAGE},
-    text2 = ${THEME}
-  )}" />
+  <th:block th:replace="~{layouts/navigation :: navigation}" />
 
   <!-- main -->
-  <main class="container-fluid px-30">
+  <section class="container-fluid px-30">
     <div class="row d-row-center">
       <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
         <!-- hidden -->
@@ -203,7 +199,11 @@
           </div>
         </div>
         <!-- hr -->
-        <hr class="mt-20 mb-20" />
+        <hr
+          th:id="${'hr'}"
+          th:name="${'hr'}"
+          th:class="${'mt-20 mb-20'}"
+        />
         <!-- link -->
         <div class="row mb-20">
           <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-row-right">
@@ -233,7 +233,7 @@
         </div>
       </div>
     </div>
-  </main>
+  </section>
 
   <!-- footer -->
   <th:block th:replace="~{layouts/footer :: footer}" />

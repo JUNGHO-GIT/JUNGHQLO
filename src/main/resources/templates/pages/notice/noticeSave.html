@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+  <!-- head -->
+  <th:block th:replace="~{layouts/head :: head}" />
+
+  <!-- header -->
+  <th:block th:replace="~{layouts/header :: header}" />
+
+  <!-- navigation -->
+  <th:block th:replace="~{layouts/navigation :: navigation}" />
+
+  <!-- main -->
+  <section class="container-fluid px-30">
+    <div class="row d-row-center">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
+        <!-- form -->
+        <form
+          th:id="${'formData'}"
+          th:name="${'formData'}"
+          th:class="${'formData'}"
+        >
+          <!-- detail -->
+          <div class="row mb-20">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="border-1 radius-2 shadow-1 px-20 py-40">
+                <!-- title -->
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800">
+                        제목
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy ms-5">
+                        *
+                      </div>
+                    </div>
+                    <div class="d-row-left">
+                      <input
+                        th:type="${'text'}"
+                        th:id="${'notice_title'}"
+                        th:name="${'notice_title'}"
+                        th:class="${'form-control'}"
+                        th:value="${''}"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- content -->
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800 light-black">
+                        내용
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy ms-5">
+                        *
+                      </div>
+                    </div>
+                    <div class="d-row-left">
+                      <textarea
+                        th:id="${'notice_contents'}"
+                        th:name="${'notice_contents'}"
+                        th:class="${'form-control h-20vh border-1 lh-1-7'}"
+                        th:value="${''}"
+                        th:text="${''}"
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+                <!-- image new -->
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800 light-black">
+                        이미지
+                      </div>
+                      <div
+                        th:id="${'imgsLabel'}"
+                        th:name="${'imgsLabel'}"
+                        th:class="${'imgsLabel fs-0-9rem fw-800 burgundy ms-10 pointer'}"
+                        th:onclick="|return createImgs()|"
+                      >
+                        선택하기 *
+                      </div>
+                    </div>
+                    <div class="d-row-center">
+                      <div
+                        th:id="${'imgsContainer'}"
+                        th:name="${'imgsContainer'}"
+                        th:data-limit="${'3'}"
+                        th:class="${'imgsContainer w-100p h-min100 p-20 border-1 radius-1'}"
+                      >
+                      </div>
+                      <div
+                        th:id="${'inputContainer'}"
+                        th:name="${'inputContainer'}"
+                        th:class="${'inputContainer d-none'}"
+                      >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- hidden -->
+                <div class="hidden-wrapper">
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'notice_number'}"
+                    th:name="${'notice_number'}"
+                    th:value="${'0'}"
+                  />
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'notice_writer'}"
+                    th:name="${'notice_writer'}"
+                    th:value="${session.member_id}"
+                  />
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'notice_count'}"
+                    th:name="${'notice_count'}"
+                    th:value="${'0'}"
+                  />
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'notice_like'}"
+                    th:name="${'notice_like'}"
+                    th:value="${'0'}"
+                  />
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'notice_dislike'}"
+                    th:name="${'notice_dislike'}"
+                    th:value="${'0'}"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- hr -->
+  <th:block th:replace="~{components/divider :: divider}" />
+
+  <!-- button -->
+  <th:block th:replace="~{components/button :: button}" />
+
+  <!-- footer -->
+  <th:block th:replace="~{layouts/footer :: footer}" />
+
+</html>

@@ -8,14 +8,10 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (
-    icon = 'fas fa-bell',
-    text1 = ${PAGE},
-    text2 = ${THEME}
-  )}" />
+  <th:block th:replace="~{layouts/navigation :: navigation}" />
 
   <!-- main -->
-  <main class="container-fluid px-30">
+  <section class="container-fluid px-30">
     <div class="row d-row-center">
       <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
         <!-- form -->
@@ -32,10 +28,10 @@
                 <div class="row mb-20">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <div class="d-row-left mb-10">
-                      <div class="fs-0-9rem fw-800 me-5">
+                      <div class="fs-0-9rem fw-800">
                         제목
                       </div>
-                      <div class="fs-0-9rem fw-800 burgundy">
+                      <div class="fs-0-9rem fw-800 burgundy ms-5">
                         *
                       </div>
                     </div>
@@ -54,10 +50,10 @@
                 <div class="row mb-20">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <div class="d-row-left mb-10">
-                      <div class="fs-0-9rem fw-800 me-5">
+                      <div class="fs-0-9rem fw-800">
                         카테고리
                       </div>
-                      <div class="fs-0-9rem fw-800 burgundy">
+                      <div class="fs-0-9rem fw-800 burgundy ms-5">
                         *
                       </div>
                     </div>
@@ -96,7 +92,7 @@
                       <div class="fs-0-9rem fw-800 light-black">
                         내용
                       </div>
-                      <div class="fs-0-6rem fw-800 burgundy">
+                      <div class="fs-0-9rem fw-800 burgundy ms-5">
                         *
                       </div>
                     </div>
@@ -118,7 +114,7 @@
                       <div class="fs-0-9rem fw-800 light-black">
                         답변 상태
                       </div>
-                      <div class="fs-0-6rem fw-800 burgundy">
+                      <div class="fs-0-9rem fw-800 burgundy ms-5">
                         *
                       </div>
                     </div>
@@ -134,7 +130,11 @@
                   </div>
                 </div>
                 <!-- hr -->
-                <hr class="mt-20 mb-20" />
+                <hr
+                	th:id="${'hr'}"
+                	th:name="${'hr'}"
+                	th:class="${'mt-20 mb-20'}"
+                />
                 <!-- image -->
                 <div class="row">
                   <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
@@ -142,7 +142,7 @@
                       <div class="fs-0-9rem fw-800 light-black">
                         기존 이미지
                       </div>
-                      <div class="fs-0-6rem fw-800 burgundy">
+                      <div class="fs-0-9rem fw-800 burgundy ms-5">
                         *
                       </div>
                     </div>
@@ -161,12 +161,12 @@
                       <div class="fs-0-9rem fw-800 light-black">
                         게시물 이미지
                       </div>
-                      <div class="fs-0-6rem fw-800 burgundy">
+                      <div class="fs-0-9rem fw-800 burgundy ms-5">
                         <label
-                          th:id="${'imageLabel'}"
-                          th:name="${'imageLabel'}"
+                          th:id="${'imgsLabel'}"
+                          th:name="${'imgsLabel'}"
                           th:class="${'ms-10'}"
-                          th:for="${'imageFile'}"
+                          th:for="${'imgsFile'}"
                         >
                           선택하기
                         </label>
@@ -175,21 +175,21 @@
                     <div class="d-row-center">
                       <input
                         th:type="${'file'}"
-                        th:id="${'imageFile'}"
+                        th:id="${'imgsFile'}"
                         th:name="${'qna_imgsFile'}"
                         th:class="${'qna_imgsFile d-none'}"
                         th:onchange="|junghoPreview()|"
                       />
                       <div
-                        th:id="${'imageLoader'}"
-                        th:name="${'imageLoader'}"
-                        th:class="${'imageLoader'}"
+                        th:id="${'imgsLoader'}"
+                        th:name="${'imgsLoader'}"
+                        th:class="${'imgsLoader'}"
                       >
                       </div>
                       <img
-                        th:id="${'imageBox'}"
-                        th:name="${'imageBox'}"
-                        th:class="${'imageBox w-100 h-100 radius-2 shadow-1'}"
+                        th:id="${'imgsBox'}"
+                        th:name="${'imgsBox'}"
+                        th:class="${'imgsBox w-100 h-100 radius-2 shadow-1'}"
                       />
                     </div>
                   </div>
@@ -198,7 +198,11 @@
             </div>
           </div>
           <!-- hr -->
-          <hr class="mt-20 mb-20" />
+          <hr
+          	th:id="${'hr'}"
+          	th:name="${'hr'}"
+          	th:class="${'mt-20 mb-20'}"
+          />
           <!-- button -->
           <div class="row d-row-center">
             <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
@@ -224,15 +228,15 @@
           <div class="hidden-wrapper">
             <input
               th:type="${'hidden'}"
-              th:id="${'qna_number'}"
-              th:name="${'qna_number'}"
-              th:value="${MODEL['qna_number']}"
-            />
-            <input
-              th:type="${'hidden'}"
               th:id="${'qna_answer1'}"
               th:name="${'qna_answer1'}"
               th:value="${MODEL['qna_answer1']}"
+            />
+            <input
+              th:type="${'hidden'}"
+              th:id="${'qna_number'}"
+              th:name="${'qna_number'}"
+              th:value="${MODEL['qna_number']}"
             />
             <input
               th:type="${'hidden'}"
@@ -274,7 +278,7 @@
         </form>
       </div>
     </div>
-  </main>
+  </section>
 
   <!-- footer -->
   <th:block th:replace="~{layouts/footer :: footer}" />

@@ -41,22 +41,50 @@ public class NoticeMapperImpl implements NoticeMapper {
     return sqlSession.selectOne("detailNotice", notice_number);
   }
 
-  // 3. addNotice ----------------------------------------------------------------------------------
+  // 3. saveNotice ----------------------------------------------------------------------------------
   @Override
-  public void addNotice(
-    Notice notice
+  public Integer saveNotice(
+    Notice notice,
+    String imgsUrl
   ) throws Exception {
 
-    sqlSession.insert("addNotice", notice);
+    Map<String, Object> map = new HashMap<>();
+    map.put("notice", notice);
+    map.put("imgsUrl", imgsUrl);
+
+    Integer result = 0;
+
+    if (sqlSession.insert("saveNotice", map) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
 
   // 4-1. updateNotice -----------------------------------------------------------------------------
   @Override
-  public void updateNotice(
-    Notice notice
+  public Integer updateNotice(
+    Notice notice,
+    String imgsUrl
   ) throws Exception {
 
-    sqlSession.update("updateNotice", notice);
+    Map<String, Object> map = new HashMap<>();
+    map.put("notice", notice);
+    map.put("imgsUrl", imgsUrl);
+
+    Integer result = 0;
+
+    if (sqlSession.update("updateNotice", map) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
 
   // 4-2. updateCount ------------------------------------------------------------------------------

@@ -8,14 +8,10 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (
-    icon = 'fas fa-user-cog',
-    text1 = ${PAGE},
-    text2 = ${THEME}
-  )}" />
+  <th:block th:replace="~{layouts/navigation :: navigation}" />
 
   <!-- main -->
-  <main class="container-fluid px-30">
+  <section class="container-fluid px-30">
     <div class="row d-row-center">
       <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
         <!-- form -->
@@ -49,7 +45,7 @@
           <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="d-row-left mb-10">
-                <div class="fs-0-9rem fw-800 me-5">
+                <div class="fs-0-9rem fw-800">
                   ID
                 </div>
                 <div class="fs-0-6rem fw-800 burgundy">
@@ -70,7 +66,7 @@
           <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="d-row-left mb-10">
-                <div class="fs-0-9rem fw-800 me-5">
+                <div class="fs-0-9rem fw-800">
                   가입일
                 </div>
                 <div class="fs-0-6rem fw-800 burgundy">
@@ -91,7 +87,7 @@
           <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="d-row-left mb-10">
-                <div class="fs-0-9rem fw-800 me-5">
+                <div class="fs-0-9rem fw-800">
                   이름
                 </div>
                 <div class="fs-0-6rem fw-800 burgundy">
@@ -184,7 +180,7 @@
           <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="d-row-left mb-10">
-                <div class="fs-0-9rem fw-800 me-5">
+                <div class="fs-0-9rem fw-800">
                   비밀번호
                 </div>
                 <div class="fs-0-6rem fw-800 burgundy">
@@ -203,7 +199,7 @@
           <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="d-row-left mb-10">
-                <div class="fs-0-9rem fw-800 me-5">
+                <div class="fs-0-9rem fw-800">
                   비밀번호 확인
                 </div>
                 <div class="fs-0-6rem fw-800 burgundy">
@@ -220,7 +216,11 @@
             </div>
           </div>
           <!-- hr -->
-          <hr class="mt-20 mb-20" />
+          <hr
+          	th:id="${'hr'}"
+          	th:name="${'hr'}"
+          	th:class="${'mt-20 mb-20'}"
+          />
           <!-- button -->
           <div class="row mb-20">
             <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
@@ -235,7 +235,7 @@
               <button
                 th:type="${'button'}"
                 th:class="${'btn btn-dark w-90p'}"
-                th:onclick="|goHome()|"
+                th:onclick="|return goHome()|"
               >
                 홈으로
               </button>
@@ -244,7 +244,7 @@
         </form>
       </div>
     </div>
-  </main>
+  </section>
 
   <!-- footer -->
   <th:block th:replace="~{layouts/footer :: footer}" />

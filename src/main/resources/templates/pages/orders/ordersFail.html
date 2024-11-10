@@ -8,26 +8,22 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (
-    icon = 'fas fa-credit-card',
-    text1 = ${PAGE},
-    text2 = ${THEME}
-  )}" />
+  <th:block th:replace="~{layouts/navigation :: navigation}" />
 
   <!-- main -->
-  <main class="container-fluid px-30">
+  <section class="container-fluid px-30">
     <div class="row d-row-center">
       <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
     <div class="row jungho-center">
       <div class="col-lg-6 col-md-6">
         <div class="checkout-order">
           <h4 class="order-title">주문이 실패하였습니다.</h4>
-          <button th:type="${'button" class="jungho-button" th:onclick="|goHome()|"><i class="|fa fa-barcode fa-lg'}|"></i>&nbsp;홈으로
+          <button th:type="${'button" class="jungho-button" th:onclick="|return goHome()|"><i class="|fa fa-barcode fa-lg'}|"></i>&nbsp;홈으로
           </button>
         </div>
       </div>
     </div>
-  </main>
+  </section>
 
   <!-- footer -->
   <th:block th:replace="~{layouts/footer :: footer}" />

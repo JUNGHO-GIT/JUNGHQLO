@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- footer -->
-  <footer th:fragment="footer" class="container-fluid bg-black mt-40 p-30">
+  <section th:fragment="footer" class="container-fluid bg-black mt-40 p-30">
     <div class="row d-row-center">
       <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
         <div class="row">
@@ -14,7 +14,7 @@
               th:width="${'80px'}"
               th:height="${'80px'}"
               th:class="${'pointer'}"
-              th:onclick="|goHome()|"
+              th:onclick="|return goHome()|"
             />
           </div>
           <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-col-left">
@@ -78,6 +78,6 @@
         </div>
       </div>
     </div>
-  </footer>
+  </section>
 
 </html>

@@ -48,6 +48,7 @@ https://maven.apache.org/xsd/maven-4.0.0.xsd">
       <artifactId>mybatis-spring-boot-starter</artifactId>
       <version>2.2.2</version>
     </dependency>
+    <!-- devtools -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>

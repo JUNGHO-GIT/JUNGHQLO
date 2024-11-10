@@ -47,13 +47,42 @@ public class GlobalAttributeConfig {
     else {
       theme = "";
     }
+
+    // page 에 따라 icon 추가
+    String ICON = "";
+    if (page.equals("board")) {
+      ICON = "fas fa-chalkboard-teacher";
+    }
+    else if (page.equals("contact")) {
+      ICON = "fas fa-map-marker-alt";
+    }
+    else if (page.equals("member")) {
+      ICON = "fas fa-user-cog";
+    }
+    else if (page.equals("notice")) {
+      ICON = "fas fa-bell";
+    }
+    else if (page.equals("orders")) {
+      ICON = "fas fa-credit-card";
+    }
+    else if (page.equals("product")) {
+      ICON = "fas fa-shopping-bag";
+    }
+    else if (page.equals("qna")) {
+      ICON = "fas fa-bell";
+    }
+    else {
+      ICON = "fas fa-home";
+    }
+
+    // 모델
     model.addAttribute("TITLE", TITLE);
     model.addAttribute("ADMIN", ADMIN);
     model.addAttribute("STORAGE", STORAGE);
-
     model.addAttribute("URL", uri);
     model.addAttribute("page", page);
     model.addAttribute("PAGE", pageUp);
     model.addAttribute("THEME", theme);
+    model.addAttribute("ICON", ICON);
   }
 }

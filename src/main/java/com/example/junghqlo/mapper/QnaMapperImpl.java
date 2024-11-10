@@ -43,22 +43,50 @@ public class QnaMapperImpl implements QnaMapper {
     return sqlSession.selectOne("detailQna", qna_number);
   }
 
-  // 3. addQna -------------------------------------------------------------------------------------
+  // 3. saveQna ----------------------------------------------------------------------------------
   @Override
-  public void addQna(
-    Qna qna
+  public Integer saveQna(
+    Qna qna,
+    String imgsUrl
   ) throws Exception {
 
-    sqlSession.insert("addQna", qna);
+    Map<String, Object> map = new HashMap<>();
+    map.put("qna", qna);
+    map.put("imgsUrl", imgsUrl);
+
+    Integer result = 0;
+
+    if (sqlSession.insert("saveQna", map) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
 
-  // 4. updateQna ----------------------------------------------------------------------------------
+  // 4-1. updateQna -----------------------------------------------------------------------------
   @Override
-  public void updateQna(
-    Qna qna
+  public Integer updateQna(
+    Qna qna,
+    String imgsUrl
   ) throws Exception {
 
-    sqlSession.update("updateQna", qna);
+    Map<String, Object> map = new HashMap<>();
+    map.put("qna", qna);
+    map.put("imgsUrl", imgsUrl);
+
+    Integer result = 0;
+
+    if (sqlSession.update("updateQna", map) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
 
   // 4-1. updateCount ------------------------------------------------------------------------------

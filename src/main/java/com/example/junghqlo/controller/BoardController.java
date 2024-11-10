@@ -2,6 +2,8 @@ package com.example.junghqlo.controller;
 
 import java.text.MessageFormat;
 import javax.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import com.example.junghqlo.handler.PageHandler;
 import com.example.junghqlo.model.Board;
 import com.example.junghqlo.service.BoardService;
@@ -19,6 +22,7 @@ import com.example.junghqlo.service.BoardService;
 public class BoardController {
 
   // 0. constructor injection ----------------------------------------------------------------------
+  Logger logger = LoggerFactory.getLogger(this.getClass());
   private BoardService boardService;
   BoardController(BoardService boardService) {
     this.boardService = boardService;
@@ -53,14 +57,6 @@ public class BoardController {
     else if (sort.equals("titleDESC")) {
       sort = "board_title DESC";
       sortHandler = "titleDESC";
-    }
-    else if (sort.equals("countASC")) {
-      sort = "board_count ASC";
-      sortHandler = "countASC";
-    }
-    else if (sort.equals("countDESC")) {
-      sort = "board_count DESC";
-      sortHandler = "countDESC";
     }
     else if (sort.equals("dateASC")) {
       sort = "board_date ASC";
@@ -129,22 +125,30 @@ public class BoardController {
     return MessageFormat.format("/pages/{0}/{1}Detail", page, page);
   }
 
-  // 3. addBoard (GET) -----------------------------------------------------------------------------
-  @GetMapping("/addBoard")
-  public String addBoard() throws Exception {
+  // 3. saveBoard (GET) -----------------------------------------------------------------------------
+  @GetMapping("/saveBoard")
+  public String saveBoard() throws Exception {
 
-    return MessageFormat.format("/pages/{0}/{1}Add", page, page);
+    return MessageFormat.format("/pages/{0}/{1}Save", page, page);
   }
 
-  // 3. addBoard (POST) ----------------------------------------------------------------------------
-  @PostMapping("/addBoard")
-  public String addBoard(
-    @ModelAttribute Board board
+  // 3. saveBoard (POST) ----------------------------------------------------------------------------
+  @PostMapping("/saveBoard")
+  public Integer saveBoard(
+    @ModelAttribute Board board,
+    @RequestParam MultipartFile[] imgsFile
   ) throws Exception {
 
-    boardService.addBoard(board);
+    Integer result = 0;
 
-    return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
+    if (boardService.saveBoard(board, imgsFile) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
 
   // 4-1. updateBoard (GET) ------------------------------------------------------------------------
@@ -162,14 +166,21 @@ public class BoardController {
 
   // 4-1. updateBoard (POST) -----------------------------------------------------------------------
   @PostMapping("/updateBoard")
-  public String updateBoard (
+  public Integer updateBoard(
     @ModelAttribute Board board,
-    @RequestParam("board_imgsUrl") String existingImage
+    @RequestParam MultipartFile[] imgsFile
   ) throws Exception {
 
-    boardService.updateBoard(board, existingImage);
+    Integer result = 0;
 
-    return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
+    if (boardService.updateBoard(board, imgsFile) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
 
   // 4-2. updateLike (GET) -------------------------------------------------------------------------

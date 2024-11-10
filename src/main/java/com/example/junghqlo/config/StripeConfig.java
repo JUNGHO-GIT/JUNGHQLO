@@ -21,11 +21,11 @@ import com.stripe.param.checkout.SessionCreateParams.LineItem.AdjustableQuantity
 public class StripeConfig {
 
   // 0. api key setting ----------------------------------------------------------------------------
-  @Value("sk_test_51Mg7EfLu8D8MOb5jqTUZrmNVqWma0G6nZx1P266MaS5lSbOLvcqJNvxeXo4Eef9FjDLNjN5JqvblejPQGgALod4d00lkWUpcSw")
-  String secretKey;
+  @Value("${stripe-pk}")
+  String publicKey;
 
-  @Value("pk_test_51Mg7EfLu8D8MOb5jEqRvQV8FFOsURbCKLbEhVAZv5fDoL1LII0SRR7WcZwMsXyCozGSK6ytzAtw2ft1npugcm2fv00giPpR9lP")
-  String publishableKey;
+  @Value("${stripe-sk}")
+  String secretKey;
 
   @Bean
   void initStripe() {
@@ -39,28 +39,37 @@ public class StripeConfig {
   }
 
   // 1. createProduct ------------------------------------------------------------------------------
-  public Product createProduct(String productName, String productDetail, String productUrl1, String productUrl2) throws StripeException {
+  public Product createProduct(
+    String productName,
+    String productDetail,
+    String productUrl
+  ) throws StripeException {
 
-    List<String> images = new ArrayList<>();
-    images.add(productUrl1);
-    images.add(productUrl2);
+    List<String> imgsArray = new ArrayList<>();
 
-    ProductCreateParams.Builder productParamsBuilder = ProductCreateParams.builder()
+    // 이미지를 ','로 구분하여 리스트에 추가
+    String[] imgs = productUrl.split(",");
+    for (String img : imgs) {
+      imgsArray.add(img);
+    }
+
+    ProductCreateParams productParams = ProductCreateParams.builder()
       .setName(productName)
       .setDescription(productDetail)
       .setActive(true)
-      .addAllImage(images);
-
-    ProductCreateParams productParams = productParamsBuilder.build();
+      .addAllImage(imgsArray)
+      .build();
 
     return Product.create(productParams);
   }
 
   // 2. createPrice --------------------------------------------------------------------------------
-  public Price createPrice(String productId, Integer productPrice) throws StripeException {
+  public Price createPrice(
+    String productId,
+    Integer productPrice
+  ) throws StripeException {
 
     PriceCreateParams priceParams = PriceCreateParams.builder()
-
       .setUnitAmount(new BigDecimal(productPrice).longValue())
       .setCurrency("krw")
       .setRecurring(PriceCreateParams.Recurring.builder().build())
@@ -72,17 +81,26 @@ public class StripeConfig {
   }
 
   // 3. updateProduct ------------------------------------------------------------------------------
-  public Product updateProduct (String productId, String productName, String productDetail, String productUrl1, String productUrl2) throws StripeException {
+  public Product updateProduct (
+    String productId,
+    String productName,
+    String productDetail,
+    String productUrl
+  ) throws StripeException {
 
-    List<String> images = new ArrayList<>();
-    images.add(productUrl1);
-    images.add(productUrl2);
+    List<String> imgsArray = new ArrayList<>();
+
+    // 이미지를 ','로 구분하여 리스트에 추가
+    String[] imgs = productUrl.split(",");
+    for (String img : imgs) {
+      imgsArray.add(img);
+    }
 
     ProductUpdateParams.Builder productParamsBuilder = ProductUpdateParams.builder()
       .setName(productName)
       .setDescription(productDetail)
       .setActive(true)
-      .addAllImage(images);
+      .addAllImage(imgsArray);
 
     ProductUpdateParams productParams = productParamsBuilder.build();
 
@@ -90,10 +108,12 @@ public class StripeConfig {
   }
 
   // 4. updatePrice --------------------------------------------------------------------------------
-  public Price updatePrice(String productId, Integer productPrice) throws StripeException {
+  public Price updatePrice(
+    String productId,
+    Integer productPrice
+  ) throws StripeException {
 
     PriceCreateParams priceParams = PriceCreateParams.builder()
-
       .setUnitAmount(new BigDecimal(productPrice).longValue())
       .setCurrency("krw")
       .setRecurring(PriceCreateParams.Recurring.builder().build())
@@ -102,15 +122,19 @@ public class StripeConfig {
       .build();
 
     // delete the existing price object
-    Price existingPrice
-      = Price.list(PriceListParams.builder().setProduct(productId).build()).getData().get(0);
+    Price existingPrice = Price.list(
+      PriceListParams.builder().setProduct(productId).build()
+    ).getData().get(0);
+
     existingPrice.setActive(false);
 
     return Price.create(priceParams);
   }
 
   // 5. deleteProduct ------------------------------------------------------------------------------
-  public Product deleteProduct(String productId) throws StripeException {
+  public Product deleteProduct(
+    String productId
+  ) throws StripeException {
 
     ProductUpdateParams.Builder productParamsBuilder = ProductUpdateParams.builder()
       .setActive(false);
@@ -121,7 +145,9 @@ public class StripeConfig {
   }
 
   // 5. deletePrice --------------------------------------------------------------------------------
-  public Price deletePrice(String productId) throws StripeException {
+  public Price deletePrice(
+    String productId
+  ) throws StripeException {
 
     PriceUpdateParams.Builder priceParamsBuilder = PriceUpdateParams.builder()
       .setActive(false);

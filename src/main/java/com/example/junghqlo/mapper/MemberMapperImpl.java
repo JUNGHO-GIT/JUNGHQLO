@@ -122,13 +122,13 @@ public class MemberMapperImpl implements MemberMapper {
     return result;
   }
 
-  // 3-1. addMember --------------------------------------------------------------------------------
+  // 3-1. saveMember --------------------------------------------------------------------------------
   @Override
-  public void addMember(
+  public void saveMember(
     Member member
   ) throws Exception {
 
-    sqlSession.insert("addMember", member);
+    sqlSession.insert("saveMember", member);
   }
 
   // 4-1. updateMember -----------------------------------------------------------------------------

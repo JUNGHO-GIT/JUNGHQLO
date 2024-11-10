@@ -10,7 +10,6 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import com.example.junghqlo.model.Notice;
-import com.example.junghqlo.handler.MultipartFileHandler;
 import com.example.junghqlo.handler.LocalDateTimeTypeHandler;
 
 @Mapper
@@ -46,11 +45,6 @@ public interface NoticeMapper {
     @Result (
       property = "notice_dislike",
       column = "notice_dislike"
-    ),
-    @Result (
-      property = "notice_imgsFile",
-      column = "notice_imgsFile",
-      typeHandler = MultipartFileHandler.class
     ),
     @Result (
       property = "notice_imgsUrl",
@@ -102,7 +96,7 @@ public interface NoticeMapper {
     Integer notice_number
   ) throws Exception;
 
-  // 3. addNotice ----------------------------------------------------------------------------------
+  // 3. saveNotice ----------------------------------------------------------------------------------
   @Insert(
     """
     INSERT INTO
@@ -113,51 +107,50 @@ public interface NoticeMapper {
         notice_count,
         notice_like,
         notice_dislike,
-        notice_imgsFile,
         notice_imgsUrl,
         notice_date
       )
     VALUES (
-      #{notice_title},
-      #{notice_contents},
-      #{notice_writer},
-      #{notice_count},
-      #{notice_like},
-      #{notice_dislike},
-      #{notice_imgsFile, typeHandler = MultipartFileHandler},
-      #{notice_imgsUrl},
+      #{notice.notice_title},
+      #{notice.notice_contents},
+      #{notice.notice_writer},
+      #{notice.notice_count},
+      #{notice.notice_like},
+      #{notice.notice_dislike},
+      #{imgsUrl},
       NOW()
     )
     """
   )
-  void addNotice(
-    Notice notice
+  Integer saveNotice(
+    @Param("notice") Notice notice,
+    @Param("imgsUrl") String imgsUrl
   ) throws Exception;
 
-  // 4. updateNotice -------------------------------------------------------------------------------
+  // 4-1. updateNotice -----------------------------------------------------------------------------
   @Update(
     """
     UPDATE
       notice
     SET
-      notice_title = #{notice_title},
-      notice_contents = #{notice_contents},
-      notice_writer = #{notice_writer},
-      notice_count = #{notice_count},
-      notice_like = #{notice_like},
-      notice_dislike = #{notice_dislike},
-      notice_imgsFile = #{notice_imgsFile, typeHandler = MultipartFileHandler},
-      notice_imgsUrl = #{notice_imgsUrl},
+      notice_title = #{notice.notice_title},
+      notice_contents = #{notice.notice_contents},
+      notice_writer = #{notice.notice_writer},
+      notice_count = #{notice.notice_count},
+      notice_like = #{notice.notice_like},
+      notice_dislike = #{notice.notice_dislike},
+      notice_imgsUrl = #{imgsUrl},
       notice_update = NOW()
     WHERE
-      notice_number = #{notice_number}
+      notice_number = #{notice.notice_number}
     """
   )
-  void updateNotice(
-    Notice notice
+  Integer updateNotice(
+    @Param("notice") Notice notice,
+    @Param("imgsUrl") String imgsUrl
   ) throws Exception;
 
-  // 4-1. updateCount ------------------------------------------------------------------------------
+  // 4-2. updateCount ------------------------------------------------------------------------------
   @Update(
     """
     UPDATE
@@ -172,7 +165,7 @@ public interface NoticeMapper {
     Integer notice_number
   ) throws Exception;
 
-  // 4-2. updateLike -------------------------------------------------------------------------------
+  // 4-3. updateLike -------------------------------------------------------------------------------
   @Update(
     """
     UPDATE
@@ -187,7 +180,7 @@ public interface NoticeMapper {
     Integer notice_number
   ) throws Exception;
 
-  // 4-3. updateDislike ----------------------------------------------------------------------------
+  // 4-4. updateDislike ----------------------------------------------------------------------------
   @Update(
     """
     UPDATE

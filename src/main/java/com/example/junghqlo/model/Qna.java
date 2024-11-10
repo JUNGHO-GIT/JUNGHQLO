@@ -2,7 +2,6 @@ package com.example.junghqlo.model;
 
 import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.multipart.MultipartFile;
 import lombok.Data;
 
 @Data
@@ -20,7 +19,6 @@ public class Qna {
   private boolean qna_answer1;
   private String qna_answer2;
   private String qna_imgsUrl;
-  private MultipartFile qna_imgsFile;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
   private LocalDateTime qna_date;
@@ -52,9 +50,6 @@ public class Qna {
   }
   public Integer getQna_dislike() {
     return this.qna_dislike;
-  }
-  public MultipartFile getQna_imgsFile() {
-    return this.qna_imgsFile;
   }
   public String getQna_imgsUrl() {
     return this.qna_imgsUrl;
@@ -96,9 +91,6 @@ public class Qna {
   }
   public void setQna_dislike(Integer qna_dislike) {
     this.qna_dislike = qna_dislike;
-  }
-  public void setQna_imgsFile(MultipartFile qna_imgsFile) {
-    this.qna_imgsFile = qna_imgsFile;
   }
   public void setQna_imgsUrl(String qna_imgsUrl) {
     this.qna_imgsUrl = qna_imgsUrl;

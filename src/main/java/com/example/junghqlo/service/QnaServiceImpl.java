@@ -5,7 +5,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import com.example.junghqlo.handler.PageHandler;
 import com.example.junghqlo.mapper.QnaMapper;
@@ -20,13 +23,22 @@ import com.google.cloud.storage.StorageOptions;
 @Service
 public class QnaServiceImpl implements QnaService {
 
+  @Value("${storage}")
+  private String STORAGE;
+
+  @Value("${bucket-main}")
+  private String BUCKET_MAIN;
+
+  @Value("${bucket-folder}")
+  private String BUCKET_FOLDER;
+
   // 0. constructor injection ----------------------------------------------------------------------
   private QnaMapper qnaMapper;
   QnaServiceImpl(QnaMapper qnaMapper) {
     this.qnaMapper = qnaMapper;
   }
 
-  // 1. listQna ---------------------------------------------------------------------------------
+  // 1. listQna ------------------------------------------------------------------------------------
   @Override
   public PageHandler<Qna> listQna(
     Integer pageNumber,
@@ -75,94 +87,110 @@ public class QnaServiceImpl implements QnaService {
     return qnaMapper.detailQna(qna_number);
   }
 
-  // 3. addQna -------------------------------------------------------------------------------------
+  // 3. saveQna ----------------------------------------------------------------------------------
   @Override
-  public void addQna(
-    Qna qna
+  public Integer saveQna(
+    @ModelAttribute Qna qna,
+    @RequestParam MultipartFile[] imgsFile
   ) throws Exception {
 
-    MultipartFile qna_imgsFile = qna.getQna_imgsFile();
+    String imgsUrl = "";
+    String googleFileName = "";
 
-    String googleBucketName="jungho-bucket";
-    String googleFolderPath="JUNGHQLO/DB/qna/";
-    String googleFileName;
-    String googleBucketUrl;
-
-    if (qna_imgsFile.isEmpty()) {
-      googleBucketUrl="https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/icon/logo.png";
-      qna.setQna_imgsUrl(googleBucketUrl);
+    if (imgsFile.length == 0) {
+      imgsUrl = STORAGE + "icon/logo.png";
     }
-    else {
 
-      // google cloud storage bucket upload
-      byte[] bytes = qna_imgsFile.getBytes();
-      String originalFilename = qna_imgsFile.getOriginalFilename();
+    // google cloud storage upload
+    for (MultipartFile file : imgsFile) {
+      byte[] bytes = file.getBytes();
 
       // google cloud storage file name
-      googleFileName = originalFilename + "_qna_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".png";
+      googleFileName = (
+        "qna_"
+        + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss"))
+        + ".webp"
+      );
       Storage storage = StorageOptions.getDefaultInstance().getService();
 
-      // create blobId
-      BlobId blobId = BlobId.of(googleBucketName, googleFolderPath + googleFileName);
+      // Create the blobId
+      BlobId blobId = BlobId.of(BUCKET_MAIN, BUCKET_FOLDER + "/qna/" + googleFileName);
+
       BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
-        .setContentType(qna_imgsFile.getContentType())
-        .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
-        .build();
+      .setContentType(file.getContentType())
+      .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
+      .build();
+
       Blob blob = storage.create(blobInfo, bytes);
       blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
 
       // Path to Google Cloud Storage bucket URL
-      googleBucketUrl="https://storage.googleapis.com/" + googleBucketName + "/" + googleFolderPath + googleFileName;
-
-      // Path to imgsUrl
-      qna.setQna_imgsUrl(googleBucketUrl);
+      imgsUrl = STORAGE + "/qna/" + googleFileName;
     }
-    qnaMapper.addQna(qna);
-  }
 
-  // 4-1. updateQna --------------------------------------------------------------------------------
-  @Override
-  public void updateQna(
-    Qna qna,
-    String existingImage
-  ) throws Exception {
+    Integer result = 0;
 
-    MultipartFile qna_imgsFile = qna.getQna_imgsFile();
-
-    String googleFileName;
-    String googleBucketUrl;
-    String googleBucketName="jungho-bucket";
-    String googleFolderPath="JUNGHQLO/DB/qna/";
-
-    if (qna_imgsFile.isEmpty()) {
-      qna.setQna_imgsUrl(existingImage);
+    if (qnaMapper.saveQna(qna, imgsUrl) > 0) {
+      result = 1;
     }
     else {
+      result = 0;
+    }
 
-      // google cloud storage bucket upload
-      byte[] bytes = qna_imgsFile.getBytes();
-      String originalFilename = qna_imgsFile.getOriginalFilename();
+    return result;
+  };
+
+  // 4-1. updateQna -----------------------------------------------------------------------------
+  @Override
+  public Integer updateQna(
+    @ModelAttribute Qna qna,
+    @RequestParam MultipartFile[] imgsFile
+  ) throws Exception {
+
+    String imgsUrl = "";
+    String googleFileName = "";
+
+    if (imgsFile.length == 0) {
+      imgsUrl = qna.getQna_imgsUrl();
+    }
+
+    // google cloud storage upload
+    for (MultipartFile file : imgsFile) {
+      byte[] bytes = file.getBytes();
 
       // google cloud storage file name
-      googleFileName = originalFilename + "_qna_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".png";
+      googleFileName = (
+        "qna_"
+        + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss"))
+        + ".webp"
+      );
       Storage storage = StorageOptions.getDefaultInstance().getService();
 
-      // create blobId
-      BlobId blobId = BlobId.of(googleBucketName, googleFolderPath + googleFileName);
+      // Create the blobId
+      BlobId blobId = BlobId.of(BUCKET_MAIN, BUCKET_FOLDER + "/qna/" + googleFileName);
+
       BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
-        .setContentType(qna_imgsFile.getContentType())
-        .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
-        .build();
+      .setContentType(file.getContentType())
+      .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
+      .build();
+
       Blob blob = storage.create(blobInfo, bytes);
       blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
 
       // Path to Google Cloud Storage bucket URL
-      googleBucketUrl="https://storage.googleapis.com/" + googleBucketName + "/" + googleFolderPath + googleFileName;
-
-      // Path to imgsUrl
-      qna.setQna_imgsUrl(googleBucketUrl);
+      imgsUrl = STORAGE + "/qna/" + googleFileName;
     }
-    qnaMapper.updateQna(qna);
+
+    Integer result = 0;
+
+    if (qnaMapper.updateQna(qna, imgsUrl) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
 
   // 4-2. updateCount ------------------------------------------------------------------------------

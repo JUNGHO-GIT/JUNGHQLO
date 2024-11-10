@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- header -->
-  <header th:fragment="header" class="container-fluid px-0">
+  <section th:fragment="header" class="container-fluid px-0">
 
     <!-- loader -->
     <th:block th:replace="~{layouts/loader :: loader}" />
@@ -21,7 +21,7 @@
         <div class="col-10 col-sm-5 col-md-5 col-lg-5 col-xl-5 d-row-right">
           <a
             th:if="${session.member_id == null}"
-            th:href="@{|/member/addMember}"
+            th:href="@{|/member/saveMember}"
           >
             <span class="upper-text white hover me-20">
               SignUp
@@ -67,13 +67,13 @@
                 </a>
               </li>
               <li>
-                <a th:href="@{|/product/addProduct|}">
-                  AddProduct
+                <a th:href="@{|/product/saveProduct|}">
+                  SaveProduct
                 </a>
               </li>
               <li>
-                <a th:href="@{|/notice/addNotice|}">
-                  AddNotice
+                <a th:href="@{|/notice/saveNotice|}">
+                  SaveNotice
                 </a>
               </li>
             </ul>
@@ -90,12 +90,12 @@
               </li>
               <li>
                 <a th:onclick="|adminAlert()|">
-                  AddProduct
+                  SaveProduct
                 </a>
               </li>
               <li>
                 <a th:onclick="|adminAlert()|">
-                  AddNotice
+                  SaveNotice
                 </a>
               </li>
             </ul>
@@ -116,7 +116,7 @@
             th:width="${'70px'}"
             th:height="${'70px'}"
             th:class="${'pointer ms-n20'}"
-            th:onclick="|goHome()|"
+            th:onclick="|return goHome()|"
           />
         </div>
         <!-- menu -->
@@ -145,7 +145,7 @@
             th:class="${'fs-0-9rem fw-700 upper-text pointer-burgundy ls-1 me-2vw'}"
             th:onclick="|location.href='@{/board/listBoard}'|"
           >
-            Blog
+            Board
           </div>
           <div
             th:class="${'fs-0-9rem fw-700 upper-text pointer-burgundy ls-1 me-2vw'}"
@@ -201,21 +201,24 @@
         </div>
       </div>
     </div>
-
     <!-- hidden -->
-    <input
-      th:type="${'hidden'}"
-      th:id="${'sessionId'}"
-      th:name="${'sessionId'}"
-      th:value="${session.member_id}"
-    />
-    <input
-      th:type="${'hidden'}"
-      th:id="${'memberNumber'}"
-      th:name="${'memberNumber'}"
-      th:value="${session.member_number}"
-    />
-
-  </header>
+    <div class="hidden-wrapper">
+      <input
+        th:type="${'hidden'}"
+        th:id="${'memberId'}"
+        th:name="${'memberId'}"
+        th:value="${session.member_id}"
+      />
+      <input
+        th:type="${'hidden'}"
+        th:id="${'memberNumber'}"
+        th:name="${'memberNumber'}"
+        th:value="${session.member_number}"
+      />
+    </div>
+  </section>
 
 </html>
+
+(^\s*<div)(\n)([\s\S\n])(th:value?)(?<=(\s*[>]))
+^(\s*)(<div)(\n)([\s\S\n]*?)(?=th:value)((?!(input|\/>)[\s\S\n]*?))(?:>)$

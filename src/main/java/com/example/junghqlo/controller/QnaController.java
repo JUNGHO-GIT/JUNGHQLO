@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import com.example.junghqlo.handler.PageHandler;
 import com.example.junghqlo.model.Qna;
 import com.example.junghqlo.service.QnaService;
@@ -158,22 +159,30 @@ public class QnaController {
     return MessageFormat.format("/pages/{0}/{1}Detail", page, page);
   }
 
-  // 3. addQna (GET) -------------------------------------------------------------------------------
-  @GetMapping("/addQna")
-  public String addQna() throws Exception {
+  // 3. saveQna (GET) -------------------------------------------------------------------------------
+  @GetMapping("/saveQna")
+  public String saveQna() throws Exception {
 
-    return MessageFormat.format("/pages/{0}/{1}Add", page, page);
+    return MessageFormat.format("/pages/{0}/{1}Save", page, page);
   }
 
-  // 3. addQna (POST) ------------------------------------------------------------------------------
-  @PostMapping("/addQna")
-  public String addQna(
-    @ModelAttribute Qna qna
+  // 3. saveQna (POST) ------------------------------------------------------------------------------
+  @PostMapping("/saveQna")
+  public Integer saveQna (
+    @ModelAttribute Qna qna,
+    @RequestParam MultipartFile[] imgsFile
   ) throws Exception {
 
-    qnaService.addQna(qna);
+    Integer result = 0;
 
-    return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
+    if (qnaService.saveQna(qna, imgsFile) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
 
   // 4-1. updateQna (GET) --------------------------------------------------------------------------
@@ -191,14 +200,21 @@ public class QnaController {
 
   // 4-1. updateQna (POST) -------------------------------------------------------------------------
   @PostMapping("/updateQna")
-  public String updateQna (
+  public Integer updateQna (
     @ModelAttribute Qna qna,
-    @RequestParam("qna_imgsUrl") String existingImage
+    @RequestParam MultipartFile[] imgsFile
   ) throws Exception {
 
-    qnaService.updateQna(qna, existingImage);
+    Integer result = 0;
 
-    return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
+    if (qnaService.updateQna(qna, imgsFile) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
 
   // 4-2. updateLike (GET) -------------------------------------------------------------------------

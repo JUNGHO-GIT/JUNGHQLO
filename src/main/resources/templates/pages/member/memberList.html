@@ -8,14 +8,10 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (
-    icon = 'fas fa-user-cog',
-    text1 = ${PAGE},
-    text2 = ${THEME}
-  )}" />
+  <th:block th:replace="~{layouts/navigation :: navigation}" />
 
   <!-- main -->
-  <main class="container-fluid px-30">
+  <section class="container-fluid px-30">
     <div class="row d-row-center">
       <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
         <!-- title -->
@@ -99,7 +95,6 @@
                   <div
                     th:id="${'member_name'}"
                     th:name="${'member_name'}"
-                    th:value="${member.member_name}"
                     th:class="${'fs-1-2rem fw-700 burgundy hover'}"
                     th:text="${member.member_name}"
                     th:onclick="|location.href='@{/member/detailMember(member_number=${member.member_number})}'|"
@@ -108,7 +103,6 @@
                   <div
                     th:id="${'member_number'}"
                     th:name="${'member_number'}"
-                    th:value="${member.member_number}"
                     th:text="${member.member_number}"
                     th:class="${'fs-0-9rem fw-600 grey ms-auto'}"
                   >
@@ -119,7 +113,6 @@
                   <div
                     th:id="${'member_id'}"
                     th:name="${'member_id'}"
-                    th:value="${member.member_id}"
                     th:class="${'fs-0-9rem fw-600 light-black'}"
                     th:text="${''-   ' + ${member.member_id}'}"
                   >
@@ -130,7 +123,6 @@
                   <div
                     th:id="${'member_pw'}"
                     th:name="${'member_pw'}"
-                    th:value="${member.member_pw}"
                     th:class="${'fs-0-9rem fw-600 light-black'}"
                     th:text="${''-   ' + ${member.member_pw}'}"
                   >
@@ -141,7 +133,6 @@
                   <div
                     th:id="${'member_email'}"
                     th:name="${'member_email'}"
-                    th:value="${member.member_email}"
                     th:class="${'fs-0-9rem  fw-600 light-black'}"
                     th:text="${''-   ' + ${member.member_email}'}"
                   >
@@ -152,7 +143,6 @@
                   <div
                     th:id="${'member_phone'}"
                     th:name="${'member_phone'}"
-                    th:value="${member.member_phone}"
                     th:class="${'fs-0-9rem fw-600 light-black'}"
                     th:text="${''-   ' + ${member.member_phone}'}"
                   >
@@ -163,7 +153,6 @@
                   <div
                     th:id="${'member_address1'}"
                     th:name="${'member_address1'}"
-                    th:value="${member.member_address1}"
                     th:class="${'fs-0-9rem fw-600 light-black'}"
                     th:text="${''-   ' + ${member.member_address1}'}"
                   >
@@ -174,7 +163,6 @@
                   <div
                     th:id="${'member_address2'}"
                     th:name="${'member_address2'}"
-                    th:value="${member.member_address2}"
                     th:class="${'fs-0-9rem fw-600 light-black'}"
                     th:text="${''-   ' + ${member.member_address2}'}"
                   >
@@ -185,14 +173,18 @@
           </div>
         </div>
         <!-- hr -->
-        <hr class="mt-20 mb-20" />
+        <hr
+          th:id="${'hr'}"
+          th:name="${'hr'}"
+          th:class="${'mt-20 mb-20'}"
+        />
         <!-- button -->
         <div class="row d-row-center">
           <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
             <button
               th:type="${'button'}"
               th:class="${'btn btn-dark w-90p'}"
-              th:onclick="|location.href='@{/member/addMember}'|"
+              th:onclick="|location.href='@{/member/saveMember}'|"
             >
               회원 추가
             </button>
@@ -201,7 +193,7 @@
             <button
               th:type="${'button'}"
               th:class="${'btn btn-dark w-90p'}"
-              th:onclick="|goHome()|"
+              th:onclick="|return goHome()|"
             >
               홈으로
             </button>
@@ -209,13 +201,10 @@
         </div>
       </div>
     </div>
-  </main>
+  </section>
 
   <!-- pagination -->
-  <th:block th:replace="~{components/pagination :: pagination (
-    prefix = ${page},
-    subfix = ${PAGE}
-  )}" />
+  <th:block th:replace="~{components/pagination :: pagination}" />
 
   <!-- footer -->
   <th:block th:replace="~{layouts/footer :: footer}" />

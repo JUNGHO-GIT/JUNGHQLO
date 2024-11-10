@@ -27,8 +27,8 @@ public interface OrdersService {
     Integer orders_number
   ) throws StripeException;
 
-  // 3. addOrders ----------------------------------------------------------------------------------
-  void addOrders(
+  // 3. saveOrders ----------------------------------------------------------------------------------
+  void saveOrders(
     Orders orders
   ) throws Exception;
 

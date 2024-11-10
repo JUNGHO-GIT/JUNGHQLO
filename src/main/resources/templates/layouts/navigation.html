@@ -2,21 +2,51 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">\
 
   <!-- navigation -->
-  <nav th:fragment="navigation" th:class="${'container-fluid bg-light-yellow border-1 p-30 mb-30'}">
-    <div class="row">
+  <section th:fragment="navigation" class="container-fluid bg-light-yellow border-1 p-30 mb-30">
+    <div class="row d-row-left">
       <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <div class="fs-1-8rem fw-600 mb-20">
-          <i th:class="${icon + ' pointer'}" th:onClick="|window.location.reload()|"></i>
-          <span th:text="${text1}" class="ms-5"></span>
+          <i
+            th:id="${'icon1'}"
+            th:name="${'icon1'}"
+            th:class="${ICON + ' pointer'}"
+            th:onclick="|return goRefresh()|"
+          ></i>
+          <span
+            th:id="${'text1'}"
+            th:name="${'text1'}"
+            th:text="${PAGE}"
+            th:class="${'ms-5'}"
+          ></span>
         </div>
         <div class="fs-1-2rem fw-500">
-          <i class="fa fa-home pointer" th:onClick="|goHome()|"></i>
-          <span class="ms-5">Home</span>
-          <span class="ms-6">|</span>
-          <span th:text="${text2}" class="ms-6"></span>
+          <i
+            th:id="${'icon2'}"
+            th:name="${'icon2'}"
+            th:class="${'fa fa-home pointer'}"
+            th:onclick="|return goHome()|"
+          ></i>
+          <span
+            th:id="${'text2'}"
+            th:name="${'text2'}"
+            th:text="${'Home'}"
+            th:class="${'ms-5'}"
+          ></span>
+          <span
+            th:id="${'text3'}"
+            th:name="${'text3'}"
+            th:text="${'|'}"
+            th:class="${'ms-5'}"
+          ></span>
+          <span
+            th:id="${'text4'}"
+            th:name="${'text4'}"
+            th:text="${THEME}"
+            th:class="${'ms-5'}"
+          ></span>
         </div>
       </div>
     </div>
-  </nav>
+  </section>
 
 </html>

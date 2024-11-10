@@ -4,7 +4,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import com.example.junghqlo.config.StripeConfig;
 import com.example.junghqlo.handler.PageHandler;
@@ -19,6 +22,15 @@ import com.google.cloud.storage.StorageOptions;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+
+  @Value("${storage}")
+  private String STORAGE;
+
+  @Value("${bucket-main}")
+  private String BUCKET_MAIN;
+
+  @Value("${bucket-folder}")
+  private String BUCKET_FOLDER;
 
   // 0. constructor injection ----------------------------------------------------------------------
   private ProductMapper productMapper;
@@ -77,168 +89,148 @@ public class ProductServiceImpl implements ProductService {
     return productMapper.detailProduct(product_number);
   }
 
-  // 3. addProduct ---------------------------------------------------------------------------------
+  // 3. saveProduct ---------------------------------------------------------------------------------
   @Override
-  public void addProduct(
-    String product_name,
-    String product_detail,
-    Integer product_price,
-    Product product
+  public Integer saveProduct(
+    @ModelAttribute Product product,
+    @RequestParam MultipartFile[] imgsFile
   ) throws Exception {
 
-    MultipartFile product_imgsFile1 = product.getProduct_imgsFile1();
-    MultipartFile product_imgsFile2 = product.getProduct_imgsFile2();
+    StringBuilder imgsUrlBuilder = new StringBuilder();
+    String googleFileName = "";
 
-    String googleFileName1;
-    String googleFileName2;
-    String googleBucketUrl1;
-    String googleBucketUrl2;
-    String googleBucketName="jungho-bucket";
-    String googleFolderPath="JUNGHQLO/DB/product/";
-    String googleNoImageUrl
-    = "https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/icon/noimage.png";
-
-    if (product_imgsFile1.isEmpty()) {
-      googleBucketUrl1 = googleNoImageUrl;
-      product.setProduct_imgsUrl1(googleBucketUrl1);
+    // 1. 만약 없을경우 기본 이미지
+    if (imgsFile.length == 0) {
+      imgsUrlBuilder.append(STORAGE).append("icon/logo.png");
     }
-    else if (product_imgsFile2.isEmpty()) {
-      googleBucketUrl2 = googleNoImageUrl;
-      product.setProduct_imgsUrl2(googleBucketUrl2);
-    }
-    else {
 
-      // google cloud storage
-      byte[] bytes1 = product_imgsFile1.getBytes();
-      byte[] bytes2 = product_imgsFile2.getBytes();
+    // 2. 이미지가 있을 경우 google cloud storage에 업로드
+    for (int i = 0; i < imgsFile.length; i++) {
+      MultipartFile file = imgsFile[i];
+      byte[] bytes = file.getBytes();
 
-      // file name
-      googleFileName1 = "_product_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".png";
-      googleFileName2 = "_product_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "_sub.png";
+      googleFileName = (
+        "product_"
+        + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss"))
+        + ".webp"
+      );
+
       Storage storage = StorageOptions.getDefaultInstance().getService();
 
-      // set google cloud storage
-      BlobId blobId1 = BlobId.of(googleBucketName, googleFolderPath + googleFileName1);
-      BlobId blobId2 = BlobId.of(googleBucketName, googleFolderPath + googleFileName2);
+      // blobId 생성
+      BlobId blobId = BlobId.of(BUCKET_MAIN, BUCKET_FOLDER + "/product/" + googleFileName);
 
-      BlobInfo blobInfo1 = BlobInfo.newBuilder(blobId1)
-        .setContentType(product_imgsFile1.getContentType())
-        .setContentDisposition("inline; filename=\"" + googleFileName1 + "\"")
-        .build();
-      BlobInfo blobInfo2 = BlobInfo.newBuilder(blobId2)
-        .setContentType(product_imgsFile2.getContentType())
-        .setContentDisposition("inline; filename=\"" + googleFileName2 + "\"")
-        .build();
+      BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
+      .setContentType(file.getContentType())
+      .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
+      .build();
 
-      Blob blob1 =  storage.create(blobInfo1, bytes1);
-      blob1.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
+      Blob blob = storage.create(blobInfo, bytes);
+      blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
 
-      Blob blob2 =  storage.create(blobInfo2, bytes2);
-      blob2.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
+      imgsUrlBuilder.append(STORAGE).append("/product/").append(googleFileName);
 
-      // path to Google Cloud Storage bucket URL
-      googleBucketUrl1 = "https://storage.googleapis.com/" + googleBucketName + "/" + googleFolderPath + googleFileName1;
-
-      googleBucketUrl2 = "https://storage.googleapis.com/" + googleBucketName + "/" + googleFolderPath + googleFileName2;
+      // 마지막 이미지가 아닐 경우 ','로 구분
+      if (i < imgsFile.length - 1) {
+        imgsUrlBuilder.append(",");
+      }
 
       // stripe id, price set
-      com.stripe.model.Product stripe_id
-      = stripeConfig.createProduct(product_name, product_detail, googleBucketUrl1, googleBucketUrl2);
-
-      com.stripe.model.Price stripe_price
-      = stripeConfig.createPrice(stripe_id.getId(), product_price);
+      com.stripe.model.Product stripe_id = (
+        stripeConfig.createProduct(product.getProduct_name(), product.getProduct_detail(), imgsUrlBuilder.toString())
+      );
+      com.stripe.model.Price stripe_price = (
+        stripeConfig.createPrice(stripe_id.getId(), product.getProduct_price())
+      );
 
       // set stripe to product
       product.setStripe_id(stripe_id.getId());
       product.setStripe_price(stripe_price.getId());
-      product.setProduct_imgsUrl1(googleBucketUrl1);
-      product.setProduct_imgsUrl2(googleBucketUrl2);
     }
-    productMapper.addProduct(product);
-  }
 
-  // 4. updateProduct ------------------------------------------------------------------------------
+    String imgsUrl = imgsUrlBuilder.toString();
+    Integer result = 0;
+
+    if (productMapper.saveProduct(product, imgsUrl) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
+  };
+
+  // 4-1. updateProduct ----------------------------------------------------------------------------
   @Override
-  public void updateProduct(
-    String product_imgsUrl1,
-    String product_imgsUrl2,
-    Product product
+  public Integer updateProduct(
+    @ModelAttribute Product product,
+    @RequestParam MultipartFile[] imgsFile
   ) throws Exception {
 
-    MultipartFile product_imgsFile1 = product.getProduct_imgsFile1();
-    MultipartFile product_imgsFile2 = product.getProduct_imgsFile2();
+    StringBuilder imgsUrlBuilder = new StringBuilder();
+    String googleFileName = "";
 
-    String googleFileName1;
-    String googleFileName2;
-    String googleBucketUrl1 = product_imgsUrl1;
-    String googleBucketUrl2 = product_imgsUrl2;
-    String googleBucketName = "jungho-bucket";
-    String googleFolderPath = "JUNGHQLO/DB/product/";
-
-    Storage storage = StorageOptions.getDefaultInstance().getService();
-
-    if (!product_imgsFile1.isEmpty() && product_imgsFile1.getSize() != 0) {
-      // google cloud storage
-      byte[] bytes1 = product_imgsFile1.getBytes();
-
-      // file name
-      googleFileName1 = "_product_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".png";
-
-      // set google cloud storage
-      BlobId blobId1 = BlobId.of(googleBucketName, googleFolderPath + googleFileName1);
-
-      BlobInfo blobInfo1 = BlobInfo.newBuilder(blobId1)
-        .setContentType(product_imgsFile1.getContentType())
-        .setContentDisposition("inline; filename=\"" + googleFileName1 + "\"")
-        .build();
-
-      Blob blob1 = storage.create(blobInfo1, bytes1);
-
-      blob1.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
-
-      // path to Google Cloud Storage bucket URL
-      googleBucketUrl1 = "https://storage.googleapis.com/" + googleBucketName + "/" + googleFolderPath + googleFileName1;
-
-      product.setProduct_imgsUrl1(googleBucketUrl1);
+    // 1. 만약 없을경우 기본 이미지
+    if (imgsFile.length == 0) {
+      imgsUrlBuilder.append(STORAGE).append("icon/logo.png");
     }
 
-    if (!product_imgsFile2.isEmpty() && product_imgsFile2.getSize() != 0) {
-      // google cloud storage
-      byte[] bytes2 = product_imgsFile2.getBytes();
+    // 2. 이미지가 있을 경우 google cloud storage에 업로드
+    for (int i = 0; i < imgsFile.length; i++) {
+      MultipartFile file = imgsFile[i];
+      byte[] bytes = file.getBytes();
 
-      // file name
-      googleFileName2 = "_product_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "_sub.png";
+      googleFileName = (
+        "product_"
+        + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss"))
+        + ".webp"
+      );
 
-      // set google cloud storage
-      BlobId blobId2 = BlobId.of(googleBucketName, googleFolderPath + googleFileName2);
+      Storage storage = StorageOptions.getDefaultInstance().getService();
 
-      BlobInfo blobInfo2 = BlobInfo.newBuilder(blobId2)
-        .setContentType(product_imgsFile2.getContentType())
-        .setContentDisposition("inline; filename=\"" + googleFileName2 + "\"")
-        .build();
+      // blobId 생성
+      BlobId blobId = BlobId.of(BUCKET_MAIN, BUCKET_FOLDER + "/product/" + googleFileName);
 
-      Blob blob2 = storage.create(blobInfo2, bytes2);
+      BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
+      .setContentType(file.getContentType())
+      .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
+      .build();
 
-      blob2.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
+      Blob blob = storage.create(blobInfo, bytes);
+      blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
 
-      // path to Google Cloud Storage bucket URL
-      googleBucketUrl2 = "https://storage.googleapis.com/" + googleBucketName + "/" + googleFolderPath + googleFileName2;
+      imgsUrlBuilder.append(STORAGE).append("/product/").append(googleFileName);
 
-      product.setProduct_imgsUrl2(googleBucketUrl2);
+      // 마지막 이미지가 아닐 경우 ','로 구분
+      if (i < imgsFile.length - 1) {
+        imgsUrlBuilder.append(",");
+      }
+
+      // stripe id, price set
+      com.stripe.model.Product stripe_id = (
+        stripeConfig.createProduct(product.getProduct_name(), product.getProduct_detail(), imgsUrlBuilder.toString())
+      );
+      com.stripe.model.Price stripe_price = (
+        stripeConfig.createPrice(stripe_id.getId(), product.getProduct_price())
+      );
+
+      // set stripe to product
+      product.setStripe_id(stripe_id.getId());
+      product.setStripe_price(stripe_price.getId());
     }
 
-    // stripe id, price set
-    com.stripe.model.Product stripe_id
-      = stripeConfig.updateProduct(product.getStripe_id(), product.getProduct_name(), product.getProduct_detail(), googleBucketUrl1, googleBucketUrl2);
+    String imgsUrl = imgsUrlBuilder.toString();
+    Integer result = 0;
 
-    com.stripe.model.Price stripe_price
-      = stripeConfig.updatePrice(stripe_id.getId(), product.getProduct_price());
+    if (productMapper.updateProduct(product, imgsUrl) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
 
-    // set stripe to product
-    product.setStripe_id(stripe_id.getId());
-    product.setStripe_price(stripe_price.getId());
-
-    productMapper.updateProduct(product);
+    return result;
   }
 
   // 5. deleteProduct ------------------------------------------------------------------------------

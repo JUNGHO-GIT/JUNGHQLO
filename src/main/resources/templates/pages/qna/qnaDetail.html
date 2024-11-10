@@ -8,14 +8,10 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (
-    icon = 'fas fa-bell',
-    text1 = ${PAGE},
-    text2 = ${THEME}
-  )}" />
+  <th:block th:replace="~{layouts/navigation :: navigation}" />
 
   <!-- main -->
-  <main class="container-fluid px-30">
+  <section class="container-fluid px-30">
     <div class="row d-row-center">
       <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
         <!-- form -->
@@ -35,7 +31,6 @@
                       <div
                         th:id="${'qna_title'}"
                         th:name="${'qna_title'}"
-                        th:value="${MODEL['qna_title']}"
                         th:text="${MODEL['qna_title']}"
                         th:class="${'fs-1-8rem fw-800 light-black'}"
                       >
@@ -43,7 +38,6 @@
                       <div
                         th:id="${'qna_category'}"
                         th:name="${'qna_category'}"
-                        th:value="${MODEL['qna_category']}"
                         th:text="${MODEL['qna_category'] == 'goods' ? '상품문의' : MODEL['qna_category'] == 'exchange' ? '교환문의' : MODEL['qna_category'] == 'refund' ? '환불문의' : MODEL['qna_category'] == 'payment' ? '결제문의' : MODEL['qna_category'] == 'delivery' ? '배송문의' : MODEL['qna_category'] == 'etc' ? '기타문의' : '문의'}"
                         th:class="${'fs-1-2rem fw-600 grey ms-10'}"
                       >
@@ -86,7 +80,6 @@
                       <div
                         th:id="${'qna_like'}"
                         th:name="${'qna_like'}"
-                        th:value="${MODEL['qna_like']}"
                         th:text="${MODEL['qna_like']}"
                         th:class="${'fs-1-0rem fw-600 dark'}"
                       >
@@ -97,7 +90,6 @@
                       <div
                         th:id="${'qna_dislike'}"
                         th:name="${'qna_dislike'}"
-                        th:value="${MODEL['qna_dislike']}"
                         th:text="${MODEL['qna_dislike']}"
                         th:class="${'fs-1-0rem fw-600 dark'}"
                       >
@@ -110,7 +102,6 @@
                       <div
                         th:id="${'qna_count'}"
                         th:name="${'qna_count'}"
-                        th:value="${MODEL['qna_count']}"
                         th:text="${MODEL['qna_count']}"
                         th:class="${'fs-1-0rem fw-600 dark'}"
                       >
@@ -126,7 +117,6 @@
                       <div
                         th:id="${'qna_date'}"
                         th:name="${'qna_date'}"
-                        th:value="${MODEL['qna_date']}"
                         th:class="${'fs-1-0rem fw-600 dark'}"
                         th:text="${#strings.substring((MODEL['qna_update'] != null ? MODEL['qna_update'] : MODEL['qna_date']), 0, 10)}"
                       >
@@ -139,7 +129,6 @@
                       <div
                         th:id="${'qna_writer'}"
                         th:name="${'qna_writer'}"
-                        th:value="${MODEL['qna_writer']}"
                         th:text="${MODEL['qna_writer']}"
                         th:class="${'fs-1-0rem fw-600 dark'}"
                       >
@@ -151,7 +140,11 @@
             </div>
           </div>
           <!-- hr -->
-          <hr class="mt-20 mb-20" />
+          <hr
+          	th:id="${'hr'}"
+          	th:name="${'hr'}"
+          	th:class="${'mt-20 mb-20'}"
+          />
           <!-- button -->
           <div class="row d-row-center">
             <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
@@ -198,7 +191,7 @@
             />
             <input
               th:type="${'hidden'}"
-              th:id="${'uniqueNumber'}"
+              th:id="${'qna_number'}"
               th:name="${'qna_number'}"
               th:value="${MODEL['qna_number']}"
             />
@@ -206,7 +199,12 @@
         </form>
       </div>
     </div>
-  </main>
+  </section>
+  <!-- hr -->
+  <th:block th:replace="~{components/divider :: divider}" />
+
+  <!-- button -->
+  <th:block th:replace="~{components/button :: button}" />
 
   <!-- fake pagination -->
   <th:block th:replace="~{components/pagination :: fake-pagination}" />

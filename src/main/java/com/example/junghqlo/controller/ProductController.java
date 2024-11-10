@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import com.example.junghqlo.handler.PageHandler;
 import com.example.junghqlo.model.Product;
 import com.example.junghqlo.service.ProductService;
@@ -158,25 +159,30 @@ public class ProductController {
     return MessageFormat.format("/pages/{0}/{1}Detail", page, page);
   }
 
-  // 3. addProduct (GET) ---------------------------------------------------------------------------
-  @GetMapping("/addProduct")
-  public String addProduct() throws Exception {
+  // 3. saveProduct (GET) ---------------------------------------------------------------------------
+  @GetMapping("/saveProduct")
+  public String saveProduct() throws Exception {
 
-    return MessageFormat.format("/pages/{0}/{1}Add", page, page);
+    return MessageFormat.format("/pages/{0}/{1}Save", page, page);
   }
 
-  // 3. addProduct (POST) --------------------------------------------------------------------------
-  @PostMapping("/addProduct")
-  public String addProduct (
+  // 3. saveProduct (POST) --------------------------------------------------------------------------
+  @PostMapping("/saveProduct")
+  public Integer saveProduct(
     @ModelAttribute Product product,
-    @RequestParam String product_name,
-    @RequestParam String product_detail,
-    @RequestParam Integer product_price
+    @RequestParam MultipartFile[] imgsFile
   ) throws Exception {
 
-    productService.addProduct(product_name, product_detail, product_price, product);
+    Integer result = 0;
 
-    return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
+    if (productService.saveProduct(product, imgsFile) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
 
   // 4. updateProduct (GET) ------------------------------------------------------------------------
@@ -194,15 +200,21 @@ public class ProductController {
 
   // 4. updateProduct (POST) -----------------------------------------------------------------------
   @PostMapping("/updateProduct")
-  public String updateProduct(
+  public Integer updateProduct(
     @ModelAttribute Product product,
-    @RequestParam String product_imgsUrl1,
-    @RequestParam String product_imgsUrl2
+    @RequestParam MultipartFile[] imgsFile
   ) throws Exception {
 
-    productService.updateProduct(product_imgsUrl1, product_imgsUrl2, product);
+    Integer result = 0;
 
-    return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
+    if (productService.updateProduct(product, imgsFile) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
 
   // 5. deleteProduct (POST) -----------------------------------------------------------------------

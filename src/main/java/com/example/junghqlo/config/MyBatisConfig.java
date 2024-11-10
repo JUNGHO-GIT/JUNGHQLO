@@ -9,7 +9,6 @@ import org.springframework.boot.sql.init.dependency.DependsOnDatabaseInitializat
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import com.example.junghqlo.handler.MultipartFileHandler;
 import com.example.junghqlo.handler.LocalDateTimeTypeHandler;
 
 @Configuration
@@ -38,13 +37,6 @@ public class MyBatisConfig {
       .getConfiguration()
       .getTypeAliasRegistry()
       .registerAlias("LocalDateTimeTypeHandler", LocalDateTimeTypeHandler.class);
-
-
-    sessionFactory
-      .getObject()
-      .getConfiguration()
-      .getTypeAliasRegistry()
-      .registerAlias("MultipartFileHandler", MultipartFileHandler.class);
 
     return sessionFactory.getObject();
   }

@@ -50,8 +50,8 @@ public interface MemberService {
     String member_pw
   ) throws Exception;
 
-  // 3. addMember ----------------------------------------------------------------------------------
-  void addMember(
+  // 3. saveMember ----------------------------------------------------------------------------------
+  void saveMember(
     Member member
   ) throws Exception;
 

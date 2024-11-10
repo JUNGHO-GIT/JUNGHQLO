@@ -8,18 +8,14 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (
-    icon = 'fas fa-shopping-bag',
-    text1 = ${PAGE},
-    text2 = ${THEME}
-  )}" />
+  <th:block th:replace="~{layouts/navigation :: navigation}" />
 
   <!-- main -->
-  <main class="container-fluid px-30">
+  <section class="container-fluid px-30">
     <div class="row d-row-center">
       <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
     <!-- form -->
-    <form th:action="@{|/product/addProduct}" th:method="${'POST" enctype="multipart/form-data'}">
+    <form th:action="@{|/product/saveProduct}" th:method="${'POST" enctype="multipart/form-data'}">
       <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
 
@@ -107,10 +103,10 @@
             <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">
               <div class="checkout-input">
                 <div class="previewMini-group">
-                  <p class="p"><label for="imageFile1">상품 이미지<span>*</span></label></p>
-                  <input th:type="${'file" id="imageFile1" onchange="junghoPreview(1)" class="imageFile" name="product_imgsFile1'}"/>
-                  <div class="imageMiniLoader" id="imageMiniLoader1"></div>
-                  <img class="imageMiniBox" id="imageMiniBox1"/>
+                  <p class="p"><label for="imgsFile1">상품 이미지<span>*</span></label></p>
+                  <input th:type="${'file" id="imgsFile1" onchange="junghoPreview(1)" class="imgsFile" name="product_imgsFile1'}"/>
+                  <div class="imgsMiniLoader" id="imgsMiniLoader1"></div>
+                  <img class="imgsMiniBox" id="imgsMiniBox1"/>
                 </div>
               </div>
             </div>
@@ -124,8 +120,8 @@
               <div class="previewImage-group">
                 <h4 class="p"><i class="fa fa-image"></i>&nbsp;Preview</h4>
                 <hr>
-                <div class="imageLoader" id="imageLoader"></div>
-                <img class="imageBox" id="imageBox"/>
+                <div class="imgsLoader" id="imgsLoader"></div>
+                <img class="imgsBox" id="imgsBox"/>
               </div>
             </div>
           </div>
@@ -134,9 +130,9 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="previewButton-group">
                 <button class="jungho-button" id="resetButton" th:type="${'reset'}"
-                th:onclick="|window.location.reload()|">새로고침</button>
+                th:onclick="|location.reload()|">새로고침</button>
                 <button class="jungho-button" id="submitButton" th:type="${'submit'}"
-                th:onclick="|return addProduct()|">등록하기</button>
+                th:onclick="|return saveProduct()|">등록하기</button>
                 <button th:type="${'button" class="jungho-button" th:onclick="|location.href='@{/}'|'}"> 홈으로 </button>
               </div>
             </div>
@@ -144,7 +140,7 @@
         </div>
       </div>
     </form>
-  </main>
+  </section>
 
   <!-- footer -->
   <th:block th:replace="~{layouts/footer :: footer}" />

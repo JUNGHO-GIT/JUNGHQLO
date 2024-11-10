@@ -82,9 +82,9 @@ public class OrdersServiceImpl implements OrdersService {
     return ordersMapper.getStripePrice(orders_number);
   }
 
-  // 3. addOrders ----------------------------------------------------------------------------------
+  // 3. saveOrders ----------------------------------------------------------------------------------
   @Override
-  public void addOrders(
+  public void saveOrders(
     Orders orders
   ) throws Exception {
 
@@ -132,7 +132,7 @@ public class OrdersServiceImpl implements OrdersService {
       // Path to imgsUrl
       orders.setProduct_imgsUrl(googleBucketUrl);
     }
-    ordersMapper.addOrders(orders);
+    ordersMapper.saveOrders(orders);
   }
 
   // 4-1. updateProductStock -----------------------------------------------------------------------

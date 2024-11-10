@@ -5,8 +5,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import com.example.junghqlo.handler.PageHandler;
 import com.example.junghqlo.mapper.NoticeMapper;
@@ -21,7 +25,17 @@ import com.google.cloud.storage.StorageOptions;
 @Service
 public class NoticeServiceImpl implements NoticeService {
 
+  @Value("${storage}")
+  private String STORAGE;
+
+  @Value("${bucket-main}")
+  private String BUCKET_MAIN;
+
+  @Value("${bucket-folder}")
+  private String BUCKET_FOLDER;
+
   // 0. constructor injection ----------------------------------------------------------------------
+  Logger logger = LoggerFactory.getLogger(this.getClass());
   private NoticeMapper noticeMapper;
   NoticeServiceImpl (NoticeMapper noticeMapper) {
     this.noticeMapper = noticeMapper;
@@ -73,92 +87,134 @@ public class NoticeServiceImpl implements NoticeService {
     return noticeMapper.detailNotice(notice_number);
   }
 
-  // 3. addNotice ----------------------------------------------------------------------------------
+  // 3. saveNotice ----------------------------------------------------------------------------------
   @Override
-  public void addNotice(
-    @ModelAttribute Notice notice
+  public Integer saveNotice(
+    @ModelAttribute Notice notice,
+    @RequestParam ArrayList<MultipartFile> imgsFile
   ) throws Exception {
 
-    MultipartFile notice_imgsFile = notice.getNotice_imgsFile();
-    String googleFileName;
-    String googleBucketUrl;
-    String googleBucketName="jungho-bucket";
-    String googleFolderPath="JUNGHQLO/DB/notices/";
+    StringBuilder newImgsUrl = new StringBuilder();
+    String googleFileName = "";
+    String existingImgsUrl = "";
 
-    if (notice_imgsFile.isEmpty()) {
-      googleBucketUrl="https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/icon/logo.png";
-      notice.setNotice_imgsUrl(googleBucketUrl);
-    }
-    else {
+    // 이미지가 있을 경우 google cloud storage에 업로드
+    if (imgsFile.size() > 0) {
+      for (int i = 0; i < imgsFile.size(); i++) {
+        MultipartFile file = imgsFile.get(i);
+        byte[] bytes = file.getBytes();
 
-      // google cloud storage upload
-      byte[] bytes = notice_imgsFile.getBytes();
+        // 고유한 파일 이름 생성 (인덱스 추가)
+        googleFileName = String.format(
+          "notice_%s_%d.webp",
+          LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss")),
+          i
+        );
 
-      // google cloud storage file name
-      googleFileName="_notice_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".png";
-      Storage storage = StorageOptions.getDefaultInstance().getService();
+        // storage 객체 생성
+        Storage storage = StorageOptions.getDefaultInstance().getService();
 
-      // Create the blobId
-      BlobId blobId = BlobId.of(googleBucketName, googleFolderPath + googleFileName);
-      BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
-        .setContentType(notice_imgsFile.getContentType())
+        // blobId 생성
+        BlobId blobId = BlobId.of(BUCKET_MAIN, BUCKET_FOLDER + "/notice/" + googleFileName);
+
+        BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
+        .setContentType(file.getContentType())
         .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
         .build();
-      Blob blob = storage.create(blobInfo, bytes);
-      blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
 
-      // Path to Google Cloud Storage bucket URL
-      googleBucketUrl="https://storage.googleapis.com/" + googleBucketName + "/" + googleFolderPath + googleFileName;
+        Blob blob = storage.create(blobInfo, bytes);
+        blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
 
-      // Path to imgsUrl
-      notice.setNotice_imgsUrl(googleBucketUrl);
+        newImgsUrl.append(googleFileName);
+
+        // 마지막 이미지가 아닐 경우 ','로 구분
+        if (i < imgsFile.size() - 1) {
+          newImgsUrl.append(",");
+        }
+      }
+      existingImgsUrl = "";
     }
-    noticeMapper.addNotice(notice);
-  }
+
+    // 이미지 URL 합치기
+    String imgsUrl = existingImgsUrl.isEmpty()
+      ? String.join(",", newImgsUrl)
+      : existingImgsUrl + (newImgsUrl.isEmpty() ? "" : ",") + String.join(",", newImgsUrl);
+
+    Integer result = 0;
+
+    if (noticeMapper.saveNotice(notice, imgsUrl) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
+  };
 
   // 4-1. updateNotice -----------------------------------------------------------------------------
   @Override
-  public void updateNotice(
+  public Integer updateNotice(
     @ModelAttribute Notice notice,
-    String existingImage
+    @RequestParam ArrayList<MultipartFile> imgsFile
   ) throws Exception {
 
-    MultipartFile notice_imgsFile = notice.getNotice_imgsFile();
+    StringBuilder newImgsUrl = new StringBuilder();
+    String googleFileName = "";
+    String existingImgsUrl = "";
 
-    String googleFileName;
-    String googleBucketUrl;
-    String googleBucketName="jungho-bucket";
-    String googleFolderPath="JUNGHQLO/DB/notice/";
+    // 이미지가 있을 경우 google cloud storage에 업로드
+    if (imgsFile.size() > 0) {
+      for (int i = 0; i < imgsFile.size(); i++) {
+        MultipartFile file = imgsFile.get(i);
+        byte[] bytes = file.getBytes();
 
-    if (notice_imgsFile.isEmpty()) {
-      notice.setNotice_imgsUrl(existingImage);
-    }
-    else {
+        // 고유한 파일 이름 생성 (인덱스 추가)
+        googleFileName = String.format(
+          "notice_%s_%d.webp",
+          LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss")),
+          i
+        );
 
-      // google cloud storage upload
-      byte[] bytes = notice_imgsFile.getBytes();
+        // storage 객체 생성
+        Storage storage = StorageOptions.getDefaultInstance().getService();
 
-      // google cloud storage file name
-      googleFileName="_notice_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".png";
-      Storage storage = StorageOptions.getDefaultInstance().getService();
+        // blobId 생성
+        BlobId blobId = BlobId.of(BUCKET_MAIN, BUCKET_FOLDER + "/notice/" + googleFileName);
 
-      // Create the blobId
-      BlobId blobId = BlobId.of(googleBucketName, googleFolderPath + googleFileName);
-      BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
-        .setContentType(notice_imgsFile.getContentType())
+        BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
+        .setContentType(file.getContentType())
         .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
         .build();
-      Blob blob = storage.create(blobInfo, bytes);
-      blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
 
-      // Path to Google Cloud Storage bucket URL
-      googleBucketUrl="https://storage.googleapis.com/" + googleBucketName + "/" + googleFolderPath + googleFileName;
+        Blob blob = storage.create(blobInfo, bytes);
+        blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
 
-      // Path to imgsUrl
-      notice.setNotice_imgsUrl(googleBucketUrl);
+        newImgsUrl.append(googleFileName);
+
+        // 마지막 이미지가 아닐 경우 ','로 구분
+        if (i < imgsFile.size() - 1) {
+          newImgsUrl.append(",");
+        }
+      }
+      existingImgsUrl = notice.getNotice_imgsUrl().trim();
     }
-    noticeMapper.updateNotice(notice);
-  }
+
+    // 이미지 URL 합치기
+    String imgsUrl = existingImgsUrl.isEmpty()
+      ? String.join(",", newImgsUrl)
+      : existingImgsUrl + (newImgsUrl.isEmpty() ? "" : ",") + String.join(",", newImgsUrl);
+
+    Integer result = 0;
+
+    if (noticeMapper.updateNotice(notice, imgsUrl) > 0) {
+      result = 1;
+    } else {
+      result = 0;
+    }
+
+    return result;
+  };
 
   // 4-2. updateCount ------------------------------------------------------------------------------
   @Override

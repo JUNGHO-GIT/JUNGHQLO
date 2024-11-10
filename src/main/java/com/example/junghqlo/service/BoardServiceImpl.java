@@ -5,8 +5,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import com.example.junghqlo.handler.PageHandler;
 import com.example.junghqlo.mapper.BoardMapper;
@@ -20,6 +22,15 @@ import com.google.cloud.storage.StorageOptions;
 
 @Service
 public class BoardServiceImpl implements BoardService {
+
+  @Value("${storage}")
+  private String STORAGE;
+
+  @Value("${bucket-main}")
+  private String BUCKET_MAIN;
+
+  @Value("${bucket-folder}")
+  private String BUCKET_FOLDER;
 
   // 0. constructor injection ----------------------------------------------------------------------
   private BoardMapper boardMapper;
@@ -73,92 +84,110 @@ public class BoardServiceImpl implements BoardService {
     return boardMapper.detailBoard(board_number);
   }
 
-  // 3. addBoard -----------------------------------------------------------------------------------
+  // 3. saveBoard ----------------------------------------------------------------------------------
   @Override
-  public void addBoard(
-    @ModelAttribute Board board
-  ) throws Exception {
-
-    MultipartFile board_imgsFile = board.getBoard_imgsFile();
-
-    String googleFileName;
-    String googleBucketUrl;
-    String googleBucketName="jungho-bucket";
-    String googleFolderPath="JUNGHQLO/DB/board/";
-
-    if (board_imgsFile.isEmpty()) {
-      googleBucketUrl = (
-        "https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/icon/logo.png"
-      );
-      board.setBoard_imgsUrl(googleBucketUrl);
-    }
-    else {
-      // google cloud storage bucket에 이미지 업로드
-      byte[] bytes = board_imgsFile.getBytes();
-
-      // create storage
-      googleFileName="_board_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".png";
-      Storage storage = StorageOptions.getDefaultInstance().getService();
-
-      // create blobId and blobInfo
-      BlobId blobId = BlobId.of(googleBucketName, googleFolderPath + googleFileName);
-      BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
-        .setContentType(board_imgsFile.getContentType())
-        .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
-        .build();
-      Blob blob = storage.create(blobInfo, bytes);
-      blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
-
-      // path to googleBucketUrl
-      googleBucketUrl="https://storage.googleapis.com/" + googleBucketName + "/" + googleFolderPath + googleFileName;
-
-      // path to imgsUrl
-      board.setBoard_imgsUrl(googleBucketUrl);
-    }
-    boardMapper.addBoard(board);
-  }
-
-  // 4-1. updateBoard ------------------------------------------------------------------------------
-  @Override
-  public void updateBoard(
+  public Integer saveBoard(
     @ModelAttribute Board board,
-    String existingImage
+    @RequestParam MultipartFile[] imgsFile
   ) throws Exception {
 
-    MultipartFile board_imgsFile = board.getBoard_imgsFile();
+    String imgsUrl = "";
+    String googleFileName = "";
 
-    String googleFileName;
-    String googleBucketUrl;
-    String googleBucketName="jungho-bucket";
-    String googleFolderPath="JUNGHQLO/DB/board/";
-
-    if (board_imgsFile.isEmpty()) {
-      board.setBoard_imgsUrl(existingImage);
+    if (imgsFile.length == 0) {
+      imgsUrl = STORAGE + "icon/logo.png";
     }
-    else {
-      //  google cloud storage bucket에 이미지 업로드
-      byte[] bytes = board_imgsFile.getBytes();
 
-      // create storage
-      googleFileName="_board_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".png";
+    // google cloud storage upload
+    for (MultipartFile file : imgsFile) {
+      byte[] bytes = file.getBytes();
+
+      // google cloud storage file name
+      googleFileName = (
+        "board_"
+        + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss"))
+        + ".webp"
+      );
       Storage storage = StorageOptions.getDefaultInstance().getService();
 
-      // create blobId and blobInfo
-      BlobId blobId = BlobId.of(googleBucketName, googleFolderPath + googleFileName);
+      // Create the blobId
+      BlobId blobId = BlobId.of(BUCKET_MAIN, BUCKET_FOLDER + "/board/" + googleFileName);
+
       BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
-        .setContentType(board_imgsFile.getContentType())
-        .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
-        .build();
+      .setContentType(file.getContentType())
+      .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
+      .build();
+
       Blob blob = storage.create(blobInfo, bytes);
       blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
 
-      // path to googleBucketUrl
-      googleBucketUrl="https://storage.googleapis.com/" + googleBucketName + "/" + googleFolderPath + googleFileName;
-
-      // path to imgsUrl
-      board.setBoard_imgsUrl(googleBucketUrl);
+      // Path to Google Cloud Storage bucket URL
+      imgsUrl = STORAGE + "/board/" + googleFileName;
     }
-    boardMapper.updateBoard(board);
+
+    Integer result = 0;
+
+    if (boardMapper.saveBoard(board, imgsUrl) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
+  };
+
+  // 4-1. updateBoard -----------------------------------------------------------------------------
+  @Override
+  public Integer updateBoard(
+    @ModelAttribute Board board,
+    @RequestParam MultipartFile[] imgsFile
+  ) throws Exception {
+
+    String imgsUrl = "";
+    String googleFileName = "";
+
+    if (imgsFile.length == 0) {
+      imgsUrl = board.getBoard_imgsUrl();
+    }
+
+    // google cloud storage upload
+    for (MultipartFile file : imgsFile) {
+      byte[] bytes = file.getBytes();
+
+      // google cloud storage file name
+      googleFileName = (
+        "board_"
+        + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss"))
+        + ".webp"
+      );
+      Storage storage = StorageOptions.getDefaultInstance().getService();
+
+      // Create the blobId
+      BlobId blobId = BlobId.of(BUCKET_MAIN, BUCKET_FOLDER + "/board/" + googleFileName);
+
+      BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
+      .setContentType(file.getContentType())
+      .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
+      .build();
+
+      Blob blob = storage.create(blobInfo, bytes);
+      blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
+
+      // Path to Google Cloud Storage bucket URL
+      imgsUrl = STORAGE + "/board/" + googleFileName;
+    }
+
+    Integer result = 0;
+
+    if (boardMapper.updateBoard(board, imgsUrl) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
 
   // 4-2. updateCount ------------------------------------------------------------------------------

@@ -5,8 +5,8 @@
   <section th:fragment="preview-select1" class="container">
     <div class="previewSelect-group">
       <p class="p">상품 이미지1<span>*</span></p>
-      <label for="imageFile1">선택</label>
-      <input th:type="${'file" th:id="imageFile1" onchange="junghoPreview(1)" class="imageFile"  th:name="|${type} + _imgsFile1|'}"/>
+      <label for="imgsFile1">선택</label>
+      <input th:type="${'file" th:id="imgsFile1" onchange="junghoPreview(1)" class="imgsFile"  th:name="|${type} + _imgsFile1|'}"/>
     </div>
   </section>
 
@@ -14,8 +14,8 @@
   <section th:fragment="preview-select2" class="container">
     <div class="previewSelect-group">
       <p class="p">상품 이미지2<span>*</span></p>
-      <label for="imageFile2">선택</label>
-      <input th:type="${'file" th:id="imageFile2" onchange="junghoPreview(2)" class="imageFile" th:name="|${type} + _imgsFile2|'}"/>
+      <label for="imgsFile2">선택</label>
+      <input th:type="${'file" th:id="imgsFile2" onchange="junghoPreview(2)" class="imgsFile" th:name="|${type} + _imgsFile2|'}"/>
     </div>
   </section>
 
@@ -25,8 +25,8 @@
       <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <div class="previewImage-group">
           <h4><i class="fa fa-spinner"></i>&nbsp;Preview</h4>
-          <div class="imageLoader" id="imageLoader"></div>
-          <img class="imageBox" id="imageBox"/>
+          <div class="imgsLoader" id="imgsLoader"></div>
+          <img class="imgsBox" id="imgsBox"/>
         </div>
       </div>
     </div>
@@ -34,22 +34,22 @@
       <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
         <div class="previewMini-group">
           <h6><i class="fa fa-spinner"></i>&nbsp;Image 1</h6>
-          <div class="imageMiniLoader" id="imageMiniLoader1"></div>
-          <img class="imageMiniBox" id="imageMiniBox1"/>
+          <div class="imgsMiniLoader" id="imgsMiniLoader1"></div>
+          <img class="imgsMiniBox" id="imgsMiniBox1"/>
         </div>
       </div>
       <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
         <div class="previewMini-group">
           <h6><i class="fa fa-spinner"></i>&nbsp;Image 2</h6>
-          <div class="imageMiniLoader" id="imageMiniLoader2"></div>
-          <img class="imageMiniBox" id="imageMiniBox2"/>
+          <div class="imgsMiniLoader" id="imgsMiniLoader2"></div>
+          <img class="imgsMiniBox" id="imgsMiniBox2"/>
         </div>
       </div>
       <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
         <div class="previewButton-group">
           <button class="jungho-button" id="resetButton" th:type="${'reset'}">초기화</button>
           <button class="jungho-button" id="submitButton" th:type="${'submit'}"
-          th:onclick="|return add + ${Type} + ()|">등록하기</button>
+          th:onclick="|return save + ${Type} + ()|">등록하기</button>
         </div>
       </div>
     </div>

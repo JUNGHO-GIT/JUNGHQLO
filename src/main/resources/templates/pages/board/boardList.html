@@ -8,116 +8,104 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
-  <th:block th:replace="~{layouts/navigation :: navigation (
-    icon = 'fas fa-chalkboard-teacher',
-    text1 = ${PAGE},
-    text2 = ${THEME}
-  )}" />
+  <th:block th:replace="~{layouts/navigation :: navigation}" />
 
   <!-- main -->
-  <main class="container-fluid px-30">
+  <section class="container-fluid px-30">
     <div class="row d-row-center">
       <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
-    <div class="row mb-3 jungho-inline">
-      <!-- sorting -->
-      <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-        <div class="jungho-left">
-          <i class="fas fa-sort-amount-down fa-lg"></i>&nbsp;&nbsp;
-          <form th:action="@{|/board/listBoard}" th:method="${'@{GET}" onchange="this.submit()'}">
-            <select name="sort" class="form-control w-50p">
-              <option value="all">정렬</option>
-              <option value="titleASC">제목순(오름차순)</option>
-              <option value="titleDESC">제목순(내림차순)</option>
-              <option value="countASC">조회수낮은순</option>
-              <option value="countDESC">조회수높은순</option>
-              <option value="dateASC">오래된순</option>
-              <option value="dateDESC">최신순</option>
-            </select>
-          </form>
-        </div>
-      </div>
-      <!-- search -->
-      <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-        <form id="searchForm" th:method="${'@{GET}" th:action="@{|/board/searchBoard}'}">
-          <div class="jungho-right">
-            <select class="ft-5 fw-8 ms-2 searchSelect" th:name="${'@{type}" th:id="@{type}'}">
-              <option value="title">제목</option>
-              <option value="contents">내용</option>
-            </select>
-            <input class="form-control ft-7 fw-7 me-1 searchBar" th:type="${'@{search}" th:id="|@{keyword}" th:placeholder="search" th:name="@{keyword}|'}" required/>
-            <i class="fas fa-search fa-lg" th:id="${'@{searchIcon}'}"></i>
-            <button th:type="${'@{submit}" id="hiddenSubmit" class="hiddenSubmit'}"></button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-
-    <!-- blog section -->
-    <div class="row">
-      <th:block th:each="@{board : ${boardList}}">
-        <div class="col-lg-4 col-md-6 col-sm-6">
-          <div class="blog-item">
-            <!-- image -->
-            <div class="blog-item-pic set-bg" th:attr="${'@{data-setbg=@{${board.board_imgsUrl}}}'}"></div>
-            <div class="blog-item-text">
-              <div style="display: flex; justify-content: space-between; align-items: center()">
-                <!-- date -->
-                <span>
-                  <i class="far fa-calendar-alt"></i>
-                  <th:block th:text="${board.board_update != null ? board.board_update+'(수정)' : board.board_date+'(원글)'}" />
-                </span>
-                <!-- view -->
-                <div style="text-align: center">
-                  <p class="p me-n4">
-                    <i class="fa fa-eye"></i>
-                    <th:block th:text="${board.board_count}" th:id="${'|@{board_count}" th:value="{board.board_count}'}" />
-                  </p>
-                </div>
-              </div>
-
-              <!-- title -->
-              <div style="display: flex; justify-content: space-between; align-items: center()">
-                <h5 th:id="${'|@{board_title}" th:value="@{board_title}" th:text="{#strings.abbreviate(board.board_title, 18)}'}"></h5>
-                <!-- like -->
-                <div style="display: flex">
-                  <div style="text-align: center">
-                    <i class="far fa-thumbs-up"></i>
-                    <h6 th:text="${board.board_like}"></h6>
+        <!-- detail -->
+        <div class="row">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <th:block th:each="LIST: ${LIST}">
+              <div
+                th:class="${'border-1 radius-2 shadow-1 p-30'}"
+                th:classappend="${LISTStat.last ? '' : 'mb-20'}"
+              >
+                <!-- logo + title -->
+                <div class="d-row-left w-100p mb-20">
+                  <img
+                    th:src="@{|${LIST['board_imgsUrl']}|}"
+                    th:loading="${'lazy'}"
+                    th:alt="${'logo'}"
+                    th:width="${'30px'}"
+                    th:height="${'30px'}"
+                    th:class="${'radius-2 me-10'}"
+                  />
+                  <div
+                    th:id="${'board_title'}"
+                    th:name="${'board_title'}"
+                    th:text="${#strings.abbreviate(LIST['board_title'], 20)}"
+                    th:class="${'fs-1-2rem fw-700 burgundy hover'}"
+                    th:onclick="|location.href='@{|/${page}/detail${PAGE}?board_number=${LIST['board_number']}|}'|"
+                  >
                   </div>
-                  <div style="text-align: center" class="ms-4 me-n4">
-                    <i class="far fa-thumbs-down"></i>
-                    <h6 th:text="${board.board_dislike}"></h6>
+                  <div
+                    th:id="${'board_number'}"
+                    th:name="${'board_number'}"
+                    th:text="${LIST['board_number']}"
+                    th:class="${'fs-0-9rem fw-600 grey ms-auto'}"
+                  >
+                  </div>
+                </div>
+                <!-- contents -->
+                <div class="d-row-left w-100p mb-30">
+                  <div
+                    th:id="${'board_contents'}"
+                    th:name="${'board_contents'}"
+                    th:text="${#strings.abbreviate(LIST['board_contents'], 40)}"
+                    th:class="${'fs-0-9rem fw-600 light-black'}"
+                  >
+                  </div>
+                </div>
+                <!-- date & view count -->
+                <div class="d-row-between w-100p">
+                  <div class="d-row-center">
+                    <i th:class="${'fa fa-calendar fs-0-7rem me-10'}"></i>
+                    <div
+                      th:id="${'board_date'}"
+                      th:name="${'board_date'}"
+                      th:class="${'fs-0-9rem fw-600 dark'}"
+                      th:text="${#strings.substring((LIST['board_update'] != null ? LIST['board_update'] : LIST['board_date']), 0, 10)}"
+                    >
+                    </div>
+                  </div>
+                  <div class="d-row-center">
+                    <i th:class="${'fa fa-eye fs-0-7rem me-10'}"></i>
+                    <div
+                      th:id="${'board_count'}"
+                      th:name="${'board_count'}"
+                      th:text="${LIST['board_count']}"
+                      th:class="${'fs-0-9rem fw-600 dark'}"
+                    >
+                    </div>
                   </div>
                 </div>
               </div>
-              <!-- click read more -->
-              <a th:href="@{|/board/detailBoard?board_number=${board.board_number}||}">
-              Read More</a>
-            </div>
+            </th:block>
           </div>
         </div>
-      </th:block>
-    </div>
-
-    <!-- board button -->
-    <div class="col-lg-12 md-12 sm-12">
-      <div class="jungho-center">
-        <button th:type="${'@{button}" class="jungho-button" th:if="${session.member_id != null}" th:onclick="|@{'location.href=\'' + @{/board/addBoard} + '\''}'}|">
-          작성하기
-        </button>
-        <button th:type="${'@{button}" class="jungho-button" th:if="${session.member_id == null}" th:onclick="|@{return sessionAlert()}'}|">
-          작성하기
-        </button>
       </div>
     </div>
-  </main>
+  </section>
+
+  <!-- hr -->
+  <th:block th:replace="~{components/divider :: divider}" />
+
+  <!-- sorting -->
+  <th:block th:replace="~{components/sorting :: sorting}" />
+
+  <!-- hr -->
+  <th:block th:replace="~{components/divider :: divider}" />
+
+  <!-- button -->
+  <th:block th:replace="~{components/button :: button}" />
+
+  <!-- hr -->
+  <th:block th:replace="~{components/divider :: divider}" />
 
   <!-- pagination -->
-  <th:block th:replace="~{components/pagination :: pagination (
-    prefix = ${page},
-    subfix = ${PAGE}
-  )}" />
+  <th:block th:replace="~{components/pagination :: pagination}" />
 
   <!-- footer -->
   <th:block th:replace="~{layouts/footer :: footer}" />

@@ -10,7 +10,6 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import com.example.junghqlo.model.Qna;
-import com.example.junghqlo.handler.MultipartFileHandler;
 import com.example.junghqlo.handler.LocalDateTimeTypeHandler;
 
 @Mapper
@@ -58,11 +57,6 @@ public interface QnaMapper {
     @Result (
       property = "qna_answer2",
       column = "qna_answer2"
-    ),
-    @Result (
-      property = "qna_imgsFile",
-      column = "qna_imgsFile",
-      typeHandler = MultipartFileHandler.class
     ),
     @Result (
       property = "qna_imgsUrl",
@@ -117,7 +111,7 @@ public interface QnaMapper {
     Integer qna_number
   ) throws Exception;
 
-  // 3. addQna -------------------------------------------------------------------------------------
+  // 3. saveQna -------------------------------------------------------------------------------------
   @Insert(
     """
     INSERT INTO
@@ -136,23 +130,23 @@ public interface QnaMapper {
         qna_date
       )
     VALUES(
-      #{qna_title},
-      #{qna_contents},
-      #{qna_writer},
-      #{qna_category},
-      #{qna_count},
-      #{qna_like},
-      #{qna_dislike},
-      #{qna_answer1},
-      #{qna_answer2},
-      #{qna_imgsFile, typeHandler = MultipartFileHandler},
-      #{qna_imgsUrl},
+      #{qna.qna_title},
+      #{qna.qna_contents},
+      #{qna.qna_writer},
+      #{qna.qna_category},
+      #{qna.qna_count},
+      #{qna.qna_like},
+      #{qna.qna_dislike},
+      #{qna.qna_answer1},
+      #{qna.qna_answer2},
+      #{imgsUrl},
       NOW()
     )
     """
   )
-  void addQna(
-    Qna qna
+  Integer saveQna(
+    @Param("qna") Qna qna,
+    @Param("imgsUrl") String imgsUrl
   ) throws Exception;
 
   // 4-1. updateQna --------------------------------------------------------------------------------
@@ -161,20 +155,20 @@ public interface QnaMapper {
     UPDATE
       qna
     SET
-      qna_title = #{qna_title},
-      qna_contents = #{qna_contents},
-      qna_category = #{qna_category},
-      qna_answer1 = #{qna_answer1},
-      qna_answer2 = #{qna_answer2},
-      qna_imgsFile = #{qna_imgsFile, typeHandler = MultipartFileHandler},
-      qna_imgsUrl = #{qna_imgsUrl},
+      qna_title = #{qna.qna_title},
+      qna_contents = #{qna.qna_contents},
+      qna_category = #{qna.qna_category},
+      qna_answer1 = #{qna.qna_answer1},
+      qna_answer2 = #{qna.qna_answer2},
+      qna_imgsUrl = #{imgsUrl},
       qna_update = NOW()
     WHERE
-      qna_number = #{qna_number}
+      qna_number = #{qna.qna_number}
     """
   )
-  void updateQna(
-    Qna qna
+  Integer updateQna(
+    @Param("qna") Qna qna,
+    @Param("imgsUrl") String imgsUrl
   ) throws Exception;
 
   // 4-2. updateCount ------------------------------------------------------------------------------

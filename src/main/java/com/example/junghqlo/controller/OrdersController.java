@@ -145,16 +145,16 @@ public class OrdersController {
     return MessageFormat.format("/pages/{0}/{1}Detail", page, page);
   }
 
-  // 3. addOrders (GET) ----------------------------------------------------------------------------
-  @GetMapping("/addOrders")
-  public String addOrders() throws Exception {
+  // 3. saveOrders (GET) ----------------------------------------------------------------------------
+  @GetMapping("/saveOrders")
+  public String saveOrders() throws Exception {
 
-    return MessageFormat.format("/pages/{0}/{1}Add", page, page);
+    return MessageFormat.format("/pages/{0}/{1}Save", page, page);
   }
 
-  // 3. addOrders (POST) ---------------------------------------------------------------------------
-  @PostMapping("/addOrders")
-  public RedirectView addOrders (
+  // 3. saveOrders (POST) ---------------------------------------------------------------------------
+  @PostMapping("/saveOrders")
+  public RedirectView saveOrders (
     @ModelAttribute Orders orders,
     @RequestParam Integer product_number,
     @RequestParam String product_name,
@@ -177,7 +177,7 @@ public class OrdersController {
     orders.setMember_id(member_id);
     orders.setOrders_quantity(Integer.parseInt(orders_quantity.toString()));
     orders.setOrders_totalPrice(totalPrice);
-    ordersService.addOrders(orders);
+    ordersService.saveOrders(orders);
 
     // 2. URL 생성
     String priceId = product.getStripe_price();

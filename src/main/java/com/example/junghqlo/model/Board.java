@@ -2,7 +2,6 @@ package com.example.junghqlo.model;
 
 import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.multipart.MultipartFile;
 import lombok.Data;
 
 @Data
@@ -16,7 +15,6 @@ public class Board {
   private Integer board_count;
   private Integer board_like;
   private Integer board_dislike;
-  private MultipartFile board_imgsFile;
   private String board_imgsUrl;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
@@ -46,9 +44,6 @@ public class Board {
   }
   public Integer getBoard_dislike() {
     return this.board_dislike;
-  }
-  public MultipartFile getBoard_imgsFile() {
-    return this.board_imgsFile;
   }
   public String getBoard_imgsUrl() {
     return this.board_imgsUrl;
@@ -81,9 +76,6 @@ public class Board {
   }
   public void setBoard_dislike(Integer board_dislike) {
     this.board_dislike = board_dislike;
-  }
-  public void setBoard_imgsFile(MultipartFile board_imgsFile) {
-    this.board_imgsFile = board_imgsFile;
   }
   public void setBoard_imgsUrl(String board_imgsUrl) {
     this.board_imgsUrl = board_imgsUrl;
