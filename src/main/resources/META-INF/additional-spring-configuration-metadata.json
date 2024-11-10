@@ -16,6 +16,11 @@
       "description": "https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE"
     },
     {
+      "name": "orders-url",
+      "type": "java.lang.String",
+      "description": "https://www.junghomun.com/JUNGHQLO/orders"
+    },
+    {
       "name": "bucket-main",
       "type": "java.lang.String",
       "description": "jungho-bucket"

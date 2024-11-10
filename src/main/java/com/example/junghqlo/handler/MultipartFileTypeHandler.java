@@ -19,7 +19,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 @Component
 @MappedTypes(MultipartFile.class)
-public class MultipartFileHandler extends BaseTypeHandler<MultipartFile> {
+public class MultipartFileTypeHandler extends BaseTypeHandler<MultipartFile> {
 
   // 1. setNonNullParameter ------------------------------------------------------------------------
   public void setNonNullParameter(PreparedStatement ps, int i, MultipartFile parameter, JdbcType jdbcType) throws SQLException {

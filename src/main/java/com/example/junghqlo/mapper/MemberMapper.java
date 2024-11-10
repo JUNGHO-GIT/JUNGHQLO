@@ -200,7 +200,7 @@ public interface MemberMapper {
     @Param("member_pw") String member_pw
   ) throws Exception;
 
-  // 3-1. saveMember --------------------------------------------------------------------------------
+  // 3-1. saveMember -------------------------------------------------------------------------------
   @Insert(
     """
     INSERT INTO

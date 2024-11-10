@@ -31,7 +31,7 @@
                   <!-- logo + title -->
                   <div class="d-row-left w-100p mb-20">
                     <img
-                      th:each="image, iterStat : ${#strings.arraySplit(LIST['notice_imgsUrl'], ',')}"
+                      th:each="image, iterStat:${#strings.arraySplit(LIST['notice_imgsUrl'], ',')}"
                       th:if="${iterStat.index == 0}"
                       th:src="@{|${STORAGE}/${page}/${image}|}"
                       th:loading="${'lazy'}"
@@ -56,6 +56,7 @@
                     >
                     </div>
                   </div>
+
                   <!-- contents -->
                   <div class="d-row-left w-100p mb-30">
                     <div

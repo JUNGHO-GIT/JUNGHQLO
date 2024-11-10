@@ -43,7 +43,7 @@ public class ProductMapperImpl implements ProductMapper {
     return sqlSession.selectOne("detailProduct", product_number);
   }
 
-  // 3. saveProduct ---------------------------------------------------------------------------------
+  // 3. saveProduct --------------------------------------------------------------------------------
   @Override
   public Integer saveProduct(
     Product product,

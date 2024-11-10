@@ -66,7 +66,7 @@ public class QnaMapperImpl implements QnaMapper {
     return result;
   }
 
-  // 4-1. updateQna -----------------------------------------------------------------------------
+  // 4-1. updateQna --------------------------------------------------------------------------------
   @Override
   public Integer updateQna(
     Qna qna,

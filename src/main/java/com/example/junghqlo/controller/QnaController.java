@@ -1,7 +1,11 @@
 package com.example.junghqlo.controller;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.junghqlo.handler.PageHandler;
 import com.example.junghqlo.model.Qna;
 import com.example.junghqlo.service.QnaService;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Controller
 @RequestMapping("/qna")
@@ -33,7 +34,7 @@ public class QnaController {
   private static String page = "qna";
   private static String PAGE = "Qna";
 
-  // 1. listQna (GET) ----------------------------------------------------------------------------
+  // 1. listQna (GET) ------------------------------------------------------------------------------
   @GetMapping("/listQna")
   public String listQna(
     @ModelAttribute Qna qna,
@@ -159,19 +160,25 @@ public class QnaController {
     return MessageFormat.format("/pages/{0}/{1}Detail", page, page);
   }
 
-  // 3. saveQna (GET) -------------------------------------------------------------------------------
+  // 3. saveQna (GET) ------------------------------------------------------------------------------
   @GetMapping("/saveQna")
   public String saveQna() throws Exception {
 
     return MessageFormat.format("/pages/{0}/{1}Save", page, page);
   }
 
-  // 3. saveQna (POST) ------------------------------------------------------------------------------
+  // 3. saveQna (POST) -----------------------------------------------------------------------------
+  @ResponseBody
   @PostMapping("/saveQna")
   public Integer saveQna (
     @ModelAttribute Qna qna,
-    @RequestParam MultipartFile[] imgsFile
+    @RequestParam(required = false) List<MultipartFile> imgsFile
   ) throws Exception {
+
+    // imgsFile이 null이면 빈 리스트로 초기화
+    if (imgsFile == null || imgsFile.size() == 0) {
+      imgsFile = new ArrayList<MultipartFile>();
+    }
 
     Integer result = 0;
 
@@ -199,11 +206,17 @@ public class QnaController {
   }
 
   // 4-1. updateQna (POST) -------------------------------------------------------------------------
+  @ResponseBody
   @PostMapping("/updateQna")
   public Integer updateQna (
     @ModelAttribute Qna qna,
-    @RequestParam MultipartFile[] imgsFile
+    @RequestParam(required = false) List<MultipartFile> imgsFile
   ) throws Exception {
+
+    // imgsFile이 null이면 빈 리스트로 초기화
+    if (imgsFile == null || imgsFile.size() == 0) {
+      imgsFile = new ArrayList<MultipartFile>();
+    }
 
     Integer result = 0;
 

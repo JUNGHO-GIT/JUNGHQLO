@@ -79,6 +79,7 @@ public class GlobalAttributeConfig {
     model.addAttribute("TITLE", TITLE);
     model.addAttribute("ADMIN", ADMIN);
     model.addAttribute("STORAGE", STORAGE);
+
     model.addAttribute("URL", uri);
     model.addAttribute("page", page);
     model.addAttribute("PAGE", pageUp);

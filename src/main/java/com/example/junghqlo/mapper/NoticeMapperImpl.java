@@ -41,7 +41,7 @@ public class NoticeMapperImpl implements NoticeMapper {
     return sqlSession.selectOne("detailNotice", notice_number);
   }
 
-  // 3. saveNotice ----------------------------------------------------------------------------------
+  // 3. saveNotice ---------------------------------------------------------------------------------
   @Override
   public Integer saveNotice(
     Notice notice,

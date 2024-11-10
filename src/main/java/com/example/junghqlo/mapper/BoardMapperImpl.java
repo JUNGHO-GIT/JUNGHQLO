@@ -41,7 +41,7 @@ public class BoardMapperImpl implements BoardMapper {
     return sqlSession.selectOne("detailBoard", board_number);
   }
 
-  // 3. saveBoard -----------------------------------------------------------------------------------
+  // 3. saveBoard ----------------------------------------------------------------------------------
   @Override
   public Integer saveBoard(
     Board board,
@@ -87,7 +87,7 @@ public class BoardMapperImpl implements BoardMapper {
     return result;
   }
 
-  // 4-2. updateCount -------------------------------------------------------------------------
+  // 4-2. updateCount ------------------------------------------------------------------------------
   @Override
   public void updateCount(
     Integer board_number

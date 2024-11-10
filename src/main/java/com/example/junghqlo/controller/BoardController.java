@@ -1,6 +1,8 @@
 package com.example.junghqlo.controller;
 
 import java.text.MessageFormat;
+import java.util.List;
+import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,17 +24,17 @@ import com.example.junghqlo.service.BoardService;
 public class BoardController {
 
   // 0. constructor injection ----------------------------------------------------------------------
-  Logger logger = LoggerFactory.getLogger(this.getClass());
   private BoardService boardService;
   BoardController(BoardService boardService) {
     this.boardService = boardService;
   }
 
   // 0. static -------------------------------------------------------------------------------------
+  Logger logger = LoggerFactory.getLogger(this.getClass());
   private static String page = "board";
   private static String PAGE = "Board";
 
-  // 1. listBoard (GET) --------------------------------------------------------------------------
+  // 1. listBoard (GET) ----------------------------------------------------------------------------
   @GetMapping("/listBoard")
   public String listBoard(
     @ModelAttribute Board board,
@@ -125,19 +127,25 @@ public class BoardController {
     return MessageFormat.format("/pages/{0}/{1}Detail", page, page);
   }
 
-  // 3. saveBoard (GET) -----------------------------------------------------------------------------
+  // 3. saveBoard (GET) ----------------------------------------------------------------------------
   @GetMapping("/saveBoard")
   public String saveBoard() throws Exception {
 
     return MessageFormat.format("/pages/{0}/{1}Save", page, page);
   }
 
-  // 3. saveBoard (POST) ----------------------------------------------------------------------------
+  // 3. saveBoard (POST) ---------------------------------------------------------------------------
+  @ResponseBody
   @PostMapping("/saveBoard")
   public Integer saveBoard(
     @ModelAttribute Board board,
-    @RequestParam MultipartFile[] imgsFile
+    @RequestParam(required = false) List<MultipartFile> imgsFile
   ) throws Exception {
+
+    // imgsFile이 null이면 빈 리스트로 초기화
+    if (imgsFile == null || imgsFile.size() == 0) {
+      imgsFile = new ArrayList<MultipartFile>();
+    }
 
     Integer result = 0;
 
@@ -165,11 +173,17 @@ public class BoardController {
   }
 
   // 4-1. updateBoard (POST) -----------------------------------------------------------------------
+  @ResponseBody
   @PostMapping("/updateBoard")
   public Integer updateBoard(
     @ModelAttribute Board board,
-    @RequestParam MultipartFile[] imgsFile
+    @RequestParam(required = false) List<MultipartFile> imgsFile
   ) throws Exception {
+
+    // imgsFile이 null이면 빈 리스트로 초기화
+    if (imgsFile == null || imgsFile.size() == 0) {
+      imgsFile = new ArrayList<MultipartFile>();
+    }
 
     Integer result = 0;
 

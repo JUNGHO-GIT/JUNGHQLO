@@ -87,50 +87,75 @@ public class QnaServiceImpl implements QnaService {
     return qnaMapper.detailQna(qna_number);
   }
 
-  // 3. saveQna ----------------------------------------------------------------------------------
+
+  // 3. saveQna ---------------------------------------------------------------------------------
   @Override
   public Integer saveQna(
     @ModelAttribute Qna qna,
-    @RequestParam MultipartFile[] imgsFile
+    @RequestParam(required = false) List<MultipartFile> imgsFile
   ) throws Exception {
 
-    String imgsUrl = "";
+    // 변수 선언
+    StringBuilder newImgsUrlBuilder = new StringBuilder();
+    String existingImgsUrl = qna.getQna_imgsUrl();
+    String newImgsUrl = "";
+    String mergedImgsUrl = "";
     String googleFileName = "";
 
-    if (imgsFile.length == 0) {
-      imgsUrl = STORAGE + "icon/logo.png";
+    // 이미지가 있을 경우 google cloud storage에 업로드
+    if (imgsFile.size() > 0) {
+      for (int i = 0; i < imgsFile.size(); i++) {
+        MultipartFile file = imgsFile.get(i);
+        byte[] bytes = file.getBytes();
+
+        // 고유한 파일 이름 생성 (인덱스 추가)
+        googleFileName = String.format(
+          "qna_%s_%d.webp",
+          LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss")),
+          i
+        );
+
+        // storage 객체 생성
+        Storage storage = StorageOptions.getDefaultInstance().getService();
+
+        // blobId 생성
+        BlobId blobId = BlobId.of(BUCKET_MAIN, BUCKET_FOLDER + "/qna/" + googleFileName);
+
+        BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
+          .setContentType(file.getContentType())
+          .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
+          .build();
+
+        Blob blob = storage.create(blobInfo, bytes);
+        blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
+
+        // 업로드된 파일 이름을 newImgsUrl에 추가
+        if (newImgsUrlBuilder.length() > 0) {
+          newImgsUrlBuilder.append(",");
+        }
+        newImgsUrlBuilder.append(googleFileName);
+      }
+
+      // 최종 newImgsUrl 설정
+      newImgsUrl = newImgsUrlBuilder.toString().trim();
     }
 
-    // google cloud storage upload
-    for (MultipartFile file : imgsFile) {
-      byte[] bytes = file.getBytes();
-
-      // google cloud storage file name
-      googleFileName = (
-        "qna_"
-        + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss"))
-        + ".webp"
-      );
-      Storage storage = StorageOptions.getDefaultInstance().getService();
-
-      // Create the blobId
-      BlobId blobId = BlobId.of(BUCKET_MAIN, BUCKET_FOLDER + "/qna/" + googleFileName);
-
-      BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
-      .setContentType(file.getContentType())
-      .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
-      .build();
-
-      Blob blob = storage.create(blobInfo, bytes);
-      blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
-
-      // Path to Google Cloud Storage bucket URL
-      imgsUrl = STORAGE + "/qna/" + googleFileName;
+    // 이미지 URL 합치기
+    if (existingImgsUrl != null && existingImgsUrl.length() > 0) {
+      if (newImgsUrl != null && newImgsUrl.length() > 0) {
+        mergedImgsUrl = existingImgsUrl + "," + newImgsUrl;
+      }
+      else {
+        mergedImgsUrl = existingImgsUrl;
+      }
+    }
+    else {
+      mergedImgsUrl = newImgsUrl;
     }
 
     Integer result = 0;
 
-    if (qnaMapper.saveQna(qna, imgsUrl) > 0) {
+    if (qnaMapper.saveQna(qna, mergedImgsUrl) > 0) {
       result = 1;
     }
     else {
@@ -144,46 +169,70 @@ public class QnaServiceImpl implements QnaService {
   @Override
   public Integer updateQna(
     @ModelAttribute Qna qna,
-    @RequestParam MultipartFile[] imgsFile
+    @RequestParam(required = false) List<MultipartFile> imgsFile
   ) throws Exception {
 
-    String imgsUrl = "";
+    // 변수 선언
+    StringBuilder newImgsUrlBuilder = new StringBuilder();
+    String existingImgsUrl = qna.getQna_imgsUrl();
+    String newImgsUrl = "";
+    String mergedImgsUrl = "";
     String googleFileName = "";
 
-    if (imgsFile.length == 0) {
-      imgsUrl = qna.getQna_imgsUrl();
+    // 이미지가 있을 경우 google cloud storage에 업로드
+    if (imgsFile.size() > 0) {
+      for (int i = 0; i < imgsFile.size(); i++) {
+        MultipartFile file = imgsFile.get(i);
+        byte[] bytes = file.getBytes();
+
+        // 고유한 파일 이름 생성 (인덱스 추가)
+        googleFileName = String.format(
+          "qna_%s_%d.webp",
+          LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss")),
+          i
+        );
+
+        // storage 객체 생성
+        Storage storage = StorageOptions.getDefaultInstance().getService();
+
+        // blobId 생성
+        BlobId blobId = BlobId.of(BUCKET_MAIN, BUCKET_FOLDER + "/qna/" + googleFileName);
+
+        BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
+          .setContentType(file.getContentType())
+          .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
+          .build();
+
+        Blob blob = storage.create(blobInfo, bytes);
+        blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
+
+        // 업로드된 파일 이름을 newImgsUrl에 추가
+        if (newImgsUrlBuilder.length() > 0) {
+          newImgsUrlBuilder.append(",");
+        }
+        newImgsUrlBuilder.append(googleFileName);
+      }
+
+      // 최종 newImgsUrl 설정
+      newImgsUrl = newImgsUrlBuilder.toString().trim();
     }
 
-    // google cloud storage upload
-    for (MultipartFile file : imgsFile) {
-      byte[] bytes = file.getBytes();
-
-      // google cloud storage file name
-      googleFileName = (
-        "qna_"
-        + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss"))
-        + ".webp"
-      );
-      Storage storage = StorageOptions.getDefaultInstance().getService();
-
-      // Create the blobId
-      BlobId blobId = BlobId.of(BUCKET_MAIN, BUCKET_FOLDER + "/qna/" + googleFileName);
-
-      BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
-      .setContentType(file.getContentType())
-      .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
-      .build();
-
-      Blob blob = storage.create(blobInfo, bytes);
-      blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
-
-      // Path to Google Cloud Storage bucket URL
-      imgsUrl = STORAGE + "/qna/" + googleFileName;
+    // 이미지 URL 합치기
+    if (existingImgsUrl != null && existingImgsUrl.length() > 0) {
+      if (newImgsUrl != null && newImgsUrl.length() > 0) {
+        mergedImgsUrl = existingImgsUrl + "," + newImgsUrl;
+      }
+      else {
+        mergedImgsUrl = existingImgsUrl;
+      }
+    }
+    else {
+      mergedImgsUrl = newImgsUrl;
     }
 
     Integer result = 0;
 
-    if (qnaMapper.updateQna(qna, imgsUrl) > 0) {
+    if (qnaMapper.updateQna(qna, mergedImgsUrl) > 0) {
       result = 1;
     }
     else {
@@ -191,7 +240,7 @@ public class QnaServiceImpl implements QnaService {
     }
 
     return result;
-  }
+  };
 
   // 4-2. updateCount ------------------------------------------------------------------------------
   @Override

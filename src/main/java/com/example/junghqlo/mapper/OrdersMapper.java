@@ -111,7 +111,7 @@ public interface OrdersMapper {
     Integer orders_number
   ) throws StripeException;
 
-  // 3. saveOrders ----------------------------------------------------------------------------------
+  // 3. saveOrders ---------------------------------------------------------------------------------
   @Insert(
     """
     INSERT INTO
@@ -130,13 +130,14 @@ public interface OrdersMapper {
       #{member_id},
       #{orders_quantity},
       #{orders_totalPrice},
-      #{product_imgsUrl},
+      #{imgsUrl},
       NOW()
     )
     """
   )
   void saveOrders(
-    Orders orders
+    Orders orders,
+    @Param("imgsUrl") String imgsUrl
   ) throws Exception;
 
   // 4-1. updateOrders ----------------------------------------------------------------------------

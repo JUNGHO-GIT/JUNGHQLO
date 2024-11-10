@@ -1,22 +1,36 @@
 package com.example.junghqlo.service;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import com.example.junghqlo.handler.PageHandler;
 import com.example.junghqlo.mapper.OrdersMapper;
 import com.example.junghqlo.model.Orders;
+import com.google.cloud.storage.Acl;
+import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.BlobId;
+import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import com.stripe.exception.StripeException;
 
 @Service
 public class OrdersServiceImpl implements OrdersService {
+
+  @Value("${storage}")
+  private String STORAGE;
+
+  @Value("${bucket-main}")
+  private String BUCKET_MAIN;
+
+  @Value("${bucket-folder}")
+  private String BUCKET_FOLDER;
 
   // 0. constructor injection ----------------------------------------------------------------------
   private OrdersMapper ordersMapper;
@@ -37,7 +51,6 @@ public class OrdersServiceImpl implements OrdersService {
   ) throws Exception {
 
     List<Orders> content = ordersMapper.listOrders(sort, type, keyword, member_id);
-
     Integer itemsTotal = content.size();
     Integer pageLast = (itemsTotal + itemsPer - 1) / itemsPer;
 
@@ -82,57 +95,74 @@ public class OrdersServiceImpl implements OrdersService {
     return ordersMapper.getStripePrice(orders_number);
   }
 
-  // 3. saveOrders ----------------------------------------------------------------------------------
+
+  // 3. saveOrders ---------------------------------------------------------------------------------
   @Override
   public void saveOrders(
-    Orders orders
+    @ModelAttribute Orders orders,
+    @RequestParam(required = false) List<MultipartFile> imgsFile
   ) throws Exception {
 
-    String product_imgsUrl = orders.getProduct_imgsUrl();
+    // 변수 선언
+    StringBuilder newImgsUrlBuilder = new StringBuilder();
+    String existingImgsUrl = orders.getProduct_imgsUrl();
+    String newImgsUrl = "";
+    String mergedImgsUrl = "";
+    String googleFileName = "";
 
-    String googleBucketName="jungho-bucket";
-    String googleFolderPath="JUNGHQLO/DB/orders/";
-    String googleFileName;
-    String googleBucketUrl;
+    // 이미지가 있을 경우 google cloud storage에 업로드
+    if (imgsFile.size() > 0) {
+      for (int i = 0; i < imgsFile.size(); i++) {
+        MultipartFile file = imgsFile.get(i);
+        byte[] bytes = file.getBytes();
 
-    if (product_imgsUrl == null) {
-      googleBucketUrl="https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/icon/logo.png";
-      orders.setProduct_imgsUrl(googleBucketUrl);
+        // 고유한 파일 이름 생성 (인덱스 추가)
+        googleFileName = String.format(
+          "orders_%s_%d.webp",
+          LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss")),
+          i
+        );
+
+        // storage 객체 생성
+        Storage storage = StorageOptions.getDefaultInstance().getService();
+
+        // blobId 생성
+        BlobId blobId = BlobId.of(BUCKET_MAIN, BUCKET_FOLDER + "/orders/" + googleFileName);
+
+        BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
+          .setContentType(file.getContentType())
+          .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
+          .build();
+
+        Blob blob = storage.create(blobInfo, bytes);
+        blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
+
+        // 업로드된 파일 이름을 newImgsUrl에 추가
+        if (newImgsUrlBuilder.length() > 0) {
+          newImgsUrlBuilder.append(",");
+        }
+        newImgsUrlBuilder.append(googleFileName);
+      }
+
+      // 최종 newImgsUrl 설정
+      newImgsUrl = newImgsUrlBuilder.toString().trim();
+    }
+
+    // 이미지 URL 합치기
+    if (existingImgsUrl != null && existingImgsUrl.length() > 0) {
+      if (newImgsUrl != null && newImgsUrl.length() > 0) {
+        mergedImgsUrl = existingImgsUrl + "," + newImgsUrl;
+      }
+      else {
+        mergedImgsUrl = existingImgsUrl;
+      }
     }
     else {
-
-      // URL
-      URL url = new URL(product_imgsUrl);
-      InputStream inputStream = url.openStream();
-      ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
-      // googleFileName
-      googleFileName="_orders_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".png";
-      Storage storage = StorageOptions.getDefaultInstance().getService();
-
-      // download image
-      int bytesRead;
-      byte[] buffer = new byte[4096];
-      while ((bytesRead = inputStream.read(buffer)) != -1) {
-        outputStream.write(buffer, 0, bytesRead);
-      }
-      byte[] imageBytes = outputStream.toByteArray();
-
-      // upload image
-      storage.create(
-        com.google.cloud.storage.BlobInfo
-          .newBuilder(googleBucketName, googleFolderPath + googleFileName)
-          .build(),
-        imageBytes
-      );
-
-      // Path to Google Cloud Storage bucket URL
-      googleBucketUrl="https://storage.googleapis.com/" + googleBucketName + "/" + googleFolderPath + googleFileName;
-
-      // Path to imgsUrl
-      orders.setProduct_imgsUrl(googleBucketUrl);
+      mergedImgsUrl = newImgsUrl;
     }
-    ordersMapper.saveOrders(orders);
+
+    // orders 는 리턴 없음
+    ordersMapper.saveOrders(orders, mergedImgsUrl);
   }
 
   // 4-1. updateProductStock -----------------------------------------------------------------------

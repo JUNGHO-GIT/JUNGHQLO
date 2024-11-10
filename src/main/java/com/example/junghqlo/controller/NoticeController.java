@@ -1,8 +1,13 @@
 package com.example.junghqlo.controller;
 
+import java.io.File;
 import java.text.MessageFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,26 +17,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import com.example.junghqlo.adapter.LocalDateTimeAdapter;
+import com.example.junghqlo.adapter.FileAdapter;
 import com.example.junghqlo.handler.PageHandler;
 import com.example.junghqlo.model.Notice;
 import com.example.junghqlo.service.NoticeService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 @Controller
 @RequestMapping("/notice")
 public class NoticeController {
 
   // 0. constructor injection ----------------------------------------------------------------------
-  Logger logger = LoggerFactory.getLogger(this.getClass());
   private NoticeService noticeService;
+  private Logger logger;
   NoticeController(NoticeService noticeService) {
     this.noticeService = noticeService;
+    this.logger = LoggerFactory.getLogger(this.getClass());
   }
 
   // 0. static -------------------------------------------------------------------------------------
   private static String page = "notice";
   private static String PAGE = "Notice";
+  private static Gson gson = new GsonBuilder()
+  .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+  .registerTypeAdapter(File.class, new FileAdapter())
+  .setPrettyPrinting()
+  .create();
 
   // 1. listNotice (GET) ---------------------------------------------------------------------------
   @GetMapping("/listNotice")
@@ -126,24 +139,24 @@ public class NoticeController {
     return MessageFormat.format("/pages/{0}/{1}Detail", page, page);
   }
 
-  // 3. saveNotice (GET) ----------------------------------------------------------------------------
+  // 3. saveNotice (GET) ---------------------------------------------------------------------------
   @GetMapping("/saveNotice")
   public String saveNotice() throws Exception {
 
     return MessageFormat.format("/pages/{0}/{1}Save", page, page);
   }
 
-  // 3. saveNotice (POST) ---------------------------------------------------------------------------
+  // 3. saveNotice (POST) --------------------------------------------------------------------------
   @ResponseBody
   @PostMapping("/saveNotice")
   public Integer saveNotice(
     @ModelAttribute Notice notice,
-    @RequestParam(required = false) ArrayList<MultipartFile> imgsFile
+    @RequestParam(required = false) List<MultipartFile> imgsFile
   ) throws Exception {
 
     // imgsFile이 null이면 빈 리스트로 초기화
-    if (imgsFile == null) {
-      imgsFile = new ArrayList<>();
+    if (imgsFile == null || imgsFile.size() == 0) {
+      imgsFile = new ArrayList<MultipartFile>();
     }
 
     Integer result = 0;
@@ -158,7 +171,6 @@ public class NoticeController {
     return result;
   }
 
-
   // 4-1. updateNotice (GET) -----------------------------------------------------------------------
   @GetMapping("/updateNotice")
   public String updateNotice (
@@ -166,6 +178,7 @@ public class NoticeController {
     Model model
   ) throws Exception {
 
+    // 모델
     model.addAttribute("MODEL", noticeService.detailNotice(notice_number));
 
     return MessageFormat.format("/pages/{0}/{1}Update", page, page);
@@ -176,12 +189,12 @@ public class NoticeController {
   @PostMapping("/updateNotice")
   public Integer updateNotice (
     @ModelAttribute Notice notice,
-    @RequestParam(required = false) ArrayList<MultipartFile> imgsFile
+    @RequestParam(required = false) List<MultipartFile> imgsFile
   ) throws Exception {
 
     // imgsFile이 null이면 빈 리스트로 초기화
-    if (imgsFile == null) {
-      imgsFile = new ArrayList<>();
+    if (imgsFile == null || imgsFile.size() == 0) {
+      imgsFile = new ArrayList<MultipartFile>();
     }
 
     Integer result = 0;

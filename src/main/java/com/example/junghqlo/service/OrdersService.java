@@ -1,5 +1,7 @@
 package com.example.junghqlo.service;
 
+import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 import com.example.junghqlo.handler.PageHandler;
 import com.example.junghqlo.model.Orders;
 import com.stripe.exception.StripeException;
@@ -27,9 +29,10 @@ public interface OrdersService {
     Integer orders_number
   ) throws StripeException;
 
-  // 3. saveOrders ----------------------------------------------------------------------------------
+  // 3. saveOrders ---------------------------------------------------------------------------------
   void saveOrders(
-    Orders orders
+    Orders orders,
+    List<MultipartFile> imgsFile
   ) throws Exception;
 
   // 4-1. updateProductStock -----------------------------------------------------------------------

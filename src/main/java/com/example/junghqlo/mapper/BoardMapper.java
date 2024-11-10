@@ -96,7 +96,7 @@ public interface BoardMapper {
     Integer board_number
   ) throws Exception;
 
-  // 3. saveBoard -----------------------------------------------------------------------------------
+  // 3. saveBoard ----------------------------------------------------------------------------------
   @Insert(
     """
     INSERT INTO

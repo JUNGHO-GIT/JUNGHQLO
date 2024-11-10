@@ -89,69 +89,75 @@ public class ProductServiceImpl implements ProductService {
     return productMapper.detailProduct(product_number);
   }
 
+
   // 3. saveProduct ---------------------------------------------------------------------------------
   @Override
   public Integer saveProduct(
     @ModelAttribute Product product,
-    @RequestParam MultipartFile[] imgsFile
+    @RequestParam(required = false) List<MultipartFile> imgsFile
   ) throws Exception {
 
-    StringBuilder imgsUrlBuilder = new StringBuilder();
+    // 변수 선언
+    StringBuilder newImgsUrlBuilder = new StringBuilder();
+    String existingImgsUrl = product.getProduct_imgsUrl();
+    String newImgsUrl = "";
+    String mergedImgsUrl = "";
     String googleFileName = "";
 
-    // 1. 만약 없을경우 기본 이미지
-    if (imgsFile.length == 0) {
-      imgsUrlBuilder.append(STORAGE).append("icon/logo.png");
-    }
+    // 이미지가 있을 경우 google cloud storage에 업로드
+    if (imgsFile.size() > 0) {
+      for (int i = 0; i < imgsFile.size(); i++) {
+        MultipartFile file = imgsFile.get(i);
+        byte[] bytes = file.getBytes();
 
-    // 2. 이미지가 있을 경우 google cloud storage에 업로드
-    for (int i = 0; i < imgsFile.length; i++) {
-      MultipartFile file = imgsFile[i];
-      byte[] bytes = file.getBytes();
+        // 고유한 파일 이름 생성 (인덱스 추가)
+        googleFileName = String.format(
+          "product_%s_%d.webp",
+          LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss")),
+          i
+        );
 
-      googleFileName = (
-        "product_"
-        + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss"))
-        + ".webp"
-      );
+        // storage 객체 생성
+        Storage storage = StorageOptions.getDefaultInstance().getService();
 
-      Storage storage = StorageOptions.getDefaultInstance().getService();
+        // blobId 생성
+        BlobId blobId = BlobId.of(BUCKET_MAIN, BUCKET_FOLDER + "/product/" + googleFileName);
 
-      // blobId 생성
-      BlobId blobId = BlobId.of(BUCKET_MAIN, BUCKET_FOLDER + "/product/" + googleFileName);
+        BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
+          .setContentType(file.getContentType())
+          .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
+          .build();
 
-      BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
-      .setContentType(file.getContentType())
-      .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
-      .build();
+        Blob blob = storage.create(blobInfo, bytes);
+        blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
 
-      Blob blob = storage.create(blobInfo, bytes);
-      blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
-
-      imgsUrlBuilder.append(STORAGE).append("/product/").append(googleFileName);
-
-      // 마지막 이미지가 아닐 경우 ','로 구분
-      if (i < imgsFile.length - 1) {
-        imgsUrlBuilder.append(",");
+        // 업로드된 파일 이름을 newImgsUrl에 추가
+        if (newImgsUrlBuilder.length() > 0) {
+          newImgsUrlBuilder.append(",");
+        }
+        newImgsUrlBuilder.append(googleFileName);
       }
 
-      // stripe id, price set
-      com.stripe.model.Product stripe_id = (
-        stripeConfig.createProduct(product.getProduct_name(), product.getProduct_detail(), imgsUrlBuilder.toString())
-      );
-      com.stripe.model.Price stripe_price = (
-        stripeConfig.createPrice(stripe_id.getId(), product.getProduct_price())
-      );
-
-      // set stripe to product
-      product.setStripe_id(stripe_id.getId());
-      product.setStripe_price(stripe_price.getId());
+      // 최종 newImgsUrl 설정
+      newImgsUrl = newImgsUrlBuilder.toString().trim();
     }
 
-    String imgsUrl = imgsUrlBuilder.toString();
+    // 이미지 URL 합치기
+    if (existingImgsUrl != null && existingImgsUrl.length() > 0) {
+      if (newImgsUrl != null && newImgsUrl.length() > 0) {
+        mergedImgsUrl = existingImgsUrl + "," + newImgsUrl;
+      }
+      else {
+        mergedImgsUrl = existingImgsUrl;
+      }
+    }
+    else {
+      mergedImgsUrl = newImgsUrl;
+    }
+
     Integer result = 0;
 
-    if (productMapper.saveProduct(product, imgsUrl) > 0) {
+    if (productMapper.saveProduct(product, mergedImgsUrl) > 0) {
       result = 1;
     }
     else {
@@ -161,69 +167,74 @@ public class ProductServiceImpl implements ProductService {
     return result;
   };
 
-  // 4-1. updateProduct ----------------------------------------------------------------------------
+  // 4-1. updateProduct -----------------------------------------------------------------------------
   @Override
   public Integer updateProduct(
     @ModelAttribute Product product,
-    @RequestParam MultipartFile[] imgsFile
+    @RequestParam(required = false) List<MultipartFile> imgsFile
   ) throws Exception {
 
-    StringBuilder imgsUrlBuilder = new StringBuilder();
+    // 변수 선언
+    StringBuilder newImgsUrlBuilder = new StringBuilder();
+    String existingImgsUrl = product.getProduct_imgsUrl();
+    String newImgsUrl = "";
+    String mergedImgsUrl = "";
     String googleFileName = "";
 
-    // 1. 만약 없을경우 기본 이미지
-    if (imgsFile.length == 0) {
-      imgsUrlBuilder.append(STORAGE).append("icon/logo.png");
-    }
+    // 이미지가 있을 경우 google cloud storage에 업로드
+    if (imgsFile.size() > 0) {
+      for (int i = 0; i < imgsFile.size(); i++) {
+        MultipartFile file = imgsFile.get(i);
+        byte[] bytes = file.getBytes();
 
-    // 2. 이미지가 있을 경우 google cloud storage에 업로드
-    for (int i = 0; i < imgsFile.length; i++) {
-      MultipartFile file = imgsFile[i];
-      byte[] bytes = file.getBytes();
+        // 고유한 파일 이름 생성 (인덱스 추가)
+        googleFileName = String.format(
+          "product_%s_%d.webp",
+          LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss")),
+          i
+        );
 
-      googleFileName = (
-        "product_"
-        + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss"))
-        + ".webp"
-      );
+        // storage 객체 생성
+        Storage storage = StorageOptions.getDefaultInstance().getService();
 
-      Storage storage = StorageOptions.getDefaultInstance().getService();
+        // blobId 생성
+        BlobId blobId = BlobId.of(BUCKET_MAIN, BUCKET_FOLDER + "/product/" + googleFileName);
 
-      // blobId 생성
-      BlobId blobId = BlobId.of(BUCKET_MAIN, BUCKET_FOLDER + "/product/" + googleFileName);
+        BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
+          .setContentType(file.getContentType())
+          .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
+          .build();
 
-      BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
-      .setContentType(file.getContentType())
-      .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
-      .build();
+        Blob blob = storage.create(blobInfo, bytes);
+        blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
 
-      Blob blob = storage.create(blobInfo, bytes);
-      blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
-
-      imgsUrlBuilder.append(STORAGE).append("/product/").append(googleFileName);
-
-      // 마지막 이미지가 아닐 경우 ','로 구분
-      if (i < imgsFile.length - 1) {
-        imgsUrlBuilder.append(",");
+        // 업로드된 파일 이름을 newImgsUrl에 추가
+        if (newImgsUrlBuilder.length() > 0) {
+          newImgsUrlBuilder.append(",");
+        }
+        newImgsUrlBuilder.append(googleFileName);
       }
 
-      // stripe id, price set
-      com.stripe.model.Product stripe_id = (
-        stripeConfig.createProduct(product.getProduct_name(), product.getProduct_detail(), imgsUrlBuilder.toString())
-      );
-      com.stripe.model.Price stripe_price = (
-        stripeConfig.createPrice(stripe_id.getId(), product.getProduct_price())
-      );
-
-      // set stripe to product
-      product.setStripe_id(stripe_id.getId());
-      product.setStripe_price(stripe_price.getId());
+      // 최종 newImgsUrl 설정
+      newImgsUrl = newImgsUrlBuilder.toString().trim();
     }
 
-    String imgsUrl = imgsUrlBuilder.toString();
+    // 이미지 URL 합치기
+    if (existingImgsUrl != null && existingImgsUrl.length() > 0) {
+      if (newImgsUrl != null && newImgsUrl.length() > 0) {
+        mergedImgsUrl = existingImgsUrl + "," + newImgsUrl;
+      }
+      else {
+        mergedImgsUrl = existingImgsUrl;
+      }
+    }
+    else {
+      mergedImgsUrl = newImgsUrl;
+    }
+
     Integer result = 0;
 
-    if (productMapper.updateProduct(product, imgsUrl) > 0) {
+    if (productMapper.updateProduct(product, mergedImgsUrl) > 0) {
       result = 1;
     }
     else {
@@ -231,7 +242,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     return result;
-  }
+  };
 
   // 5. deleteProduct ------------------------------------------------------------------------------
   @Override

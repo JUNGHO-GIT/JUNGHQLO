@@ -1,6 +1,6 @@
 package com.example.junghqlo.service;
 
-import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.web.multipart.MultipartFile;
 import com.example.junghqlo.handler.PageHandler;
@@ -23,16 +23,16 @@ public interface NoticeService {
     Integer notice_number
   ) throws Exception;
 
-  // 3. saveNotice ----------------------------------------------------------------------------------
+  // 3. saveNotice ---------------------------------------------------------------------------------
   Integer saveNotice(
     Notice notice,
-    ArrayList<MultipartFile> imgsFile
+    List<MultipartFile> imgsFile
   ) throws Exception;
 
   // 4-1. updateNotice -----------------------------------------------------------------------------
   Integer updateNotice(
     Notice notice,
-    ArrayList<MultipartFile> imgsFile
+    List<MultipartFile> imgsFile
   ) throws Exception;
 
   // 4-2. updateCount ------------------------------------------------------------------------------

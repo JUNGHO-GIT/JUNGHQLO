@@ -2,72 +2,78 @@
 let imgsExistCnt = 0;
 let imgsNewCnt = 0;
 
-// 기존 이미지 개수 가져오기 -----------------------------------------------------------------------
-const getExistingImgs = () => {
-  const imgsExist = getById(`${preFix1}_imgsUrl`);
-  const imgsExistValue = getValue(imgsExist);
+/** ------------------------------------------------------------------------------------------------
+* @param null
+* @return {void}
+* @desc 기존 이미지 파싱 및 개수 가져오기
+**/
+const initPaseAndGetCount = () => {
+  const existingImgsUrl = getValue(getById(`${preFix1}_imgsUrl`)).trim();
 
-  const updateImgsExistCnt = (value) => {
-    if (value.trim() === "") {
-      imgsExistCnt = 0;
-    }
-    else if (value.trim().indexOf(",") === -1) {
-      imgsExistCnt = 1;
-    }
-    else {
-      imgsExistCnt = value.trim().split(",").length;
-    }
-  };
-
-  // 초기값 설정
-  updateImgsExistCnt(imgsExistValue);
-  console.log("Initial imgsExist value:", imgsExistValue);
-  console.log("Initial imgsExistCnt:", imgsExistCnt);
-
-  // MutationObserver로 값 변화 감지
-  new MutationObserver(() => {
-    const newValue = getValue(imgsExist);
-    updateImgsExistCnt(newValue);
-    console.log("Updated imgsExistCnt:", imgsExistCnt);
-  })
-  .observe(imgsExist, {
-    attributes: true,
-    attributeFilter: ['value'],
-  });
-};
-
-// 기존 이미지 삭제 기능 ---------------------------------------------------------------------------
-const deleteExistingImgs = (index) => {
-  const existingImgs = getById(`existingImgs${index}`);
-  const existingName = getById(`existingName${index}`);
-  const existingDelete = getById(`existingDelete${index}`);
-
-  // 기존 imgsUrl 스트링에서 이미지명을 제거
-  const existingUrl = getValue(getById(`${preFix1}_imgsUrl`)).trim();
-
-  if (existingUrl.trim() === "") {
+  // 1. 값이 없는경우
+  if (existingImgsUrl === "") {
     imgsExistCnt = 0;
   }
-  else if (existingUrl.indexOf(",") === -1) {
-    setValue(getById(`${preFix1}_imgsUrl`), "");
+  // 2. 값이 1개만 있는경우 (콤마 없음)
+  else if (!existingImgsUrl.includes(",")) {
     imgsExistCnt = 1;
   }
+  // 3. 값이 2개 이상 있는경우 (콤마 있음)
   else {
-    const existingImgsUrl = existingUrl.split(",");
-    existingImgsUrl.splice(index, 1);
-    setValue(getById(`${preFix1}_imgsUrl`), existingImgsUrl.join(","));
-    imgsExistCnt = existingImgsUrl.length;
+    imgsExistCnt = existingImgsUrl.split(",").length;
   }
 
-  console.log("Modified imgsUrl:", getValue(getById(`${preFix1}_imgsUrl`)));
-
-  // 이미지 삭제
-  existingImgs.remove();
-  existingName.remove();
-  existingDelete.remove();
+  console.log("init imgsExistCnt:", imgsExistCnt);
+  console.log("init existingImgs:", existingImgsUrl);
 };
 
-// 새로운 이미지 생성하기 --------------------------------------------------------------------------
+/** ------------------------------------------------------------------------------------------------
+* @param {string} name
+* @return {void}
+* @desc 기존 이미지 삭제
+* @desc 인덱스값 아니고 name 값 비교로 삭제
+**/
+const deleteExistingImgs = (name="") => {
+
+  // 이미지 dom 요소 삭제
+  getById(`existingImgs_${name}`).remove();
+  getById(`existingName_${name}`).remove();
+  getById(`existingDelete_${name}`).remove();
+
+  let existingImgsUrl = getValue(getById(`${preFix1}_imgsUrl`)).trim();
+  let newExistingImgs = "";
+
+  // 1. 값이 없는경우
+  if (existingImgsUrl === "") {
+    return;
+  }
+  // 2. 값이 1개만 있는경우 (콤마 없음)
+  else if (!existingImgsUrl.includes(",")) {
+    setValue(getById(`${preFix1}_imgsUrl`), "");
+    imgsExistCnt = 0;
+  }
+  // 3. 값이 2개 이상 있는경우 (콤마 있음)
+  else {
+    const existingImgs = existingImgsUrl.split(",");
+    existingImgs.forEach((img) => {
+      if (img !== name) {
+        newExistingImgs += `${img},`;
+      }
+    });
+    setValue(getById(`${preFix1}_imgsUrl`), newExistingImgs.slice(0, -1));
+    imgsExistCnt -= 1;
+  }
+
+  // 로그
+  console.log("new imgsExistCnt:", imgsExistCnt);
+  console.log("new existingImgs:", getValue(getById(`${preFix1}_imgsUrl`)));
+};
+
+/** ------------------------------------------------------------------------------------------------
+* @param null
+* @return {void}
+* @desc 새로운 이미지 생성하기
+**/
 const createImgs = () => {
 
   // dom 요소 찾기
@@ -232,6 +238,6 @@ const createImgs = () => {
 // -------------------------------------------------------------------------------------------------
 if (currentUrl.includes("save") || currentUrl.includes("update")) {
   document.addEventListener('DOMContentLoaded', function () {
-    getExistingImgs();
+    initPaseAndGetCount();
   });
 }

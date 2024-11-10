@@ -106,7 +106,7 @@
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <div class="d-col-left">
                       <div
-                        th:each="image, iterStat : ${#strings.arraySplit(MODEL['notice_imgsUrl'], ',')}"
+                        th:each="image,iterStat:${#strings.arraySplit(MODEL['notice_imgsUrl'],',')}"
                         th:class="${'d-row-between w-80p'}"
                         th:classappend="${iterStat.last ? '' : 'mb-10'}"
                       >
@@ -114,13 +114,13 @@
                           <img
                             th:src="@{|${STORAGE}/${page}/${image}|}"
                             th:loading="${'lazy'}"
-                            th:id="${'existingImgs' + iterStat.index}"
-                            th:name="${'existingImgs' + iterStat.index}"
+                            th:id="${'existingImgs_' + image}"
+                            th:name="${'existingImgs_' + image}"
                             th:class="${'w-30 h-30 radius-1'}"
                           />
                           <div
-                            th:id="${'existingName' + iterStat.index}"
-                            th:name="${'existingName' + iterStat.index}"
+                            th:id="${'existingName_' + image}"
+                            th:name="${'existingName_' + image}"
                             th:class="${'fs-0-8rem fw-600 grey ms-10'}"
                             th:text="${#strings.abbreviate(image, 20)}"
                           >
@@ -128,11 +128,11 @@
                         </div>
                         <div class="d-row-center">
                           <div
-                            th:id="${'existingDelete' + iterStat.index}"
-                            th:name="${'existingDelete' + iterStat.index}"
+                            th:id="${'existingDelete_' + image}"
+                            th:name="${'existingDelete_' + image}"
                             th:class="${'fs-1-0rem fw-600 burgundy pointer'}"
                             th:text="${'X'}"
-                            th:onclick="|deleteExistingImgs(${iterStat.index})|"
+                            th:onclick="deleteExistingImgs([[${image}]])"
                           >
                           </div>
                         <div>

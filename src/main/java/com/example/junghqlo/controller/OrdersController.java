@@ -1,20 +1,27 @@
 package com.example.junghqlo.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import javax.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.multipart.MultipartFile;
 import com.example.junghqlo.handler.PageHandler;
 import com.example.junghqlo.model.Orders;
 import com.example.junghqlo.model.Product;
+import org.springframework.beans.factory.annotation.Value;
 import com.example.junghqlo.service.OrdersService;
 import com.example.junghqlo.service.ProductService;
 import com.stripe.model.PaymentIntent;
@@ -25,6 +32,9 @@ import com.stripe.param.checkout.SessionCreateParams;
 @RequestMapping("/orders")
 public class OrdersController {
 
+  @Value("${orders-url}")
+  String ORDERS_URL;
+
   // 0. constructor injection ----------------------------------------------------------------------
   private OrdersService ordersService;
   private ProductService productService;
@@ -34,6 +44,7 @@ public class OrdersController {
   }
 
   // 0. static -------------------------------------------------------------------------------------
+  Logger logger = LoggerFactory.getLogger(this.getClass());
   private static String page = "orders";
   private static String PAGE = "Orders";
 
@@ -105,7 +116,7 @@ public class OrdersController {
       keywordHandler = keyword;
     }
 
-    // *. member_id 세션값 가져오기
+    // * member_id 세션값 가져오기
     String member_id = (String) session.getAttribute("member_id");
 
     // 5. Page handling
@@ -120,6 +131,7 @@ public class OrdersController {
       model.addAttribute("keywordHandler", keywordHandler);
       model.addAttribute("pageHandler", pageHandler);
       model.addAttribute("LIST", pageHandler.getContent());
+
       return MessageFormat.format("/pages/{0}/{1}List", page, page);
     }
 
@@ -145,17 +157,19 @@ public class OrdersController {
     return MessageFormat.format("/pages/{0}/{1}Detail", page, page);
   }
 
-  // 3. saveOrders (GET) ----------------------------------------------------------------------------
+  // 3. saveOrders (GET) ---------------------------------------------------------------------------
   @GetMapping("/saveOrders")
   public String saveOrders() throws Exception {
 
     return MessageFormat.format("/pages/{0}/{1}Save", page, page);
   }
 
-  // 3. saveOrders (POST) ---------------------------------------------------------------------------
+  // 3. saveOrders (POST) --------------------------------------------------------------------------
+  @ResponseBody
   @PostMapping("/saveOrders")
   public RedirectView saveOrders (
     @ModelAttribute Orders orders,
+    @RequestParam(required = false) List<MultipartFile> imgsFile,
     @RequestParam Integer product_number,
     @RequestParam String product_name,
     @RequestParam Long orders_quantity,
@@ -163,6 +177,11 @@ public class OrdersController {
     HttpSession httpSession,
     Model model
   ) throws Exception {
+
+    // imgsFile이 null이면 빈 리스트로 초기화
+    if (imgsFile == null || imgsFile.size() == 0) {
+      imgsFile = new ArrayList<MultipartFile>();
+    }
 
     // 아이디 세션값 가져오기
     String member_id = (String) httpSession.getAttribute("member_id");
@@ -177,17 +196,31 @@ public class OrdersController {
     orders.setMember_id(member_id);
     orders.setOrders_quantity(Integer.parseInt(orders_quantity.toString()));
     orders.setOrders_totalPrice(totalPrice);
-    ordersService.saveOrders(orders);
+
+    // 서비스 호출
+    ordersService.saveOrders(orders, imgsFile);
 
     // 2. URL 생성
     String priceId = product.getStripe_price();
     String encodedProductName = URLEncoder.encode(product_name, StandardCharsets.UTF_8);
 
-    String SUCCESS_URL
-    ="http://www.junghomun.com/JUNGHQLO/orders/successOrders?session_id={CHECKOUT_SESSION_ID}&product_number="+product_number+"&product_stock="+product_stock+"&orders_quantity="+orders_quantity+"&orders_totalPrice="+totalPrice+"&product_name="+encodedProductName;
+    StringBuilder SUCCESS_URL = new StringBuilder();
+    StringBuilder CANCEL_URL = new StringBuilder();
 
-    String CANCEL_URL
-    ="http://www.junghomun.com/JUNGHQLO/orders/successOrders?session_id={CHECKOUT_SESSION_ID}";
+    SUCCESS_URL
+    .append(ORDERS_URL + "/successOrders")
+    .append("?session_id=" + "{CHECKOUT_SESSION_ID}")
+    .append("&product_number=" + product_number)
+    .append("&product_stock=" + product_stock)
+    .append("&orders_quantity=" + orders_quantity)
+    .append("&orders_totalPrice=" + totalPrice)
+    .append("&product_name=" + encodedProductName)
+    .toString();
+
+    CANCEL_URL
+    .append(ORDERS_URL + "/successOrders")
+    .append("?session_id=" + "{CHECKOUT_SESSION_ID}")
+    .toString();
 
     // 3. stripe 결제 처리
     SessionCreateParams params = SessionCreateParams.builder()
@@ -198,8 +231,8 @@ public class OrdersController {
     .putMetadata("product_stock", Integer.toString(product_stock))
     .putMetadata("orders_quantity", orders_quantity.toString())
     .putMetadata("orders_totalPrice", Integer.toString(totalPrice))
-    .setSuccessUrl(SUCCESS_URL)
-    .setCancelUrl(CANCEL_URL)
+    .setSuccessUrl(SUCCESS_URL.toString())
+    .setCancelUrl(CANCEL_URL.toString())
     .addLineItem(SessionCreateParams.LineItem.builder()
       .setQuantity(orders_quantity)
       .setPrice(priceId)

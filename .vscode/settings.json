@@ -28,7 +28,6 @@
     "**/package-lock.json": true,
     "**/**build/**": true,
     "**/target": true,
-    "**/**.properties**": true,
     "build.tar.gz": true
   },
   "search.exclude": {
@@ -43,10 +42,10 @@
     "**/*.json": true,
     "**/*.txt": true,
     "**/*gcloud*": true,
-    "**/**.properties**": true,
     "**/*Auth*": true,
     "**/*.env*": true,
   },
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "explorerExclude.backup": {},
+  "java.configuration.updateBuildConfiguration": "automatic",
 }

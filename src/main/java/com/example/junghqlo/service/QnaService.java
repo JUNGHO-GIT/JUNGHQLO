@@ -1,5 +1,6 @@
 package com.example.junghqlo.service;
 
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.web.multipart.MultipartFile;
 import com.example.junghqlo.handler.PageHandler;
@@ -23,16 +24,16 @@ public interface QnaService {
     Integer qna_number
   ) throws Exception;
 
-  // 3. saveQna -------------------------------------------------------------------------------------
+  // 3. saveQna ------------------------------------------------------------------------------------
   Integer saveQna(
     Qna qna,
-    MultipartFile[] imgsFile
+    List<MultipartFile> imgsFile
   ) throws Exception;
 
   // 4-1. updateQna --------------------------------------------------------------------------------
   Integer updateQna(
     Qna qna,
-    MultipartFile[] imgsFile
+    List<MultipartFile> imgsFile
   ) throws Exception;
 
   // 4-2. updateCount ------------------------------------------------------------------------------

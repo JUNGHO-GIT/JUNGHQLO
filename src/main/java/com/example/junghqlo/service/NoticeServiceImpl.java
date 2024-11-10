@@ -1,5 +1,6 @@
 package com.example.junghqlo.service;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import com.example.junghqlo.adapter.FileAdapter;
+import com.example.junghqlo.adapter.LocalDateTimeAdapter;
 import com.example.junghqlo.handler.PageHandler;
 import com.example.junghqlo.mapper.NoticeMapper;
 import com.example.junghqlo.model.Notice;
@@ -21,6 +24,8 @@ import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 @Service
 public class NoticeServiceImpl implements NoticeService {
@@ -35,11 +40,19 @@ public class NoticeServiceImpl implements NoticeService {
   private String BUCKET_FOLDER;
 
   // 0. constructor injection ----------------------------------------------------------------------
-  Logger logger = LoggerFactory.getLogger(this.getClass());
   private NoticeMapper noticeMapper;
+  private Logger logger;
   NoticeServiceImpl (NoticeMapper noticeMapper) {
     this.noticeMapper = noticeMapper;
+    this.logger = LoggerFactory.getLogger(this.getClass());
   }
+
+  // 0. static -------------------------------------------------------------------------------------
+  private static Gson gson = new GsonBuilder()
+  .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+  .registerTypeAdapter(File.class, new FileAdapter())
+  .setPrettyPrinting()
+  .create();
 
   // 1. listNotice ---------------------------------------------------------------------------------
   @Override
@@ -75,6 +88,7 @@ public class NoticeServiceImpl implements NoticeService {
     else {
       pageContent = content.subList(pageStart, pageEnd);
     }
+
     return new PageHandler<>(pageNumber, pageStart, pageEnd, 1, pageLast, itemsPer, itemsTotal, pageContent);
   }
 
@@ -87,16 +101,19 @@ public class NoticeServiceImpl implements NoticeService {
     return noticeMapper.detailNotice(notice_number);
   }
 
-  // 3. saveNotice ----------------------------------------------------------------------------------
+  // 3. saveNotice ---------------------------------------------------------------------------------
   @Override
   public Integer saveNotice(
     @ModelAttribute Notice notice,
-    @RequestParam ArrayList<MultipartFile> imgsFile
+    @RequestParam(required = false) List<MultipartFile> imgsFile
   ) throws Exception {
 
-    StringBuilder newImgsUrl = new StringBuilder();
+    // 변수 선언
+    StringBuilder newImgsUrlBuilder = new StringBuilder();
+    String existingImgsUrl = notice.getNotice_imgsUrl();
+    String newImgsUrl = "";
+    String mergedImgsUrl = "";
     String googleFileName = "";
-    String existingImgsUrl = "";
 
     // 이미지가 있을 경우 google cloud storage에 업로드
     if (imgsFile.size() > 0) {
@@ -118,31 +135,40 @@ public class NoticeServiceImpl implements NoticeService {
         BlobId blobId = BlobId.of(BUCKET_MAIN, BUCKET_FOLDER + "/notice/" + googleFileName);
 
         BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
-        .setContentType(file.getContentType())
-        .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
-        .build();
+          .setContentType(file.getContentType())
+          .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
+          .build();
 
         Blob blob = storage.create(blobInfo, bytes);
         blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
 
-        newImgsUrl.append(googleFileName);
-
-        // 마지막 이미지가 아닐 경우 ','로 구분
-        if (i < imgsFile.size() - 1) {
-          newImgsUrl.append(",");
+        // 업로드된 파일 이름을 newImgsUrl에 추가
+        if (newImgsUrlBuilder.length() > 0) {
+          newImgsUrlBuilder.append(",");
         }
+        newImgsUrlBuilder.append(googleFileName);
       }
-      existingImgsUrl = "";
+
+      // 최종 newImgsUrl 설정
+      newImgsUrl = newImgsUrlBuilder.toString().trim();
     }
 
     // 이미지 URL 합치기
-    String imgsUrl = existingImgsUrl.isEmpty()
-      ? String.join(",", newImgsUrl)
-      : existingImgsUrl + (newImgsUrl.isEmpty() ? "" : ",") + String.join(",", newImgsUrl);
+    if (existingImgsUrl != null && existingImgsUrl.length() > 0) {
+      if (newImgsUrl != null && newImgsUrl.length() > 0) {
+        mergedImgsUrl = existingImgsUrl + "," + newImgsUrl;
+      }
+      else {
+        mergedImgsUrl = existingImgsUrl;
+      }
+    }
+    else {
+      mergedImgsUrl = newImgsUrl;
+    }
 
     Integer result = 0;
 
-    if (noticeMapper.saveNotice(notice, imgsUrl) > 0) {
+    if (noticeMapper.saveNotice(notice, mergedImgsUrl) > 0) {
       result = 1;
     }
     else {
@@ -156,12 +182,15 @@ public class NoticeServiceImpl implements NoticeService {
   @Override
   public Integer updateNotice(
     @ModelAttribute Notice notice,
-    @RequestParam ArrayList<MultipartFile> imgsFile
+    @RequestParam(required = false) List<MultipartFile> imgsFile
   ) throws Exception {
 
-    StringBuilder newImgsUrl = new StringBuilder();
+    // 변수 선언
+    StringBuilder newImgsUrlBuilder = new StringBuilder();
+    String existingImgsUrl = notice.getNotice_imgsUrl();
+    String newImgsUrl = "";
+    String mergedImgsUrl = "";
     String googleFileName = "";
-    String existingImgsUrl = "";
 
     // 이미지가 있을 경우 google cloud storage에 업로드
     if (imgsFile.size() > 0) {
@@ -183,33 +212,43 @@ public class NoticeServiceImpl implements NoticeService {
         BlobId blobId = BlobId.of(BUCKET_MAIN, BUCKET_FOLDER + "/notice/" + googleFileName);
 
         BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
-        .setContentType(file.getContentType())
-        .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
-        .build();
+          .setContentType(file.getContentType())
+          .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
+          .build();
 
         Blob blob = storage.create(blobInfo, bytes);
         blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
 
-        newImgsUrl.append(googleFileName);
-
-        // 마지막 이미지가 아닐 경우 ','로 구분
-        if (i < imgsFile.size() - 1) {
-          newImgsUrl.append(",");
+        // 업로드된 파일 이름을 newImgsUrl에 추가
+        if (newImgsUrlBuilder.length() > 0) {
+          newImgsUrlBuilder.append(",");
         }
+        newImgsUrlBuilder.append(googleFileName);
       }
-      existingImgsUrl = notice.getNotice_imgsUrl().trim();
+
+      // 최종 newImgsUrl 설정
+      newImgsUrl = newImgsUrlBuilder.toString().trim();
     }
 
     // 이미지 URL 합치기
-    String imgsUrl = existingImgsUrl.isEmpty()
-      ? String.join(",", newImgsUrl)
-      : existingImgsUrl + (newImgsUrl.isEmpty() ? "" : ",") + String.join(",", newImgsUrl);
+    if (existingImgsUrl != null && existingImgsUrl.length() > 0) {
+      if (newImgsUrl != null && newImgsUrl.length() > 0) {
+        mergedImgsUrl = existingImgsUrl + "," + newImgsUrl;
+      }
+      else {
+        mergedImgsUrl = existingImgsUrl;
+      }
+    }
+    else {
+      mergedImgsUrl = newImgsUrl;
+    }
 
     Integer result = 0;
 
-    if (noticeMapper.updateNotice(notice, imgsUrl) > 0) {
+    if (noticeMapper.updateNotice(notice, mergedImgsUrl) > 0) {
       result = 1;
-    } else {
+    }
+    else {
       result = 0;
     }
 

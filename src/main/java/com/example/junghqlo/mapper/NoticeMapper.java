@@ -96,7 +96,7 @@ public interface NoticeMapper {
     Integer notice_number
   ) throws Exception;
 
-  // 3. saveNotice ----------------------------------------------------------------------------------
+  // 3. saveNotice ---------------------------------------------------------------------------------
   @Insert(
     """
     INSERT INTO

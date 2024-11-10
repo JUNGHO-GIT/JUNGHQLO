@@ -1,11 +1,15 @@
 package com.example.junghqlo.controller;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +30,7 @@ public class ProductController {
   }
 
   // 0. static -------------------------------------------------------------------------------------
+  Logger logger = LoggerFactory.getLogger(this.getClass());
   private static String page = "product";
   private static String PAGE = "Product";
 
@@ -128,6 +133,7 @@ public class ProductController {
       keywordHandler = keyword;
     }
 
+    // 5. Page handling
     PageHandler<Product> pageHandler = productService.listProduct(
       pageNumber, itemsPer, sort, category, type, keyword, product
     );
@@ -159,19 +165,25 @@ public class ProductController {
     return MessageFormat.format("/pages/{0}/{1}Detail", page, page);
   }
 
-  // 3. saveProduct (GET) ---------------------------------------------------------------------------
+  // 3. saveProduct (GET) --------------------------------------------------------------------------
   @GetMapping("/saveProduct")
   public String saveProduct() throws Exception {
 
     return MessageFormat.format("/pages/{0}/{1}Save", page, page);
   }
 
-  // 3. saveProduct (POST) --------------------------------------------------------------------------
+  // 3. saveProduct (POST) -------------------------------------------------------------------------
+  @ResponseBody
   @PostMapping("/saveProduct")
   public Integer saveProduct(
     @ModelAttribute Product product,
-    @RequestParam MultipartFile[] imgsFile
+    @RequestParam(required = false) List<MultipartFile> imgsFile
   ) throws Exception {
+
+    // imgsFile이 null이면 빈 리스트로 초기화
+    if (imgsFile == null || imgsFile.size() == 0) {
+      imgsFile = new ArrayList<MultipartFile>();
+    }
 
     Integer result = 0;
 
@@ -199,11 +211,17 @@ public class ProductController {
   }
 
   // 4. updateProduct (POST) -----------------------------------------------------------------------
+  @ResponseBody
   @PostMapping("/updateProduct")
   public Integer updateProduct(
     @ModelAttribute Product product,
-    @RequestParam MultipartFile[] imgsFile
+    @RequestParam(required = false) List<MultipartFile> imgsFile
   ) throws Exception {
+
+    // imgsFile이 null이면 빈 리스트로 초기화
+    if (imgsFile == null || imgsFile.size() == 0) {
+      imgsFile = new ArrayList<MultipartFile>();
+    }
 
     Integer result = 0;
 

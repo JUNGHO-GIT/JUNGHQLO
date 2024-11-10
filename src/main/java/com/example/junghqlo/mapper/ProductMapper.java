@@ -55,14 +55,6 @@ public interface ProductMapper {
       column = "product_imgsUrl"
     ),
     @Result (
-      property = "stripe_id",
-      column = "stripe_id"
-    ),
-    @Result (
-      property = "stripe_price",
-      column = "stripe_price"
-    ),
-    @Result (
       property = "product_date",
       column = "product_date",
       typeHandler = LocalDateTimeTypeHandler.class
@@ -71,6 +63,14 @@ public interface ProductMapper {
       property = "product_update",
       column = "product_update",
       typeHandler = LocalDateTimeTypeHandler.class
+    ),
+    @Result (
+      property = "stripe_id",
+      column = "stripe_id"
+    ),
+    @Result (
+      property = "stripe_price",
+      column = "stripe_price"
     ),
   })
 
@@ -111,7 +111,7 @@ public interface ProductMapper {
     Integer product_number
   ) throws Exception;
 
-  // 3. saveProduct ---------------------------------------------------------------------------------
+  // 3. saveProduct --------------------------------------------------------------------------------
   @Insert(
     """
     INSERT INTO

@@ -1,5 +1,6 @@
 package com.example.junghqlo.service;
 
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.web.multipart.MultipartFile;
 import com.example.junghqlo.handler.PageHandler;
@@ -22,16 +23,16 @@ public interface BoardService {
     Integer board_number
   ) throws Exception;
 
-  // 3. saveBoard -----------------------------------------------------------------------------------
+  // 3. saveBoard ----------------------------------------------------------------------------------
   Integer saveBoard(
     Board board,
-    MultipartFile[] imgsFile
+    List<MultipartFile> imgsFile
   ) throws Exception;
 
   // 4-1. updateBoard ------------------------------------------------------------------------------
   Integer updateBoard(
     Board board,
-    MultipartFile[] imgsFile
+    List<MultipartFile> imgsFile
   ) throws Exception;
 
   // 4-2. updateCount ------------------------------------------------------------------------------
