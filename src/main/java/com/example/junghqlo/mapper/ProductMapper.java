@@ -39,8 +39,8 @@ public interface ProductMapper {
       column = "product_stock"
     ),
     @Result (
-      property = "product_company",
-      column = "product_company"
+      property = "product_brand",
+      column = "product_brand"
     ),
     @Result (
       property = "product_category",
@@ -124,7 +124,7 @@ public interface ProductMapper {
         product_detail,
         product_price,
         product_stock,
-        product_company,
+        product_brand,
         product_category,
         product_origin,
         product_imgsUrl,
@@ -138,7 +138,7 @@ public interface ProductMapper {
         #{product.product_detail},
         #{product.product_price},
         #{product.product_stock},
-        #{product.product_company},
+        #{product.product_brand},
         #{product.product_category},
         #{product.product_origin},
         #{imgsUrl},
@@ -163,7 +163,7 @@ public interface ProductMapper {
       product_detail = #{product.product_detail},
       product_price = #{product.product_price},
       product_stock = #{product.product_stock},
-      product_company = #{product.product_company},
+      product_brand = #{product.product_brand},
       product_category = #{product.product_category},
       product_origin = #{product.product_origin},
       product_imgsUrl = #{imgsUrl},

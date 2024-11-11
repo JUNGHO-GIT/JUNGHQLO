@@ -104,7 +104,7 @@ public interface OrdersMapper {
     FROM
       product
     WHERE
-      product_number = #{product_number}
+      product_number = #{orders_number}
     """
   )
   String getStripePrice(
@@ -125,11 +125,11 @@ public interface OrdersMapper {
         orders_date
       )
     VALUES (
-      #{product_number},
-      #{product_name},
-      #{member_id},
-      #{orders_quantity},
-      #{orders_totalPrice},
+      #{orders.product_number},
+      #{orders.product_name},
+      #{orders.member_id},
+      #{orders.orders_quantity},
+      #{orders.orders_totalPrice},
       #{imgsUrl},
       NOW()
     )
@@ -146,8 +146,8 @@ public interface OrdersMapper {
     UPDATE
       orders
     SET
-      orders_quantity = #{orders_quantity},
-      orders_totalPrice = #{orders_totalPrice},
+      orders_quantity = #{orders.orders_quantity},
+      orders_totalPrice = #{orders.orders_totalPrice},
       orders_update = NOW()
     WHERE
       orders_number = #{orders_number}

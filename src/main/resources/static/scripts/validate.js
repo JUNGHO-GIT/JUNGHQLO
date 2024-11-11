@@ -194,14 +194,14 @@ function validateProduct(page) {
       getById("product_stock")?.focus();
       return false;
     }
-    if (!getValue(getById("product_company"))) {
+    if (!getValue(getById("product_brand"))) {
       alert("상품 제조사를 입력하세요");
-      getById("product_company")?.focus();
+      getById("product_brand")?.focus();
       return false;
     }
-    else if (getValue(getById("product_company")).length > 10) {
+    else if (getValue(getById("product_brand")).length > 10) {
       alert("상품 제조사는 10글자 이하로 입력하세요");
-      getById("product_company")?.focus();
+      getById("product_brand")?.focus();
       return false;
     }
     if (!getValue(getById("product_category"))) {
@@ -265,11 +265,6 @@ function validateOrders(page) {
     }
   }
   else if (page === "save" || page === "update") {
-    if (!getValue(getById("orders_name"))) {
-      alert("주문자명을 입력하세요");
-      getById("orders_name")?.focus();
-      return false;
-    }
     if (!getValue(getById("orders_quantity"))) {
       alert("주문 수량을 입력하세요");
       getById("orders_quantity")?.focus();

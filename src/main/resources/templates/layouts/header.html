@@ -23,7 +23,7 @@
             <div
               th:id="${'signup'}"
               th:name="${'signup'}"
-              th:class="${'upper white hover fs-1-0rem me-20'}"
+              th:class="${'upper white hover fs-0-8rem me-20'}"
               th:onclick="|return goSignUp()|"
             >
               SignUp
@@ -31,7 +31,7 @@
             <div
               th:id="${'login'}"
               th:name="${'login'}"
-              th:class="${'upper white hover fs-1-0rem me-20'}"
+              th:class="${'upper white hover fs-0-8rem me-20'}"
               th:onclick="|return goLogin()|"
             >
               Login
@@ -41,7 +41,7 @@
             <div
               th:id="${'mypage'}"
               th:name="${'mypage'}"
-              th:class="${'upper white hover fs-1-0rem me-20'}"
+              th:class="${'upper white hover fs-0-8rem me-20'}"
               th:onclick="|return goMyPage()|"
             >
               MyPage
@@ -49,14 +49,14 @@
             <div
               th:id="${'logout'}"
               th:name="${'logout'}"
-              th:class="${'upper white hover fs-1-0rem me-20'}"
+              th:class="${'upper white hover fs-0-8rem me-20'}"
               th:onclick="|return logoutMember()|"
             >
               Logout
             </div>
           </th:block>
           <div class="header-top-hover">
-            <span class="upper white hover fs-1-0rem">
+            <span class="upper white hover fs-0-8rem">
               Admin
             </span>
             <ul th:if ="${session.member_id == ADMIN}">

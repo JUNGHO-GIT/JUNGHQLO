@@ -39,6 +39,7 @@ public class NoticeController {
   private static String page = "notice";
   private static String PAGE = "Notice";
 
+  // 0. logger -------------------------------------------------------------------------------------
   private static Logger logger = LoggerFactory.getLogger(NoticeController.class);
   private static Gson gson = new GsonBuilder()
   .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())

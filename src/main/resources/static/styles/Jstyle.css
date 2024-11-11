@@ -12115,6 +12115,20 @@
   transform: scale(1.1) !important;
 }
 
+.dark-grey {
+  color: #7e848d !important;
+}
+.bg-dark-grey {
+  background-color: #7e848d !important;
+}
+.pointer-dark-grey:hover,
+.pointer-dark-grey.active {
+  cursor: pointer !important;
+  color: #7e848d !important;
+  transition: transform 0.2s ease-in-out !important;
+  transform: scale(1.1) !important;
+}
+
 .dark {
   color: #5e5e5e !important;
 }
@@ -12239,10 +12253,10 @@
 }
 .hover {
   cursor: pointer !important;
-  transition: transform 0.3s ease !important;
+  transition: transform 0.3s ease-in-out !important;
 }
 .hover:hover {
-  transform: scale(1.08);
+  transform: scale(1.08) !important;
 }
 
 /** 100. animation ********************************************************************************/

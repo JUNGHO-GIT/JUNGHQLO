@@ -13,7 +13,7 @@
   <!-- main -->
   <section class="container-fluid">
     <div class="row d-center">
-      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
+      <div class="col-11 col-sm-11 col-md-10 col-lg-9 col-xl-8">
     <!-- form -->
     <form th:action="@{|/product/saveProduct}" th:method="${'POST" enctype="multipart/form-data'}">
       <div class="row">
@@ -48,7 +48,7 @@
             <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
               <div class="checkout-input">
                 <p class="p"> 제조사<span>*</span></p>
-                <input th:type="${'text" th:placeholder="|Company" th:id="product_company" th:name="product_company|'}"/>
+                <input th:type="${'text" th:placeholder="|Company" th:id="product_brand" th:name="product_brand|'}"/>
               </div>
             </div>
             <!-- category -->

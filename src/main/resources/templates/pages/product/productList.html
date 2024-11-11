@@ -13,7 +13,7 @@
   <!-- main -->
   <section class="container-fluid">
     <div class="row d-center">
-      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
+      <div class="col-11 col-sm-11 col-md-10 col-lg-9 col-xl-8">
         <!-- form -->
         <form
           th:id="${'formData'}"
@@ -295,32 +295,32 @@
                       </div>
                       <!-- hover -->
                       <div class="product-hover radius-2 fadeIn">
-                        <div class="d-row-center pointer-light ms-20 mb-20">
-                          <i class="far fa-heart light me-10"></i>
+                        <div class="d-row-center hover ms-20 mb-20">
+                          <i class="far fa-heart white me-10"></i>
                           <div
                             th:id="${'like'}"
                             th:name="${'like'}"
-                            th:class="${'fs-0-9rem fw-500 light'}"
+                            th:class="${'fs-0-9rem fw-500 white'}"
                           >
                             Like
                           </div>
                         </div>
-                        <div class="d-row-center pointer-light ms-20 mb-20">
-                          <i class="fas fa-exchange-alt light me-10"></i>
+                        <div class="d-row-center hover ms-20 mb-20">
+                          <i class="fas fa-exchange-alt white me-10"></i>
                           <div
                             th:id="${'compare'}"
                             th:name="${'compare'}"
-                            th:class="${'fs-0-9rem fw-500 light'}"
+                            th:class="${'fs-0-9rem fw-500 white'}"
                           >
                             Compare
                           </div>
                         </div>
-                        <div class="d-row-center pointer-light ms-20">
-                          <i class="fas fa-search light me-10"></i>
+                        <div class="d-row-center hover ms-20 mb-0">
+                          <i class="fas fa-search white me-10"></i>
                           <div
                             th:id="${'view'}"
                             th:name="${'view'}"
-                            th:class="${'fs-0-9rem fw-500 light'}"
+                            th:class="${'fs-0-9rem fw-500 white'}"
                             th:onclick="goDetail([[${LIST['product_number']}]])"
                           >
                             View
@@ -340,10 +340,10 @@
                         </div>
                         <div class="d-row-between mt-10">
                           <div
-                            th:id="${'product_company'}"
-                            th:name="${'product_company'}"
+                            th:id="${'product_brand'}"
+                            th:name="${'product_brand'}"
                             th:class="${'fs-0-9rem fw-600 grey ms-20'}"
-                            th:text="${LIST['product_company']}"
+                            th:text="${LIST['product_brand']}"
                           >
                           </div>
                           <div
@@ -647,7 +647,7 @@
           width: '100%',
           height: '100%',
           top: '0',
-          backgroundColor: 'rgba(0, 0, 0, 0.3)',
+          backgroundColor: 'rgba(0, 0, 0, 0.4)',
           display: 'none',
         });
         el.parentElement.addEventListener('mouseover', () => {
@@ -660,7 +660,7 @@
           Object.assign(Array.from(itemText).filter((text) => (
             text.parentElement === el.parentElement
           )).map((text) => text.style), {
-            color: 'light',
+            color: 'white',
             transition: 'color 0.3s, transform 0.3s',
             transform: 'scale(1.1)',
           });
@@ -714,19 +714,19 @@
     });
   </script>
 
-  <!-- hr -->
+  <!-- divider -->
   <th:block th:replace="~{components/divider :: divider}" />
 
   <!-- sorting -->
   <th:block th:replace="~{components/sorting :: sorting}" />
 
-  <!-- hr -->
+  <!-- divider -->
   <th:block th:replace="~{components/divider :: divider}" />
 
   <!-- button -->
   <th:block th:replace="~{components/button :: button}" />
 
-  <!-- hr -->
+  <!-- divider -->
   <th:block th:replace="~{components/divider :: divider}" />
 
   <!-- pagination -->

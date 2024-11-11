@@ -4,7 +4,7 @@ CREATE TABLE `product` (
   `product_detail` varchar(255) NOT NULL,
   `product_price` decimal(10,0) NOT NULL,
   `product_stock` int(100) NOT NULL,
-  `product_company` varchar(255) NOT NULL,
+  `product_brand` varchar(255) NOT NULL,
   `product_category` varchar(255) NOT NULL,
   `product_origin` varchar(255) NOT NULL,
   `product_imgsFile` longblob NOT NULL,

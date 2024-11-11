@@ -10,313 +10,329 @@
   <!-- navigation -->
   <th:block th:replace="~{layouts/navigation :: navigation}" />
 
-  <!-- section -->
-  <section class="container" onload="randomSideImage()">
-
-    <!-- image -->
-    <div class="product-detail-pic">
-      <div class="container">
-        <div class="row">
-          <!-- main -->
-          <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-            <div class="product-detail-pic-item">
-              <img th:src="${'@{${productModel.product_imgsUrl1}}" th:id="product_imgsUrl1" th:name="|product_imgsUrl1|'}"/>
-            </div>
-          </div>
-          <!-- main -->
-          <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-            <div class="product-detail-pic-item">
-              <img th:src="${'@{${productModel.product_imgsUrl2}}" th:id="product_imgsUrl2" th:name="|product_imgsUrl2|'}"/>
-            </div>
-          </div>
-          <!-- vertical  -->
-          <div class="col-lg-1 d-none d-lg-block d-md-block">
-            <div class="jungho-vertical"></div>
-          </div>
+  <!-- main -->
+  <section class="container-fluid">
+    <div class="row d-center">
+      <div class="col-11 col-sm-11 col-md-10 col-lg-9 col-xl-8">
+        <!-- form -->
+        <form
+          th:id="${'formData'}"
+          th:name="${'formData'}"
+          th:class="${'formData'}"
+        >
           <!-- detail -->
-          <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-            <div class="product-detail-text">
-
-              <!-- form -->
-              <form th:action="@{|/orders/saveOrders}" th:method="${'POST'}">
-
-                <!-- hidden -->
-                <input th:type="${'hidden" th:id="product_number" th:name="|product_number|'}"
-                th:value="${productModel.product_number}"/>
-                <input th:type="${'hidden" th:id="|product_name" th:name="product_name" th:value="${productModel.product_name}|'}"/>
-                <input th:type="${'hidden" th:id="|product_company" th:name="product_company" th:value="${productModel.product_company}|'}"/>
-                <input th:type="${'hidden" th:id="|product_category" th:name="product_category" th:value="${productModel.product_category}|'}"/>
-                <input th:type="${'hidden" th:id="|product_price" th:name="product_price" th:value="${productModel.product_price}|'}"/>
-                <input th:type="${'hidden" th:id="|product_imgsUrl1" th:name="product_imgsUrl1" th:value="${productModel.product_imgsUrl1}|'}"/>
-                <input th:type="${'hidden" th:id="|product_imgsUrl" th:name="product_imgsUrl" th:value="${productModel.product_imgsUrl1}|'}"/>
-                <input th:type="${'hidden" th:id="|product_imgsUrl2" th:name="product_imgsUrl2" th:value="${productModel.product_imgsUrl2}|'}"/>
-                <input th:type="${'hidden" th:id="|product_stock" th:name="product_stock" th:value="${productModel.product_stock}|'}"/>
-
-                <!-- name -->
-                <h4>
-                  <h5 th:text="${productModel.product_name}"></h5>
-                </h4>
-                <!-- detail -->
-                <div class="product-detail-tab-content-item">
-                  <p class="p">
-                    <h6 th:text="${productModel.product_detail}"></h6>
-                  </p>
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <!-- image -->
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-col-center">
+                  <img
+                    th:each="image : ${#strings.arraySplit(MODEL['product_imgsUrl'], ',')}"
+                    th:src="@{|${STORAGE}/${page}/${image}|}"
+                    th:loading="${'lazy'}"
+                    th:alt="${'image'}"
+                    th:class="${'w-100p w-max600 border-1 radius-1 shadow-1'}"
+                  />
                 </div>
-                <!-- price -->
-                <h3>
-                  <i class="fas fa-won-sign fa-xs"></i>
-                  <th:block th:text="${#numbers.formatInteger(productModel.product_price, 3, 'COMMA')}" />
-                </h3>
-                <!-- sale -->
-                <h3 class="mt-n4">
-                  <span>
-                    <i class="fas fa-won-sign fa-xs"></i>
-                    <th:block th:text="${#numbers.formatInteger(productModel.product_price * 3, 3, 'COMMA')}" />
-                  </span>
-                </h3>
-                <div class="product-detail-cart-option">
-                  <div class="ms-n6 mb-2">
-                    <!-- quantity -->
-                    <div class="quantity">
-                      <div class="pro-qty">
-                        <input th:type="${'text" th:id="|orders_quantity" th:name="orders_quantity" th:value="1|'}"/>
-                      </div>
-                    </div>
-                    <!-- button -->
-                    <th:block th:if="${session.member_id} == null">
-                      <button th:type="${'button" class="jungho-button" th:onclick="|return sessionAlert()'}|">구매</button>
-                      <button th:type="${'button" class="jungho-button" th:onclick="|@{|location.href='/JUNGHQLO/product/listProduct'|}'}|">리스트</button>
-                      <br>
-                      <br>
-                      <div class="jungho-center ms-6 mb-1">
-                        <h6 class="p">
-                          <i class="fas fa-truck fa-xs"></i>
-                          &nbsp;배송&nbsp;&nbsp;:&nbsp;&nbsp;
-                        </h6>
-                        <span>영업일 기준 2-3일</span>
-                      </div>
-                      <!-- share -->
-                      <div class="jungho-center ms-6 mb-1">
-                        <h6 class="p">
-                          <i class="fas fa-share fa-xs"></i>
-                          &nbsp;공유&nbsp;&nbsp;:&nbsp;&nbsp;
-                        </h6>
-                        <div class="a2a_kit a2a_kit_size_20 a2a_default_style">
-                          <a class="a2a_button_kakao"></a>
-                          <a class="a2a_button_line"></a>
-                          <a class="a2a_button_facebook"></a>
-                          <a class="a2a_button_twitter"></a>
-                          <a class="a2a_button_pinterest"></a>
-                          <a class="a2a_button_yahoo_mail"></a>
-                          <script async src="https://static.addtoany.com/menu/page.js"></script>
-                        </div>
-                      </div>
-                      <div class="jungho-center ms-6 mb-1">
-                        <h6 class="p mt-n6">
-                          <i class="fas fa-credit-card fa-xs"></i>
-                          &nbsp;카드&nbsp;&nbsp;:&nbsp;&nbsp;
-                        </h6>
-                        <span>
-                          <p class="ft-6">4242 4242 4242 4242<br/>1234 / 567</p>
-                        </span>
-                      </div>
-                    </th:block>
-                    <th:block th:if="${session.member_id} != null">
-                      <button th:type="${'submit" class="jungho-button" th:onclick="|return ordersCheck()'}|">구매</button>
-                      <button th:type="${'button" class="jungho-button" th:onclick="|@{|location.href='/JUNGHQLO/product/listProduct'|}'}|">리스트</button>
-                      <br>
-                      <br>
-                      <br>
-                      <div class="jungho-center ms-6 mb-1">
-                        <h6 class="p">
-                          <i class="fas fa-truck fa-xs"></i>
-                          &nbsp;배송&nbsp;&nbsp;:&nbsp;&nbsp;
-                        </h6>
-                        <span>영업일 기준 2-3일</span>
-                      </div>
-                      <!-- share -->
-                      <div class="jungho-center ms-6 mb-1">
-                        <h6 class="p">
-                          <i class="fas fa-share fa-xs"></i>
-                          &nbsp;공유&nbsp;&nbsp;:&nbsp;&nbsp;
-                        </h6>
-                        <div class="a2a_kit a2a_kit_size_20 a2a_default_style">
-                          <a class="a2a_button_kakao"></a>
-                          <a class="a2a_button_line"></a>
-                          <a class="a2a_button_facebook"></a>
-                          <a class="a2a_button_twitter"></a>
-                          <a class="a2a_button_pinterest"></a>
-                          <a class="a2a_button_yahoo_mail"></a>
-                          <script th:src="${'@{https://static.addtoany.com/menu/page.js}'}"></script>
-                        </div>
-                      </div>
-                      <div class="jungho-center ms-6 mb-1">
-                        <h6 class="p mt-n6">
-                          <i class="fas fa-credit-card fa-xs"></i>
-                          &nbsp;카드&nbsp;&nbsp;:&nbsp;&nbsp;
-                        </h6>
-                        <span>
-                          <p class="ft-6">4242 4242 4242 4242<br/>1234 / 567</p>
-                        </span>
-                      </div>
-                    </th:block>
-                  </div>
-                </div>
-                <!-- button group -->
-                <div class="btn-group mb-n5" th:if="${session.member_id == 'eric4757'}">
-                  <button th:type="${'button" class="jungho-button-admin" th:onclick="|location.href='@{/product/updateProduct(product_number=${productModel.product_number})}'|'}">수정</button>
-                  <button th:type="${'button" class="jungho-button-admin" th:onclick="|location.href='@{/product/deleteProduct(product_number=${productModel.product_number})}'|'}">삭제</button>
-                </div>
-              </form>
-
-
-            </div>
-          </div>
-        </div><br><br>
-        <!-- /.row -->
-
-        <!-- horizontal -->
-        <div class="row parent-element">
-          <div class="col-lg-12 col-md-12">
-            <div class="jungho-horizon"></div>
-          </div>
-        </div><br><br>
-
-        <!-- related -->
-        <div class="row">
-          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <div class="jungho-related">
-              <span><i class="fas fa-tags fa-xs p"></i>&nbsp;&nbsp;Related Product</span>
-            </div>
-            <ul class="nav nav-tabs" role="tablist">
-              <div th:each="i : ${#numbers.sequence(1, 6)}">
-                <li class="nav-item">
-                  <a class="nav-link table-active" th:onclick="|randomSideImage()|">
-                    <div class="product-thumb-pic set-bg" ></div>
-                  </a>
-                </li>
               </div>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- detail -->
-    <div class="product-detail-content">
-      <div class="container">
-        <!-- row -->
-        <div class="row">
-          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <div class="product-detail-tab">
-              <ul class="nav nav-tabs" role="tablist">
-                <!-- description -->
-                <li class="nav-item">
-                  <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">
-                  <i class="fas fa-map-pin"></i>&nbsp;&nbsp;&nbsp;Description</a>
-                </li>
-                <!-- information -->
-                <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">
-                  <i class="fas fa-map-pin"></i>&nbsp;&nbsp;&nbsp;Information</a>
-                </li>
-              </ul>
-              <div class="tab-content">
-                <!-- description -->
-                <div class="tab-pane active" id="tabs-1" role="tabpanel">
-                  <div class="product-detail-tab-content">
-                    <div class="row">
-                      <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                        <!-- number -->
-                        <div class="product-detail-tab-content-item">
-                          <h5><i class="fas fa-hand-point-up"></i>&nbsp;&nbsp;상품번호</h5>
-                          <p th:text="${productModel.product_number}"></p>
-                        </div>
-                        <!-- name -->
-                        <div class="product-detail-tab-content-item">
-                          <h5><i class="fa fa-cube"></i>&nbsp;&nbsp;상품명</h5>
-                          <p th:text="${productModel.product_name}"></p>
-                        </div>
-                        <!-- category -->
-                        <div class="product-detail-tab-content-item">
-                          <h5><i class="fas fa-clipboard-list"></i>&nbsp;&nbsp;카테고리</h5>
-                          <p th:text="${productModel.product_category}"></p>
-                        </div>
-                      </div>
-                      <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                        <!-- company -->
-                        <div class="product-detail-tab-content-item">
-                          <h5><i class="fa fa-building"></i>&nbsp;&nbsp;제조사</h5>
-                          <p th:text="${productModel.product_company}"></p>
-                        </div>
-                        <!-- origin -->
-                        <div class="product-detail-tab-content-item">
-                          <h5><i class="fa fa-map-marker"></i>&nbsp;&nbsp;원산지</h5>
-                          <p th:text="${productModel.product_origin}"></p>
-                        </div>
-                        <!-- price -->
-                        <div class="product-detail-tab-content-item">
-                          <h5><i class="fas fa-won-sign fa-xs"></i>&nbsp;&nbsp;가격</h5>
-                          <p th:text="${#numbers.formatInteger(productModel.product_price, 3, 'COMMA')}"></p>
-                        </div>
-                      </div>
-                      <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                        <!-- date -->
-                        <div class="product-detail-tab-content-item">
-                          <h5><i class="far fa-calendar-alt fa-xs"></i>&nbsp;&nbsp;등록일자</h5>
-                          <p th:text="${#strings.substring((productModel.product_update != null ? productModel.product_update+'(수정)' : productModel.product_date+'(원글)'), 0, 9)}"></p>
-                        </div>
-                        <!-- stock -->
-                        <div class="product-detail-tab-content-item">
-                          <h5><i class="fas fa-boxes"></i>&nbsp;&nbsp;재고</h5>
-                          <p th:text="${productModel.product_stock}"></p>
-                        </div>
-                        <!-- detail -->
-                        <div class="product-detail-tab-content-item">
-                          <h5><i class="fas fa-clipboard-list"></i>&nbsp;&nbsp;상세설명</h5>
-                          <p th:text="${#strings.abbreviate(productModel.product_detail, 25)}">
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- information -->
-                <div class="tab-pane" id="tabs-2" role="tabpanel">
-                  <div class="product-detail-tab-content">
-                    <div class="row">
-                      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                        <div class="product-detail-tab-content-item">
-                        <h5><i class="fa fa-info-circle"></i>&nbsp;상품 정보 제공 고시&nbsp;</h5>
-                          <p>
-                            상품 정보 제공 고시[전자상거래에 관한 상품정보 제공에 관한 고시] 항목에 의해 등록된 정보입니다. 품질보증기준 관련법규 및 소비자 보호법에 따름 A/S 책임자와 주문후 예상 배송기간	2~3일소요 구매, 교환, 반품, 배송, 설치 등과 관련하여 추가비용, 제한조건 등의 특이사항이 있는 경우 소비자가 전자상거래등에서 소비자 보호에 관한 법률 제 17조 제1항 또는 제3항에 따라 청약철회를 하고 동법 제 18조 제1항 에 따라 청약철회한 물품을 판매자에게 반환하였음에도 불구 하고 결제 대금의 환급이 3영업일을 넘게 지연된 경우, 소비자 는 전자상거래등에서 소비자보호에 관한 법률 제18조 제2항 및 동법 시행령 제21조 2에 따라 지연일수에 대하여 전상법 시행령으로 정하는 이율을 곱하여 산정한 지연이자(“지연배상금”)를 신청할 수 있습니다.
-                          </p>
-                        </div>
-                        <div class="product-detail-tab-content-item">
-                          <h5><i class="fa fa-info-circle"></i>&nbsp;필수 고시 사항&nbsp;</h5>
-                          <p>
-                            전자상거래 등에서의 소비자보호법에 관한 법률에 의거하여 미성년자가 물품을 구매하는 경우, 법정대리인이 동의하지 않으면 미성년자 본인 또는 법정대리인이 구매를 취소할 수 있습니다. 등록된 판매 상품과 상품의 내용, 거래 정보 및 가격은 판매자가 등록한 것으로 해당 내용에 대하여 일체의 책임을 지지 않습니다.
-                          </p>
-                        </div>
-                        <div class="product-detail-tab-content-item">
-                          <h5><i class="fa fa-info-circle"></i>&nbsp;교환 정보&nbsp;</h5>
-                          <p>
-                            반품/교환 기준 상품 수령 후 7일 이내에 신청하실 수 있습니다. 단, 제품이 표시·광고 내용과 다르거나, 계약과 다르게 이행된 경우는 제품 수령일부터 3개월 이내, 그 사실을 안 날 또는 알 수 있었던 날부터 30일 이내에 교환/반품이 가능합니다. 추가적으로 다음의 경우 해당하는 반품/교환은 신청이 불가능할 수 있습니다.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+              <!-- hr -->
+              <hr class="mt-30 mb-20 bg-light-grey" />
+              <!-- name -->
+              <div class="row px-20 mb-20">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-center">
+                  <div
+                    th:id="${'product_name'}"
+                    th:name="${'product_name'}"
+                    th:text="${MODEL['product_name']}"
+                    th:class="${'fs-1-7rem fw-600 light-black'}"
+                  >
                   </div>
                 </div>
               </div>
+              <!-- price && brand -->
+              <div class="row px-20 mb-30">
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 d-row-left">
+                  <div
+                    th:id="${'product_price'}"
+                    th:name="${'product_price'}"
+                    th:text="${'₩   ' + #numbers.formatInteger(MODEL['product_price'], 3, 'COMMA')}"
+                    th:class="${'fs-1-2rem fw-500 light-black'}"
+                  >
+                  </div>
+                </div>
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 d-row-right">
+                  <div
+                    th:id="${'product_brand'}"
+                    th:name="${'product_brand'}"
+                    th:text="${MODEL['product_brand']}"
+                    th:class="${'fs-1-2rem fw-600 dark'}"
+                  >
+                  </div>
+                </div>
+              </div>
+              <!-- category && origin && stock && delivery -->
+              <div class="row px-20 mb-20">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-10">
+                  <div
+                    th:id="${'product_category_prefix'}"
+                    th:name="${'product_category_prefix'}"
+                    th:text="${'스 타 일 : '}"
+                    th:class="${'fs-1-0rem fw-500 dark me-10'}"
+                  >
+                  </div>
+                  <div
+                    th:id="${'product_category'}"
+                    th:name="${'product_category'}"
+                    th:text="${MODEL['product_category']}"
+                    th:class="${'fs-1-0rem fw-500 light-black'}"
+                  >
+                  </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-10">
+                  <div
+                    th:id="${'product_origin_prefix'}"
+                    th:name="${'product_origin_prefix'}"
+                    th:text="${'원 산 지 : '}"
+                    th:class="${'fs-1-0rem fw-500 dark me-10'}"
+                  >
+                  </div>
+                  <div
+                    th:id="${'product_origin'}"
+                    th:name="${'product_origin'}"
+                    th:text="${MODEL['product_origin']}"
+                    th:class="${'fs-1-0rem fw-500 light-black'}"
+                  >
+                  </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-10">
+                  <div
+                    th:id="${'product_stock_prefix'}"
+                    th:name="${'product_stock_prefix'}"
+                    th:text="${'재고 수량 : '}"
+                    th:class="${'fs-1-0rem fw-500 dark me-10'}"
+                  >
+                  </div>
+                  <div
+                    th:id="${'product_stock'}"
+                    th:name="${'product_stock'}"
+                    th:text="${MODEL['product_stock']}"
+                    th:class="${'fs-1-0rem fw-500 light-black'}"
+                  >
+                  </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left">
+                  <div
+                    th:id="${'product_delivery_prefix'}"
+                    th:name="${'product_delivery_prefix'}"
+                    th:text="${'배송 안내 : '}"
+                    th:class="${'fs-1-0rem fw-500 dark me-10'}"
+                  >
+                  </div>
+                  <div
+                    th:id="${'product_delivery'}"
+                    th:name="${'product_delivery'}"
+                    th:text="${'영업일 기준 2-3일'}"
+                    th:class="${'fs-1-0rem fw-500 light-black'}"
+                  >
+                  </div>
+                </div>
+              </div>
+              <!-- hr -->
+              <hr class="mt-20 mb-20 bg-light-grey" />
+              <!-- detail -->
+              <div class="row px-20">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left">
+                  <div
+                    th:id="${'product_detail'}"
+                    th:name="${'product_detail'}"
+                    th:text="${MODEL['product_detail']}"
+                    th:class="${'fs-1-0rem fw-400 dark-grey lh-1-7'}"
+                  >
+                  </div>
+                </div>
+              </div>
+              <!-- hr -->
+              <hr class="mt-20 mb-20 bg-light-grey" />
+              <!-- quantity -->
+              <div class="row px-20 mb-30">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left">
+                  <div
+                    th:id="${'orders_quantity_prefix'}"
+                    th:name="${'orders_quantity_prefix'}"
+                    th:text="${'수   량 : '}"
+                    th:class="${'fs-1-0rem fw-500 dark me-30'}"
+                  >
+                  </div>
+                  <div class="p-relative w-70p ms-auto">
+                    <input
+                      th:id="${'orders_quantity'}"
+                      th:name="${'orders_quantity'}"
+                      th:type="${'number'}"
+                      th:min="${'1'}"
+                      th:value="${'1'}"
+                      th:max="${MODEL['product_stock']}"
+                      th:class="${'form-control'}"
+                    />
+                    <i
+                      th:id="${'minus'}"
+                      th:name="${'minus'}"
+                      th:class="${'fa fa-minus fs-0-9rem dark-grey pointer p-absolute'}"
+                      th:style="${'top: 50%; right: 40px; transform: translateY(-50%);'}"
+                    ></i>
+                    <i
+                      th:id="${'plus'}"
+                      th:name="${'plus'}"
+                      th:class="${'fa fa-plus fs-0-9rem dark-grey pointer p-absolute'}"
+                      th:style="${'top: 50%; right: 10px; transform: translateY(-50%);'}"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+              <!-- total price && buy -->
+              <div class="row px-20">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left">
+                  <div
+                    th:id="${'orders_totalPrice_prefix'}"
+                    th:name="${'orders_totalPrice_prefix'}"
+                    th:text="${'총 금액 : '}"
+                    th:class="${'fs-1-0rem fw-500 dark me-20'}"
+                  >
+                  </div>
+                  <div
+                    th:id="${'orders_totalPrice'}"
+                    th:name="${'orders_totalPrice'}"
+                    th:text="${'₩   ' + #numbers.formatInteger(MODEL['product_price'], 3, 'COMMA')}"
+                    th:class="${'fs-1-2rem fw-500 light-black'}"
+                  >
+                  </div>
+                  <div
+                    th:id="${'getOrders'}"
+                    th:name="${'getOrders'}"
+                    th:class="${'fs-1-1rem fw-600 dark pointer-black ms-auto'}"
+                    th:text="${'구매하기'}"
+                    th:onclick="getOrders()"
+                  >
+                  </div>
+                </div>
+              </div>
+              <!-- hidden -->
+              <div class="hidden-wrapper">
+                <input
+                  th:type="${'hidden'}"
+                  th:id="${'product_number'}"
+                  th:name="${'product_number'}"
+                  th:value="${MODEL['product_number']}"
+                />
+                <input
+                  th:type="${'hidden'}"
+                  th:id="${'sessionId'}"
+                  th:name="${'sessionId'}"
+                  th:value="${session.member_id}"
+                />
+                <input
+                  th:type="${'hidden'}"
+                  th:id="${'product_name'}"
+                  th:name="${'product_name'}"
+                  th:value="${MODEL['product_name']}"
+                />
+                <input
+                  th:type="${'hidden'}"
+                  th:id="${'product_price'}"
+                  th:name="${'product_price'}"
+                  th:value="${MODEL['product_price']}"
+                />
+                <input
+                  th:type="${'hidden'}"
+                  th:id="${'product_stock'}"
+                  th:name="${'product_stock'}"
+                  th:value="${MODEL['product_stock']}"
+                />
+                <input
+                  th:type="${'hidden'}"
+                  th:id="${'product_imgsUrl'}"
+                  th:name="${'product_imgsUrl'}"
+                  th:value="${MODEL['product_imgsUrl']}"
+                />
+                <input
+                  th:type="${'hidden'}"
+                  th:id="${'product_category'}"
+                  th:name="${'product_category'}"
+                  th:value="${MODEL['product_category']}"
+                />
+                <input
+                  th:type="${'hidden'}"
+                  th:id="${'product_origin'}"
+                  th:name="${'product_origin'}"
+                  th:value="${MODEL['product_origin']}"
+                />
+                <input
+                  th:type="${'hidden'}"
+                  th:id="${'product_brand'}"
+                  th:name="${'product_brand'}"
+                  th:value="${MODEL['product_brand']}"
+                />
+                <input
+                  th:type="${'hidden'}"
+                  th:id="${'product_detail'}"
+                  th:name="${'product_detail'}"
+                  th:value="${MODEL['product_detail']}"
+                />
+                <input
+                  th:type="${'hidden'}"
+                  th:id="${'product_stock'}"
+                  th:name="${'product_stock'}"
+                  th:value="${MODEL['product_stock']}"
+                />
+              </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </section>
 
-  <!-- fake pagination -->
-  <th:block th:replace="components/pagination :: fake-pagination" />
+  <script defer>
+    // 총 금액 계산
+    function calcTotalPrice() {
+      const productPrice = document.getElementById('product_price').innerText;
+      const ordersQuantity = document.getElementById('orders_quantity').value;
+      const ordersTotalPrice = document.getElementById('orders_totalPrice');
+      const totalPrice = parseInt(productPrice.replace(/[^0-9]/g, '')) * ordersQuantity;
+      ordersTotalPrice.innerText = '₩   ' + totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    // 수량 감소
+    document.getElementById('minus').addEventListener('click', () => {
+      const ordersQuantity = document.getElementById('orders_quantity');
+      if (parseInt(ordersQuantity.value) > 1) {
+        ordersQuantity.value = parseInt(ordersQuantity.value) - 1;
+        calcTotalPrice();
+      }
+    });
+
+    // 수량 증가
+    document.getElementById('plus').addEventListener('click', () => {
+      const ordersQuantity = document.getElementById('orders_quantity');
+      if (parseInt(ordersQuantity.value) < parseInt(ordersQuantity.max)) {
+        ordersQuantity.value = parseInt(ordersQuantity.value) + 1;
+        calcTotalPrice();
+      }
+    });
+
+    // 수량 변경
+    document.getElementById('orders_quantity').addEventListener('change', () => {
+      calcTotalPrice();
+    });
+
+    // 총 금액 초기화
+    calcTotalPrice();
+  </script>
+
+  <!-- divider -->
+  <th:block th:replace="~{components/divider :: divider}" />
+
+  <!-- button -->
+  <th:block th:replace="~{components/button :: button}" />
 
   <!-- footer -->
   <th:block th:replace="~{layouts/footer :: footer}" />

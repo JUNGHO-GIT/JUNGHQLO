@@ -30,6 +30,12 @@ function goLogin() {
 * @desc 리스트 페이지로 이동
 **/
 function goList(param) {
+
+  if (!param) {
+    goToPage(`/${title}/${preFix1}/list${preFix2}`);
+    return;
+  }
+
   const parsedParam = JSON.parse(JSON.stringify(param));
 
   // 1. 빈 객체일 경우
@@ -78,6 +84,56 @@ function goUpdate(number) {
 **/
 function goDelete(number) {
   goToPage(`/${title}/${preFix1}/delete${preFix2}?${preFix1}_number=${number}`);
+};
+
+/** ----------------------------------------------------------------------------------------------->
+* @desc 구매 하기
+**/
+function getOrders() {
+
+  // form 요소 찾기
+  const form = getElem("#formData");
+  const formDataObject = form instanceof HTMLFormElement ? new FormData(form) : new FormData();
+
+  /* const productNumber = getValue(getById("product_number"));
+  const productName = getValue(getById("product_name"));
+  const productStock = getValue(getById("product_stock"));
+  const ordersQuantity = getValue(getById("orders_quantity")); */
+
+  // form 데이터 추가
+  /* formDataObject.append("product_number", productNumber);
+  formDataObject.append("product_name", productName);
+  formDataObject.append("product_stock", productStock);
+  formDataObject.append("orders_quantity", ordersQuantity); */
+
+  // 동적 validate 함수 호출
+  const validate = eval(`validateOrders('save')`);
+  if (validate === false) {
+    return;
+  }
+
+  $.ajax({
+    type: "POST",
+    url: `/${title}/orders/saveOrders`,
+    data: formDataObject,
+    processData: false,
+    contentType: false,
+    enctype: 'multipart/form-data',
+    success: function(response) {
+      if (response === 1) {
+        alert("구매되었습니다.");
+        goList();
+      }
+      else if (response === 0) {
+        alert("구매 실패했습니다.");
+        goRefresh();
+      }
+      else {
+        alert("오류가 발생했습니다.");
+        goRefresh();
+      }
+    }
+  });
 };
 
 /** ----------------------------------------------------------------------------------------------->

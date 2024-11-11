@@ -13,7 +13,7 @@ public class Product {
   private String product_detail;
   private Integer product_price;
   private Integer product_stock;
-  private String product_company;
+  private String product_brand;
   private String product_category;
   private String product_origin;
   private String product_imgsUrl;
@@ -44,8 +44,8 @@ public class Product {
   public Integer getProduct_stock() {
     return this.product_stock;
   }
-  public String getProduct_company() {
-    return this.product_company;
+  public String getProduct_brand() {
+    return this.product_brand;
   }
   public String getProduct_category() {
     return this.product_category;
@@ -85,8 +85,8 @@ public class Product {
   public void setProduct_stock(Integer product_stock) {
     this.product_stock = product_stock;
   }
-  public void setProduct_company(String product_company) {
-    this.product_company = product_company;
+  public void setProduct_brand(String product_brand) {
+    this.product_brand = product_brand;
   }
   public void setProduct_category(String product_category) {
     this.product_category = product_category;
