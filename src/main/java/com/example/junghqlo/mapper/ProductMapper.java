@@ -84,6 +84,8 @@ public interface ProductMapper {
     WHERE
       ${category}
     AND
+      ${origin}
+    AND
       ${type} LIKE CONCAT('%', #{keyword}, '%')
     ORDER BY
       ${sort}
@@ -92,6 +94,7 @@ public interface ProductMapper {
   List<Product> listProduct(
     @Param("sort") String sort,
     @Param("category") String category,
+    @Param("origin") String origin,
     @Param("type") String type,
     @Param("keyword") String keyword
   ) throws Exception;

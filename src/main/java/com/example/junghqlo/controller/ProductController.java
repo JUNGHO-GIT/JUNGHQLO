@@ -1,6 +1,8 @@
 package com.example.junghqlo.controller;
 
+import java.io.File;
 import java.text.MessageFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -15,9 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import com.example.junghqlo.adapter.FileAdapter;
+import com.example.junghqlo.adapter.LocalDateTimeAdapter;
 import com.example.junghqlo.handler.PageHandler;
 import com.example.junghqlo.model.Product;
 import com.example.junghqlo.service.ProductService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 @Controller
 @RequestMapping("/product")
@@ -30,9 +36,15 @@ public class ProductController {
   }
 
   // 0. static -------------------------------------------------------------------------------------
-  Logger logger = LoggerFactory.getLogger(this.getClass());
   private static String page = "product";
   private static String PAGE = "Product";
+
+  private static Logger logger = LoggerFactory.getLogger(ProductController.class);
+  private static Gson gson = new GsonBuilder()
+  .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+  .registerTypeAdapter(File.class, new FileAdapter())
+  .setPrettyPrinting()
+  .create();
 
   // 1. listProduct (GET) --------------------------------------------------------------------------
   @GetMapping("/listProduct")
@@ -40,6 +52,7 @@ public class ProductController {
     @ModelAttribute Product product,
     @RequestParam(defaultValue = "all") String sort,
     @RequestParam(defaultValue = "all") String category,
+    @RequestParam(defaultValue = "all") String origin,
     @RequestParam(defaultValue = "name") String type,
     @RequestParam(defaultValue = "") String keyword,
     @RequestParam(defaultValue = "1") Integer pageNumber,
@@ -78,7 +91,7 @@ public class ProductController {
       sortHandler = "dateDESC";
     }
 
-    // 2. Category handling
+    // 2-1. Category handling
     String categoryHandler = "";
     if (category == null || category.equals("all")) {
       category = "product_category IS NOT NULL";
@@ -109,6 +122,29 @@ public class ProductController {
       categoryHandler = "acc";
     }
 
+    // 2-2. Origin handling
+    String originHandler = "";
+    if (origin == null || origin.equals("all")) {
+      origin = "product_origin IS NOT NULL";
+      originHandler = "all";
+    }
+    else if (origin.equals("kr")) {
+      origin = "product_origin = 'kr'";
+      originHandler = "kr";
+    }
+    else if (origin.equals("jp")) {
+      origin = "product_origin = 'jp'";
+      originHandler = "jp";
+    }
+    else if (origin.equals("ch")) {
+      origin = "product_origin = 'ch'";
+      originHandler = "ch";
+    }
+    else if (origin.equals("us")) {
+      origin = "product_origin = 'us'";
+      originHandler = "us";
+    }
+
     // 3. Type handling
     String typeHandler = "";
     if (type == null || keyword == null) {
@@ -135,12 +171,13 @@ public class ProductController {
 
     // 5. Page handling
     PageHandler<Product> pageHandler = productService.listProduct(
-      pageNumber, itemsPer, sort, category, type, keyword, product
+      pageNumber, itemsPer, sort, category, origin, type, keyword, product
     );
 
     // 모델
     model.addAttribute("sortHandler", sortHandler);
     model.addAttribute("categoryHandler", categoryHandler);
+    model.addAttribute("originHandler", originHandler);
     model.addAttribute("typeHandler", typeHandler);
     model.addAttribute("keywordHandler", keywordHandler);
     model.addAttribute("pageHandler", pageHandler);

@@ -11,7 +11,7 @@
   <th:block th:replace="~{layouts/navigation :: navigation}" />
 
   <!-- main -->
-  <section class="container-fluid px-30">
+  <section class="container-fluid">
     <div class="row d-center">
       <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
         <!-- form -->
@@ -20,207 +20,599 @@
           th:name="${'formData'}"
           th:class="${'formData'}"
         >
+          <!-- list -->
           <div class="row">
-            <!-- shop-sidebar -->
-            <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-              <div class="shop-sidebar">
-                <!-- categories -->
-                <div class="shop-sidebar-accordion">
-                  <div class="accordion" id="accordion">
-                    <div class="card">
-                      <div class="card-heading">
-                        <a data-toggle="collapse" data-target="#collapseOne">
-                          <i class="fas fa-list-ul"></i>
-                          &nbsp;&nbsp;&nbsp;Categories&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                          <i class="fas fa-sort-down"></i>
-                        </a>
-                      </div>
-                      <div id="collapseOne">
-                        <div class="card-body">
-                          <div class="shop-sidebar-tags">
-                            <a th:href="@{|/product/listProduct|}">All</a>
-                            <a th:href="@{|/product/categoryProduct?category=top|}">Top</a>
-                            <a th:href="@{|/product/categoryProduct?category=bottom|}">Bottom</a>
-                            <a th:href="@{|/product/categoryProduct?category=shoes|}">Shoes</a>
-                            <a th:href="@{|/product/categoryProduct?category=acc|}">Acc</a>
-                            <a th:href="@{|/product/categoryProduct?category=bag|}">Bag</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+            <!-- slider -->
+            <div class="d-none d-sm-block col-sm-3 col-md-3 col-lg-3 col-xl-3">
+              <!-- sort -->
+              <div class="slider-sort">
+                <div class="d-row-left mb-20">
+                  <i
+                    th:id="${'sort-icon'}"
+                    th:name="${'sort-icon'}"
+                    th:class="${'fas fa-list-ul me-10'}"
+                  >
+                  </i>
+                  <div
+                    th:id="${'sort-title'}"
+                    th:name="${'sort-title'}"
+                    th:class="${'fs-0-8rem fw-700 light-black upper'}"
+                    th:text="${'Sort'}"
+                  >
+                  </div>
+                  <i
+                    th:id="${'sort-icon-down'}"
+                    th:name="${'sort-icon-down'}"
+                    th:class="${'fas fa-sort-down hover mt-n5 ms-3'}"
+                    th:onclick="collapseList('sort')"
+                  >
+                  </i>
+                </div>
+                <div class="d-col-left">
+                  <div
+                    th:id="${'all'}"
+                    th:name="${'all'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${sortHandler == 'all' ? 'bg-dark light' : ''}"
+                    th:text="${'ALL'}"
+                    th:onclick="goList({category: [[${categoryHandler}]], sort: 'all', origin: [[${originHandler}]]})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'nameASC'}"
+                    th:name="${'nameASC'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${sortHandler == 'nameASC' ? 'bg-dark light' : ''}"
+                    th:text="${'Name   ' + '   ▲'}"
+                    th:onclick="goList({category: [[${categoryHandler}]], sort: 'nameASC', origin: [[${originHandler}]]})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'nameDESC'}"
+                    th:name="${'nameDESC'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${sortHandler == 'nameDESC' ? 'bg-dark light' : ''}"
+                    th:text="${'Name   ' + '   ▼'}"
+                    th:onclick="goList({category: [[${categoryHandler}]], sort: 'nameDESC', origin: [[${originHandler}]]})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'priceASC'}"
+                    th:name="${'priceASC'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${sortHandler == 'priceASC' ? 'bg-dark light' : ''}"
+                    th:text="${'Price   ' + '   ▲'}"
+                    th:onclick="goList({category: [[${categoryHandler}]], sort: 'priceASC', origin: [[${originHandler}]]})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'priceDESC'}"
+                    th:name="${'priceDESC'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${sortHandler == 'priceDESC' ? 'bg-dark light' : ''}"
+                    th:text="${'Price   ' + '   ▼'}"
+                    th:onclick="goList({category: [[${categoryHandler}]], sort: 'priceDESC', origin: [[${originHandler}]]})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'dateASC'}"
+                    th:name="${'dateASC'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${sortHandler == 'dateASC' ? 'bg-dark light' : ''}"
+                    th:text="${'Date   ' + '   ▲'}"
+                    th:onclick="goList({category: [[${categoryHandler}]], sort: 'dateASC', origin: [[${originHandler}]]})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'dateDESC'}"
+                    th:name="${'dateDESC'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10'}"
+                    th:classappend="${sortHandler == 'dateDESC' ? 'bg-dark light' : ''}"
+                    th:text="${'Date   ' + '   ▼'}"
+                    th:onclick="goList({category: [[${categoryHandler}]], sort: 'dateDESC', origin: [[${originHandler}]]})"
+                  >
                   </div>
                 </div>
-                <!-- sort -->
-                <div class="shop-sidebar-accordion">
-                  <div class="accordion" id="accordion">
-                    <div class="card">
-                      <div class="card-heading">
-                        <a data-toggle="collapse" data-target="#collapseTwo">
-                          <i class="fas fa-list-ul"></i>
-                          &nbsp;&nbsp;&nbsp;Sort&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                          <i class="fas fa-sort-down"></i>
-                        </a>
-                      </div>
-                      <div id="collapseTwo">
-                        <div class="card-body">
-                          <div class="shop-sidebar-tags">
-                            <a th:href="@{|/product/listProduct?sort=nameASC|}">
-                            Name&nbsp;&nbsp;&nbsp;<i class="fas fa-long-arrow-alt-up"></i></a>
-                            <a th:href="@{|/product/listProduct?sort=nameDESC|}">
-                            Name&nbsp;&nbsp;&nbsp;<i class="fas fa-long-arrow-alt-down"></i></a>
-                            <a th:href="@{|/product/listProduct?sort=priceASC|}">
-                            Price&nbsp;&nbsp;&nbsp;<i class="fas fa-long-arrow-alt-up"></i></a>
-                            <a th:href="@{|/product/listProduct?sort=priceDESC|}">
-                            Price&nbsp;&nbsp;&nbsp;<i class="fas fa-long-arrow-alt-down"></i></a>
-                            <a th:href="@{|/product/listProduct?sort=dateASC|}">
-                            Date&nbsp;&nbsp;&nbsp;  <i class="fas fa-long-arrow-alt-up"></i></a>
-                            <a th:href="@{|/product/listProduct?sort=dateDESC|}">
-                            Date&nbsp;&nbsp;&nbsp;  <i class="fas fa-long-arrow-alt-down"></i></a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+              </div>
+              <hr class="mt-20 mb-20 h-2" />
+              <!-- category -->
+              <div class="slider-category">
+                <div class="d-row-left mb-20">
+                  <i
+                    th:id="${'category-icon'}"
+                    th:name="${'category-icon'}"
+                    th:class="${'fas fa-list-ul me-10'}"
+                  >
+                  </i>
+                  <div
+                    th:id="${'category-title'}"
+                    th:name="${'category-title'}"
+                    th:class="${'fs-0-8rem fw-700 light-black upper'}"
+                    th:text="${'category'}"
+                  >
+                  </div>
+                  <i
+                    th:id="${'category-icon-down'}"
+                    th:name="${'category-icon-down'}"
+                    th:class="${'fas fa-sort-down hover mt-n5 ms-3'}"
+                    th:onclick="collapseList('category')"
+                  >
+                  </i>
+                </div>
+                <div class="d-col-left">
+                  <div
+                    th:id="${'all'}"
+                    th:name="${'all'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${categoryHandler == 'all' ? 'bg-dark light' : ''}"
+                    th:text="${'ALL'}"
+                    th:onclick="goList({category: 'all', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'outer'}"
+                    th:name="${'outer'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${categoryHandler == 'outer' ? 'bg-dark light' : ''}"
+                    th:text="${'OUTER'}"
+                    th:onclick="goList({category: 'outer', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'top'}"
+                    th:name="${'top'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${categoryHandler == 'top' ? 'bg-dark light' : ''}"
+                    th:text="${'TOP'}"
+                    th:onclick="goList({category: 'top', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'bottom'}"
+                    th:name="${'bottom'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${categoryHandler == 'bottom' ? 'bg-dark light' : ''}"
+                    th:text="${'BOTTOM'}"
+                    th:onclick="goList({category: 'bottom', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'shoes'}"
+                    th:name="${'shoes'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${categoryHandler == 'shoes' ? 'bg-dark light' : ''}"
+                    th:text="${'SHOES'}"
+                    th:onclick="goList({category: 'shoes', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'acc'}"
+                    th:name="${'acc'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${categoryHandler == 'acc' ? 'bg-dark light' : ''}"
+                    th:text="${'ACC'}"
+                    th:onclick="goList({category: 'acc', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'bag'}"
+                    th:name="${'bag'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10'}"
+                    th:classappend="${categoryHandler == 'bag' ? 'bg-dark light' : ''}"
+                    th:text="${'BAG'}"
+                    th:onclick="goList({category: 'bag', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  >
                   </div>
                 </div>
-                <!-- size -->
-                <div class="shop-sidebar-accordion">
-                  <div class="accordion" id="accordion">
-                    <div class="card">
-                      <div class="card-heading">
-                        <a data-toggle="collapse" data-target="#collapseThree">
-                          <i class="fas fa-list-ul"></i>
-                          &nbsp;&nbsp;&nbsp;Size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                          <i class="fas fa-sort-down"></i>
-                        </a>
-                      </div>
-                      <div id="collapseThree">
-                        <div class="card-body">
-                          <div class="shop-sidebar-size">
-                            <label for="xs">xs<input th:type="${'radio'}" th:id="${'xs'}"></label>
-                            <label for="sm">s<input th:type="${'radio'}" th:id="${'sm'}"></label>
-                            <label for="md">m<input th:type="${'radio'}" th:id="${'md'}"></label>
-                            <label for="xl">xl<input th:type="${'radio'}" th:id="${'xl'}"></label>
-                            <label for="2xl">2xl<input th:type="${'radio'}" th:id="${'2xl'}"></label>
-                            <label for="xxl">xxl<input th:type="${'radio'}" th:id="${'xxl'}"></label>
-                            <label for="3xl">3xl<input th:type="${'radio'}" th:id="${'3xl'}"></label>
-                            <label for="4xl">4xl<input th:type="${'radio'}" th:id="${'4xl'}"></label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+              </div>
+              <hr class="mt-20 mb-20 h-2" />
+              <!-- origin -->
+              <div class="slider-origin">
+                <div class="d-row-left mb-20">
+                  <i
+                    th:id="${'origin-icon'}"
+                    th:name="${'origin-icon'}"
+                    th:class="${'fas fa-list-ul me-10'}"
+                  >
+                  </i>
+                  <div
+                    th:id="${'origin-title'}"
+                    th:name="${'origin-title'}"
+                    th:class="${'fs-0-8rem fw-700 light-black upper'}"
+                    th:text="${'Origin'}"
+                  >
                   </div>
+                  <i
+                    th:id="${'origin-icon-down'}"
+                    th:name="${'origin-icon-down'}"
+                    th:class="${'fas fa-sort-down hover mt-n5 ms-3'}"
+                    th:onclick="collapseList('origin')"
+                  >
+                  </i>
                 </div>
-                <!-- color -->
-                <div class="shop-sidebar-accordion">
-                  <div class="accordion" id="accordion">
-                    <div class="card">
-                      <div class="card-heading">
-                        <a data-toggle="collapse" data-target="#collapseFour">
-                          <i class="fas fa-list-ul"></i>
-                          &nbsp;&nbsp;&nbsp;Colors&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                          <i class="fas fa-sort-down"></i>
-                        </a>
-                      </div>
-                      <div id="collapseFour">
-                        <div class="card-body">
-                          <div class="shop-sidebar-color">
-                            <label class="c-1" for="sp-1"><input th:type="${'radio'}" th:id="${'sp-1'}"></label>
-                            <label class="c-2" for="sp-2"><input th:type="${'radio'}" th:id="${'sp-2'}"></label>
-                            <label class="c-3" for="sp-3"><input th:type="${'radio'}" th:id="${'sp-3'}"></label>
-                            <label class="c-4" for="sp-4"><input th:type="${'radio'}" th:id="${'sp-4'}"></label>
-                            <label class="c-5" for="sp-5"><input th:type="${'radio'}" th:id="${'sp-5'}"></label>
-                            <label class="c-6" for="sp-6"><input th:type="${'radio'}" th:id="${'sp-6'}"></label>
-                            <label class="c-7" for="sp-7"><input th:type="${'radio'}" th:id="${'sp-7'}"></label>
-                            <label class="c-8" for="sp-8"><input th:type="${'radio'}" th:id="${'sp-8'}"></label>
-                            <label class="c-9" for="sp-9"><input th:type="${'radio'}" th:id="${'sp-9'}"></label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                <div class="d-col-left">
+                  <div
+                    th:id="${'all'}"
+                    th:name="${'all'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${originHandler == 'all' ? 'bg-dark light' : ''}"
+                    th:text="${'ALL'}"
+                    th:onclick="goList({category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'all'})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'kr'}"
+                    th:name="${'kr'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${originHandler == 'kr' ? 'bg-dark light' : ''}"
+                    th:text="${'KOREA'}"
+                    th:onclick="goList({category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'kr'})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'ch'}"
+                    th:name="${'ch'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${originHandler == 'ch' ? 'bg-dark light' : ''}"
+                    th:text="${'CHINA'}"
+                    th:onclick="goList({category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'ch'})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'jp'}"
+                    th:name="${'jp'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${originHandler == 'jp' ? 'bg-dark light' : ''}"
+                    th:text="${'JAPAN'}"
+                    th:onclick="goList({category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'jp'})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'us'}"
+                    th:name="${'us'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${originHandler == 'us' ? 'bg-dark light' : ''}"
+                    th:text="${'USA'}"
+                    th:onclick="goList({category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'us'})"
+                  >
                   </div>
                 </div>
               </div>
             </div>
-            <!-- list -->
-            <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+            <!-- product-list -->
+            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9">
               <div class="row">
                 <th:block th:each="LIST : ${LIST}">
-                  <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 p-50">
-                    <div class="border-1 radius-2 shadow-3 w-200 h-200 object-cover">
+                  <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 d-center p-10 mb-15vh">
+                    <div class="radius-2 shadow-1 w-100p h-300 w-max500 object-cover p-relative">
+                      <!-- image -->
                       <div
                         th:id="${'product-bg'}"
                         th:name="${'product-bg'}"
-                        th:class="${'radius-1 z-100'}"
+                        th:class="${'radius-2 z-100'}"
                         th:attr="product-bg=@{|${STORAGE}/${page}/${LIST['product_imgsUrl']}|}"
                       >
                       </div>
-                      <div class="product-hover">
-                        <div class="d-row-center ms-10 mb-10">
-                          <i class="far fa-heart light-black me-10"></i>
+                      <!-- hover -->
+                      <div class="product-hover radius-2 fadeIn">
+                        <div class="d-row-center pointer-light ms-20 mb-20">
+                          <i class="far fa-heart light me-10"></i>
                           <div
                             th:id="${'like'}"
                             th:name="${'like'}"
-                            th:class="${'fs-0-7rem fw-600 light-black'}"
+                            th:class="${'fs-0-9rem fw-500 light'}"
                           >
                             Like
                           </div>
                         </div>
-                        <div class="d-row-center ms-10 mb-10">
-                          <i class="fas fa-exchange-alt light-black me-10"></i>
+                        <div class="d-row-center pointer-light ms-20 mb-20">
+                          <i class="fas fa-exchange-alt light me-10"></i>
                           <div
                             th:id="${'compare'}"
                             th:name="${'compare'}"
-                            th:class="${'fs-0-7rem fw-600 light-black'}"
+                            th:class="${'fs-0-9rem fw-500 light'}"
                           >
                             Compare
                           </div>
                         </div>
-                        <div class="d-row-center ms-10">
-                          <i class="fas fa-search light-black me-10"></i>
+                        <div class="d-row-center pointer-light ms-20">
+                          <i class="fas fa-search light me-10"></i>
                           <div
                             th:id="${'view'}"
                             th:name="${'view'}"
-                            th:class="${'fs-0-7rem fw-600 light-black'}"
+                            th:class="${'fs-0-9rem fw-500 light'}"
                             th:onclick="goDetail([[${LIST['product_number']}]])"
                           >
                             View
                           </div>
                         </div>
                       </div>
-                      <div class="product-item-text">
-                        <div
-                          th:id="${'product_name'}"
-                          th:name="${'product_name'}"
-                          th:class="${'fs-1-0rem fw-700 light-black'}"
-                          th:text="${#strings.abbreviate(LIST['product_name'], 20)}"
-                        >
+                      <!-- text -->
+                      <div class="product-text">
+                        <div class="d-row-center mt-20">
+                          <div
+                            th:id="${'product_name'}"
+                            th:name="${'product_name'}"
+                            th:class="${'fs-1-1rem fw-700 light-black'}"
+                            th:text="${#strings.abbreviate(LIST['product_name'], 20)}"
+                          >
+                          </div>
                         </div>
-                        <a
-                          th:href="@{|/product/detailProduct?product_number=${LIST['product_number']}|}"
-                          class="save-cart"
-                        >
-                          + Buy
-                        </a>
-                        <div
-                          th:id="${'product_company'}"
-                          th:name="${'product_company'}"
-                          th:class="${'fs-0-7rem fw-600 dark-grey'}"
-                          th:text="${LIST['product_company']}"
-                        >
-                        </div>
-                        <div
-                          th:id="${'product_price'}"
-                          th:name="${'product_price'}"
-                          th:class="${'fs-0-9rem fw-600 dark-grey'}"
-                          th:text="${LIST['product_price']}"
-                        >
+                        <div class="d-row-between mt-10">
+                          <div
+                            th:id="${'product_company'}"
+                            th:name="${'product_company'}"
+                            th:class="${'fs-0-9rem fw-600 grey ms-20'}"
+                            th:text="${LIST['product_company']}"
+                          >
+                          </div>
+                          <div
+                            th:id="${'product_price'}"
+                            th:name="${'product_price'}"
+                            th:class="${'fs-0-9rem fw-600 dark me-20'}"
+                            th:text="${#numbers.formatInteger(LIST['product_price'], 3, 'COMMA')}"
+                          >
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </th:block>
+              </div>
+            </div>
+            <!-- slider-off -->
+            <div class="d-block d-sm-none col-12">
+              <!-- sort -->
+              <div class="slider-off-sort">
+                <div class="d-row-left mb-20">
+                <i
+                  th:id="${'off-sort-icon'}"
+                  th:name="${'off-sort-icon'}"
+                  th:class="${'fas fa-list-ul me-10'}"
+                >
+                </i>
+                <div
+                  th:id="${'off-sort-title'}"
+                  th:name="${'off-sort-title'}"
+                  th:class="${'fs-0-7rem fw-600 light-black upper'}"
+                  th:text="${'Sort'}"
+                >
+                </div>
+                <i
+                  th:id="${'off-sort-icon-down'}"
+                  th:name="${'off-sort-icon-down'}"
+                  th:class="${'fas fa-sort-down hover mt-n5 ms-3'}"
+                  th:onclick="collapseList('off-sort')"
+                >
+                </i>
+                </div>
+                <div class="d-col-left">
+                  <div
+                    th:id="${'all'}"
+                    th:name="${'all'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${sortHandler == 'all' ? 'bg-dark light' : ''}"
+                    th:text="${'ALL'}"
+                    th:onclick="goList({category: [[${categoryHandler}]], sort: 'all', origin: [[${originHandler}]]})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'nameASC'}"
+                    th:name="${'nameASC'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${sortHandler == 'nameASC' ? 'bg-dark light' : ''}"
+                    th:text="${'Name   ' + '   ▲'}"
+                    th:onclick="goList({category: [[${categoryHandler}]], sort: 'nameASC', origin: [[${originHandler}]]})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'nameDESC'}"
+                    th:name="${'nameDESC'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${sortHandler == 'nameDESC' ? 'bg-dark light' : ''}"
+                    th:text="${'Name   ' + '   ▼'}"
+                    th:onclick="goList({category: [[${categoryHandler}]], sort: 'nameDESC', origin: [[${originHandler}]]})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'priceASC'}"
+                    th:name="${'priceASC'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${sortHandler == 'priceASC' ? 'bg-dark light' : ''}"
+                    th:text="${'Price   ' + '   ▲'}"
+                    th:onclick="goList({category: [[${categoryHandler}]], sort: 'priceASC', origin: [[${originHandler}]]})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'priceDESC'}"
+                    th:name="${'priceDESC'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${sortHandler == 'priceDESC' ? 'bg-dark light' : ''}"
+                    th:text="${'Price   ' + '   ▼'}"
+                    th:onclick="goList({category: [[${categoryHandler}]], sort: 'priceDESC', origin: [[${originHandler}]]})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'dateASC'}"
+                    th:name="${'dateASC'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${sortHandler == 'dateASC' ? 'bg-dark light' : ''}"
+                    th:text="${'Date   ' + '   ▲'}"
+                    th:onclick="goList({category: [[${categoryHandler}]], sort: 'dateASC', origin: [[${originHandler}]]})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'dateDESC'}"
+                    th:name="${'dateDESC'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10'}"
+                    th:classappend="${sortHandler == 'dateDESC' ? 'bg-dark light' : ''}"
+                    th:text="${'Date   ' + '   ▼'}"
+                    th:onclick="goList({category: [[${categoryHandler}]], sort: 'dateDESC', origin: [[${originHandler}]]})"
+                  >
+                  </div>
+                </div>
+              </div>
+              <!-- category -->
+              <div class="slider-off-category">
+                <div class="d-row-left mb-20">
+                  <i
+                    th:id="${'off-category-icon'}"
+                    th:name="${'off-category-icon'}"
+                    th:class="${'fas fa-list-ul me-10'}"
+                  >
+                  </i>
+                  <div
+                    th:id="${'off-category-title'}"
+                    th:name="${'off-category-title'}"
+                    th:class="${'fs-0-7rem fw-600 light-black upper'}"
+                    th:text="${'category'}"
+                  >
+                  </div>
+                  <i
+                    th:id="${'off-category-icon-down'}"
+                    th:name="${'off-category-icon-down'}"
+                    th:class="${'fas fa-sort-down hover mt-n5 ms-3'}"
+                    th:onclick="collapseList('off-category')"
+                  >
+                  </i>
+                </div>
+                <div class="d-col-left">
+                  <div
+                    th:id="${'all'}"
+                    th:name="${'all'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${categoryHandler == 'all' ? 'bg-dark light' : ''}"
+                    th:text="${'ALL'}"
+                    th:onclick="goList({category: 'all', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'outer'}"
+                    th:name="${'outer'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${categoryHandler == 'outer' ? 'bg-dark light' : ''}"
+                    th:text="${'OUTER'}"
+                    th:onclick="goList({category: 'outer', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'top'}"
+                    th:name="${'top'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${categoryHandler == 'top' ? 'bg-dark light' : ''}"
+                    th:text="${'TOP'}"
+                    th:onclick="goList({category: 'top', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'bottom'}"
+                    th:name="${'bottom'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${categoryHandler == 'bottom' ? 'bg-dark light' : ''}"
+                    th:text="${'BOTTOM'}"
+                    th:onclick="goList({category: 'bottom', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'shoes'}"
+                    th:name="${'shoes'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${categoryHandler == 'shoes' ? 'bg-dark light' : ''}"
+                    th:text="${'SHOES'}"
+                    th:onclick="goList({category: 'shoes', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'acc'}"
+                    th:name="${'acc'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${categoryHandler == 'acc' ? 'bg-dark light' : ''}"
+                    th:text="${'ACC'}"
+                    th:onclick="goList({category: 'acc', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'bag'}"
+                    th:name="${'bag'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10'}"
+                    th:classappend="${categoryHandler == 'bag' ? 'bg-dark light' : ''}"
+                    th:text="${'BAG'}"
+                    th:onclick="goList({category: 'bag', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  >
+                  </div>
+                </div>
+              </div>
+              <!-- origin -->
+              <div class="slider-off-origin">
+                <div class="d-row-left mb-20">
+                  <i
+                    th:id="${'off-origin-icon'}"
+                    th:name="${'off-origin-icon'}"
+                    th:class="${'fas fa-list-ul me-10'}"
+                  >
+                  </i>
+                  <div
+                    th:id="${'off-origin-title'}"
+                    th:name="${'off-origin-title'}"
+                    th:class="${'fs-0-7rem fw-600 light-black upper'}"
+                    th:text="${'Origin'}"
+                  >
+                  </div>
+                  <i
+                    th:id="${'off-origin-icon-down'}"
+                    th:name="${'off-origin-icon-down'}"
+                    th:class="${'fas fa-sort-down hover mt-n5 ms-3'}"
+                    th:onclick="collapseList('off-origin')"
+                  >
+                  </i>
+                </div>
+                <div class="d-col-left">
+                  <div
+                    th:id="${'all'}"
+                    th:name="${'all'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${originHandler == 'all' ? 'bg-dark light' : ''}"
+                    th:text="${'ALL'}"
+                    th:onclick="goList({category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'all'})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'kr'}"
+                    th:name="${'kr'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${originHandler == 'kr' ? 'bg-dark light' : ''}"
+                    th:text="${'KOREA'}"
+                    th:onclick="goList({category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'kr'})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'ch'}"
+                    th:name="${'ch'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${originHandler == 'ch' ? 'bg-dark light' : ''}"
+                    th:text="${'CHINA'}"
+                    th:onclick="goList({category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'ch'})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'jp'}"
+                    th:name="${'jp'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${originHandler == 'jp' ? 'bg-dark light' : ''}"
+                    th:text="${'JAPAN'}"
+                    th:onclick="goList({category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'jp'})"
+                  >
+                  </div>
+                  <div
+                    th:id="${'us'}"
+                    th:name="${'us'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:classappend="${originHandler == 'us' ? 'bg-dark light' : ''}"
+                    th:text="${'USA'}"
+                    th:onclick="goList({category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'us'})"
+                  >
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -232,31 +624,93 @@
   <!-- script -->
   <script defer>
     // product-bg 이미지 삽입
-    const productBg = document.querySelectorAll('[product-bg]');
-    productBg.forEach((bg) => {
-      const bgUrl = bg.getAttribute('product-bg');
-      bg.style.backgroundImage = `url(${bgUrl})`;
-      bg.style.width = '100%';
-      bg.style.height = '100%';
-      bg.style.backgroundSize = 'cover';
-      bg.style.backgroundPosition = 'center';
-    });
+    function insertBg() {
+      document.querySelectorAll('[product-bg]')?.forEach((bg) => {
+        const bgUrl = bg.getAttribute('product-bg');
+        Object.assign(bg.style, {
+          backgroundImage: `url(${bgUrl})`,
+          width: '100%',
+          height: '100%',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        });
+      });
+    };
+
     // product-hover 호버했을때 효과
-    const productItemHover = document.querySelectorAll('.product-hover');
-    productItemHover.forEach((el) => {
-      el.style.position = 'absolute';
-      el.style.width = '100%';
-      el.style.height = '50%';
-      el.style.top = '25%';
-      el.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-    });
-    productItemHover.forEach((el) => {
-      el.addEventListener('mouseover', () => {
-        el.style.display = 'block';
+    function hoverTransition() {
+      const itemHover = document.querySelectorAll('.product-hover');
+      const itemText = document.querySelectorAll('.product-text');
+      itemHover.forEach((el) => {
+        Object.assign(el.style, {
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          top: '0',
+          backgroundColor: 'rgba(0, 0, 0, 0.3)',
+          display: 'none',
+        });
+        el.parentElement.addEventListener('mouseover', () => {
+          Object.assign(el.style, {
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'flex-start',
+          });
+          Object.assign(Array.from(itemText).filter((text) => (
+            text.parentElement === el.parentElement
+          )).map((text) => text.style), {
+            color: 'light',
+            transition: 'color 0.3s, transform 0.3s',
+            transform: 'scale(1.1)',
+          });
+        });
+        el.parentElement.addEventListener('mouseout', () => {
+          Object.assign(el.style, {
+            display: 'none',
+          });
+          Object.assign(Array.from(itemText).filter((text) => (
+            text.parentElement === el.parentElement
+          )).map((text) => text.style), {
+            color: 'light-black',
+            transition: 'color 0.3s, transform 0.3s',
+            transform: 'scale(1)',
+          });
+        });
       });
-      el.addEventListener('mouseout', () => {
-        el.style.display = 'none';
+    };
+
+    // collapse 효과
+    function collapseList(element) {
+      document.querySelectorAll(`.slider-${element}`).forEach((el) => {
+        const iconDown = el.querySelector(`#${element}-icon-down`);
+        const elementList = el.querySelector('.d-col-left');
+
+        const computedStyle = window.getComputedStyle(elementList);
+        const currentMaxHeight = computedStyle.maxHeight;
+        const currentOpacity = computedStyle.opacity;
+
+        elementList.style.transition = 'max-height 0.5s ease, opacity 0.5s ease';
+        elementList.style.overflow = 'hidden';
+
+        if (currentMaxHeight === '0px' || currentOpacity === '0') {
+          elementList.style.maxHeight = '500px';
+          elementList.style.opacity = '1';
+          iconDown.style.transform = 'rotate(0deg)';
+          iconDown.classList.add('mt-n5');
+        }
+        else {
+          elementList.style.maxHeight = '0';
+          elementList.style.opacity = '0';
+          iconDown.style.transform = 'rotate(180deg)';
+          iconDown.classList.remove('mt-n5');
+        }
       });
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      insertBg();
+      hoverTransition();
     });
   </script>
 

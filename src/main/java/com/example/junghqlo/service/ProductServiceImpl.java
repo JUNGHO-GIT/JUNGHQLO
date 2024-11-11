@@ -47,12 +47,13 @@ public class ProductServiceImpl implements ProductService {
     Integer itemsPer,
     String sort,
     String category,
+    String origin,
     String type,
     String keyword,
     Product product
   ) throws Exception {
 
-    List<Product> content = productMapper.listProduct(sort, category, type, keyword);
+    List<Product> content = productMapper.listProduct(sort, category, origin, type, keyword);
 
     Integer itemsTotal = content.size();
     Integer pageLast = (itemsTotal + itemsPer - 1) / itemsPer;

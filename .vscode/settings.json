@@ -47,5 +47,5 @@
   },
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "explorerExclude.backup": {},
-  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.configuration.updateBuildConfiguration": "automatic"
 }

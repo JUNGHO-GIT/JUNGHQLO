@@ -29,8 +29,27 @@ function goLogin() {
 /** ----------------------------------------------------------------------------------------------->
 * @desc 리스트 페이지로 이동
 **/
-function goList() {
-  goToPage(`/${title}/${preFix1}/list${preFix2}`);
+function goList(param) {
+  const parsedParam = JSON.parse(JSON.stringify(param));
+
+  // 1. 빈 객체일 경우
+  if (!Array.isArray(parsedParam) && Object.keys(parsedParam).length === 0) {
+    goToPage(`/${title}/${preFix1}/list${preFix2}`);
+  }
+  // 2. 키-값이 1개만 있는 경우
+  else if (Object.keys(parsedParam).length === 1) {
+    const key = Object.keys(parsedParam)[0];
+    const value = parsedParam[key];
+    goToPage(`/${title}/${preFix1}/list${preFix2}?${key}=${value}`);
+  }
+  // 3. 키-값이 2개 이상인 경우
+  else {
+    let url = `/${title}/${preFix1}/list${preFix2}?`;
+    for (const key in parsedParam) {
+      url += `${key}=${parsedParam[key]}&`;
+    }
+    goToPage(url);
+  }
 };
 
 /** ----------------------------------------------------------------------------------------------->

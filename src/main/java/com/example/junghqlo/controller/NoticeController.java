@@ -31,15 +31,15 @@ public class NoticeController {
 
   // 0. constructor injection ----------------------------------------------------------------------
   private NoticeService noticeService;
-  private Logger logger;
   NoticeController(NoticeService noticeService) {
     this.noticeService = noticeService;
-    this.logger = LoggerFactory.getLogger(this.getClass());
   }
 
   // 0. static -------------------------------------------------------------------------------------
   private static String page = "notice";
   private static String PAGE = "Notice";
+
+  private static Logger logger = LoggerFactory.getLogger(NoticeController.class);
   private static Gson gson = new GsonBuilder()
   .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
   .registerTypeAdapter(File.class, new FileAdapter())

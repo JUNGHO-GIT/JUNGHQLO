@@ -21,6 +21,7 @@ public class ProductMapperImpl implements ProductMapper {
   public List<Product> listProduct(
     String sort,
     String category,
+    String origin,
     String type,
     String keyword
   ) throws Exception {
@@ -28,6 +29,7 @@ public class ProductMapperImpl implements ProductMapper {
     Map<String, Object> map = new HashMap<>();
     map.put("sort", sort);
     map.put("category", category);
+    map.put("origin", origin);
     map.put("type", type);
     map.put("keyword", keyword);
 

@@ -19,40 +19,44 @@
           </span>
         </div>
         <div class="col-12 col-sm-5 col-md-5 col-lg-5 col-xl-5 d-row-right">
-          <a
-            th:if="${session.member_id == null}"
-            th:href="@{|/member/saveMember}"
-          >
-            <span class="upper-text white hover me-20">
+          <th:block th:if="${session.member_id == null}">
+            <div
+              th:id="${'signup'}"
+              th:name="${'signup'}"
+              th:class="${'upper white hover fs-1-0rem me-20'}"
+              th:onclick="|return goSignUp()|"
+            >
               SignUp
-            </span>
-          </a>
-          <a
-            th:if="${session.member_id == null}"
-            th:href="@{|/member/loginMember|}"
-          >
-            <span class="upper-text white hover me-20">
+            </div>
+            <div
+              th:id="${'login'}"
+              th:name="${'login'}"
+              th:class="${'upper white hover fs-1-0rem me-20'}"
+              th:onclick="|return goLogin()|"
+            >
               Login
-            </span>
-          </a>
-          <a
-            th:if="${session.member_id != null}"
-            th:href="@{|/member/detailMember|}"
-          >
-            <span class="upper-text white hover me-20">
+            </div>
+          </th:block>
+          <th:block th:if="${session.member_id != null}">
+            <div
+              th:id="${'mypage'}"
+              th:name="${'mypage'}"
+              th:class="${'upper white hover fs-1-0rem me-20'}"
+              th:onclick="|return goMyPage()|"
+            >
               MyPage
-            </span>
-          </a>
-          <a
-            th:if="${session.member_id != null}"
-            th:onclick="|logoutMember()|"
-          >
-            <span class="upper-text white hover me-20">
+            </div>
+            <div
+              th:id="${'logout'}"
+              th:name="${'logout'}"
+              th:class="${'upper white hover fs-1-0rem me-20'}"
+              th:onclick="|return logoutMember()|"
+            >
               Logout
-            </span>
-          </a>
+            </div>
+          </th:block>
           <div class="header-top-hover">
-            <span class="upper-text white hover">
+            <span class="upper white hover fs-1-0rem">
               Admin
             </span>
             <ul th:if ="${session.member_id == ADMIN}">
@@ -122,45 +126,45 @@
         <!-- menu -->
         <div class="d-none d-sm-block col-sm-10 col-md-10 col-lg-6 col-xl-6">
           <div
-            th:class="${'fs-0-9rem fw-700 upper-text pointer-burgundy ls-1 ms-n30 me-2vw'}"
+            th:class="${'fs-0-9rem fw-700 upper pointer-burgundy ls-1 ms-n30 me-2vw'}"
             th:onclick="|location.href='@{/product/listProduct}'|"
           >
             Product
           </div>
           <div
-            th:class="${'fs-0-9rem fw-700 upper-text pointer-burgundy ls-1 me-2vw'}"
+            th:class="${'fs-0-9rem fw-700 upper pointer-burgundy ls-1 me-2vw'}"
             th:if="${session.member_id != null}"
             th:onclick="|location.href='@{/orders/listOrders}'|"
           >
             Orders
           </div>
           <div
-            th:class="${'fs-0-9rem fw-700 upper-text pointer-burgundy ls-1 me-2vw'}"
+            th:class="${'fs-0-9rem fw-700 upper pointer-burgundy ls-1 me-2vw'}"
             th:if="${session.member_id == null}"
             th:onclick="|return sessionAlert()|"
           >
             Orders
           </div>
           <div
-            th:class="${'fs-0-9rem fw-700 upper-text pointer-burgundy ls-1 me-2vw'}"
+            th:class="${'fs-0-9rem fw-700 upper pointer-burgundy ls-1 me-2vw'}"
             th:onclick="|location.href='@{/board/listBoard}'|"
           >
             Board
           </div>
           <div
-            th:class="${'fs-0-9rem fw-700 upper-text pointer-burgundy ls-1 me-2vw'}"
+            th:class="${'fs-0-9rem fw-700 upper pointer-burgundy ls-1 me-2vw'}"
             th:onclick="|location.href='@{/notice/listNotice}'|"
           >
             Notice
           </div>
           <div
-            th:class="${'fs-0-9rem fw-700 upper-text pointer-burgundy ls-1 me-2vw'}"
+            th:class="${'fs-0-9rem fw-700 upper pointer-burgundy ls-1 me-2vw'}"
             th:onclick="|location.href='@{/qna/listQna}'|"
           >
             QnA
           </div>
           <div
-            th:class="${'fs-0-9rem fw-700 upper-text pointer-burgundy ls-1'}"
+            th:class="${'fs-0-9rem fw-700 upper pointer-burgundy ls-1'}"
             th:onclick="|location.href='@{/contact/listContact}'|"
           >
             Contact

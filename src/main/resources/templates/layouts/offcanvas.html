@@ -15,7 +15,7 @@
             th:if="${session.member_id == null}"
             th:href="@{|/member/saveMember|}"
           >
-            <span class="upper-text me-20">
+            <span class="upper me-20">
               SignUp
             </span>
           </a>
@@ -23,7 +23,7 @@
             th:if="${session.member_id == null}"
             th:href="@{|/member/loginMember|}"
           >
-            <span class="upper-text me-20">
+            <span class="upper me-20">
               Login
             </span>
           </a>
@@ -31,7 +31,7 @@
             th:if="${session.member_id != null}"
             th:href="@{|/member/detailMember|}"
           >
-            <span class="upper-text me-20">
+            <span class="upper me-20">
               MyPage
             </span>
           </a>
@@ -39,13 +39,13 @@
             th:if="${session.member_id != null}"
             th:onclick="|logoutMember()|"
           >
-            <span class="upper-text me-20">
+            <span class="upper me-20">
               Logout
             </span>
           </a>
         </div>
         <div class="off-canvas-top-hover">
-          <span class="upper-text black hover">
+          <span class="upper black hover">
             Admin
           </span>
           <ul th:if ="${session.member_id == ADMIN}">
@@ -99,45 +99,45 @@
       <!-- menu -->
       <div class="d-col-left">
         <div
-          class="fs-1-0rem fw-700 upper-text pointer-burgundy ls-1 mb-30"
+          class="fs-1-0rem fw-700 upper pointer-burgundy ls-1 mb-30"
           th:onclick="|location.href='@{/product/listProduct}'|"
         >
           Product
         </div>
         <div
-          th:class="${'fs-1-0rem fw-700 upper-text pointer-burgundy ls-1 mb-30'}"
+          th:class="${'fs-1-0rem fw-700 upper pointer-burgundy ls-1 mb-30'}"
           th:if="${session.member_id != null}"
           th:onclick="|location.href='@{/orders/listOrders}'|"
         >
           Orders
         </div>
         <div
-          th:class="${'fs-1-0rem fw-700 upper-text pointer-burgundy ls-1 mb-30'}"
+          th:class="${'fs-1-0rem fw-700 upper pointer-burgundy ls-1 mb-30'}"
           th:if="${session.member_id == null}"
           th:onclick="|return sessionAlert()|"
         >
           Orders
         </div>
         <div
-          th:class="${'fs-1-0rem fw-700 upper-text pointer-burgundy ls-1 mb-30'}"
+          th:class="${'fs-1-0rem fw-700 upper pointer-burgundy ls-1 mb-30'}"
           th:onclick="|location.href='@{/board/listBoard}'|"
         >
             Board
         </div>
         <div
-          th:class="${'fs-1-0rem fw-700 upper-text pointer-burgundy ls-1 mb-30'}"
+          th:class="${'fs-1-0rem fw-700 upper pointer-burgundy ls-1 mb-30'}"
           th:onclick="|location.href='@{/notice/listNotice}'|"
         >
           Notice
         </div>
         <div
-          th:class="${'fs-1-0rem fw-700 upper-text pointer-burgundy ls-1 mb-30'}"
+          th:class="${'fs-1-0rem fw-700 upper pointer-burgundy ls-1 mb-30'}"
           th:onclick="|location.href='@{/qna/listQna}'|"
         >
           QnA
         </div>
         <div
-          th:class="${'fs-1-0rem fw-700 upper-text pointer-burgundy ls-1 mb-30'}"
+          th:class="${'fs-1-0rem fw-700 upper pointer-burgundy ls-1 mb-30'}"
           th:onclick="|location.href='@{/contact/listContact}'|"
         >
           Contact

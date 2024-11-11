@@ -11,10 +11,4 @@ public class CommonController {
 	public String home() throws Exception {
 		return "/pages/home";
   }
-
-  // contact ---------------------------------------------------------------------------------------
-  @GetMapping("/contact")
-  public String contact() throws Exception {
-    return "/pages/contact/contact";
-  }
-}
+};

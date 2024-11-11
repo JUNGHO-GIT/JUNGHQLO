@@ -12,146 +12,149 @@
           th:action="@{|/${page}/list${PAGE}|}"
           th:class="${'w-100p'}"
         >
-          <div class="d-row-between mb-20">
-            <!-- sort -->
-            <div class="d-row-center w-100p">
+          <!-- sort -->
+          <th:block th:if="${page != 'user' && page != 'product'}">
+            <div class="d-row-between mb-20">
+              <div class="d-row-center w-100p">
+                <select
+                  th:id="${'sort'}"
+                  th:name="${'sort'}"
+                  th:class="${'form-control'}"
+                >
+                  <th:block th:if="${PAGE != null}">
+                    <option
+                      th:value="${'all'}"
+                      th:selected="${sortHandler == 'all'}"
+                      th:text="${'전체'}"
+                    >
+                    </option>
+                    <option
+                      th:value="${'dateDESC'}"
+                      th:selected="${sortHandler == 'dateDESC'}"
+                      th:text="${'최신순'}"
+                    >
+                    </option>
+                    <option
+                      th:value="${'dateASC'}"
+                      th:selected="${sortHandler == 'dateASC'}"
+                      th:text="${'오래된순'}"
+                    >
+                    </option>
+                  </th:block>
+                  <th:block th:if="${page == 'notice' || page == 'board' || page == 'qna'}">
+                    <option
+                      th:value="${'titleDESC'}"
+                      th:selected="${sortHandler == 'titleDESC'}"
+                      th:text="${'제목순(내림차순)'}"
+                    >
+                    </option>
+                    <option
+                      th:value="${'titleASC'}"
+                      th:selected="${sortHandler == 'titleASC'}"
+                      th:text="${'제목순(오름차순)'}"
+                    >
+                    </option>
+                  </th:block>
+                  <th:block th:if="${page == 'product' || page == 'orders' || page == 'member'}">
+                    <option
+                      th:value="${'nameDESC'}"
+                      th:selected="${sortHandler == 'nameDESC'}"
+                      th:text="${'이름순(내림차순)'}"
+                    >
+                    </option>
+                    <option
+                      th:value="${'nameASC'}"
+                      th:selected="${sortHandler == 'nameASC'}"
+                      th:text="${'이름순(오름차순)'}"
+                    >
+                    </option>
+                  </th:block>
+                </select>
+              </div>
+            </div>
+          </th:block>
+          <!-- search -->
+          <th:block th:if="${page != ''}">
+            <div class="d-row-center p-relative">
               <select
-                th:id="${'sort'}"
-                th:name="${'sort'}"
-                th:class="${'form-control'}"
+                th:id="${'type'}"
+                th:name="${'type'}"
+                th:class="${'form-control w-30p me-10'}"
               >
-                <th:block th:if="${PAGE != null}">
+                <th:block th:if="${page == 'notice' || page == 'board' || page == 'qna'}">
                   <option
                     th:value="${'all'}"
-                    th:selected="${sortHandler == 'all'}"
+                    th:selected="${typeHandler == 'all'}"
                     th:text="${'전체'}"
                   >
                   </option>
                   <option
-                    th:value="${'dateDESC'}"
-                    th:selected="${sortHandler == 'dateDESC'}"
-                    th:text="${'최신순'}"
+                    th:value="${'title'}"
+                    th:selected="${typeHandler == 'title'}"
+                    th:text="${'제목'}"
                   >
                   </option>
                   <option
-                    th:value="${'dateASC'}"
-                    th:selected="${sortHandler == 'dateASC'}"
-                    th:text="${'오래된순'}"
-                  >
-                  </option>
-                </th:block>
-                <th:block th:if="${page == 'notice' || page == 'board' || page == 'qna'}">
-                  <option
-                    th:value="${'titleDESC'}"
-                    th:selected="${sortHandler == 'titleDESC'}"
-                    th:text="${'제목순(내림차순)'}"
-                  >
-                  </option>
-                  <option
-                    th:value="${'titleASC'}"
-                    th:selected="${sortHandler == 'titleASC'}"
-                    th:text="${'제목순(오름차순)'}"
+                    th:value="${'contents'}"
+                    th:selected="${typeHandler == 'contents'}"
+                    th:text="${'내용'}"
                   >
                   </option>
                 </th:block>
-                <th:block th:if="${page == 'product' || page == 'orders' || page == 'member'}">
+                <th:block th:if="${page == 'product' || page == 'orders'}">
                   <option
-                    th:value="${'nameDESC'}"
-                    th:selected="${sortHandler == 'nameDESC'}"
-                    th:text="${'이름순(내림차순)'}"
+                    th:value="${'all'}"
+                    th:selected="${typeHandler == 'all'}"
+                    th:text="${'전체'}"
                   >
                   </option>
                   <option
-                    th:value="${'nameASC'}"
-                    th:selected="${sortHandler == 'nameASC'}"
-                    th:text="${'이름순(오름차순)'}"
+                    th:value="${'name'}"
+                    th:selected="${typeHandler == 'name'}"
+                    th:text="${'이름'}"
+                  >
+                  </option>
+                </th:block>
+                <th:block th:if="${page == 'member'}">
+                  <option
+                    th:value="${'all'}"
+                    th:selected="${typeHandler == 'all'}"
+                    th:text="${'전체'}"
+                  >
+                  </option>
+                  <option
+                    th:value="${'id'}"
+                    th:selected="${typeHandler == 'id'}"
+                    th:text="${'아이디'}"
+                  >
+                  </option>
+                  <option
+                    th:value="${'name'}"
+                    th:selected="${typeHandler == 'name'}"
+                    th:text="${'이름'}"
                   >
                   </option>
                 </th:block>
               </select>
+              <input
+                th:type="${'search'}"
+                th:id="${'keyword'}"
+                th:name="${'keyword'}"
+                th:value="${keywordHandler}"
+                th:placeholder="${'search'}"
+                th:class="${'form-control p-relative pe-4vw'}"
+              />
+              <i
+                th:id="${'searchIcon'}"
+                th:name="${'searchIcon'}"
+                th:class="${'fas fa-search fa-lg pointer p-absolute'}"
+                th:style="${'top: 50%; right: 10px; transform: translateY(-50%);'}"
+                th:onclick="|document.getElementById('arrangeForm').submit()|"
+              ></i>
             </div>
-          </div>
-          <!-- search -->
-          <div class="d-row-center p-relative">
-            <select
-              th:id="${'type'}"
-              th:name="${'type'}"
-              th:class="${'form-control w-30p me-10'}"
-            >
-              <th:block th:if="${page == 'notice' || page == 'board' || page == 'qna'}">
-                <option
-                  th:value="${'all'}"
-                  th:selected="${typeHandler == 'all'}"
-                  th:text="${'전체'}"
-                >
-                </option>
-                <option
-                  th:value="${'title'}"
-                  th:selected="${typeHandler == 'title'}"
-                  th:text="${'제목'}"
-                >
-                </option>
-                <option
-                  th:value="${'contents'}"
-                  th:selected="${typeHandler == 'contents'}"
-                  th:text="${'내용'}"
-                >
-                </option>
-              </th:block>
-              <th:block th:if="${page == 'product' || page == 'orders'}">
-                <option
-                  th:value="${'all'}"
-                  th:selected="${typeHandler == 'all'}"
-                  th:text="${'전체'}"
-                >
-                </option>
-                <option
-                  th:value="${'name'}"
-                  th:selected="${typeHandler == 'name'}"
-                  th:text="${'이름'}"
-                >
-                </option>
-              </th:block>
-              <th:block th:if="${page == 'member'}">
-                <option
-                  th:value="${'all'}"
-                  th:selected="${typeHandler == 'all'}"
-                  th:text="${'전체'}"
-                >
-                </option>
-                <option
-                  th:value="${'id'}"
-                  th:selected="${typeHandler == 'id'}"
-                  th:text="${'아이디'}"
-                >
-                </option>
-                <option
-                  th:value="${'name'}"
-                  th:selected="${typeHandler == 'name'}"
-                  th:text="${'이름'}"
-                >
-                </option>
-              </th:block>
-            </select>
-            <input
-              th:type="${'search'}"
-              th:id="${'keyword'}"
-              th:name="${'keyword'}"
-              th:value="${keywordHandler}"
-              th:placeholder="${'search'}"
-              th:class="${'form-control p-relative pe-4vw'}"
-            />
-            <i
-              th:id="${'searchIcon'}"
-              th:name="${'searchIcon'}"
-              th:class="${'fas fa-search fa-lg pointer p-absolute'}"
-              th:style="${'top: 50%; right: 10px; transform: translateY(-50%);'}"
-              th:onclick="|document.getElementById('arrangeForm').submit()|"
-            ></i>
-          </div>
+          </th:block>
         </form>
       </div>
     </div>
   </section>
-
 </html>

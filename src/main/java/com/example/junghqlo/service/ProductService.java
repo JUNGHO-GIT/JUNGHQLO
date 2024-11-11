@@ -13,6 +13,7 @@ public interface ProductService {
     Integer itemsPer,
     String sort,
     String category,
+    String origin,
     String type,
     String keyword,
     Product product

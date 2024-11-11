@@ -13,16 +13,9 @@
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
 }
-[class^="col"] {
+[class^="col-"] {
   padding: 0;
   margin: 0;
-}
-.upper-text {
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  display: inline-block;
-  font-weight: 600;
 }
 .set-bg {
 	background-repeat: no-repeat;
