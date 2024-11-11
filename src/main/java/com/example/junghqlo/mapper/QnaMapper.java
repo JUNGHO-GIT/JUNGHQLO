@@ -51,12 +51,8 @@ public interface QnaMapper {
       column = "qna_dislike"
     ),
     @Result (
-      property = "qna_answer1",
-      column = "qna_answer1"
-    ),
-    @Result (
-      property = "qna_answer2",
-      column = "qna_answer2"
+      property = "qna_answer",
+      column = "qna_answer"
     ),
     @Result (
       property = "qna_imgsUrl",
@@ -123,9 +119,7 @@ public interface QnaMapper {
         qna_count,
         qna_like,
         qna_dislike,
-        qna_answer1,
-        qna_answer2,
-        qna_imgsFile,
+        qna_answer,
         qna_imgsUrl,
         qna_date
       )
@@ -137,8 +131,7 @@ public interface QnaMapper {
       #{qna.qna_count},
       #{qna.qna_like},
       #{qna.qna_dislike},
-      #{qna.qna_answer1},
-      #{qna.qna_answer2},
+      #{qna.qna_answer},
       #{imgsUrl},
       NOW()
     )
@@ -158,8 +151,7 @@ public interface QnaMapper {
       qna_title = #{qna.qna_title},
       qna_contents = #{qna.qna_contents},
       qna_category = #{qna.qna_category},
-      qna_answer1 = #{qna.qna_answer1},
-      qna_answer2 = #{qna.qna_answer2},
+      qna_answer = #{qna.qna_answer},
       qna_imgsUrl = #{imgsUrl},
       qna_update = NOW()
     WHERE

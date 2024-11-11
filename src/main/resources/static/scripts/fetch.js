@@ -36,7 +36,7 @@ function goList() {
 /** ----------------------------------------------------------------------------------------------->
 * @desc 상세 페이지로 이동
 **/
-function goDetail() {
+function goDetail(number) {
   goToPage(`/${title}/${preFix1}/detail${preFix2}?${preFix1}_number=${number}`);
 };
 
@@ -50,14 +50,14 @@ function goSave() {
 /** ------------------------------------------------------------------------------------------------
 * @desc 수정하기 페이지로 이동
 **/
-function goUpdate() {
+function goUpdate(number) {
   goToPage(`/${title}/${preFix1}/update${preFix2}?${preFix1}_number=${number}`);
 };
 
 /** ------------------------------------------------------------------------------------------------
 * @desc 삭제하기 페이지로 이동
 **/
-function goDelete() {
+function goDelete(number) {
   goToPage(`/${title}/${preFix1}/delete${preFix2}?${preFix1}_number=${number}`);
 };
 

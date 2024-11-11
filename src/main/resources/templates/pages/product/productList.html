@@ -12,222 +12,268 @@
 
   <!-- main -->
   <section class="container-fluid px-30">
-
-    <div class="row">
-      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
-    <div class="row">
-
-      <!-- side bar -->
-      <div class="col-lg-3">
-        <div class="shop-sidebar">
-
-          <!-- categories -->
-          <div class="shop-sidebar-accordion">
-            <div class="accordion" id="accordion">
-              <div class="card">
-                <div class="card-heading">
-                  <a data-toggle="collapse" data-target="#collapseOne">
-                    <i class="fas fa-list-ul"></i>
-                    &nbsp;&nbsp;&nbsp;Categories&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <i class="fas fa-sort-down"></i>
-                  </a>
+    <div class="row d-center">
+      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
+        <!-- form -->
+        <form
+          th:id="${'formData'}"
+          th:name="${'formData'}"
+          th:class="${'formData'}"
+        >
+          <div class="row">
+            <!-- shop-sidebar -->
+            <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+              <div class="shop-sidebar">
+                <!-- categories -->
+                <div class="shop-sidebar-accordion">
+                  <div class="accordion" id="accordion">
+                    <div class="card">
+                      <div class="card-heading">
+                        <a data-toggle="collapse" data-target="#collapseOne">
+                          <i class="fas fa-list-ul"></i>
+                          &nbsp;&nbsp;&nbsp;Categories&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <i class="fas fa-sort-down"></i>
+                        </a>
+                      </div>
+                      <div id="collapseOne">
+                        <div class="card-body">
+                          <div class="shop-sidebar-tags">
+                            <a th:href="@{|/product/listProduct|}">All</a>
+                            <a th:href="@{|/product/categoryProduct?category=top|}">Top</a>
+                            <a th:href="@{|/product/categoryProduct?category=bottom|}">Bottom</a>
+                            <a th:href="@{|/product/categoryProduct?category=shoes|}">Shoes</a>
+                            <a th:href="@{|/product/categoryProduct?category=acc|}">Acc</a>
+                            <a th:href="@{|/product/categoryProduct?category=bag|}">Bag</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div id="collapseOne">
-                  <div class="card-body">
-                    <div class="shop-sidebar-tags">
-                      <a th:href="@{|/product/listProduct|}">All</a>
-                      <a th:href="@{|/product/categoryProduct?category=top|}">Top</a>
-                      <a th:href="@{|/product/categoryProduct?category=bottom|}">Bottom</a>
-                      <a th:href="@{|/product/categoryProduct?category=shoes|}">Shoes</a>
-                      <a th:href="@{|/product/categoryProduct?category=acc|}">Acc</a>
-                      <a th:href="@{|/product/categoryProduct?category=bag|}">Bag</a>
+                <!-- sort -->
+                <div class="shop-sidebar-accordion">
+                  <div class="accordion" id="accordion">
+                    <div class="card">
+                      <div class="card-heading">
+                        <a data-toggle="collapse" data-target="#collapseTwo">
+                          <i class="fas fa-list-ul"></i>
+                          &nbsp;&nbsp;&nbsp;Sort&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <i class="fas fa-sort-down"></i>
+                        </a>
+                      </div>
+                      <div id="collapseTwo">
+                        <div class="card-body">
+                          <div class="shop-sidebar-tags">
+                            <a th:href="@{|/product/listProduct?sort=nameASC|}">
+                            Name&nbsp;&nbsp;&nbsp;<i class="fas fa-long-arrow-alt-up"></i></a>
+                            <a th:href="@{|/product/listProduct?sort=nameDESC|}">
+                            Name&nbsp;&nbsp;&nbsp;<i class="fas fa-long-arrow-alt-down"></i></a>
+                            <a th:href="@{|/product/listProduct?sort=priceASC|}">
+                            Price&nbsp;&nbsp;&nbsp;<i class="fas fa-long-arrow-alt-up"></i></a>
+                            <a th:href="@{|/product/listProduct?sort=priceDESC|}">
+                            Price&nbsp;&nbsp;&nbsp;<i class="fas fa-long-arrow-alt-down"></i></a>
+                            <a th:href="@{|/product/listProduct?sort=dateASC|}">
+                            Date&nbsp;&nbsp;&nbsp;  <i class="fas fa-long-arrow-alt-up"></i></a>
+                            <a th:href="@{|/product/listProduct?sort=dateDESC|}">
+                            Date&nbsp;&nbsp;&nbsp;  <i class="fas fa-long-arrow-alt-down"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- size -->
+                <div class="shop-sidebar-accordion">
+                  <div class="accordion" id="accordion">
+                    <div class="card">
+                      <div class="card-heading">
+                        <a data-toggle="collapse" data-target="#collapseThree">
+                          <i class="fas fa-list-ul"></i>
+                          &nbsp;&nbsp;&nbsp;Size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <i class="fas fa-sort-down"></i>
+                        </a>
+                      </div>
+                      <div id="collapseThree">
+                        <div class="card-body">
+                          <div class="shop-sidebar-size">
+                            <label for="xs">xs<input th:type="${'radio'}" th:id="${'xs'}"></label>
+                            <label for="sm">s<input th:type="${'radio'}" th:id="${'sm'}"></label>
+                            <label for="md">m<input th:type="${'radio'}" th:id="${'md'}"></label>
+                            <label for="xl">xl<input th:type="${'radio'}" th:id="${'xl'}"></label>
+                            <label for="2xl">2xl<input th:type="${'radio'}" th:id="${'2xl'}"></label>
+                            <label for="xxl">xxl<input th:type="${'radio'}" th:id="${'xxl'}"></label>
+                            <label for="3xl">3xl<input th:type="${'radio'}" th:id="${'3xl'}"></label>
+                            <label for="4xl">4xl<input th:type="${'radio'}" th:id="${'4xl'}"></label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- color -->
+                <div class="shop-sidebar-accordion">
+                  <div class="accordion" id="accordion">
+                    <div class="card">
+                      <div class="card-heading">
+                        <a data-toggle="collapse" data-target="#collapseFour">
+                          <i class="fas fa-list-ul"></i>
+                          &nbsp;&nbsp;&nbsp;Colors&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <i class="fas fa-sort-down"></i>
+                        </a>
+                      </div>
+                      <div id="collapseFour">
+                        <div class="card-body">
+                          <div class="shop-sidebar-color">
+                            <label class="c-1" for="sp-1"><input th:type="${'radio'}" th:id="${'sp-1'}"></label>
+                            <label class="c-2" for="sp-2"><input th:type="${'radio'}" th:id="${'sp-2'}"></label>
+                            <label class="c-3" for="sp-3"><input th:type="${'radio'}" th:id="${'sp-3'}"></label>
+                            <label class="c-4" for="sp-4"><input th:type="${'radio'}" th:id="${'sp-4'}"></label>
+                            <label class="c-5" for="sp-5"><input th:type="${'radio'}" th:id="${'sp-5'}"></label>
+                            <label class="c-6" for="sp-6"><input th:type="${'radio'}" th:id="${'sp-6'}"></label>
+                            <label class="c-7" for="sp-7"><input th:type="${'radio'}" th:id="${'sp-7'}"></label>
+                            <label class="c-8" for="sp-8"><input th:type="${'radio'}" th:id="${'sp-8'}"></label>
+                            <label class="c-9" for="sp-9"><input th:type="${'radio'}" th:id="${'sp-9'}"></label>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-
-          <!-- sort -->
-          <div class="shop-sidebar-accordion">
-            <div class="accordion" id="accordion">
-              <div class="card">
-                <div class="card-heading">
-                  <a data-toggle="collapse" data-target="#collapseTwo">
-                    <i class="fas fa-list-ul"></i>
-                    &nbsp;&nbsp;&nbsp;Sort&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <i class="fas fa-sort-down"></i>
-                  </a>
-                </div>
-                <div id="collapseTwo">
-                  <div class="card-body">
-                    <div class="shop-sidebar-tags">
-                      <a th:href="@{|/product/listProduct?sort=nameASC|}">
-                      Name&nbsp;&nbsp;&nbsp;<i class="fas fa-long-arrow-alt-up"></i></a>
-                      <a th:href="@{|/product/listProduct?sort=nameDESC|}">
-                      Name&nbsp;&nbsp;&nbsp;<i class="fas fa-long-arrow-alt-down"></i></a>
-                      <a th:href="@{|/product/listProduct?sort=priceASC|}">
-                      Price&nbsp;&nbsp;&nbsp;<i class="fas fa-long-arrow-alt-up"></i></a>
-                      <a th:href="@{|/product/listProduct?sort=priceDESC|}">
-                      Price&nbsp;&nbsp;&nbsp;<i class="fas fa-long-arrow-alt-down"></i></a>
-                      <a th:href="@{|/product/listProduct?sort=dateASC|}">
-                      Date&nbsp;&nbsp;&nbsp;  <i class="fas fa-long-arrow-alt-up"></i></a>
-                      <a th:href="@{|/product/listProduct?sort=dateDESC|}">
-                      Date&nbsp;&nbsp;&nbsp;  <i class="fas fa-long-arrow-alt-down"></i></a>
+            <!-- list -->
+            <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+              <div class="row">
+                <th:block th:each="LIST : ${LIST}">
+                  <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 p-50">
+                    <div class="border-1 radius-2 shadow-3 w-200 h-200 object-cover">
+                      <div
+                        th:id="${'product-bg'}"
+                        th:name="${'product-bg'}"
+                        th:class="${'radius-1 z-100'}"
+                        th:attr="product-bg=@{|${STORAGE}/${page}/${LIST['product_imgsUrl']}|}"
+                      >
+                      </div>
+                      <div class="product-hover">
+                        <div class="d-row-center ms-10 mb-10">
+                          <i class="far fa-heart light-black me-10"></i>
+                          <div
+                            th:id="${'like'}"
+                            th:name="${'like'}"
+                            th:class="${'fs-0-7rem fw-600 light-black'}"
+                          >
+                            Like
+                          </div>
+                        </div>
+                        <div class="d-row-center ms-10 mb-10">
+                          <i class="fas fa-exchange-alt light-black me-10"></i>
+                          <div
+                            th:id="${'compare'}"
+                            th:name="${'compare'}"
+                            th:class="${'fs-0-7rem fw-600 light-black'}"
+                          >
+                            Compare
+                          </div>
+                        </div>
+                        <div class="d-row-center ms-10">
+                          <i class="fas fa-search light-black me-10"></i>
+                          <div
+                            th:id="${'view'}"
+                            th:name="${'view'}"
+                            th:class="${'fs-0-7rem fw-600 light-black'}"
+                            th:onclick="goDetail([[${LIST['product_number']}]])"
+                          >
+                            View
+                          </div>
+                        </div>
+                      </div>
+                      <div class="product-item-text">
+                        <div
+                          th:id="${'product_name'}"
+                          th:name="${'product_name'}"
+                          th:class="${'fs-1-0rem fw-700 light-black'}"
+                          th:text="${#strings.abbreviate(LIST['product_name'], 20)}"
+                        >
+                        </div>
+                        <a
+                          th:href="@{|/product/detailProduct?product_number=${LIST['product_number']}|}"
+                          class="save-cart"
+                        >
+                          + Buy
+                        </a>
+                        <div
+                          th:id="${'product_company'}"
+                          th:name="${'product_company'}"
+                          th:class="${'fs-0-7rem fw-600 dark-grey'}"
+                          th:text="${LIST['product_company']}"
+                        >
+                        </div>
+                        <div
+                          th:id="${'product_price'}"
+                          th:name="${'product_price'}"
+                          th:class="${'fs-0-9rem fw-600 dark-grey'}"
+                          th:text="${LIST['product_price']}"
+                        >
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </th:block>
               </div>
             </div>
           </div>
-
-          <!-- size -->
-          <div class="shop-sidebar-accordion">
-            <div class="accordion" id="accordion">
-              <div class="card">
-                <div class="card-heading">
-                  <a data-toggle="collapse" data-target="#collapseThree">
-                    <i class="fas fa-list-ul"></i>
-                    &nbsp;&nbsp;&nbsp;Size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <i class="fas fa-sort-down"></i>
-                  </a>
-                </div>
-                <div id="collapseThree">
-                  <div class="card-body">
-                    <div class="shop-sidebar-size">
-                      <label for="xs">xs<input th:type="${'radio" id="xs'}"></label>
-                      <label for="sm">s<input th:type="${'radio" id="sm'}"></label>
-                      <label for="md">m<input th:type="${'radio" id="md'}"></label>
-                      <label for="xl">xl<input th:type="${'radio" id="xl'}"></label>
-                      <label for="2xl">2xl<input th:type="${'radio" id="2xl'}"></label>
-                      <label for="xxl">xxl<input th:type="${'radio" id="xxl'}"></label>
-                      <label for="3xl">3xl<input th:type="${'radio" id="3xl'}"></label>
-                      <label for="4xl">4xl<input th:type="${'radio" id="4xl'}"></label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- color -->
-          <div class="shop-sidebar-accordion">
-            <div class="accordion" id="accordion">
-              <div class="card">
-                <div class="card-heading">
-                  <a data-toggle="collapse" data-target="#collapseFour">
-                    <i class="fas fa-list-ul"></i>
-                    &nbsp;&nbsp;&nbsp;Colors&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <i class="fas fa-sort-down"></i>
-                  </a>
-                </div>
-                <div id="collapseFour">
-                  <div class="card-body">
-                    <div class="shop-sidebar-color">
-                      <label class="c-1" for="sp-1"><input th:type="${'radio" id="sp-1'}"></label>
-                      <label class="c-2" for="sp-2"><input th:type="${'radio" id="sp-2'}"></label>
-                      <label class="c-3" for="sp-3"><input th:type="${'radio" id="sp-3'}"></label>
-                      <label class="c-4" for="sp-4"><input th:type="${'radio" id="sp-4'}"></label>
-                      <label class="c-5" for="sp-5"><input th:type="${'radio" id="sp-5'}"></label>
-                      <label class="c-6" for="sp-6"><input th:type="${'radio" id="sp-6'}"></label>
-                      <label class="c-7" for="sp-7"><input th:type="${'radio" id="sp-7'}"></label>
-                      <label class="c-8" for="sp-8"><input th:type="${'radio" id="sp-8'}"></label>
-                      <label class="c-9" for="sp-9"><input th:type="${'radio" id="sp-9'}"></label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
+        </form>
       </div>
-
-
-      <!-- main bar -->
-      <div class="col-12 col-sm-12 col-md-12 col-lg-9 col-xl-9">
-
-        <!-- sorting + search -->
-        <div class="row mb-3 jungho-inline">
-          <!-- sorting -->
-          <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-            <div class="jungho-left">
-              <i class="fas fa-sort-amount-down fa-lg"></i>&nbsp;&nbsp;
-              <form th:action="@{|/product/listProduct}" th:method="${'GET" onchange="this.submit()" th:id="searchForm'}">
-                <select name="sort" class="form-control w-50p">
-                  <option value="all">정렬</option>
-                  <option value="nameASC">이름순(오름차순)</option>
-                  <option value="nameDESC">이름순(내림차순)</option>
-                  <option value="priceASC">가격낮은순</option>
-                  <option value="priceDESC">가격높은순</option>
-                  <option value="dateASC">오래된순</option>
-                  <option value="dateDESC">최신순</option>
-                </select>
-              </form>
-            </div>
-          </div>
-          <!-- search -->
-          <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-            <form id="searchForm" th:method="${'GET" th:action="@{|/product/searchProduct}'}">
-              <div class="jungho-right">
-                <select class="ft-5 fw-8 ms-2 searchSelect" th:name="${'type" th:id="type'}">
-                  <option value="name">Name</option>
-                  <option value="detail">Detail</option>
-                </select>
-                <input class="form-control ft-7 fw-7 me-1 searchBar" th:type="${'search" th:id="|keyword" th:placeholder="search" th:name="keyword|'}" required/>
-                <i class="fas fa-search fa-lg" th:id="${'searchIcon'}"></i>
-                <button th:type="${'submit" id="hiddenSubmit" class="hiddenSubmit'}"></button>
-              </div>
-            </form>
-          </div>
-        </div>
-
-
-        <!-- row -->
-        <div class="row">
-          <th:block th:each="product:${productList}">
-            <!-- col 1 -->
-            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 mix new-arrivals">
-              <div class="product-item">
-                <!-- 이미지 -->
-                <div class="product-item-pic set-bg" th:attr="${'data-setbg=@{${product.product_imgsUrl1}}'}">
-                  <ul class="product-hover">
-                    <li><a th:href="@{|/your_link_here|}">
-                    <img th:src="${'@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/icon/heart.png}'}"/><span>Like</span>
-                    </a></li>
-                    <li><a th:href="@{|/your_link_here|}">
-                    <img th:src="${'@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/icon/compare.png}'}"/><span>Compare</span>
-                    </a></li>
-                    <li><a th:href="@{|/product/detailProduct?product_number=${product.product_number}|}"><img th:src="@{https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE/icon/search.png|}"/><span>View more</span>
-                    </a></li>
-                  </ul>
-                </div>
-                <div class="product-item-text">
-                  <div class="jungho-inline">
-                    <!-- 이름 -->
-                    <h6 th:value="${'product_name" th:id="|product_name" th:href="@{|/product/detailProduct?product_number=${product.product_number}|}" th:text="{product.product_name}'}"></h6>
-                    <!-- 구매 -->
-                    <a th:href="${'@{|/product/detailProduct?product_number=${product.product_number}|}" class="save-cart'}">+ 구매</a>
-                    <!-- 회사 -->
-                    <h6 th:text="${product.product_company}" th:id="${'product_company" th:value="product_company'}"></h6>
-                  </div>
-                  <div class="jungho-inline">
-                    <!-- 가격 -->
-                    <h5 th:text="${''₩  ' +${#numbers.formatInteger(product.product_price, 3, 'COMMA')}" th:id="product_price" th:value="product_price'}"></h5>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </th:block>
-        </div>
-        <!-- /.row -->
-      </div>
-      <!-- /. col -->
-
     </div>
   </section>
+
+  <!-- script -->
+  <script defer>
+    // product-bg 이미지 삽입
+    const productBg = document.querySelectorAll('[product-bg]');
+    productBg.forEach((bg) => {
+      const bgUrl = bg.getAttribute('product-bg');
+      bg.style.backgroundImage = `url(${bgUrl})`;
+      bg.style.width = '100%';
+      bg.style.height = '100%';
+      bg.style.backgroundSize = 'cover';
+      bg.style.backgroundPosition = 'center';
+    });
+    // product-hover 호버했을때 효과
+    const productItemHover = document.querySelectorAll('.product-hover');
+    productItemHover.forEach((el) => {
+      el.style.position = 'absolute';
+      el.style.width = '100%';
+      el.style.height = '50%';
+      el.style.top = '25%';
+      el.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    });
+    productItemHover.forEach((el) => {
+      el.addEventListener('mouseover', () => {
+        el.style.display = 'block';
+      });
+      el.addEventListener('mouseout', () => {
+        el.style.display = 'none';
+      });
+    });
+  </script>
+
+  <!-- hr -->
+  <th:block th:replace="~{components/divider :: divider}" />
+
+  <!-- sorting -->
+  <th:block th:replace="~{components/sorting :: sorting}" />
+
+  <!-- hr -->
+  <th:block th:replace="~{components/divider :: divider}" />
+
+  <!-- button -->
+  <th:block th:replace="~{components/button :: button}" />
+
+  <!-- hr -->
+  <th:block th:replace="~{components/divider :: divider}" />
 
   <!-- pagination -->
   <th:block th:replace="~{components/pagination :: pagination}" />

@@ -11845,7 +11845,7 @@
 .pointer-red.active {
   cursor: pointer !important;
   color: #ff0000 !important;
-  transition: transform 0.1s ease-in-out !important;
+  transition: transform 0.2s ease-in-out !important;
   transform: scale(1.1) !important;
 }
 
@@ -11859,7 +11859,7 @@
 .pointer-burgundy.active {
   cursor: pointer !important;
   color: #973131 !important;
-  transition: transform 0.1s ease-in-out !important;
+  transition: transform 0.2s ease-in-out !important;
   transform: scale(1.1) !important;
 }
 
@@ -11873,7 +11873,7 @@
 .pointer-danger.active {
   cursor: pointer !important;
   color: #EF4444 !important;
-  transition: transform 0.1s ease-in-out !important;
+  transition: transform 0.2s ease-in-out !important;
   transform: scale(1.1) !important;
 }
 
@@ -11887,7 +11887,7 @@
 .pointer-warning.active {
   cursor: pointer !important;
   color: #F59E0B !important;
-  transition: transform 0.1s ease-in-out !important;
+  transition: transform 0.2s ease-in-out !important;
   transform: scale(1.1) !important;
 }
 
@@ -11901,7 +11901,7 @@
 .pointer-orange.active {
   cursor: pointer !important;
   color: #F59E0B !important;
-  transition: transform 0.1s ease-in-out !important;
+  transition: transform 0.2s ease-in-out !important;
   transform: scale(1.1) !important;
 }
 
@@ -11915,7 +11915,7 @@
 .pointer-yellow.active {
   cursor: pointer !important;
   color: #FBBF24 !important;
-  transition: transform 0.1s ease-in-out !important;
+  transition: transform 0.2s ease-in-out !important;
   transform: scale(1.1) !important;
 }
 
@@ -11929,7 +11929,7 @@
 .pointer-light-yellow.active {
   cursor: pointer !important;
   color: #F2ECBE !important;
-  transition: transform 0.1s ease-in-out !important;
+  transition: transform 0.2s ease-in-out !important;
   transform: scale(1.1) !important;
 }
 
@@ -11943,7 +11943,7 @@
 .pointer-ivory.active {
   cursor: pointer !important;
   color: #d8caba !important;
-  transition: transform 0.1s ease-in-out !important;
+  transition: transform 0.2s ease-in-out !important;
   transform: scale(1.1) !important;
 }
 
@@ -11957,7 +11957,7 @@
 .pointer-ivory-light.active {
   cursor: pointer !important;
   color: #ede7e3 !important;
-  transition: transform 0.1s ease-in-out !important;
+  transition: transform 0.2s ease-in-out !important;
   transform: scale(1.1) !important;
 }
 
@@ -11971,7 +11971,7 @@
 .pointer-success.active {
   cursor: pointer !important;
   color: #10B981 !important;
-  transition: transform 0.1s ease-in-out !important;
+  transition: transform 0.2s ease-in-out !important;
   transform: scale(1.1) !important;
 }
 
@@ -11985,7 +11985,7 @@
 .pointer-green.active {
   cursor: pointer !important;
   color: #10B981 !important;
-  transition: transform 0.1s ease-in-out !important;
+  transition: transform 0.2s ease-in-out !important;
   transform: scale(1.1) !important;
 }
 
@@ -11999,7 +11999,7 @@
 .pointer-info.active {
   cursor: pointer !important;
   color: #89e2ff !important;
-  transition: transform 0.1s ease-in-out !important;
+  transition: transform 0.2s ease-in-out !important;
   transform: scale(1.1) !important;
 }
 
@@ -12013,7 +12013,7 @@
 .pointer-primary.active {
   cursor: pointer !important;
   color: #1976D2 !important;
-  transition: transform 0.1s ease-in-out !important;
+  transition: transform 0.2s ease-in-out !important;
   transform: scale(1.1) !important;
 }
 
@@ -12027,7 +12027,7 @@
 .pointer-blue.active {
   cursor: pointer !important;
   color: #3B82F6 !important;
-  transition: transform 0.1s ease-in-out !important;
+  transition: transform 0.2s ease-in-out !important;
   transform: scale(1.1) !important;
 }
 
@@ -12041,7 +12041,7 @@
 .pointer-navy.active {
   cursor: pointer !important;
   color: #0f2f74 !important;
-  transition: transform 0.1s ease-in-out !important;
+  transition: transform 0.2s ease-in-out !important;
   transform: scale(1.1) !important;
 }
 
@@ -12055,7 +12055,7 @@
 .pointer-secondary.active {
   cursor: pointer !important;
   color: #6c757d !important;
-  transition: transform 0.1s ease-in-out !important;
+  transition: transform 0.2s ease-in-out !important;
   transform: scale(1.1) !important;
 }
 
@@ -12069,7 +12069,7 @@
 .pointer-white.active {
   cursor: pointer !important;
   color: #FFFFFF !important;
-  transition: transform 0.1s ease-in-out !important;
+  transition: transform 0.2s ease-in-out !important;
   transform: scale(1.1) !important;
 }
 
@@ -12083,7 +12083,7 @@
 .pointer-light.active {
   cursor: pointer !important;
   color: #f8f8f8 !important;
-  transition: transform 0.1s ease-in-out !important;
+  transition: transform 0.2s ease-in-out !important;
   transform: scale(1.1) !important;
 }
 
@@ -12097,7 +12097,7 @@
 .pointer-light-grey.active {
   cursor: pointer !important;
   color: #dbdbdb !important;
-  transition: transform 0.1s ease-in-out !important;
+  transition: transform 0.2s ease-in-out !important;
   transform: scale(1.1) !important;
 }
 
@@ -12111,7 +12111,7 @@
 .pointer-grey.active {
   cursor: pointer !important;
   color: #9CA3AF !important;
-  transition: transform 0.1s ease-in-out !important;
+  transition: transform 0.2s ease-in-out !important;
   transform: scale(1.1) !important;
 }
 
@@ -12125,7 +12125,7 @@
 .pointer-dark.active {
   cursor: pointer !important;
   color: #5e5e5e !important;
-  transition: transform 0.1s ease-in-out !important;
+  transition: transform 0.2s ease-in-out !important;
   transform: scale(1.1) !important;
 }
 
@@ -12139,7 +12139,7 @@
 .pointer-light-black.active {
   cursor: pointer !important;
   color: #3a3a3a !important;
-  transition: transform 0.1s ease-in-out !important;
+  transition: transform 0.2s ease-in-out !important;
   transform: scale(1.1) !important;
 }
 
@@ -12153,7 +12153,7 @@
 .pointer-black.active {
   cursor: pointer !important;
   color: #111111 !important;
-  transition: transform 0.1s ease-in-out !important;
+  transition: transform 0.2s ease-in-out !important;
   transform: scale(1.1) !important;
 }
 
@@ -12166,7 +12166,7 @@
 .pointer-transparent {
   cursor: pointer !important;
   color: transparent !important;
-  transition: transform 0.1s ease-in-out !important;
+  transition: transform 0.2s ease-in-out !important;
   transform: scale(1.1) !important;
 }
 

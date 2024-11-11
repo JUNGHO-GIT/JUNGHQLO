@@ -12,82 +12,110 @@
 
   <!-- main -->
   <section class="container-fluid px-30">
-    <div class="row d-row-center">
-      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
-        <!-- detail -->
-        <div class="row">
-          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <th:block th:each="LIST: ${LIST}">
-              <div
-                th:class="${'border-1 radius-2 shadow-1 p-30'}"
-                th:classappend="${LISTStat.last ? '' : 'mb-20'}"
-              >
-                <!-- logo + title -->
-                <div class="d-row-left w-100p mb-20">
-                  <img
-                    th:src="@{|${LIST['board_imgsUrl']}|}"
-                    th:loading="${'lazy'}"
-                    th:alt="${'logo'}"
-                    th:width="${'30px'}"
-                    th:height="${'30px'}"
-                    th:class="${'radius-2 me-10'}"
-                  />
+    <div class="row d-center">
+      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
+        <!-- form -->
+        <form
+          th:id="${'formData'}"
+          th:name="${'formData'}"
+          th:class="${'formData'}"
+        >
+          <!-- list -->
+          <div class="row">
+            <th:block th:each="LIST : ${LIST}">
+              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4 p-20">
+                <div class="border-1 radius-2 shadow-3 w-300 h-300 object-cover">
                   <div
-                    th:id="${'board_title'}"
-                    th:name="${'board_title'}"
-                    th:text="${#strings.abbreviate(LIST['board_title'], 20)}"
-                    th:class="${'fs-1-2rem fw-700 burgundy hover'}"
-                    th:onclick="|location.href='@{|/${page}/detail${PAGE}?board_number=${LIST['board_number']}|}'|"
+                    th:id="${'board-bg'}"
+                    th:name="${'board-bg'}"
+                    th:class="${'radius-2 z-100'}"
+                    th:attr="board-bg=@{|${STORAGE}/${page}/${LIST['board_imgsUrl']}|}"
                   >
                   </div>
-                  <div
-                    th:id="${'board_number'}"
-                    th:name="${'board_number'}"
-                    th:text="${LIST['board_number']}"
-                    th:class="${'fs-0-9rem fw-600 grey ms-auto'}"
-                  >
-                  </div>
-                </div>
-                <!-- contents -->
-                <div class="d-row-left w-100p mb-30">
-                  <div
-                    th:id="${'board_contents'}"
-                    th:name="${'board_contents'}"
-                    th:text="${#strings.abbreviate(LIST['board_contents'], 40)}"
-                    th:class="${'fs-0-9rem fw-600 light-black'}"
-                  >
-                  </div>
-                </div>
-                <!-- date & view count -->
-                <div class="d-row-between w-100p">
-                  <div class="d-row-center">
-                    <i th:class="${'fa fa-calendar fs-0-7rem me-10'}"></i>
+                  <div class="blog-item-text z-200">
+                    <!-- date & view -->
+                    <div class="d-row-between">
+                      <div class="d-row-left">
+                        <i class="far fa-calendar-alt"></i>
+                        <div
+                          th:class="${'fs-0-7rem fw-600 dark-grey ms-5'}"
+                          th:text="${#strings.substring((LIST['board_update'] != null ? LIST['board_update'] : LIST['board_date']), 0, 10)}"
+                        >
+                        </div>
+                      </div>
+                      <div class="d-row-right">
+                        <i class="fa fa-eye"></i>
+                        <div
+                          th:class="${'fs-0-7rem fw-600 dark-grey ms-5'}"
+                          th:text="${LIST['board_count']}"
+                        >
+                        </div>
+                      </div>
+                    </div>
+                    <!-- hr -->
+                    <br class="mt-10 mb-10" />
+                    <!-- title -->
                     <div
-                      th:id="${'board_date'}"
-                      th:name="${'board_date'}"
-                      th:class="${'fs-0-9rem fw-600 dark'}"
-                      th:text="${#strings.substring((LIST['board_update'] != null ? LIST['board_update'] : LIST['board_date']), 0, 10)}"
+                      th:id="${'board_title'}"
+                      th:name="${'board_title'}"
+                      th:class="${'fs-1-0rem fw-700 light-black'}"
+                      th:text="${#strings.abbreviate(LIST['board_title'], 20)}"
                     >
                     </div>
-                  </div>
-                  <div class="d-row-center">
-                    <i th:class="${'fa fa-eye fs-0-7rem me-10'}"></i>
-                    <div
-                      th:id="${'board_count'}"
-                      th:name="${'board_count'}"
-                      th:text="${LIST['board_count']}"
-                      th:class="${'fs-0-9rem fw-600 dark'}"
-                    >
+                    <!-- hr -->
+                    <br class="mt-10 mb-10" />
+                    <!-- click read more -->
+                    <div class="d-row-center">
+                      <input
+                        th:type="${'hidden'}"
+                        th:id="${'board_number'}"
+                        th:name="${'board_number'}"
+                        th:value="${LIST['board_number']}"
+                      />
+                      <div
+                        th:id="${'read-more'}"
+                        th:name="${'read-more'}"
+                        th:class="${'pointer-burgundy fs-0-9rem fw-600 upper-text'}"
+                        th:onclick="goDetail([[${LIST['board_number']}]])"
+                      >
+                        Read More
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </th:block>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </section>
+
+  <!-- script -->
+  <script defer>
+    // set background image
+    const blogBg = document.querySelectorAll('[board-bg]');
+    blogBg.forEach((bg) => {
+      const bgUrl = bg.getAttribute('board-bg');
+      bg.style.backgroundImage = `url(${bgUrl})`;
+      bg.style.width = '100%';
+      bg.style.height = '100%';
+      bg.style.backgroundSize = 'cover';
+      bg.style.backgroundPosition = 'center';
+    });
+    // blog-item-text 호버했을때 효과
+    const blogItemText = document.querySelectorAll('.blog-item-text');
+    blogItemText.forEach((text) => {
+      text.addEventListener('mouseover', () => {
+        text.style.scale = '1.1';
+        text.style.transition = 'all 0.3s';
+      });
+      text.addEventListener('mouseout', () => {
+        text.style.scale = '1';
+        text.style.transition = 'all 0.3s';
+      });
+    });
+  </script>
 
   <!-- hr -->
   <th:block th:replace="~{components/divider :: divider}" />

@@ -36,7 +36,7 @@ public class MemberController {
   public String listMember(
     @ModelAttribute Member member,
     @RequestParam(defaultValue = "all") String sort,
-    @RequestParam(defaultValue = "title") String type,
+    @RequestParam(defaultValue = "name") String type,
     @RequestParam(defaultValue = "") String keyword,
     @RequestParam(defaultValue = "1") Integer pageNumber,
     @RequestParam(defaultValue = "9") Integer itemsPer,

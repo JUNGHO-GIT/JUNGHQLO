@@ -12,276 +12,78 @@
 
   <!-- main -->
   <section class="container-fluid px-30">
-    <div class="row d-row-center">
-      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
-        <!-- list -->
-        <div class="row">
-          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    <div class="row d-center">
+      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
+        <!-- form -->
+        <form
+          th:id="${'formData'}"
+          th:name="${'formData'}"
+          th:class="${'formData'}"
+        >
+          <!-- list -->
+          <div class="row">
             <th:block th:each="LIST: ${LIST}">
-              <div
-                th:class="${'border-1 radius-2 shadow-1 p-30'}"
-                th:classappend="${LISTStat.last ? '' : 'mb-20'}"
-              >
-                <!-- logo + title -->
-                <div class="d-row-left w-100p mb-20">
-                  <img
-                    th:src="@{|${LIST['qna_imgsUrl']}|}"
-                    th:loading="${'lazy'}"
-                    th:alt="${'logo'}"
-                    th:width="${'30px'}"
-                    th:height="${'30px'}"
-                    th:class="${'radius-2 me-10'}"
-                  />
-                  <div
-                    th:id="${'qna_title'}"
-                    th:name="${'qna_title'}"
-                    th:text="${#strings.abbreviate(LIST['qna_title'], 20)}"
-                    th:class="${'fs-1-2rem fw-700 burgundy hover'}"
-                    th:onclick="|location.href='@{|/${page}/detail${PAGE}?qna_number=${LIST['qna_number']}|}'|"
-                  >
-                  </div>
-                  <div
-                    th:id="${'qna_category'}"
-                    th:name="${'qna_category'}"
-                    th:class="${'fs-1-0rem fw-600 grey ms-10 me-auto'}"
-                    th:text="${
-                      LIST['qna_category'] == 'goods' ? '상품 문의' : LIST['qna_category'] == 'exchange' ? '교환 문의' : LIST['qna_category'] == 'refund' ? '환불 문의' : LIST['qna_category'] == 'payment' ? '결제 문의' : LIST['qna_category'] == 'delivery' ? '배송 문의' : '기타 문의'
-                    }"
-                  >
-                  </div>
-                  <div
-                    th:id="${'qna_number'}"
-                    th:name="${'qna_number'}"
-                    th:text="${LIST['qna_number']}"
-                    th:class="${'fs-0-9rem fw-600 grey ms-auto'}"
-                  >
-                  </div>
-                </div>
-                <!-- contents -->
-                <div class="d-row-left w-100p mb-30">
-                  <div
-                    th:id="${'qna_contents'}"
-                    th:name="${'qna_contents'}"
-                    th:text="${#strings.abbreviate(LIST['qna_contents'], 40)}"
-                    th:class="${'fs-0-9rem fw-600 light-black'}"
-                  >
-                  </div>
-                </div>
-                <!-- date & view count -->
-                <div class="d-row-between w-100p">
-                  <div class="d-row-center">
-                    <i th:class="${'fa fa-calendar fs-0-7rem me-10'}"></i>
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div
+                  th:class="${'border-1 radius-2 shadow-0 p-30'}"
+                  th:classappend="${LISTStat.last ? '' : 'mb-0'}"
+                >
+                  <!-- logo + title -->
+                  <div class="d-row-left w-100p mb-20">
+                    <img
+                      th:each="image, iterStat:${#strings.arraySplit(LIST['qna_imgsUrl'], ',')}"
+                      th:if="${iterStat.index == 0}"
+                      th:src="@{|${STORAGE}/${page}/${image}|}"
+                      th:loading="${'lazy'}"
+                      th:alt="${'logo'}"
+                      th:width="${'30px'}"
+                      th:height="${'30px'}"
+                      th:class="${'radius-2 me-10'}"
+                    />
                     <div
-                      th:id="${'qna_date'}"
-                      th:name="${'qna_date'}"
-                      th:class="${'fs-0-9rem fw-600 dark'}"
-                      th:text="${#strings.substring((LIST['qna_update'] != null ? LIST['qna_update'] : LIST['qna_date']), 0, 10)}"
+                      th:id="${'qna_title'}"
+                      th:name="${'qna_title'}"
+                      th:text="${#strings.abbreviate(LIST['qna_title'], 20)}"
+                      th:class="${'fs-1-2rem fw-700 burgundy hover'}"
+                      th:onclick="goDetail([[${LIST['qna_number']}]])"
+                    >
+                    </div>
+                    <div
+                      th:id="${'qna_category'}"
+                      th:name="${'qna_category'}"
+                      th:text="${LIST['qna_category'] == 'goods' ? '상품문의' : LIST['qna_category'] == 'exchange' ? '교환문의' : LIST['qna_category'] == 'refund' ? '환불문의' : LIST['qna_category'] == 'payment' ? '결제문의' : LIST['qna_category'] == 'delivery' ? '배송문의' : LIST['qna_category'] == 'etc' ? '기타문의' : '문의'}"
+                      th:class="${'fs-0-9rem fw-600 dark ms-auto'}"
                     >
                     </div>
                   </div>
-                  <div class="d-row-center">
-                    <i th:class="${'fa fa-eye fs-0-7rem me-10'}"></i>
-                    <div
-                      th:id="${'qna_count'}"
-                      th:name="${'qna_count'}"
-                      th:text="${LIST['qna_count']}"
-                      th:class="${'fs-0-9rem fw-600 dark'}"
-                    >
+                  <!-- date & user -->
+                  <div class="d-row-between w-100p">
+                    <div class="d-row-center">
+                      <i th:class="${'fa fa-calendar fs-0-7rem me-10'}"></i>
+                      <div
+                        th:id="${'qna_date'}"
+                        th:name="${'qna_date'}"
+                        th:class="${'fs-0-9rem fw-600 dark'}"
+                        th:text="${#strings.substring((LIST['qna_update'] != null ? LIST['qna_update'] : LIST['qna_date']), 0, 10)}"
+                      >
+                      </div>
+                    </div>
+                    <div class="d-row-center">
+                      <i th:class="${'fa fa-user fs-0-7rem me-10'}"></i>
+                      <div
+                        th:id="${'qna_writer'}"
+                        th:name="${'qna_writer'}"
+                        th:text="${LIST['qna_writer']}"
+                        th:class="${'fs-0-9rem fw-600 dark'}"
+                      >
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </th:block>
           </div>
-        </div>
-        <!-- hr -->
-        <hr
-          th:id="${'hr'}"
-          th:name="${'hr'}"
-          th:class="${'mt-20 mb-20'}"
-        />
-        <!-- sort & search -->
-        <div class="row">
-          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <form
-              th:method="${'GET'}"
-              th:id="${'arrangeForm'}"
-              th:name="${'arrangeForm'}"
-              th:action="@{|/${page}/list${PAGE}|}"
-              th:class="${'w-100p'}"
-            >
-              <div class="d-row-between mb-20">
-                <!-- sort -->
-                <div class="d-row-center w-49p">
-                  <select
-                    th:id="${'sort'}"
-                    th:name="${'sort'}"
-                    th:class="${'form-control'}"
-                  >
-                    <option
-                      th:value="${'all'}"
-                      th:selected="${sortHandler == 'all'}"
-                      th:text="${'전체'}"
-                    >
-                    </option>
-                    <option
-                      th:value="${'nameDESC'}"
-                      th:selected="${sortHandler == 'nameDESC'}"
-                      th:text="${'제목순(내림차순)'}"
-                    >
-                    </option>
-                    <option
-                      th:value="${'nameASC'}"
-                      th:selected="${sortHandler == 'nameASC'}"
-                      th:text="${'제목순(오름차순)'}"
-                    >
-                    </option>
-                    <option
-                      th:value="${'dateDESC'}"
-                      th:selected="${sortHandler == 'dateDESC'}"
-                      th:text="${'최신순'}"
-                    >
-                    </option>
-                    <option
-                      th:value="${'dateASC'}"
-                      th:selected="${sortHandler == 'dateASC'}"
-                      th:text="${'오래된순'}"
-                    >
-                    </option>
-                  </select>
-                </div>
-                <!-- category -->
-                <div class="d-row-center w-49p">
-                  <select
-                    th:id="${'category'}"
-                    th:name="${'category'}"
-                    th:class="${'form-control'}"
-                  >
-                    <option
-                      th:value="${'all'}"
-                      th:selected="${categoryHandler == 'all'}"
-                      th:text="${'전체'}"
-                    >
-                    </option>
-                    <option
-                      th:value="${'goods'}"
-                      th:selected="${categoryHandler == 'goods'}"
-                      th:text="${'상품 문의'}"
-                    >
-                    </option>
-                    <option
-                      th:value="${'exchange'}"
-                      th:selected="${categoryHandler == 'exchange'}"
-                      th:text="${'교환 문의'}"
-                    >
-                    </option>
-                    <option
-                      th:value="${'refund'}"
-                      th:selected="${categoryHandler == 'refund'}"
-                      th:text="${'환불 문의'}"
-                    >
-                    </option>
-                    <option
-                      th:value="${'payment'}"
-                      th:selected="${categoryHandler == 'payment'}"
-                      th:text="${'결제 문의'}"
-                    >
-                    </option>
-                    <option
-                      th:value="${'delivery'}"
-                      th:selected="${categoryHandler == 'delivery'}"
-                      th:text="${'배송 문의'}"
-                    >
-                    </option>
-                    <option
-                      th:value="${'etc'}"
-                      th:selected="${categoryHandler == 'etc'}"
-                      th:text="${'기타 문의'}"
-                    >
-                    </option>
-                  </select>
-                </div>
-              </div>
-              <!-- search -->
-              <div class="d-row-center p-relative">
-                <select
-                  th:id="${'type'}"
-                  th:name="${'type'}"
-                  th:class="${'form-control w-30p me-10'}"
-                >
-                  <option
-                    th:value="${'all'}"
-                    th:selected="${typeHandler == 'all'}"
-                    th:text="${'전체'}"
-                  >
-                  </option>
-                  <option
-                    th:value="${'title'}"
-                    th:selected="${typeHandler == 'title'}"
-                    th:text="${'제목'}"
-                  >
-                  </option>
-                  <option
-                    th:value="${'contents'}"
-                    th:selected="${typeHandler == 'contents'}"
-                    th:text="${'내용'}"
-                  >
-                </select>
-                <input
-                  th:type="${'search'}"
-                  th:id="${'keyword'}"
-                  th:name="${'keyword'}"
-                  th:value="${keywordHandler}"
-                  th:placeholder="${'search'}"
-                  th:class="${'form-control p-relative pe-4vw'}"
-                />
-                <i
-                  th:id="${'searchIcon'}"
-                  th:name="${'searchIcon'}"
-                  th:class="${'fas fa-search fa-lg pointer p-absolute'}"
-                  th:style="${'top: 50%; right: 10px; transform: translateY(-50%);'}"
-                  th:onclick="|document.getElementById('arrangeForm').submit()|"
-                ></i>
-              </div>
-            </form>
-          </div>
-        </div>
-        <!-- hr -->
-        <hr
-          th:id="${'hr'}"
-          th:name="${'hr'}"
-          th:class="${'mt-20 mb-20'}"
-        />
-        <!-- button -->
-        <div class="row d-row-center">
-          <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-            <button
-              th:type="${'button'}"
-              th:class="${'btn btn-dark w-90p'}"
-              th:if="${session.member_id != null}"
-              th:onclick="|location.href='@{|/${page}/save${PAGE}|}'|"
-            >
-              등록하기
-            </button>
-            <button
-              th:type="${'button'}"
-              th:class="${'btn btn-dark w-90p'}"
-              th:if="${session.member_id == null}"
-              th:onclick="|sessionAlert()|"
-            >
-              등록하기
-            </button>
-          </div>
-          <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-            <button
-              th:type="${'button'}"
-              th:class="${'btn btn-dark w-90p'}"
-              th:onclick="|return goHome()|"
-            >
-              홈으로
-            </button>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
   </section>
@@ -289,8 +91,18 @@
   <!-- hr -->
   <th:block th:replace="~{components/divider :: divider}" />
 
+  <!-- sorting -->
+  <th:block th:replace="~{components/sorting :: sorting}" />
+
+  <!-- hr -->
+  <th:block th:replace="~{components/divider :: divider}" />
+
   <!-- button -->
   <th:block th:replace="~{components/button :: button}" />
+
+  <!-- hr -->
+  <th:block th:replace="~{components/divider :: divider}" />
+
   <!-- pagination -->
   <th:block th:replace="~{components/pagination :: pagination}" />
 

@@ -186,7 +186,7 @@ const createImgs = () => {
             name="imgsName"
             class="fs-0-9rem fw-500 dark ms-10"
           >
-            ${imageName.length > 10 ? imageName.substring(0, 10) + "..." : imageName}
+            ${imageName.length > 15 ? imageName.substring(0, 15) + "..." : imageName}
           </div>
         </div>
         <div class="d-row-center">

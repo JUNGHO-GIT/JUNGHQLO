@@ -41,10 +41,8 @@ public class NoticeServiceImpl implements NoticeService {
 
   // 0. constructor injection ----------------------------------------------------------------------
   private NoticeMapper noticeMapper;
-  private Logger logger;
   NoticeServiceImpl (NoticeMapper noticeMapper) {
     this.noticeMapper = noticeMapper;
-    this.logger = LoggerFactory.getLogger(this.getClass());
   }
 
   // 0. static -------------------------------------------------------------------------------------
@@ -135,9 +133,9 @@ public class NoticeServiceImpl implements NoticeService {
         BlobId blobId = BlobId.of(BUCKET_MAIN, BUCKET_FOLDER + "/notice/" + googleFileName);
 
         BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
-          .setContentType(file.getContentType())
-          .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
-          .build();
+        .setContentType(file.getContentType())
+        .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
+        .build();
 
         Blob blob = storage.create(blobInfo, bytes);
         blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));

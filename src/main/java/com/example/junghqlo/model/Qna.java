@@ -16,8 +16,7 @@ public class Qna {
   private Integer qna_count;
   private Integer qna_like;
   private Integer qna_dislike;
-  private boolean qna_answer1;
-  private String qna_answer2;
+  private String qna_answer;
   private String qna_imgsUrl;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
@@ -54,11 +53,8 @@ public class Qna {
   public String getQna_imgsUrl() {
     return this.qna_imgsUrl;
   }
-  public Boolean getQna_answer1() {
-    return this.qna_answer1;
-  }
-  public String getQna_answer2() {
-    return this.qna_answer2;
+  public String getQna_answer() {
+    return this.qna_answer;
   }
   public LocalDateTime getQna_date() {
     return this.qna_date;
@@ -95,11 +91,8 @@ public class Qna {
   public void setQna_imgsUrl(String qna_imgsUrl) {
     this.qna_imgsUrl = qna_imgsUrl;
   }
-  public void setQna_answer1(Boolean qna_answer1) {
-    this.qna_answer1 = qna_answer1;
-  }
-  public void setQna_answer2(String qna_answer2) {
-    this.qna_answer2 = qna_answer2;
+  public void setQna_answer(String qna_answer) {
+    this.qna_answer = qna_answer;
   }
   public void setQna_date(LocalDateTime qna_date) {
     this.qna_date = qna_date;

@@ -40,7 +40,7 @@ public class ProductController {
     @ModelAttribute Product product,
     @RequestParam(defaultValue = "all") String sort,
     @RequestParam(defaultValue = "all") String category,
-    @RequestParam(defaultValue = "title") String type,
+    @RequestParam(defaultValue = "name") String type,
     @RequestParam(defaultValue = "") String keyword,
     @RequestParam(defaultValue = "1") Integer pageNumber,
     @RequestParam(defaultValue = "9") Integer itemsPer,

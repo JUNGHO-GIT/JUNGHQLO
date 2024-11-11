@@ -12,18 +12,18 @@
 
   <!-- main -->
   <section class="container-fluid px-30">
-    <div class="row d-row-center">
-      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
+    <div class="row d-center">
+      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
         <!-- form -->
         <form
-          th:method="${'GET'}"
-          th:class="${'empty-form'}"
-          th:onsubmit="|event.preventDefault()|"
+          th:id="${'formData'}"
+          th:name="${'formData'}"
+          th:class="${'formData'}"
         >
           <!-- detail -->
           <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="border-1 radius-2 shadow-1 px-20 py-40">
+              <div class="border-1 radius-2 shadow-1 px-20 py-40 bg-ivory-light">
                 <!-- title -->
                 <div class="row">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -32,7 +32,7 @@
                         th:id="${'board_title'}"
                         th:name="${'board_title'}"
                         th:text="${MODEL['board_title']}"
-                        th:class="${'fs-1-8rem fw-800 light-black'}"
+                        th:class="${'fs-2-0rem fw-800 light-black'}"
                       >
                       </div>
                     </div>
@@ -42,16 +42,18 @@
                 <hr class="mt-30 mb-30 bg-burgundy h-1" />
                 <!-- image -->
                 <div class="row">
-                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-center">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-col-center">
                     <img
-                      th:src="${MODEL['board_imgsUrl']}"
-                      th:alt="${MODEL['board_title']}"
-                      th:class="${'w-70p object-cover'}"
+                      th:each="image : ${#strings.arraySplit(MODEL['board_imgsUrl'], ',')}"
+                      th:src="@{|${STORAGE}/${page}/${image}|}"
+                      th:loading="${'lazy'}"
+                      th:alt="${'image'}"
+                      th:class="${'w-100p w-max600 border-1 radius-1 shadow-4'}"
                     />
                   </div>
                 </div>
                 <!-- hr -->
-                <hr class="mt-30 mb-30 bg-grey h-1" />
+                <hr class="mt-20 mb-20 bg-grey " />
                 <!-- content -->
                 <div class="row">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -59,12 +61,12 @@
                       th:id="${'board_contents'}"
                       th:name="${'board_contents'}"
                       th:text="${MODEL['board_contents']}"
-                      th:class="${'form-control h-20vh border-0 lh-1-7'}"
+                      th:class="${'form-control h-min30vh border-1 radius-1 shadow-1 lh-1-7'}"
                     ></textarea>
                   </div>
                 </div>
                 <!-- hr -->
-                <hr class="mt-30 mb-30 bg-grey h-1" />
+                <hr class="mt-20 mb-20 bg-grey" />
                 <!-- like && dislike && count -->
                 <div class="row mb-30">
                   <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-row-left">
@@ -129,73 +131,40 @@
                     </div>
                   </div>
                 </div>
+                <!-- hidden -->
+                <div class="hidden-wrapper">
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'board_number'}"
+                    th:name="${'board_number'}"
+                    th:value="${MODEL['board_number']}"
+                  />
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'sessionId'}"
+                    th:name="${'sessionId'}"
+                    th:value="${session.member_id}"
+                  />
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'writerId'}"
+                    th:name="${'writerId'}"
+                    th:value="${MODEL['board_writer']}"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <!-- hr -->
-          <hr
-          	th:id="${'hr'}"
-          	th:name="${'hr'}"
-          	th:class="${'mt-20 mb-20'}"
-          />
-          <!-- button -->
-          <div class="row d-row-center">
-            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-              <button
-                th:type="${'button'}"
-                th:class="${'btn btn-dark w-90p'}"
-                th:onclick="|goUpdate()|"
-              >
-                수정
-              </button>
-            </div>
-            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-              <button
-                th:type="${'button'}"
-                th:class="${'btn btn-danger w-90p'}"
-                th:onclick="|getDelete()|"
-              >
-                삭제
-              </button>
-            </div>
-            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-              <button
-                th:type="${'button'}"
-                th:class="${'btn btn-secondary w-90p'}"
-                th:onclick="|location.href='@{|/${page}/list${PAGE}|}'|"
-              >
-                목록
-              </button>
-            </div>
-          </div>
-          <!-- hidden -->
-          <div class="hidden-wrapper">
-            <input
-              th:type="${'hidden'}"
-              th:id="${'sessionId'}"
-              th:name="${'sessionId'}"
-              th:value="${session.member_id}"
-            />
-            <input
-              th:type="${'hidden'}"
-              th:id="${'writerId'}"
-              th:name="${'writerId'}"
-              th:value="${MODEL['board_writer']}"
-            />
-            <input
-              th:type="${'hidden'}"
-              th:id="${'board_number'}"
-              th:name="${'board_number'}"
-              th:value="${MODEL['board_number']}"
-            />
           </div>
         </form>
       </div>
     </div>
   </section>
 
-  <!-- fake pagination -->
-  <th:block th:replace="~{components/pagination :: fake-pagination}" />
+  <!-- hr -->
+  <th:block th:replace="~{components/divider :: divider}" />
+
+  <!-- button -->
+  <th:block th:replace="~{components/button :: button}" />
 
   <!-- footer -->
   <th:block th:replace="~{layouts/footer :: footer}" />

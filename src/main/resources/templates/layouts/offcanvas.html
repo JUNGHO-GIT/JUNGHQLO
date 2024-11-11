@@ -9,7 +9,7 @@
 
     <!-- off-canvas -->
     <div class="off-canvas-menu-wrapper">
-      <div class="d-row-center mt-20 ms-n20">
+      <div class="d-row-center mt-20">
         <div class="off-canvas-links">
           <a
             th:if="${session.member_id == null}"
@@ -99,45 +99,45 @@
       <!-- menu -->
       <div class="d-col-left">
         <div
-          class="fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30"
+          class="fs-1-0rem fw-700 upper-text pointer-burgundy ls-1 mb-30"
           th:onclick="|location.href='@{/product/listProduct}'|"
         >
-          Products
+          Product
         </div>
         <div
-          th:class="${'fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30'}"
+          th:class="${'fs-1-0rem fw-700 upper-text pointer-burgundy ls-1 mb-30'}"
           th:if="${session.member_id != null}"
           th:onclick="|location.href='@{/orders/listOrders}'|"
         >
           Orders
         </div>
         <div
-          th:class="${'fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30'}"
+          th:class="${'fs-1-0rem fw-700 upper-text pointer-burgundy ls-1 mb-30'}"
           th:if="${session.member_id == null}"
           th:onclick="|return sessionAlert()|"
         >
           Orders
         </div>
         <div
-          th:class="${'fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30'}"
+          th:class="${'fs-1-0rem fw-700 upper-text pointer-burgundy ls-1 mb-30'}"
           th:onclick="|location.href='@{/board/listBoard}'|"
         >
             Board
         </div>
         <div
-          th:class="${'fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30'}"
+          th:class="${'fs-1-0rem fw-700 upper-text pointer-burgundy ls-1 mb-30'}"
           th:onclick="|location.href='@{/notice/listNotice}'|"
         >
           Notice
         </div>
         <div
-          th:class="${'fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30'}"
+          th:class="${'fs-1-0rem fw-700 upper-text pointer-burgundy ls-1 mb-30'}"
           th:onclick="|location.href='@{/qna/listQna}'|"
         >
           QnA
         </div>
         <div
-          th:class="${'fs-1-1rem fw-700 upper-text pointer-burgundy ls-1 mb-30'}"
+          th:class="${'fs-1-0rem fw-700 upper-text pointer-burgundy ls-1 mb-30'}"
           th:onclick="|location.href='@{/contact/listContact}'|"
         >
           Contact
@@ -156,7 +156,7 @@
           th:class="${'pointer'}"
           th:onclick="|return goHome()|"
         />
-        <div class="fs-1-1rem fw-700 mt-20 mb-20">
+        <div class="fs-1-0rem fw-700 mt-20 mb-20">
           JUNGHQLO
         </div>
         <div class="fs-0-9rem fw-400 mb-10 ls-1">

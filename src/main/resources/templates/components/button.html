@@ -4,7 +4,7 @@
 	<!-- divider -->
   <section th:fragment="button" class="container-fluid px-30">
     <div class="row d-row-center">
-      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
+      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
 
         <!-- 1. list -->
         <th:block th:if="${THEME == 'List'}">
@@ -55,7 +55,7 @@
                 th:type="${'button'}"
                 th:class="${'btn btn-dark w-90p'}"
                 th:if="${session.member_id != null}"
-                th:onclick="|return goUpdate()|"
+                th:onclick="goUpdate(number)"
               >
                 수정하기
               </button>
@@ -73,7 +73,7 @@
                 th:type="${'button'}"
                 th:class="${'btn btn-danger w-90p'}"
                 th:if="${session.member_id != null}"
-                th:onclick="|return getDelete()|"
+                th:onclick="getDelete(number)"
               >
                 삭제하기
               </button>

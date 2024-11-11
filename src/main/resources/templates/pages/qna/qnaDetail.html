@@ -12,18 +12,18 @@
 
   <!-- main -->
   <section class="container-fluid px-30">
-    <div class="row d-row-center">
-      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
+    <div class="row d-center">
+      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
         <!-- form -->
         <form
-          th:method="${'GET'}"
-          th:class="${'empty-form'}"
-          th:onsubmit="|event.preventDefault()|"
+          th:id="${'formData'}"
+          th:name="${'formData'}"
+          th:class="${'formData'}"
         >
           <!-- detail -->
           <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="border-1 radius-2 shadow-1 px-20 py-40">
+              <div class="border-1 radius-2 shadow-1 px-15 py-35">
                 <!-- title -->
                 <div class="row">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -51,14 +51,16 @@
                 <div class="row">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-center">
                     <img
-                      th:src="${MODEL['qna_imgsUrl']}"
-                      th:alt="${MODEL['qna_title']}"
-                      th:class="${'w-70p object-cover'}"
+                      th:each="image : ${#strings.arraySplit(MODEL['qna_imgsUrl'], ',')}"
+                      th:src="@{|${STORAGE}/${page}/${image}|}"
+                      th:loading="${'lazy'}"
+                      th:alt="${'image'}"
+                      th:class="${'w-50p w-max200 h-auto'}"
                     />
                   </div>
                 </div>
                 <!-- hr -->
-                <hr class="mt-30 mb-30 bg-grey h-1" />
+                <hr class="mt-20 mb-20 bg-grey" />
                 <!-- content -->
                 <div class="row">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -66,12 +68,36 @@
                       th:id="${'qna_contents'}"
                       th:name="${'qna_contents'}"
                       th:text="${MODEL['qna_contents']}"
-                      th:class="${'form-control h-20vh border-0 lh-1-7'}"
+                      th:class="${'form-control h-min20vh border-0 lh-1-7'}"
                     ></textarea>
                   </div>
                 </div>
                 <!-- hr -->
-                <hr class="mt-30 mb-30 bg-grey h-1" />
+                <hr class="mt-20 mb-20 bg-grey" />
+                <!-- answer -->
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800 light-black">
+                        답변 상태
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy ms-5">
+                        *
+                      </div>
+                    </div>
+                    <div class="d-row-left w-100p">
+                      <input
+                        th:type="${'text'}"
+                        th:id="${'qna_answer'}"
+                        th:name="${'qna_answer'}"
+                        th:class="${'form-control disabled'}"
+                        th:value="${MODEL['qna_answer']}"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- hr -->
+                <hr class="mt-20 mb-20 bg-grey" />
                 <!-- like && dislike && count -->
                 <div class="row mb-30">
                   <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-row-left">
@@ -139,44 +165,14 @@
               </div>
             </div>
           </div>
-          <!-- hr -->
-          <hr
-          	th:id="${'hr'}"
-          	th:name="${'hr'}"
-          	th:class="${'mt-20 mb-20'}"
-          />
-          <!-- button -->
-          <div class="row d-row-center">
-            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-              <button
-                th:type="${'button'}"
-                th:class="${'btn btn-dark w-90p'}"
-                th:onclick="|goUpdate()|"
-              >
-                수정
-              </button>
-            </div>
-            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-              <button
-                th:type="${'button'}"
-                th:class="${'btn btn-danger w-90p'}"
-                th:onclick="|getDelete()|"
-              >
-                삭제
-              </button>
-            </div>
-            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-              <button
-                th:type="${'button'}"
-                th:class="${'btn btn-secondary w-90p'}"
-                th:onclick="|location.href='@{|/${page}/list${PAGE}|}'|"
-              >
-                목록
-              </button>
-            </div>
-          </div>
           <!-- hidden -->
           <div class="hidden-wrapper">
+            <input
+              th:type="${'hidden'}"
+              th:id="${'qna_number'}"
+              th:name="${'qna_number'}"
+              th:value="${MODEL['qna_number']}"
+            />
             <input
               th:type="${'hidden'}"
               th:id="${'sessionId'}"
@@ -189,25 +185,17 @@
               th:name="${'writerId'}"
               th:value="${MODEL['qna_writer']}"
             />
-            <input
-              th:type="${'hidden'}"
-              th:id="${'qna_number'}"
-              th:name="${'qna_number'}"
-              th:value="${MODEL['qna_number']}"
-            />
           </div>
         </form>
       </div>
     </div>
   </section>
+
   <!-- hr -->
   <th:block th:replace="~{components/divider :: divider}" />
 
   <!-- button -->
   <th:block th:replace="~{components/button :: button}" />
-
-  <!-- fake pagination -->
-  <th:block th:replace="~{components/pagination :: fake-pagination}" />
 
   <!-- footer -->
   <th:block th:replace="~{layouts/footer :: footer}" />

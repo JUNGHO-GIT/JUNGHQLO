@@ -18,7 +18,7 @@
             Free shipping, 30-day return or refund guarantee.
           </span>
         </div>
-        <div class="col-10 col-sm-5 col-md-5 col-lg-5 col-xl-5 d-row-right">
+        <div class="col-12 col-sm-5 col-md-5 col-lg-5 col-xl-5 d-row-right">
           <a
             th:if="${session.member_id == null}"
             th:href="@{|/member/saveMember}"
@@ -125,7 +125,7 @@
             th:class="${'fs-0-9rem fw-700 upper-text pointer-burgundy ls-1 ms-n30 me-2vw'}"
             th:onclick="|location.href='@{/product/listProduct}'|"
           >
-            Products
+            Product
           </div>
           <div
             th:class="${'fs-0-9rem fw-700 upper-text pointer-burgundy ls-1 me-2vw'}"
@@ -217,8 +217,4 @@
       />
     </div>
   </section>
-
 </html>
-
-(^\s*<div)(\n)([\s\S\n])(th:value?)(?<=(\s*[>]))
-^(\s*)(<div)(\n)([\s\S\n]*?)(?=th:value)((?!(input|\/>)[\s\S\n]*?))(?:>)$

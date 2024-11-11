@@ -12,20 +12,18 @@
 
   <!-- main -->
   <section class="container-fluid px-30">
-    <div class="row d-row-center">
-      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
+    <div class="row d-center">
+      <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
         <!-- form -->
         <form
           th:id="${'formData'}"
           th:name="${'formData'}"
-          th:method="${'POST'}"
-          th:action="@{|/${page}/save${PAGE}|}"
-          th:enctype="${'multipart/form-data'}"
+          th:class="${'formData'}"
         >
           <!-- detail -->
           <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="border-1 radius-2 shadow-1 px-20 py-40">
+              <div class="border-1 radius-2 shadow-1 px-15 py-35">
                 <!-- title -->
                 <div class="row mb-20">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -43,6 +41,7 @@
                         th:id="${'board_title'}"
                         th:name="${'board_title'}"
                         th:class="${'form-control'}"
+                        th:value="${''}"
                       />
                     </div>
                   </div>
@@ -62,136 +61,92 @@
                       <textarea
                         th:id="${'board_contents'}"
                         th:name="${'board_contents'}"
-                        th:class="${'form-control h-20vh border-1 lh-1-7'}"
+                        th:class="${'form-control h-min20vh border-1 lh-1-7'}"
+                        th:value="${''}"
+                        th:text="${''}"
                       ></textarea>
                     </div>
                   </div>
                 </div>
-                <!-- hr -->
-                <hr
-                	th:id="${'hr'}"
-                	th:name="${'hr'}"
-                	th:class="${'mt-20 mb-20'}"
-                />
-                <!-- image -->
-                <div class="row">
-                  <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                    <div class="d-row-center mb-10">
+                <!-- image new -->
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
                       <div class="fs-0-9rem fw-800 light-black">
-                        기존 이미지
+                        이미지
                       </div>
-                      <div class="fs-0-9rem fw-800 burgundy ms-5">
-                        *
-                      </div>
-                    </div>
-                    <div class="d-row-center">
-                      <img
-                        th:id="${'existingImage'}"
-                        th:name="${'existingImage'}"
-                        th:class="${'w-100 h-100 radius-2 shadow-1'}"
-                        th:src="@{|${STORAGE}/icon/logo.png|}"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                    <div class="d-row-center mb-10">
-                      <div class="fs-0-9rem fw-800 light-black">
-                        게시물 이미지
-                      </div>
-                      <div class="fs-0-9rem fw-800 burgundy ms-5">
-                        <label
-                          th:id="${'imgsLabel'}"
-                          th:name="${'imgsLabel'}"
-                          th:class="${'ms-10'}"
-                          th:for="${'imgsFile'}"
-                        >
-                          선택하기
-                        </label>
-                      </div>
-                    </div>
-                    <div class="d-row-center">
-                      <input
-                        th:type="${'file'}"
-                        th:id="${'imgsFile'}"
-                        th:name="${'board_imgsFile'}"
-                        th:class="${'board_imgsFile d-none'}"
-                        th:onchange="|junghoPreview()|"
-                      />
                       <div
-                        th:id="${'imgsLoader'}"
-                        th:name="${'imgsLoader'}"
-                        th:class="${'imgsLoader'}"
+                        th:id="${'imgsLabel'}"
+                        th:name="${'imgsLabel'}"
+                        th:class="${'imgsLabel fs-0-9rem fw-800 burgundy ms-10 pointer'}"
+                        th:onclick="|return createImgs()|"
+                      >
+                        선택하기 *
+                      </div>
+                    </div>
+                    <div class="d-row-center">
+                      <div
+                        th:id="${'imgsContainer'}"
+                        th:name="${'imgsContainer'}"
+                        th:data-limit="${'3'}"
+                        th:class="${'imgsContainer w-100p h-min100 p-20 border-1 radius-1'}"
                       >
                       </div>
-                      <img
-                        th:id="${'imgsBox'}"
-                        th:name="${'imgsBox'}"
-                        th:class="${'imgsBox w-100 h-100 radius-2 shadow-1'}"
-                      />
+                      <div
+                        th:id="${'inputContainer'}"
+                        th:name="${'inputContainer'}"
+                        th:class="${'inputContainer d-none'}"
+                      >
+                      </div>
                     </div>
                   </div>
                 </div>
+                <!-- hidden -->
+                <div class="hidden-wrapper">
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'board_number'}"
+                    th:name="${'board_number'}"
+                    th:value="${'0'}"
+                  />
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'board_writer'}"
+                    th:name="${'board_writer'}"
+                    th:value="${session.member_id}"
+                  />
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'board_count'}"
+                    th:name="${'board_count'}"
+                    th:value="${'0'}"
+                  />
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'board_like'}"
+                    th:name="${'board_like'}"
+                    th:value="${'0'}"
+                  />
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'board_dislike'}"
+                    th:name="${'board_dislike'}"
+                    th:value="${'0'}"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <!-- hr -->
-          <hr
-          	th:id="${'hr'}"
-          	th:name="${'hr'}"
-          	th:class="${'mt-20 mb-20'}"
-          />
-          <!-- button -->
-          <div class="row d-row-center">
-            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-              <button
-                th:type="${'submit'}"
-                th:class="${'btn btn-dark w-90p'}"
-                th:onclick="|return saveBoard()|"
-              >
-                등록
-              </button>
-            </div>
-            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-              <button
-                th:type="${'button'}"
-                th:class="${'btn btn-dark w-90p'}"
-                th:onclick="|return goHome()|"
-              >
-                홈으로
-              </button>
-            </div>
-          </div>
-          <!-- hidden -->
-          <div class="hidden-wrapper">
-            <input
-              th:type="${'hidden'}"
-              th:id="${'board_writer'}"
-              th:name="${'board_writer'}"
-              th:value="${session.member_id}"
-            />
-            <input
-              th:type="${'hidden'}"
-              th:id="${'board_count'}"
-              th:name="${'board_count'}"
-              th:value="${'0'}"
-            />
-            <input
-              th:type="${'hidden'}"
-              th:id="${'board_like'}"
-              th:name="${'board_like'}"
-              th:value="${'0'}"
-            />
-            <input
-              th:type="${'hidden'}"
-              th:id="${'board_dislike'}"
-              th:name="${'board_dislike'}"
-              th:value="${'0'}"
-            />
           </div>
         </form>
       </div>
     </div>
   </section>
+
+  <!-- hr -->
+  <th:block th:replace="~{components/divider :: divider}" />
+
+  <!-- button -->
+  <th:block th:replace="~{components/button :: button}" />
 
   <!-- footer -->
   <th:block th:replace="~{layouts/footer :: footer}" />
