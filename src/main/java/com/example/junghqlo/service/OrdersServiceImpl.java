@@ -1,23 +1,16 @@
 package com.example.junghqlo.service;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import com.example.junghqlo.handler.PageHandler;
 import com.example.junghqlo.mapper.OrdersMapper;
 import com.example.junghqlo.model.Orders;
-import com.google.cloud.storage.Acl;
-import com.google.cloud.storage.Blob;
-import com.google.cloud.storage.BlobId;
-import com.google.cloud.storage.BlobInfo;
-import com.google.cloud.storage.Storage;
-import com.google.cloud.storage.StorageOptions;
+import com.example.junghqlo.model.Product;
 import com.stripe.exception.StripeException;
 
 @Service
@@ -95,74 +88,15 @@ public class OrdersServiceImpl implements OrdersService {
     return ordersMapper.getStripePrice(orders_number);
   }
 
-
   // 3. saveOrders ---------------------------------------------------------------------------------
   @Override
   public void saveOrders(
     @ModelAttribute Orders orders,
-    @RequestParam(required = false) List<MultipartFile> imgsFile
+    @ModelAttribute Product product
   ) throws Exception {
 
-    // 변수 선언
-    StringBuilder newImgsUrlBuilder = new StringBuilder();
-    String existingImgsUrl = orders.getProduct_imgsUrl();
-    String newImgsUrl = "";
-    String mergedImgsUrl = "";
-    String googleFileName = "";
-
-    // 이미지가 있을 경우 google cloud storage에 업로드
-    if (imgsFile.size() > 0) {
-      for (int i = 0; i < imgsFile.size(); i++) {
-        MultipartFile file = imgsFile.get(i);
-        byte[] bytes = file.getBytes();
-
-        // 고유한 파일 이름 생성 (인덱스 추가)
-        googleFileName = String.format(
-          "orders_%s_%d.webp",
-          LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss")),
-          i
-        );
-
-        // storage 객체 생성
-        Storage storage = StorageOptions.getDefaultInstance().getService();
-
-        // blobId 생성
-        BlobId blobId = BlobId.of(BUCKET_MAIN, BUCKET_FOLDER + "/orders/" + googleFileName);
-
-        BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
-          .setContentType(file.getContentType())
-          .setContentDisposition("inline; filename=\"" + googleFileName + "\"")
-          .build();
-
-        Blob blob = storage.create(blobInfo, bytes);
-        blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
-
-        // 업로드된 파일 이름을 newImgsUrl에 추가
-        if (newImgsUrlBuilder.length() > 0) {
-          newImgsUrlBuilder.append(",");
-        }
-        newImgsUrlBuilder.append(googleFileName);
-      }
-
-      // 최종 newImgsUrl 설정
-      newImgsUrl = newImgsUrlBuilder.toString().trim();
-    }
-
-    // 이미지 URL 합치기
-    if (existingImgsUrl != null && existingImgsUrl.length() > 0) {
-      if (newImgsUrl != null && newImgsUrl.length() > 0) {
-        mergedImgsUrl = existingImgsUrl + "," + newImgsUrl;
-      }
-      else {
-        mergedImgsUrl = existingImgsUrl;
-      }
-    }
-    else {
-      mergedImgsUrl = newImgsUrl;
-    }
-
-    // orders 는 리턴 없음
-    ordersMapper.saveOrders(orders, mergedImgsUrl);
+    // orders 는 리턴 없음, 이미지 저장 필요없음
+    ordersMapper.saveOrders(orders, product);
   }
 
   // 4-1. updateProductStock -----------------------------------------------------------------------

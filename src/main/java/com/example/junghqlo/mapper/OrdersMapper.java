@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import com.stripe.exception.StripeException;
 import com.example.junghqlo.model.Orders;
+import com.example.junghqlo.model.Product;
 import com.example.junghqlo.handler.LocalDateTimeTypeHandler;
 
 @Mapper
@@ -24,16 +25,16 @@ public interface OrdersMapper {
       id = true
     ),
     @Result (
-      property = "product_number",
-      column = "product_number"
+      property = "orders_product_number",
+      column = "orders_product_number"
     ),
     @Result (
-      property = "product_name",
-      column = "product_name"
+      property = "orders_product_name",
+      column = "orders_product_name"
     ),
     @Result (
-      property = "member_id",
-      column = "member_id"
+      property = "orders_member_id",
+      column = "orders_member_id"
     ),
     @Result (
       property = "orders_quantity",
@@ -42,10 +43,6 @@ public interface OrdersMapper {
     @Result (
       property = "orders_totalPrice",
       column = "orders_totalPrice"
-    ),
-    @Result (
-      property = "product_imgsUrl",
-      column = "product_imgsUrl"
     ),
     @Result (
       property = "orders_date",
@@ -67,7 +64,7 @@ public interface OrdersMapper {
     FROM
       orders
     WHERE
-      member_id = #{member_id}
+      orders_member_id = #{member_id}
     AND
       ${type} LIKE CONCAT('%', #{keyword}, '%')
     ORDER BY
@@ -116,28 +113,28 @@ public interface OrdersMapper {
     """
     INSERT INTO
       orders(
-        product_number,
-        product_name,
-        member_id,
+        orders_number,
+        orders_product_number,
+        orders_product_name,
+        orders_member_id,
         orders_quantity,
         orders_totalPrice,
-        product_imgsUrl,
         orders_date
       )
     VALUES (
-      #{orders.product_number},
-      #{orders.product_name},
-      #{orders.member_id},
+      #{orders.orders_number},
+      #{product.product_number},
+      #{product.product_name},
+      #{orders.orders_member_id},
       #{orders.orders_quantity},
       #{orders.orders_totalPrice},
-      #{imgsUrl},
       NOW()
     )
     """
   )
   void saveOrders(
     Orders orders,
-    @Param("imgsUrl") String imgsUrl
+    Product product
   ) throws Exception;
 
   // 4-1. updateOrders ----------------------------------------------------------------------------
@@ -146,8 +143,8 @@ public interface OrdersMapper {
     UPDATE
       orders
     SET
-      orders_quantity = #{orders.orders_quantity},
-      orders_totalPrice = #{orders.orders_totalPrice},
+      orders_quantity = #{orders_quantity},
+      orders_totalPrice = #{orders_totalPrice},
       orders_update = NOW()
     WHERE
       orders_number = #{orders_number}

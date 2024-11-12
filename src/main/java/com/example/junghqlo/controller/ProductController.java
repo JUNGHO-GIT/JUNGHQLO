@@ -39,6 +39,7 @@ public class ProductController {
   private static String page = "product";
   private static String PAGE = "Product";
 
+  // 0. logger -------------------------------------------------------------------------------------
   private static Logger logger = LoggerFactory.getLogger(ProductController.class);
   private static Gson gson = new GsonBuilder()
   .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())

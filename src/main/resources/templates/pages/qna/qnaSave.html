@@ -41,7 +41,6 @@
                         th:id="${'qna_title'}"
                         th:name="${'qna_title'}"
                         th:class="${'form-control'}"
-                        th:value="${''}"
                       />
                     </div>
                   </div>
@@ -123,8 +122,6 @@
                         th:id="${'qna_contents'}"
                         th:name="${'qna_contents'}"
                         th:class="${'form-control h-min20vh border-1 lh-1-7'}"
-                        th:value="${''}"
-                        th:text="${''}"
                       ></textarea>
                     </div>
                   </div>
@@ -140,7 +137,7 @@
                         th:id="${'imgsLabel'}"
                         th:name="${'imgsLabel'}"
                         th:class="${'imgsLabel fs-0-9rem fw-800 burgundy ms-10 pointer'}"
-                        th:onclick="|return createImgs()|"
+                        th:onclick="createImgs()"
                       >
                         선택하기 *
                       </div>
@@ -151,19 +148,23 @@
                         th:name="${'imgsContainer'}"
                         th:data-limit="${'3'}"
                         th:class="${'imgsContainer w-100p h-min100 p-20 border-1 radius-1'}"
-                      >
-                      </div>
+                      ></div>
                       <div
                         th:id="${'inputContainer'}"
                         th:name="${'inputContainer'}"
                         th:class="${'inputContainer d-none'}"
-                      >
-                      </div>
+                      ></div>
                     </div>
                   </div>
                 </div>
                 <!-- hidden -->
                 <div class="hidden-wrapper">
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'sessionId'}"
+                    th:name="${'sessionId'}"
+                    th:value="${session.member_id}"
+                  />
                   <input
                     th:type="${'hidden'}"
                     th:id="${'qna_number'}"

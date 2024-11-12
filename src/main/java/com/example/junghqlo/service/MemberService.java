@@ -50,13 +50,13 @@ public interface MemberService {
     String member_pw
   ) throws Exception;
 
-  // 3. saveMember ----------------------------------------------------------------------------------
-  void saveMember(
+  // 3. signupMember -------------------------------------------------------------------------------
+  void signupMember(
     Member member
   ) throws Exception;
 
   // 4-1. updateMember -----------------------------------------------------------------------------
-  void updateMember(
+  Integer updateMember(
     Member member
   ) throws Exception;
 
@@ -71,11 +71,6 @@ public interface MemberService {
     String member_name,
     String member_id,
     String member_pw
-  ) throws Exception;
-
-  // 6. logoutMember -------------------------------------------------------------------------------
-  void logoutMember(
-    HttpSession session
   ) throws Exception;
 
 }

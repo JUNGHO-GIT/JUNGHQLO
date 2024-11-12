@@ -79,7 +79,7 @@
                         th:id="${'imgsLabel'}"
                         th:name="${'imgsLabel'}"
                         th:class="${'imgsLabel fs-0-9rem fw-800 burgundy ms-10 pointer'}"
-                        th:onclick="|return createImgs()|"
+                        th:onclick="createImgs()"
                       >
                         선택하기 *
                       </div>
@@ -90,14 +90,12 @@
                         th:name="${'imgsContainer'}"
                         th:data-limit="${'3'}"
                         th:class="${'imgsContainer w-100p h-min100 p-20 border-1 radius-1'}"
-                      >
-                      </div>
+                      ></div>
                       <div
                         th:id="${'inputContainer'}"
                         th:name="${'inputContainer'}"
                         th:class="${'inputContainer d-none'}"
-                      >
-                      </div>
+                      ></div>
                     </div>
                   </div>
                 </div>
@@ -123,8 +121,7 @@
                             th:name="${'existingName_' + image}"
                             th:class="${'fs-0-8rem fw-600 grey ms-10'}"
                             th:text="${#strings.abbreviate(image, 20)}"
-                          >
-                          </div>
+                          ></div>
                         </div>
                         <div class="d-row-center">
                           <div
@@ -133,8 +130,7 @@
                             th:class="${'fs-1-0rem fw-600 burgundy pointer'}"
                             th:text="${'X'}"
                             th:onclick="deleteExistingImgs([[${image}]])"
-                          >
-                          </div>
+                          ></div>
                         <div>
                       </div>
                     </div>
@@ -142,6 +138,12 @@
                 </div>
                 <!-- hidden -->
                 <div class="hidden-wrapper">
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'sessionId'}"
+                    th:name="${'sessionId'}"
+                    th:value="${session.member_id}"
+                  />
                   <input
                     th:type="${'hidden'}"
                     th:id="${'notice_number'}"

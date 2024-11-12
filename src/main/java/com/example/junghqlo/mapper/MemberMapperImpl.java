@@ -3,7 +3,6 @@ package com.example.junghqlo.mapper;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.http.HttpSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 import com.example.junghqlo.model.Member;
@@ -122,22 +121,31 @@ public class MemberMapperImpl implements MemberMapper {
     return result;
   }
 
-  // 3-1. saveMember --------------------------------------------------------------------------------
+  // 3-1. signupMember -----------------------------------------------------------------------------
   @Override
-  public void saveMember(
+  public void signupMember(
     Member member
   ) throws Exception {
 
-    sqlSession.insert("saveMember", member);
+    sqlSession.insert("signupMember", member);
   }
 
   // 4-1. updateMember -----------------------------------------------------------------------------
   @Override
-  public void updateMember(
+  public Integer updateMember(
     Member member
   ) throws Exception {
 
-    sqlSession.update("updateMember", member);
+    Integer result = 0;
+
+    if (sqlSession.update("updateMember", member) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
 
   // 4-2. updateMemberPw ---------------------------------------------------------------------------
@@ -177,14 +185,5 @@ public class MemberMapperImpl implements MemberMapper {
     }
 
     return result;
-  }
-
-  // 6. logoutMember -------------------------------------------------------------------------------
-  @Override
-  public void logoutMember(
-    HttpSession session
-  ) throws Exception {
-
-    session.invalidate();
   }
 }

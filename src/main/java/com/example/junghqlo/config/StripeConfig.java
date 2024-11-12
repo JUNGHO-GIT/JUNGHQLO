@@ -34,7 +34,6 @@ public class StripeConfig {
 
   @Bean
   AdjustableQuantity adjustableQuantity() {
-
     return SessionCreateParams.LineItem.AdjustableQuantity.builder().build();
   }
 

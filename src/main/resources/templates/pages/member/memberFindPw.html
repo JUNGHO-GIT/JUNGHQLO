@@ -28,13 +28,13 @@
             </div>
           </div>
           <!-- ID -->
-          <div class="row">
+          <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="d-row-left mb-10">
                 <div class="fs-0-9rem fw-800">
                   아이디
                 </div>
-                <div class="fs-0-9rem fw-800 burgundy me-10">
+                <div class="fs-0-9rem fw-800 burgundy ms-5">
                   *
                 </div>
               </div>
@@ -49,14 +49,14 @@
               />
             </div>
           </div>
-          <!-- Name -->
-          <div class="row">
+          <!-- name -->
+          <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="d-row-left mb-10">
                 <div class="fs-0-9rem fw-800">
                   이름
                 </div>
-                <div class="fs-0-9rem fw-800 burgundy me-10">
+                <div class="fs-0-9rem fw-800 burgundy ms-5">
                   *
                 </div>
               </div>
@@ -78,7 +78,7 @@
                 <div class="fs-0-9rem fw-800 light-black">
                   이메일
                 </div>
-                <div class="fs-0-9rem fw-800 burgundy me-10">
+                <div class="fs-0-9rem fw-800 burgundy ms-5">
                   *
                 </div>
               </div>
@@ -93,27 +93,16 @@
               />
             </div>
           </div>
-          <!-- hr -->
-          <hr
-          	th:id="${'hr'}"
-          	th:name="${'hr'}"
-          	th:class="${'mt-20 mb-20'}"
-          />
-          <!-- button -->
-          <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <button
-                th:type="${'submit'}"
-                class="btn btn-dark w-100p"
-              >
-                비밀번호 찾기
-              </button>
-            </div>
-          </div>
         </form>
       </div>
     </div>
   </section>
+
+  <!-- divider -->
+  <th:block th:replace="~{components/divider :: divider}" />
+
+  <!-- button -->
+  <th:block th:replace="~{components/button :: button}" />
 
   <!-- footer -->
   <th:block th:replace="~{layouts/footer :: footer}" />

@@ -11356,6 +11356,9 @@
 .z-10000 {z-index: 10000 !important;}
 
 /** 9-1. display **********************************************************************************/
+.d-none {
+  display: none;
+}
 .d-fill {
   display: -webkit-fill-available !important;
 }
@@ -11377,6 +11380,18 @@
   justify-content: center !important;
   align-items: center !important;
   text-align: center !important;
+}
+.d-left {
+  display: flex !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  text-align: left !important;
+}
+.d-right {
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  text-align: right !important;
 }
 .d-row {
   display: flex !important;
@@ -11776,32 +11791,20 @@
 .border-left-0 {
   border-left: 0px solid transparent !important;
 }
-.border-dark-1 {
-  border: 1px solid #707070 !important;
-}
-.border-dark-top-1 {
-  border-top: 1px solid #707070 !important;
-}
-.border-dark-right-1 {
-  border-right: 1px solid #707070 !important;
-}
-.border-dark-bottom-1 {
-  border-bottom: 1px solid #707070 !important;
-}
 .border-1 {
-  border: 1px solid #bebebe !important;
+  border: 1px solid #dbdbdb !important;
 }
 .border-top-1 {
-  border-top: 1px solid #bebebe !important;
+  border-top: 1px solid #dbdbdb !important;
 }
 .border-right-1 {
-  border-right: 1px solid #bebebe !important;
+  border-right: 1px solid #dbdbdb !important;
 }
 .border-bottom-1 {
-  border-bottom: 1px solid #bebebe !important;
+  border-bottom: 1px solid #dbdbdb !important;
 }
 .border-left-1 {
-  border-left: 1px solid #bebebe !important;
+  border-left: 1px solid #dbdbdb !important;
 }
 .border-2 {
   border: 2px solid #bebebe !important;
@@ -11832,6 +11835,18 @@
 }
 .border-left-3 {
   border-left: 3px solid #bebebe !important;
+}
+.border-dark-1 {
+  border: 1px solid #707070 !important;
+}
+.border-dark-top-1 {
+  border-top: 1px solid #707070 !important;
+}
+.border-dark-right-1 {
+  border-right: 1px solid #707070 !important;
+}
+.border-dark-bottom-1 {
+  border-bottom: 1px solid #707070 !important;
 }
 
 /** 99. color *************************************************************************************/

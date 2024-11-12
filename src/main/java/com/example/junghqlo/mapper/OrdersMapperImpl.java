@@ -6,6 +6,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 import com.example.junghqlo.model.Orders;
+import com.example.junghqlo.model.Product;
 import com.stripe.exception.StripeException;
 
 @Repository
@@ -55,12 +56,12 @@ public class OrdersMapperImpl implements OrdersMapper {
   @Override
   public void saveOrders(
     Orders orders,
-    String imgsUrl
+    Product product
   ) throws Exception {
 
     Map<String, Object> map = new HashMap<>();
     map.put("orders", orders);
-    map.put("imgsUrl", imgsUrl);
+    map.put("product", product);
 
     sqlSession.insert("saveOrders", map);
   }

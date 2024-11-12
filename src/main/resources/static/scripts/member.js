@@ -1,157 +1,73 @@
-/** ----------------------------------------------------------------------------------------------->
-* @param null
-* @return {boolean}
-* @desc 아이디 찾기
+
+
+/** ------------------------------------------------------------------------------------------------
+* @desc 로그인
 **/
-function findMemberId() {
-  if (getValue(getById("member_name")) === "") {
-    alert("이름을 입력하세요");
-    getById("member_name")?.focus();
-    return false;
-  }
-  if (getValue(getById("member_email")) === "") {
-    alert("이메일을 입력하세요");
-    getById("member_email")?.focus();
-    return false;
+function getLogin() {
+
+  // id, password 값 찾기
+  const memberId = getValue(getById("member_id"));
+  const memberPw = getValue(getById("member_pw"));
+
+  // 동적 validate 함수 호출
+  const validate = eval(`validateMember('login')`);
+  if (!validate) {
+    return;
   }
 
   $.ajax({
-    url: `/${title}/member/findMemberId`,
-    method: "POST",
+    type: "POST",
+    url: `/${title}/member/loginMember`,
     data: {
-      member_name: getValue(getById("member_name")),
-      member_email: getValue(getById("member_email")),
+      member_id: memberId,
+      member_pw: memberPw
     },
-    success: function (response) {
-      if (response === "notExist") {
-        alert("일치하는 회원정보가 없습니다.");
-        location.reload();
+    success: function(response) {
+      if (response === 1) {
+        alert("로그인 되었습니다.");
+        goToPage("home");
+      }
+      else if (response === 0) {
+        alert("로그인 실패했습니다.");
+        goToPage("refresh");
       }
       else {
-        alert(`회원님의 아이디는 ${response} 입니다.`);
-        location.reload();
+        alert("오류가 발생했습니다.");
+        goToPage("refresh");
       }
-    },
+    }
   });
-
-  return true;
 };
 
 /** ----------------------------------------------------------------------------------------------->
 * @param null
 * @return {boolean}
-* @desc 비밀번호 찾기
+* @desc 로그아웃
 **/
-function findMemberPw() {
-  if (getValue(getById("member_id")) === "") {
-    alert("아이디를 입력하세요");
-    getById("member_id")?.focus();
-    return false;
-  }
-  if (getValue(getById("member_name")) === "") {
-    alert("이름을 입력하세요");
-    getById("member_name")?.focus();
-    return false;
-  }
-  if (getValue(getById("member_email")) === "") {
-    alert("이메일을 입력하세요");
-    getById("member_email")?.focus();
-    return false;
-  }
-
-  $.ajax({
-    url: `/${title}/member/findMemberPw`,
-    method: "POST",
-    data: {
-      member_id: getValue(getById("member_id")),
-      member_name: getValue(getById("member_name")),
-      member_email: getValue(getById("member_email")),
-    },
-    /**
-    * @param {any} responseText
-    **/
-    success: function (responseText) {
-      if (responseText === "notExist") {
-        alert("일치하는 회원정보가 없습니다.");
-        location.reload();
+function getLogout() {
+  if (confirm("로그아웃 하시겠습니까?")) {
+    $.ajax({
+      url: `/${title}/member/logoutMember`,
+      method: "GET",
+      success: function (response) {
+        if (response === 1) {
+          goToPage("home");
+        }
+        else if (response === 0) {
+          goToPage("refresh");
+        }
+        else {
+          alert("오류가 발생했습니다.");
+          goToPage("refresh");
+        }
       }
-      else {
-        alert(`회원님의 비밀번호는 ${responseText} 입니다.`);
-        location.reload();
-      }
-    },
-  });
+    });
+  }
+  else {
+    location.reload();
+    return false;
+  }
 
-  return true;
-};
-
-/** ----------------------------------------------------------------------------------------------->
-* @param null
-* @return {boolean}
-* @desc 회원가입 유효성 검사
-**/
-function saveMember() {
-  if (getValue(getById("member_id")) === "") {
-    alert("아이디를 입력하세요");
-    getById("member_id")?.focus();
-    return false;
-  }
-  if (getValue(getById("member_pw")) === "") {
-    alert("비밀번호를 입력하세요");
-    getById("member_pw")?.focus();
-    return false;
-  }
-  if (!getValue(getById("member_pw")).toString().match(/^[a-zA-Z0-9]{8,12}$/)) {
-    alert("비밀번호는 8~12자리의 영문 대소문자와 숫자만 입력 가능합니다");
-    getById("member_pw")?.focus();
-    return false;
-  }
-  if (getValue(getById("member_name")) === "") {
-    alert("이름을 입력하세요");
-    getById("member_name")?.focus();
-    return false;
-  }
-  if (getValue(getById("member_name")).toString().match(/^[가-힣]+$/)) {
-    alert("이름은 한글만 입력 가능합니다");
-    getById("member_name")?.focus();
-    return false;
-  }
-  if (getValue(getById("member_phone")) === "") {
-    alert("전화번호를 입력하세요");
-    getById("member_phone")?.focus();
-    return false;
-  }
-  if (getValue(getById("member_phone")).toString().match(/^010[0-9]{8}$/)) {
-    alert("전화번호는 01012345678 형식으로 입력해주세요");
-    getById("member_phone")?.focus();
-    return false;
-  }
-  if (getValue(getById("member_email")) === "") {
-    alert("이메일을 입력하세요");
-    getById("member_email")?.focus();
-    return false;
-  }
-  if (getValue(getById("email_verified")) !== "true") {
-    alert("이메일 인증을 해주세요");
-    return false;
-  }
-  if (getValue(getById("member_address1")) === "") {
-    alert("주소를 입력하세요");
-    getById("member_address1")?.focus();
-    return false;
-  }
-  if (getValue(getById("member_address2")) === "") {
-    alert("상세주소를 입력하세요");
-    getById("member_address2")?.focus();
-    return false;
-  }
-  if (!getValue(getById("member_agree"))) {
-    alert("약관에 동의해주세요");
-    getById("member_agree")?.focus();
-    return false;
-  }
-  alert("등록이 완료되었습니다.");
-  location.href = `/${title}/member/loginMember`;
   return true;
 };
 
@@ -161,30 +77,11 @@ function saveMember() {
 * @desc 아이디 중복 확인
 **/
 function checkMemberId() {
-
-  if (getValue(getById("member_id")) === "") {
-    alert("아이디를 입력하세요");
-    getById("member_id")?.focus();
-    return false;
-  }
-  if (
-    getValue(getById("member_id")).length < 4 ||
-    getValue(getById("member_id")).length > 12 ||
-    !getValue(getById("member_id")).toString().match(/^[a-zA-Z0-9]+$/)
-  ) {
-    alert("아이디는 4~12자리의 영문 대소문자와 숫자를 포함해야 합니다");
-    getById("member_id")?.focus();
-    return false;
-  }
-
   $.ajax({
     url: `/${title}/member/checkMemberId?member_id=${getValue(getById("member_id"))}`,
     method: "GET",
-    /**
-    * @param {any} responseText
-    **/
-    success: function (responseText) {
-      if (responseText === 0) {
+    success: function (response) {
+      if (response === 0) {
         alert("이미 사용중인 아이디입니다.");
         getById("member_id")?.focus();
         return false;
@@ -197,23 +94,6 @@ function checkMemberId() {
   });
 
   return true;
-};
-
-/** ----------------------------------------------------------------------------------------------->
-* @param null
-* @return {boolean}
-* @desc 다음 우편번호
-**/
-function openDaumPostcode() {
-  new daum.Postcode({
-    /**
-    * @param {any} data
-    **/
-    oncomplete: function (data) {
-      setValue(getById("member_address1"), data.address);
-    },
-  }).open();
-  return false;
 };
 
 /** ----------------------------------------------------------------------------------------------->
@@ -281,219 +161,204 @@ function checkEmail() {
 };
 
 /** ----------------------------------------------------------------------------------------------->
-* @param null
-* @return {boolean}
-* @desc 로그인 아이디 비밀번호 체크
+* @desc 회원가입
 **/
-function checkMemberIdPw() {
-  if (getValue(getById("member_id")) === "") {
-    alert("아이디를 입력하세요");
-    getById("member_id")?.focus();
-    return false;
-  }
-  if (getValue(getById("member_pw")) === "") {
-    alert("비밀번호를 입력하세요");
-    getById("member_pw")?.focus();
-    return false;
+function getSignup() {
+
+  // form 요소 찾기
+  const form = getElem("#formData");
+  const formDataObject = form instanceof HTMLFormElement ? new FormData(form) : new FormData();
+
+  // 동적 validate 함수 호출
+  const validate = eval(`validateMember('signup')`);
+  if (!validate) {
+    return;
   }
 
   $.ajax({
-    url: `/${title}/member/checkMemberIdPw?member_id=${getValue(getById("member_id"))}&member_pw=${getValue(getById("member_pw"))}`,
-    method: "GET",
-    success: function (response) {
+    type: "POST",
+    url: `/${title}/member/saveMember`,
+    data: formDataObject,
+    success: function(response) {
       if (response === 1) {
-        alert("로그인 되었습니다.");
-        location.href = `/${title}`;
-        return true;
+        alert("회원가입 되었습니다.");
+        goToPage("home");
       }
       else if (response === 0) {
-        alert("아이디 또는 비밀번호가 일치하지 않습니다.");
-        getById("member_id")?.focus();
-        return false;
+        alert("회원가입 실패했습니다.");
+        goToPage("refresh");
       }
       else {
-        alert("오류가 발생했습니다. 다시 시도해주세요");
-        return false;
+        alert("오류가 발생했습니다.");
+        goToPage("refresh");
       }
-    },
+    }
   });
 
-  return true;
-};
+}
 
 /** ----------------------------------------------------------------------------------------------->
-* @param null
-* @return {boolean}
-* @desc 로그아웃
-**/
-function logoutMember() {
-  if (confirm("로그아웃 하시겠습니까?")) {
-    $.ajax({
-      url: `/${title}/member/logoutMember`,
-      method: "GET",
-      success: function () {
-        alert("로그아웃 되었습니다.");
-        location.href = "/JUNGHQLO";
-        return true;
-      }
-    });
-  }
-  else {
-    alert("로그아웃이 취소되었습니다.");
-    return false;
-  }
-
-  return true;
-};
-
-/** ----------------------------------------------------------------------------------------------->
-* @param null
-* @return {boolean}
 * @desc 회원정보 수정
 **/
-function updateMember() {
-  if (getValue(getById("member_phone")) === "") {
-    alert("전화번호를 입력하세요");
-    getById("member_phone")?.focus();
-    return false;
-  }
-  if (!getValue(getById("member_phone")).toString().match(/^010[0-9]{8}$/)) {
-    alert("전화번호는 01012345678 형식으로 입력해주세요");
-    getById("member_phone")?.focus();
-    return false;
-  }
-  if (getValue(getById("member_email")) === "") {
-    alert("이메일을 입력하세요");
-    getById("member_email")?.focus();
-    return false;
-  }
-  if (getValue(getById("member_address1")) === "") {
-    alert("주소를 입력하세요");
-    getById("member_address1")?.focus();
-    return false;
-  }
-  if (getValue(getById("member_address2")) === "") {
-    alert("상세주소를 입력하세요");
-    getById("member_address2")?.focus();
-    return false;
-  }
-  alert("수정이 완료되었습니다.");
-  location.reload();
-  return true;
-};
+function getUpdateMember() {
 
-/** ----------------------------------------------------------------------------------------------->
-* @param null
-* @return {boolean}
-* @desc 비밀번호 변경
-**/
-function updateMemberPw() {
-  if (getValue(getById("member_pw")) === "") {
-    alert("비밀번호를 입력하세요");
-    getById("member_pw")?.focus();
-    return false;
-  }
-  if (getValue(getById("member_pw2")) === "") {
-    alert("비밀번호를 다시 입력하세요");
-    getById("member_pw2")?.focus();
-    return false;
-  }
-  if (getValue(getById("member_pw")) !== getValue(getById("member_pw2"))) {
-    alert("비밀번호 확인이 일치하지 않습니다.");
-    setValue(getById("member_pw2"), "");
-    getById("member_pw2")?.focus();
-    return false;
-  }
-  if (!getValue(getById("member_pw")).toString().match(/^[a-zA-Z0-9]{8,12}$/)) {
-    alert("비밀번호는 8~12자리의 영문 대소문자와 숫자만 입력 가능합니다");
-    getById("member_pw")?.focus();
-    return false;
+  // form 요소 찾기
+  const form = getElem("#formData");
+  const formDataObject = form instanceof HTMLFormElement ? new FormData(form) : new FormData();
+
+  // 동적 validate 함수 호출
+  const validate = eval(`validateMember('update')`);
+  if (!validate) {
+    return;
   }
 
   $.ajax({
-    url: `/${title}/member/updateMemberPw`,
-    method: "POST",
-    data: {
-      member_pw: getValue(getById("member_pw")),
-    },
-    success: function (response) {
+    type: "POST",
+    url: `/${title}/member/updateMember`,
+    data: formDataObject,
+    success: function(response) {
       if (response === 1) {
-        alert("비밀번호가 변경되었습니다.");
-        location.href = `/${title}/member/loginMember`;
-        return true;
+        alert("수정되었습니다.");
+        goToPage("home");
       }
       else if (response === 0) {
-        alert("비밀번호 변경에 실패했습니다.");
-        location.reload();
-        return false;
+        alert("수정 실패했습니다.");
+        goToPage("refresh");
       }
       else {
-        alert("오류가 발생했습니다. 다시 시도해주세요");
-        location.reload();
-        return false;
+        alert("오류가 발생했습니다.");
+        goToPage("refresh");
       }
-    },
+    }
   });
-
-  return true;
 };
 
-/** ----------------------------------------------------------------------------------------------->
-* @param null
-* @return {boolean}
-* @desc 회원탈퇴
+/** ------------------------------------------------------------------------------------------------
+* @desc 비밀번호 변경
 **/
-function deleteMember() {
-  if (getValue(getById("member_pw")) === "") {
-    alert("비밀번호를 입력하세요");
-    getById("member_pw")?.focus();
-    return false;
-  }
-  if (getValue(getById("member_pw2")) === "") {
-    alert("비밀번호를 다시 입력하세요");
-    getById("member_pw2")?.focus();
-    return false;
-  }
-  if (getValue(getById("member_pw")) !== getValue(getById("member_pw2"))) {
-    alert("비밀번호 확인이 일치하지 않습니다.");
-    setValue(getById("member_pw2"), "");
-    getById("member_pw2")?.focus();
-    return false;
+function getUpdatePw() {
+
+  // form 요소 찾기
+  const form = getElem("#formData");
+  const formDataObject = form instanceof HTMLFormElement ? new FormData(form) : new FormData();
+
+  // 동적 validate 함수 호출
+  const validate = eval(`validateMember('change')`);
+  if (!validate) {
+    return;
   }
 
   $.ajax({
-    url: `/${title}/member/deleteMember`,
-    method: "POST",
-    data: {
-      member_name: getValue(getById("member_name")),
-      member_id: getValue(getById("member_id")),
-      member_pw: getValue(getById("member_pw")),
-    },
-    success: function (response) {
-      if (response === 0) {
-        alert("일치하는 회원정보가 없습니다.");
-        location.reload();
-        return false;
+    type: "POST",
+    url: `/${title}/member/changePassword`,
+    data: formDataObject,
+    success: function(response) {
+      if (response === 1) {
+        alert("비밀번호가 변경되었습니다.");
+        goToPage("home");
       }
-      else if (response === 1) {
-        if (confirm("회원 탈퇴를 하시겠습니까?")) {
-          alert("회원 탈퇴 되었습니다.");
-          location.href = `/${title}/member/loginMember`;
-          return true;
-        }
-        else {
-          alert("회원탈퇴가 취소되었습니다.");
-          location.reload();
-          return false;
-        }
+      else if (response === 0) {
+        alert("비밀번호 변경 실패했습니다.");
+        goToPage("refresh");
       }
       else {
-        alert("오류가 발생했습니다. 다시 시도해주세요");
-        location.reload();
-        return false;
+        alert("오류가 발생했습니다.");
+        goToPage("refresh");
       }
-    },
+    }
   });
+};
 
-  return true;
+/** ------------------------------------------------------------------------------------------------
+* @desc 아이디 찾기
+**/
+function getFindId() {
+
+  // 동적 validate 함수 호출
+  const validate = eval(`validateMember('findId')`);
+  if (!validate) {
+    return;
+  }
+
+  $.ajax({
+    type: "POST",
+    url: `/${title}/member/findId`,
+    data: {
+      member_name: getValue(getById("member_name")),
+      member_email: getValue(getById("member_email")),
+    },
+    success: function(response) {
+      if (response) {
+        alert(`회원님의 아이디는 ${response} 입니다.`);
+        goToPage("home");
+      }
+      else {
+        alert("아이디를 찾을 수 없습니다.");
+        goToPage("refresh");
+      }
+    }
+  });
+};
+
+/** ------------------------------------------------------------------------------------------------
+* @desc 비밀번호 찾기
+**/
+function getFindPw() {
+
+  // 동적 validate 함수 호출
+  const validate = eval(`validateMember('findPassword')`);
+  if (!validate) {
+    return;
+  }
+
+  $.ajax({
+    type: "POST",
+    url: `/${title}/member/findPassword`,
+    data: {
+      member_id: getValue(getById("member_id")),
+      member_name: getValue(getById("member_name")),
+      member_email: getValue(getById("member_email")),
+    },
+    success: function(response) {
+      if (response) {
+        alert(`회원님의 비밀번호는 ${response} 입니다.`);
+        goToPage("home");
+      }
+      else {
+        alert("비밀번호를 찾을 수 없습니다.");
+        goToPage("refresh");
+      }
+    }
+  });
+};
+
+/** ------------------------------------------------------------------------------------------------
+* @desc 회원 탈퇴
+**/
+function getDeleteMember() {
+
+  // 동적 validate 함수 호출
+  const validate = eval(`validateMember('delete')`);
+  if (!validate) {
+    return;
+  }
+
+  $.ajax({
+    type: "POST",
+    url: `/${title}/member/deleteMember`,
+    success: function(response) {
+      if (response === 1) {
+        alert("탈퇴되었습니다.");
+        goToPage("home");
+      }
+      else if (response === 0) {
+        alert("탈퇴 실패했습니다.");
+        goToPage("refresh");
+      }
+      else {
+        alert("오류가 발생했습니다.");
+        goToPage("refresh");
+      }
+    }
+  });
 };

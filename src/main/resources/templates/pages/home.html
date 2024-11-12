@@ -31,7 +31,7 @@
             </div>
             <div
               th:class="${'primary-btn'}"
-              th:onclick="|location.href='@{/product/listProduct}'|"
+              th:onclick="goToPage('product/listProduct')"
             >
               <p>Shop now</p>
               <span class="arrow_right"></span>
@@ -189,7 +189,7 @@
     </section>
 
     <!-- instagram -->
-    <section class="container-fluid">
+    <section class="container-fluid px-30">
       <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
           <div class="instagram-pic">

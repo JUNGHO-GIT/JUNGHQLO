@@ -10,7 +10,7 @@
             th:id="${'icon1'}"
             th:name="${'icon1'}"
             th:class="${ICON + ' pointer'}"
-            th:onclick="|return goRefresh()|"
+            th:onclick="goToPage('refresh')"
           ></i>
           <span
             th:id="${'text1'}"
@@ -24,7 +24,7 @@
             th:id="${'icon2'}"
             th:name="${'icon2'}"
             th:class="${'fa fa-home pointer'}"
-            th:onclick="|return goHome()|"
+            th:onclick="goToPage('home')"
           ></i>
           <span
             th:id="${'text2'}"

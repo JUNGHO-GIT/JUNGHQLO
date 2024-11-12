@@ -23,15 +23,14 @@
           <!-- list -->
           <div class="row">
             <th:block th:each="LIST : ${LIST}">
-              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4 p-20">
+              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4 p-20 d-center">
                 <div class="border-1 radius-2 shadow-3 w-300 h-300 object-cover">
                   <div
                     th:id="${'board-bg'}"
                     th:name="${'board-bg'}"
                     th:class="${'radius-2 z-100'}"
                     th:attr="board-bg=@{|${STORAGE}/${page}/${LIST['board_imgsUrl']}|}"
-                  >
-                  </div>
+                  ></div>
                   <div class="blog-item-text z-200">
                     <!-- date & view -->
                     <div class="d-row-between">
@@ -40,30 +39,27 @@
                         <div
                           th:class="${'fs-0-7rem fw-600 dark-grey ms-5'}"
                           th:text="${#strings.substring((LIST['board_update'] != null ? LIST['board_update'] : LIST['board_date']), 0, 10)}"
-                        >
-                        </div>
+                        ></div>
                       </div>
                       <div class="d-row-right">
                         <i class="fa fa-eye"></i>
                         <div
                           th:class="${'fs-0-7rem fw-600 dark-grey ms-5'}"
                           th:text="${LIST['board_count']}"
-                        >
-                        </div>
+                        ></div>
                       </div>
                     </div>
                     <!-- hr -->
-                    <br class="mt-10 mb-10" />
+                    <br class="my-10" />
                     <!-- title -->
                     <div
                       th:id="${'board_title'}"
                       th:name="${'board_title'}"
                       th:class="${'fs-1-0rem fw-700 light-black'}"
                       th:text="${#strings.abbreviate(LIST['board_title'], 20)}"
-                    >
-                    </div>
+                    ></div>
                     <!-- hr -->
-                    <br class="mt-10 mb-10" />
+                    <br class="my-10" />
                     <!-- click read more -->
                     <div class="d-row-center">
                       <input
@@ -76,7 +72,7 @@
                         th:id="${'read-more'}"
                         th:name="${'read-more'}"
                         th:class="${'pointer-burgundy fs-0-9rem fw-600 upper'}"
-                        th:onclick="goDetail([[${LIST['board_number']}]])"
+                        th:onclick="goToPage('detail', [[${LIST['board_number']}]])"
                       >
                         Read More
                       </div>

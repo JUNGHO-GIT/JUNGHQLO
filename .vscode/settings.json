@@ -45,7 +45,6 @@
     "**/*Auth*": true,
     "**/*.env*": true,
   },
-  "typescript.tsdk": "node_modules\\typescript\\lib",
   "explorerExclude.backup": {},
   "java.configuration.updateBuildConfiguration": "automatic"
 }

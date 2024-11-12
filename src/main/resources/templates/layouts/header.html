@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- header -->
-  <section th:fragment="header" class="container-fluid px-0">
+  <section th:fragment="header" class="container-fluid">
 
     <!-- loader -->
     <th:block th:replace="~{layouts/loader :: loader}" />
@@ -24,7 +24,7 @@
               th:id="${'signup'}"
               th:name="${'signup'}"
               th:class="${'upper white hover fs-0-8rem me-20'}"
-              th:onclick="|return goSignUp()|"
+              th:onclick="goToPage('member/signupMember')"
             >
               SignUp
             </div>
@@ -32,7 +32,7 @@
               th:id="${'login'}"
               th:name="${'login'}"
               th:class="${'upper white hover fs-0-8rem me-20'}"
-              th:onclick="|return goLogin()|"
+              th:onclick="goToPage('member/loginMember')"
             >
               Login
             </div>
@@ -42,7 +42,8 @@
               th:id="${'mypage'}"
               th:name="${'mypage'}"
               th:class="${'upper white hover fs-0-8rem me-20'}"
-              th:onclick="|return goMyPage()|"
+              th:with="memberNumber=${session.member_number}"
+              th:onclick="goToPage('member/detailMember?member_number=' + [[${memberNumber}]])"
             >
               MyPage
             </div>
@@ -50,7 +51,7 @@
               th:id="${'logout'}"
               th:name="${'logout'}"
               th:class="${'upper white hover fs-0-8rem me-20'}"
-              th:onclick="|return logoutMember()|"
+              th:onclick="goLogout()"
             >
               Logout
             </div>
@@ -61,44 +62,44 @@
             </span>
             <ul th:if ="${session.member_id == ADMIN}">
               <li>
-                <a th:href="@{https://dashboard.stripe.com/test/dashboard|}">
+                <a th:onclick="@{https://dashboard.stripe.com/test/dashboard|}">
                   AdminPage
                 </a>
               </li>
               <li>
-                <a th:href="@{|/member/listMember|}">
+                <a th:onclick="@{|/member/listMember|}">
                   MemberList
                 </a>
               </li>
               <li>
-                <a th:href="@{|/product/saveProduct|}">
+                <a th:onclick="@{|/product/saveProduct|}">
                   SaveProduct
                 </a>
               </li>
               <li>
-                <a th:href="@{|/notice/saveNotice|}">
+                <a th:onclick="@{|/notice/saveNotice|}">
                   SaveNotice
                 </a>
               </li>
             </ul>
             <ul th:if ="${session.member_id != ADMIN}">
               <li>
-                <a th:onclick="|adminAlert()|">
+                <a th:onclick="adminAlert()">
                   AdminPage
                 </a>
               </li>
               <li>
-                <a th:onclick="|adminAlert()|">
+                <a th:onclick="adminAlert()">
                   MemberList
                 </a>
               </li>
               <li>
-                <a th:onclick="|adminAlert()|">
+                <a th:onclick="adminAlert()">
                   SaveProduct
                 </a>
               </li>
               <li>
-                <a th:onclick="|adminAlert()|">
+                <a th:onclick="adminAlert()">
                   SaveNotice
                 </a>
               </li>
@@ -112,7 +113,7 @@
     <div class="container bg-white p-10">
       <div class="row d-row-center">
         <!-- logo -->
-        <div class="col-4 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+        <div class="col-4 col-sm-2 col-md-2 col-lg-2 col-xl-2 d-row-center">
           <img
             th:src="@{|${STORAGE}/icon/logo.png|}"
             th:loading="${'lazy'}"
@@ -120,82 +121,49 @@
             th:width="${'70px'}"
             th:height="${'70px'}"
             th:class="${'pointer ms-n20'}"
-            th:onclick="|return goHome()|"
+            th:onclick="goToPage('home')"
           />
         </div>
         <!-- menu -->
-        <div class="d-none d-sm-block col-sm-10 col-md-10 col-lg-6 col-xl-6">
+        <div class="d-none d-sm-block col-sm-10 col-md-10 col-lg-10 col-xl-10">
           <div
             th:class="${'fs-0-9rem fw-700 upper pointer-burgundy ls-1 ms-n30 me-2vw'}"
-            th:onclick="|location.href='@{/product/listProduct}'|"
+            th:onclick="goToPage('product/listProduct')"
           >
             Product
           </div>
           <div
             th:class="${'fs-0-9rem fw-700 upper pointer-burgundy ls-1 me-2vw'}"
             th:if="${session.member_id != null}"
-            th:onclick="|location.href='@{/orders/listOrders}'|"
+            th:onclick="goToPage('orders/listOrders')"
           >
             Orders
           </div>
           <div
             th:class="${'fs-0-9rem fw-700 upper pointer-burgundy ls-1 me-2vw'}"
             th:if="${session.member_id == null}"
-            th:onclick="|return sessionAlert()|"
+            th:onclick="sessionAlert()"
           >
             Orders
           </div>
           <div
             th:class="${'fs-0-9rem fw-700 upper pointer-burgundy ls-1 me-2vw'}"
-            th:onclick="|location.href='@{/board/listBoard}'|"
+            th:onclick="goToPage('board/listBoard')"
           >
             Board
           </div>
           <div
             th:class="${'fs-0-9rem fw-700 upper pointer-burgundy ls-1 me-2vw'}"
-            th:onclick="|location.href='@{/notice/listNotice}'|"
+            th:onclick="goToPage('notice/listNotice')"
           >
             Notice
           </div>
           <div
             th:class="${'fs-0-9rem fw-700 upper pointer-burgundy ls-1 me-2vw'}"
-            th:onclick="|location.href='@{/qna/listQna}'|"
+            th:onclick="goToPage('qna/listQna')"
           >
             QnA
           </div>
-          <div
-            th:class="${'fs-0-9rem fw-700 upper pointer-burgundy ls-1'}"
-            th:onclick="|location.href='@{/contact/listContact}'|"
-          >
-            Contact
-          </div>
-        </div>
-        <!-- search -->
-        <div class="d-none d-lg-block col-lg-4 col-xl-4">
-          <form
-            id="searchForm"
-            class="d-row-center"
-            th:method="${'GET'}"
-            th:action="@{|/product/searchProduct}"
-          >
-            <select
-              th:id="${'type'}"
-              th:name="${'type'}"
-              th:class="${'form-control me-10'}"
-            >
-              <option value="name">이름</option>
-              <option value="detail">상세정보</option>
-            </select>
-            <input
-              th:type="${'search'}"
-              th:id="${'keyword'}"
-              th:name="${'keyword'}"
-              th:placeholder="${'상품 검색'}"
-              class="form-control w-max150 me-10"
-              required
-            />
-            <i class="fas fa-search fa-lg pointer"></i>
-          </form>
         </div>
         <!-- mobile menu -->
         <div class="col-8 d-sm-none">

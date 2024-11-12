@@ -2,9 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- head -->
-	<th:block th:replace="~{layouts/head :: head}" />
+  <th:block th:replace="~{layouts/head :: head}" />
 
-	<!-- header -->
+  <!-- header -->
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- navigation -->
@@ -16,235 +16,239 @@
       <div class="col-11 col-sm-11 col-md-10 col-lg-9 col-xl-8">
         <!-- form -->
         <form
-          th:method="${'POST'}"
-          th:action="@{|/member/deleteMember}"
-          th:onsubmit="|deleteMember()|"
+          th:id="${'formData'}"
+          th:name="${'formData'}"
+          th:class="${'formData'}"
         >
-          <!-- hidden -->
-          <input
-            th:type="${'hidden'}"
-            th:id="${'member_number'}"
-            th:name="${'member_number'}"
-            th:value="${memberModel.member_number}"
-          />
-          <input
-            th:type="${'hidden'}"
-            th:id="${'member_agree'}"
-            th:name="${'member_agree'}"
-            th:value="${memberModel.member_agree}"
-          />
-          <!-- title -->
-          <div class="row d-row-center mb-20">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="fs-1-8rem fw-800 light-black">
-                회원 탈퇴
-              </div>
-            </div>
-          </div>
-          <!-- ID -->
+          <!-- detail -->
           <div class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="d-row-left mb-10">
-                <div class="fs-0-9rem fw-800">
-                  ID
+              <div class="border-1 radius-2 shadow-1 px-15 py-35">
+                <!-- title -->
+                <div class="row">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="fs-1-8rem fw-800 light-black">
+                      회원 탈퇴
+                    </div>
+                  </div>
                 </div>
-                <div class="fs-0-6rem fw-800 burgundy">
-                  *
+                <!-- hr -->
+                <div class="w-100p my-20 bg-light-grey h-1"></div>
+                <!-- ID -->
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800 me-5">
+                        ID
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy">
+                        *
+                      </div>
+                    </div>
+                    <input
+                      readonly
+                      th:type="${'text'}"
+                      th:name="${'member_id'}"
+                      th:id="${'member_id'}"
+                      th:placeholder="${'ID'}"
+                      th:value="${MODEL['member_id']}"
+                      th:class="${'form-control'}"
+                    />
+                  </div>
+                </div>
+                <!-- PW -->
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800 light-black">
+                        비밀번호
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy">
+                        *  필수입력
+                      </div>
+                    </div>
+                    <input
+                      th:type="${'password'}"
+                      th:id="${'member_pw'}"
+                      th:name="${'member_pw'}"
+                      th:placeholder="${'비밀번호를 입력하세요.'}"
+                      th:class="${'form-control'}"
+                    />
+                  </div>
+                </div>
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800">
+                        비밀번호 확인
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy">
+                        *  필수입력
+                      </div>
+                    </div>
+                    <input
+                      th:type="${'password'}"
+                      th:id="${'member_pw2'}"
+                      th:name="${'member_pw2'}"
+                      th:placeholder="${'비밀번호를 다시 입력하세요.'}"
+                      th:class="${'form-control'}"
+                    />
+                  </div>
+                </div>
+                <!-- name -->
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800 light-black">
+                        이름
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy">
+                        *
+                      </div>
+                    </div>
+                    <input
+                      readonly
+                      th:type="${'text'}"
+                      th:id="${'member_name'}"
+                      th:name="${'member_name'}"
+                      th:value="${MODEL['member_name']}"
+                      th:class="${'form-control'}"
+                    />
+                  </div>
+                </div>
+                <!-- phone -->
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800 light-black">
+                        전화번호
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy">
+                        *
+                      </div>
+                    </div>
+                    <input
+                      readonly
+                      th:type="${'text'}"
+                      th:id="${'member_phone'}"
+                      th:name="${'member_phone'}"
+                      th:value="${MODEL['member_phone']}"
+                      th:class="${'form-control'}"
+                    />
+                  </div>
+                </div>
+                <!-- email -->
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800 light-black">
+                        이메일
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy">
+                        *
+                      </div>
+                    </div>
+                    <input
+                      readonly
+                      th:type="${'email'}"
+                      th:name="${'email_front'}"
+                      th:id="${'email_front'}"
+                      th:value="${MODEL['member_email']}"
+                      th:class="${'form-control'}"
+                    />
+                  </div>
+                </div>
+                <!-- date -->
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800 light-black">
+                        가입일
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy">
+                        *
+                      </div>
+                    </div>
+                    <input
+                      readonly
+                      th:type="${'text'}"
+                      th:name="${'member_date'}"
+                      th:id="${'member_date'}"
+                      th:value="${#strings.substring((MODEL['member_update'] != null ? MODEL['member_update'] : MODEL['member_date']), 0, 10)}"
+                      th:class="${'form-control'}"
+                    />
+                  </div>
+                </div>
+                <!-- address -->
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800 light-black">
+                        주소
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy">
+                        *
+                      </div>
+                    </div>
+                    <input
+                      readonly
+                      th:type="${'text'}"
+                      th:name="${'member_address1'}"
+                      th:id="${'member_address1'}"
+                      th:value="${MODEL['member_address1']}"
+                      th:class="${'form-control'}"
+                    />
+                  </div>
+                </div>
+                <!-- address2 -->
+                <div class="row">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800 light-black">
+                        상세주소
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy">
+                        *
+                      </div>
+                    </div>
+                    <input
+                      readonly
+                      th:type="${'text'}"
+                      th:name="${'member_address2'}"
+                      th:id="${'member_address2'}"
+                      th:value="${MODEL['member_address2']}"
+                      th:class="${'form-control'}"
+                    />
+                  </div>
+                </div>
+                <!-- hidden -->
+                <div class="hidden-wrapper">
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'member_number'}"
+                    th:name="${'member_number'}"
+                    th:value="${MODEL['member_number']}"
+                  />
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'member_update'}"
+                    th:name="${'member_update'}"
+                    th:value="${MODEL['member_update']}"
+                  />
                 </div>
               </div>
-              <input
-                readonly
-                th:type="${'text'}"
-                th:id="${'member_id'}"
-                th:name="${'member_id'}"
-                th:value="${memberModel.member_id}"
-                th:class="${'form-control'}"
-              />
-            </div>
-          </div>
-          <!-- reg date -->
-          <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="d-row-left mb-10">
-                <div class="fs-0-9rem fw-800">
-                  가입일
-                </div>
-                <div class="fs-0-6rem fw-800 burgundy">
-                  *
-                </div>
-              </div>
-              <input
-                readonly
-                th:type="${'text'}"
-                th:name="${'member_date'}"
-                th:id="${'member_date'}"
-                th:value="${memberModel.member_update != null ? memberModel.member_update+'(수정)' : memberModel.member_date+'(최초)'}"
-                th:class="${'form-control'}"
-              />
-            </div>
-          </div>
-          <!-- name -->
-          <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="d-row-left mb-10">
-                <div class="fs-0-9rem fw-800">
-                  이름
-                </div>
-                <div class="fs-0-6rem fw-800 burgundy">
-                  *
-                </div>
-              </div>
-              <input
-                readonly
-                th:type="${'text'}"
-                th:id="${'member_name'}"
-                th:name="${'member_name'}"
-                th:value="${memberModel.member_name}"
-                th:class="${'form-control'}"
-              />
-            </div>
-          </div>
-          <!-- phone -->
-          <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="d-row-left mb-10">
-                <div class="fs-0-9rem fw-800 light-black">
-                  전화번호
-                </div>
-              </div>
-              <input
-                readonly
-                th:type="${'text'}"
-                th:id="${'member_phone'}"
-                th:name="${'member_phone'}"
-                th:value="${memberModel.member_phone}"
-                th:class="${'form-control'}"
-              />
-            </div>
-          </div>
-          <!-- email -->
-          <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="d-row-left mb-10">
-                <div class="fs-0-9rem fw-800 light-black">
-                  이메일
-                </div>
-              </div>
-              <input
-                readonly
-                th:type="${'email'}"
-                th:name="${'member_email'}"
-                th:id="${'member_email'}"
-                th:value="${memberModel.member_email}"
-                th:class="${'form-control'}"
-              />
-            </div>
-          </div>
-          <!-- address -->
-          <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="d-row-left mb-10">
-                <div class="fs-0-9rem fw-800 light-black">
-                  주소
-                </div>
-              </div>
-              <input
-                readonly
-                th:type="${'text'}"
-                th:name="${'member_address1'}"
-                th:id="${'member_address1'}"
-                th:value="${memberModel.member_address1}"
-                th:class="${'form-control'}"
-              />
-            </div>
-          </div>
-          <!-- address detail -->
-          <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="d-row-left mb-10">
-                <div class="fs-0-9rem fw-800 light-black">
-                  상세주소
-                </div>
-              </div>
-              <input
-                readonly
-                th:type="${'text'}"
-                th:name="${'member_address2'}"
-                th:id="${'member_address2'}"
-                th:value="${memberModel.member_address2}"
-                th:class="${'form-control'}"
-              />
-            </div>
-          </div>
-          <!-- PW -->
-          <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="d-row-left mb-10">
-                <div class="fs-0-9rem fw-800">
-                  비밀번호
-                </div>
-                <div class="fs-0-6rem fw-800 burgundy">
-                  *  필수입력
-                </div>
-              </div>
-              <input
-                th:type="${'password'}"
-                th:id="${'member_pw'}"
-                th:name="${'member_pw'}"
-                th:placeholder="${'비밀번호를 입력하세요.'}"
-                th:class="${'form-control'}"
-              />
-            </div>
-          </div>
-          <div class="row mb-20">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="d-row-left mb-10">
-                <div class="fs-0-9rem fw-800">
-                  비밀번호 확인
-                </div>
-                <div class="fs-0-6rem fw-800 burgundy">
-                  *  필수입력
-                </div>
-              </div>
-              <input
-                th:type="${'password'}"
-                th:id="${'member_pw2'}"
-                th:name="${'member_pw2'}"
-                th:placeholder="${'비밀번호를 다시 입력하세요.'}"
-                th:class="${'form-control'}"
-              />
-            </div>
-          </div>
-          <!-- hr -->
-          <hr
-          	th:id="${'hr'}"
-          	th:name="${'hr'}"
-          	th:class="${'mt-20 mb-20'}"
-          />
-          <!-- button -->
-          <div class="row">
-            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-              <button
-                th:type="${'submit'}"
-                th:class="${'btn btn-danger w-90p'}"
-              >
-                탈퇴하기
-              </button>
-            </div>
-            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-              <button
-                th:type="${'button'}"
-                th:class="${'btn btn-dark w-90p'}"
-                th:onclick="|return goHome()|"
-              >
-                홈으로
-              </button>
             </div>
           </div>
         </form>
       </div>
     </div>
   </section>
+
+  <!-- divider -->
+  <th:block th:replace="~{components/divider :: divider}" />
+
+  <!-- button -->
+  <th:block th:replace="~{components/button :: button}" />
 
   <!-- footer -->
   <th:block th:replace="~{layouts/footer :: footer}" />

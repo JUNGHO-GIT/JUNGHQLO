@@ -34,7 +34,7 @@
                 <div class="fs-0-9rem fw-800">
                   비밀번호
                 </div>
-                <div class="fs-0-9rem fw-800 burgundy me-10">
+                <div class="fs-0-9rem fw-800 burgundy ms-5">
                   *
                 </div>
               </div>
@@ -54,7 +54,7 @@
                 <div class="fs-0-9rem fw-800 light-black">
                   비밀번호 확인
                 </div>
-                <div class="fs-0-9rem fw-800 burgundy me-10">
+                <div class="fs-0-9rem fw-800 burgundy ms-5">
                   *
                 </div>
               </div>
@@ -68,11 +68,7 @@
             </div>
           </div>
           <!-- hr -->
-          <hr
-          	th:id="${'hr'}"
-          	th:name="${'hr'}"
-          	th:class="${'mt-20 mb-20'}"
-          />
+          <div class="w-100p my-20 bg-light-grey h-1"></div>
           <!-- button -->
           <div class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -88,6 +84,12 @@
       </div>
     </div>
   </section>
+
+  <!-- divider -->
+  <th:block th:replace="~{components/divider :: divider}" />
+
+  <!-- button -->
+  <th:block th:replace="~{components/button :: button}" />
 
   <!-- footer -->
   <th:block th:replace="~{layouts/footer :: footer}" />

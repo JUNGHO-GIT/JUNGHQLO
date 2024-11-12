@@ -33,34 +33,42 @@
                         th:name="${'qna_title'}"
                         th:text="${MODEL['qna_title']}"
                         th:class="${'fs-1-8rem fw-800 light-black'}"
-                      >
-                      </div>
+                      ></div>
                       <div
                         th:id="${'qna_category'}"
                         th:name="${'qna_category'}"
                         th:text="${MODEL['qna_category'] == 'goods' ? '상품문의' : MODEL['qna_category'] == 'exchange' ? '교환문의' : MODEL['qna_category'] == 'refund' ? '환불문의' : MODEL['qna_category'] == 'payment' ? '결제문의' : MODEL['qna_category'] == 'delivery' ? '배송문의' : MODEL['qna_category'] == 'etc' ? '기타문의' : '문의'}"
                         th:class="${'fs-1-2rem fw-600 grey ms-10'}"
-                      >
-                      </div>
+                      ></div>
                     </div>
                   </div>
                 </div>
                 <!-- hr -->
-                <hr class="mt-30 mb-30 bg-burgundy h-1" />
+                <div class="w-100p my-30 bg-burgundy h-1"></div>
                 <!-- image -->
                 <div class="row">
-                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-center">
-                    <img
-                      th:each="image : ${#strings.arraySplit(MODEL['qna_imgsUrl'], ',')}"
-                      th:src="@{|${STORAGE}/${page}/${image}|}"
-                      th:loading="${'lazy'}"
-                      th:alt="${'image'}"
-                      th:class="${'w-50p w-max200 h-auto'}"
-                    />
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <th:block th:if="${MODEL['qna_imgsUrl'] == ''}">
+                      <img
+                        th:src="@{|${STORAGE}/icon/logo.png|}"
+                        th:loading="${'lazy'}"
+                        th:alt="${'image'}"
+                        th:class="${'w-50p w-max300 border-1 radius-1 shadow-0'}"
+                      />
+                    </th:block>
+                    <th:block th:if="${MODEL['qna_imgsUrl'] != ''}">
+                      <img
+                        th:each="image : ${#strings.arraySplit(MODEL['qna_imgsUrl'], ',')}"
+                        th:src="@{|${STORAGE}/${page}/${image}|}"
+                        th:loading="${'lazy'}"
+                        th:alt="${'image'}"
+                        th:class="${'w-90p w-max300 border-1 radius-1 shadow-0'}"
+                      />
+                    </th:block>
                   </div>
                 </div>
                 <!-- hr -->
-                <hr class="mt-20 mb-20 bg-light-grey" />
+                <div class="w-100p my-20 bg-light-grey h-1"></div>
                 <!-- content -->
                 <div class="row">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -73,7 +81,7 @@
                   </div>
                 </div>
                 <!-- hr -->
-                <hr class="mt-20 mb-20 bg-light-grey" />
+                <div class="w-100p my-20 bg-light-grey h-1"></div>
                 <!-- answer -->
                 <div class="row mb-20">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -97,7 +105,7 @@
                   </div>
                 </div>
                 <!-- hr -->
-                <hr class="mt-20 mb-20 bg-light-grey" />
+                <div class="w-100p my-20 bg-light-grey h-1"></div>
                 <!-- like && dislike && count -->
                 <div class="row mb-30">
                   <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-row-left">
@@ -108,8 +116,7 @@
                         th:name="${'qna_like'}"
                         th:text="${MODEL['qna_like']}"
                         th:class="${'fs-1-0rem fw-600 dark'}"
-                      >
-                      </div>
+                      ></div>
                     </div>
                     <div class="d-row-center ms-1vw">
                       <i th:class="${'fa fa-thumbs-down fs-1-0rem me-10 burgundy'}"></i>
@@ -118,8 +125,7 @@
                         th:name="${'qna_dislike'}"
                         th:text="${MODEL['qna_dislike']}"
                         th:class="${'fs-1-0rem fw-600 dark'}"
-                      >
-                      </div>
+                      ></div>
                     </div>
                   </div>
                   <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
@@ -130,8 +136,7 @@
                         th:name="${'qna_count'}"
                         th:text="${MODEL['qna_count']}"
                         th:class="${'fs-1-0rem fw-600 dark'}"
-                      >
-                      </div>
+                      ></div>
                     </div>
                   </div>
                 </div>
@@ -145,8 +150,7 @@
                         th:name="${'qna_date'}"
                         th:class="${'fs-1-0rem fw-600 dark'}"
                         th:text="${#strings.substring((MODEL['qna_update'] != null ? MODEL['qna_update'] : MODEL['qna_date']), 0, 10)}"
-                      >
-                      </div>
+                      ></div>
                     </div>
                   </div>
                   <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
@@ -157,8 +161,7 @@
                         th:name="${'qna_writer'}"
                         th:text="${MODEL['qna_writer']}"
                         th:class="${'fs-1-0rem fw-600 dark'}"
-                      >
-                      </div>
+                      ></div>
                     </div>
                   </div>
                 </div>

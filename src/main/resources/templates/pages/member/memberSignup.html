@@ -17,16 +17,16 @@
         <!-- form -->
         <form
           th:method="${'POST'}"
-          th:onsubmit="|event.preventDefault(); saveMember()|"
+          th:onsubmit="|event.preventDefault(); signupMember()|"
         >
           <!-- ID -->
-          <div class="row">
+          <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="d-row-left mb-10">
                 <div class="fs-0-9rem fw-800">
                   ID
                 </div>
-                <div class="fs-0-9rem fw-800 burgundy me-10">
+                <div class="fs-0-9rem fw-800 burgundy ms-5">
                   *
                 </div>
               </div>
@@ -42,13 +42,13 @@
             </div>
           </div>
           <!-- PW -->
-          <div class="row">
+          <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="d-row-left mb-10">
                 <div class="fs-0-9rem fw-800">
                   PW
                 </div>
-                <div class="fs-0-9rem fw-800 burgundy me-10">
+                <div class="fs-0-9rem fw-800 burgundy ms-5">
                   *
                 </div>
               </div>
@@ -64,13 +64,13 @@
             </div>
           </div>
           <!-- name -->
-          <div class="row">
+          <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="d-row-left mb-10">
                 <div class="fs-0-9rem fw-800">
                   이름
                 </div>
-                <div class="fs-0-9rem fw-800 burgundy me-10">
+                <div class="fs-0-9rem fw-800 burgundy ms-5">
                   *
                 </div>
               </div>
@@ -86,13 +86,13 @@
             </div>
           </div>
           <!-- phone -->
-          <div class="row">
+          <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="d-row-left mb-10">
                 <div class="fs-0-9rem fw-800">
                   전화번호
                 </div>
-                <div class="fs-0-9rem fw-800 burgundy me-10">
+                <div class="fs-0-9rem fw-800 burgundy ms-5">
                   *
                 </div>
               </div>
@@ -108,13 +108,13 @@
             </div>
           </div>
           <!-- email -->
-          <div class="row">
+          <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="d-row-left mb-10">
                 <div class="fs-0-9rem fw-800">
                   이메일
                 </div>
-                <div class="fs-0-9rem fw-800 burgundy me-10">
+                <div class="fs-0-9rem fw-800 burgundy ms-5">
                   *
                 </div>
               </div>
@@ -144,7 +144,7 @@
                   <button
                     th:type="${'button'}"
                     th:class="${'btn btn-dark btn-sm'}"
-                    th:onclick="|return sendEmail()|"
+                    th:onclick="sendEmail()"
                   >
                     전송
                   </button>
@@ -152,14 +152,14 @@
               </div>
             </div>
           </div>
-          <!-- email code -->
-          <div class="row">
+          <!-- code -->
+          <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="d-row-left mb-10">
                 <div class="fs-0-9rem fw-800">
                   인증번호
                 </div>
-                <div class="fs-0-9rem fw-800 burgundy me-10">
+                <div class="fs-0-9rem fw-800 burgundy ms-5">
                   *
                 </div>
               </div>
@@ -185,7 +185,7 @@
                     th:id="${'email_button'}"
                     th:name="${'email_button'}"
                     th:class="${'btn btn-dark btn-sm'}"
-                    th:onclick="|return checkEmail()|"
+                    th:onclick="checkEmail()"
                   >
                     확인
                   </button>
@@ -194,13 +194,13 @@
             </div>
           </div>
           <!-- address -->
-          <div class="row">
+          <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="d-row-left mb-10">
                 <div class="fs-0-9rem fw-800">
                   주소
                 </div>
-                <div class="fs-0-9rem fw-800 burgundy me-10">
+                <div class="fs-0-9rem fw-800 burgundy ms-5">
                   *
                 </div>
               </div>
@@ -211,20 +211,20 @@
                   th:id="${'member_address1'}"
                   th:name="${'member_address1'}"
                   th:class="${'form-control'}"
-                  th:onclick="|openDaumPostcode()|"
                   th:placeholder="${'주소를 입력하세요'}"
+                  th:onclick="openDaumPostcode()"
                 />
               </div>
             </div>
           </div>
           <!-- address detail -->
-          <div class="row">
+          <div class="row mb-20">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="d-row-left mb-10">
                 <div class="fs-0-9rem fw-800">
                   상세주소
                 </div>
-                <div class="fs-0-9rem fw-800 burgundy me-10">
+                <div class="fs-0-9rem fw-800 burgundy ms-5">
                   *
                 </div>
               </div>
@@ -246,7 +246,7 @@
                 <div class="fs-0-9rem fw-800">
                   약관 동의
                 </div>
-                <div class="fs-0-9rem fw-800 burgundy me-10">
+                <div class="fs-0-9rem fw-800 burgundy ms-5">
                   *
                 </div>
               </div>
@@ -264,28 +264,16 @@
               </div>
             </div>
           </div>
-          <!-- hr -->
-          <hr
-          	th:id="${'hr'}"
-          	th:name="${'hr'}"
-          	th:class="${'mt-20 mb-20'}"
-          />
-          <!-- button -->
-          <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <button
-                th:type="${'submit'}"
-                th:class="${'btn btn-dark w-100p'}"
-                th:onclick="|return checkMemberId()|"
-              >
-                회원 가입
-              </button>
-            </div>
-          </div>
         </form>
       </div>
     </div>
   </section>
+
+  <!-- divider -->
+  <th:block th:replace="~{components/divider :: divider}" />
+
+  <!-- button -->
+  <th:block th:replace="~{components/button :: button}" />
 
   <!-- footer -->
   <th:block th:replace="~{layouts/footer :: footer}" />

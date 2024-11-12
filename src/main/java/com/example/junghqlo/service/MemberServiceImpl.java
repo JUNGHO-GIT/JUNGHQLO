@@ -131,22 +131,31 @@ public class MemberServiceImpl implements MemberService {
     return result;
   }
 
-  // 3. saveMember ----------------------------------------------------------------------------------
+  // 3. signupMember ----------------------------------------------------------------------------------
   @Override
-  public void saveMember(
+  public void signupMember(
     Member member
   ) throws Exception {
 
-    memberMapper.saveMember(member);
+    memberMapper.signupMember(member);
   }
 
   // 4-1. updateMember -----------------------------------------------------------------------------
   @Override
-  public void updateMember(
+  public Integer updateMember(
     Member member
   ) throws Exception {
 
-    memberMapper.updateMember(member);
+    Integer result = 0;
+
+    if (memberMapper.updateMember(member) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
 
   // 4-2. updateMemberPw  --------------------------------------------------------------------------
@@ -177,14 +186,5 @@ public class MemberServiceImpl implements MemberService {
     }
 
     return result;
-  }
-
-  // 6. logoutMember -------------------------------------------------------------------------------
-  @Override
-  public void logoutMember(
-    HttpSession session
-  ) throws Exception {
-
-    session.removeAttribute("member");
   }
 }

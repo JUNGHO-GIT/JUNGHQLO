@@ -1,7 +1,7 @@
 package com.example.junghqlo.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.io.File;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
-import org.springframework.web.multipart.MultipartFile;
 import com.example.junghqlo.adapter.FileAdapter;
 import com.example.junghqlo.adapter.LocalDateTimeAdapter;
 import com.example.junghqlo.handler.PageHandler;
@@ -27,7 +26,6 @@ import com.example.junghqlo.model.Orders;
 import com.example.junghqlo.model.Product;
 import org.springframework.beans.factory.annotation.Value;
 import com.example.junghqlo.service.OrdersService;
-import com.example.junghqlo.service.ProductService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.stripe.model.PaymentIntent;
@@ -43,10 +41,8 @@ public class OrdersController {
 
   // 0. constructor injection ----------------------------------------------------------------------
   private OrdersService ordersService;
-  private ProductService productService;
-  OrdersController(OrdersService ordersService, ProductService productService) {
+  OrdersController(OrdersService ordersService) {
     this.ordersService = ordersService;
-    this.productService = productService;
   }
 
   // 0. static -------------------------------------------------------------------------------------
@@ -54,7 +50,7 @@ public class OrdersController {
   private static String PAGE = "Orders";
 
   // 0. logger -------------------------------------------------------------------------------------
-  private static Logger logger = LoggerFactory.getLogger(NoticeController.class);
+  private static Logger logger = LoggerFactory.getLogger(OrdersController.class);
   private static Gson gson = new GsonBuilder()
   .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
   .registerTypeAdapter(File.class, new FileAdapter())
@@ -81,11 +77,11 @@ public class OrdersController {
       sortHandler = "all";
     }
     else if(sort.equals("nameASC")) {
-      sort = "product_name ASC";
+      sort = "orders_product_name ASC";
       sortHandler = "nameASC";
     }
     else if(sort.equals("nameDESC")) {
-      sort = "product_name DESC";
+      sort = "orders_product_name DESC";
       sortHandler = "nameDESC";
     }
     else if(sort.equals("priceASC")) {
@@ -111,16 +107,12 @@ public class OrdersController {
       return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
     }
     else if (type.equals("all")) {
-      type = "product_name OR product_category";
+      type = "orders_product_name OR product_category";
       typeHandler = "all";
     }
     else if (type.equals("name")) {
-      type = "product_name";
+      type = "orders_product_name";
       typeHandler = "name";
-    }
-    else if (type.equals("category")) {
-      type = "product_category";
-      typeHandler = "category";
     }
 
     // 4. Keyword handling
@@ -182,85 +174,84 @@ public class OrdersController {
   @PostMapping("/saveOrders")
   public RedirectView saveOrders (
     @ModelAttribute Orders orders,
-    @RequestParam(required = false) List<MultipartFile> imgsFile,
-    @RequestParam Integer product_stock,
-    HttpSession httpSession,
+    @ModelAttribute Product product,
     Model model
   ) throws Exception {
 
-    logger.info("orders" + gson.toJson(orders));
-    logger.info("imgsFile" + gson.toJson(imgsFile));
-    logger.info("product_stock" + gson.toJson(product_stock));
+    logger.info(
+      "\n========================================================================\n" +
+      "orders : " + gson.toJson(orders) +
+      "\n" +
+      "product : " + gson.toJson(product) +
+      "\n========================================================================\n"
+    );
 
-    // imgsFile이 null이면 빈 리스트로 초기화
-    if (imgsFile == null || imgsFile.size() == 0) {
-      imgsFile = new ArrayList<MultipartFile>();
-    }
-
-    // 아이디 세션값 가져오기
-    String member_id = (String) httpSession.getAttribute("member_id");
-
-    // 전체 금액 계산
-    Product product = productService.detailProduct(orders.getProduct_number());
-    Integer totalPrice = product.getProduct_price() * orders.getOrders_quantity();
-
-    // orders 객체에 값 삽입
-    orders.setProduct_number(orders.getProduct_number());
-    orders.setProduct_name(orders.getProduct_name());
-    orders.setMember_id(member_id);
-    orders.setOrders_quantity(orders.getOrders_quantity());
-    orders.setOrders_totalPrice(totalPrice);
-
-    // 서비스 호출
-    ordersService.saveOrders(orders, imgsFile);
+    // 1. 서비스 호출
+    ordersService.saveOrders(orders, product);
 
     // 2. URL 생성
-    String priceId = product.getStripe_price();
-    String encodedProductName = URLEncoder.encode(orders.getProduct_name(), StandardCharsets.UTF_8);
+    String stripePrice = URLEncoder.encode(product.getStripe_price(), StandardCharsets.UTF_8);
+    String productName = URLEncoder.encode(product.getProduct_name(), StandardCharsets.UTF_8);
 
-    StringBuilder SUCCESS_URL = new StringBuilder();
-    StringBuilder CANCEL_URL = new StringBuilder();
+    // 성공했다면 successOrders 로 이동
+    String SUCCESS_URL = (
+      ORDERS_URL + "/successOrders" +
+      "?session_id=" + "{CHECKOUT_SESSION_ID}" +
+      "&product_number=" + product.getProduct_number() +
+      "&product_stock=" + product.getProduct_stock() +
+      "&orders_quantity=" + orders.getOrders_quantity() +
+      "&orders_totalPrice=" + orders.getOrders_totalPrice() +
+      "&product_name=" + productName
+    );
+    // 실패했다면 failOrders 로 이동
+    String CANCEL_URL = (
+      ORDERS_URL + "/failOrders"
+    );
 
-    SUCCESS_URL
-    .append(ORDERS_URL + "/successOrders")
-    .append("?session_id=" + "{CHECKOUT_SESSION_ID}")
-    .append("&product_number=" + orders.getProduct_number())
-    .append("&product_stock=" + product_stock)
-    .append("&orders_quantity=" + orders.getOrders_quantity())
-    .append("&orders_totalPrice=" + totalPrice)
-    .append("&product_name=" + encodedProductName)
-    .toString();
+    logger.info(
+      "\n========================================================================\n" +
+      "success URL : " + SUCCESS_URL +
+      "\n" +
+      "cancel URL : " + CANCEL_URL +
+      "\n========================================================================\n"
+    );
 
-    CANCEL_URL
-    .append(ORDERS_URL + "/successOrders")
-    .append("?session_id=" + "{CHECKOUT_SESSION_ID}")
-    .toString();
+    // 3. 메타데이터 생성
+    Map<String, String> map = new HashMap<>();
+    map.put("product_number", product.getProduct_number().toString());
+    map.put("product_name", product.getProduct_name());
+    map.put("member_id", orders.getOrders_member_id());
+    map.put("product_stock", Integer.toString(product.getProduct_stock()));
+    map.put("orders_quantity", Integer.toString(orders.getOrders_quantity()));
+    map.put("orders_totalPrice", Integer.toString(orders.getOrders_totalPrice()));
+
 
     // 3. stripe 결제 처리
     SessionCreateParams params = SessionCreateParams.builder()
     .setMode(SessionCreateParams.Mode.PAYMENT)
-    .putMetadata("product_number", Integer.toString(orders.getProduct_number()))
-    .putMetadata("product_name", orders.getProduct_name())
-    .putMetadata("member_id", member_id)
-    .putMetadata("product_stock", Integer.toString(product_stock))
-    .putMetadata("orders_quantity", Integer.toString(orders.getOrders_quantity()))
-    .putMetadata("orders_totalPrice", Integer.toString(totalPrice))
-    .setSuccessUrl(SUCCESS_URL.toString())
-    .setCancelUrl(CANCEL_URL.toString())
+    .putAllMetadata(map)
+    .setSuccessUrl(SUCCESS_URL)
+    .setCancelUrl(CANCEL_URL)
     .addLineItem(SessionCreateParams.LineItem.builder()
       .setQuantity(orders.getOrders_quantity().longValue())
-      .setPrice(priceId)
+      .setPrice(stripePrice)
       .build()
     )
     .build();
 
-    // 4. stripe session 생성, 뷰 리턴
-    Session session = Session.create(params);
+    // stripe session 생성, 뷰 리턴
+    Session stripSession = Session.create(params);
 
-    return new RedirectView(session.getUrl());
-  }
+    logger.info(
+      "\n========================================================================\n" +
+      "stripSession url : " + stripSession.getUrl() +
+      "\n========================================================================\n"
+    );
 
-  // 4-2. successOrders (GET) ----------------------------------------------------------------------
+    return new RedirectView(stripSession.getUrl());
+  };
+
+  // 4-1. successOrders (GET) ----------------------------------------------------------------------
   @GetMapping("/successOrders")
   public String successOrders (
     @RequestParam String session_id,
@@ -301,11 +292,10 @@ public class OrdersController {
     return MessageFormat.format("/pages/{0}/{1}Success", page, page);
   }
 
-  // 4-3. failOrders (GET) -------------------------------------------------------------------------
+  // 4-2. failOrders (GET) -------------------------------------------------------------------------
   @GetMapping("/failOrders")
   public String failOrders () throws Exception {
 
     return MessageFormat.format("/pages/{0}/{1}Fail", page, page);
   }
-
 }

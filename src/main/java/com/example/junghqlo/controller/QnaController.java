@@ -1,6 +1,8 @@
 package com.example.junghqlo.controller;
 
+import java.io.File;
 import java.text.MessageFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -15,9 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import com.example.junghqlo.adapter.FileAdapter;
+import com.example.junghqlo.adapter.LocalDateTimeAdapter;
 import com.example.junghqlo.handler.PageHandler;
 import com.example.junghqlo.model.Qna;
 import com.example.junghqlo.service.QnaService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 @Controller
 @RequestMapping("/qna")
@@ -30,9 +36,16 @@ public class QnaController {
   }
 
   // 0. static -------------------------------------------------------------------------------------
-  Logger logger = LoggerFactory.getLogger(this.getClass());
   private static String page = "qna";
   private static String PAGE = "Qna";
+
+  // 0. logger -------------------------------------------------------------------------------------
+  private static Logger logger = LoggerFactory.getLogger(QnaController.class);
+  private static Gson gson = new GsonBuilder()
+  .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+  .registerTypeAdapter(File.class, new FileAdapter())
+  .setPrettyPrinting()
+  .create();
 
   // 1. listQna (GET) ------------------------------------------------------------------------------
   @GetMapping("/listQna")

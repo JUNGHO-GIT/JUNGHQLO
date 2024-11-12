@@ -1,7 +1,11 @@
 package com.example.junghqlo.controller;
 
+import java.io.File;
 import java.text.MessageFormat;
+import java.time.LocalDateTime;
 import javax.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,10 +14,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import com.example.junghqlo.adapter.FileAdapter;
+import com.example.junghqlo.adapter.LocalDateTimeAdapter;
 import com.example.junghqlo.handler.EmailHandler;
 import com.example.junghqlo.handler.PageHandler;
 import com.example.junghqlo.model.Member;
 import com.example.junghqlo.service.MemberService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 @Controller
 @RequestMapping("/member")
@@ -30,6 +38,64 @@ public class MemberController {
   // 0. static -------------------------------------------------------------------------------------
   private static String page = "member";
   private static String PAGE = "Member";
+
+  // 0. logger -------------------------------------------------------------------------------------
+  private static Logger logger = LoggerFactory.getLogger(MemberController.class);
+  private static Gson gson = new GsonBuilder()
+  .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+  .registerTypeAdapter(File.class, new FileAdapter())
+  .setPrettyPrinting()
+  .create();
+
+  // 0-1. loginMember (GET) ------------------------------------------------------------------------
+  @GetMapping("/loginMember")
+  public String loginMember() throws Exception {
+
+    return MessageFormat.format("/pages/{0}/{1}Login", page, page);
+  }
+
+  // 0-2. loginMember (POST) -----------------------------------------------------------------------
+  @ResponseBody
+  @PostMapping("/loginMember")
+  public Integer loginMember(
+    @RequestParam String member_id,
+    @RequestParam String member_pw,
+    HttpSession session
+  ) throws Exception {
+
+    Integer result = 0;
+
+    if (memberService.checkMemberIdPw(member_id, member_pw) > 0) {
+      session.setAttribute("member_id", member_id);
+      session.setAttribute("member_pw", member_pw);
+      session.setAttribute("member_number", memberService.getMemberNumber(member_id));
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
+  }
+
+  // 0-3. logoutMember (GET) -----------------------------------------------------------------------
+  @GetMapping("/logoutMember")
+  public Integer logoutMember(
+    HttpSession session
+  ) throws Exception {
+
+    Integer result = 0;
+
+    try{
+      session.invalidate();
+      result = 1;
+    }
+    catch (Exception e) {
+      result = 0;
+    }
+
+    return result;
+  }
 
   // 1. listMember(GET) --------------------------------------------------------------------------
   @GetMapping("/listMember")
@@ -224,21 +290,21 @@ public class MemberController {
     return result;
   }
 
-  // 3-1. saveMember (GET) --------------------------------------------------------------------------
-  @GetMapping("/saveMember")
-  public String saveMember() throws Exception {
+  // 3-1. signupMember (GET) -----------------------------------------------------------------------
+  @GetMapping("/signupMember")
+  public String signupMember() throws Exception {
 
     return MessageFormat.format("/pages/{0}/{1}Signup", page, page);
   }
 
-  // 3-1. saveMember (POST) -------------------------------------------------------------------------
-  @PostMapping("/saveMember")
-  public String saveMember(
+  // 3-1. signupMember (POST) ----------------------------------------------------------------------
+  @PostMapping("/signupMember")
+  public String signupMember(
     @ModelAttribute Member member,
     Model model
   ) throws Exception {
 
-    memberService.saveMember(member);
+    memberService.signupMember(member);
 
     return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
   }
@@ -301,15 +367,22 @@ public class MemberController {
   }
 
   // 4-1. updateMember (POST) ----------------------------------------------------------------------
+  @ResponseBody
   @PostMapping("/updateMember")
-  public String updateMember(
-    @ModelAttribute Member member,
-    HttpSession session
+  public Integer updateMember(
+    @ModelAttribute Member member
   ) throws Exception {
 
-    memberService.updateMember(member);
+    Integer result = 0;
 
-    return MessageFormat.format("redirect:/", page);
+    if (memberService.updateMember(member) > 0) {
+      result = 1;
+    }
+    else {
+      result = 0;
+    }
+
+    return result;
   }
 
   // 4-2. updateMemberPw (GET) ---------------------------------------------------------------------
@@ -324,8 +397,7 @@ public class MemberController {
   @PostMapping("/updateMemberPw")
   public Integer updateMemberPw(
     @RequestParam String member_id,
-    @RequestParam String member_pw,
-    HttpSession session
+    @RequestParam String member_pw
   ) throws Exception {
 
     Integer result = 0;
@@ -338,6 +410,19 @@ public class MemberController {
     }
 
     return result;
+  }
+
+  // 5. deleteMember (GET) -------------------------------------------------------------------------
+  @GetMapping("/deleteMember")
+  public String deleteMember(
+    @RequestParam Integer member_number,
+    Model model
+  ) throws Exception {
+
+    // 모델
+    model.addAttribute("MODEL", memberService.detailMember(member_number));
+
+    return MessageFormat.format("/pages/{0}/{1}Delete", page, page);
   }
 
   // 5. deleteMember (POST) ------------------------------------------------------------------------
@@ -359,45 +444,5 @@ public class MemberController {
     }
 
     return result;
-  }
-
-  // 6-1. loginMember (GET) ------------------------------------------------------------------------
-  @GetMapping("/loginMember")
-  public String loginMember() throws Exception {
-
-    return MessageFormat.format("/pages/{0}/{1}Login", page, page);
-  }
-
-  // 6-2. loginMember (POST) -----------------------------------------------------------------------
-  @ResponseBody
-  @PostMapping("/loginMember")
-  public Integer loginMember(
-    @RequestParam String member_id,
-    @RequestParam String member_pw,
-    HttpSession session
-  ) throws Exception {
-
-    Integer result = 0;
-
-    if (memberService.checkMemberIdPw(member_id, member_pw) > 0) {
-      session.setAttribute("member_id", member_id);
-      session.setAttribute("member_pw", member_pw);
-      result = 1;
-    }
-    else {
-      result = 0;
-    }
-
-    return result;
-  }
-
-  // 6-3. logoutMember (GET) -----------------------------------------------------------------------
-  @ResponseBody
-  @GetMapping("/logoutMember")
-  public void logoutMember(
-    HttpSession session
-  ) throws Exception {
-
-    session.invalidate();
   }
 }

@@ -33,27 +33,36 @@
                         th:name="${'notice_title'}"
                         th:text="${MODEL['notice_title']}"
                         th:class="${'fs-1-8rem fw-800 light-black'}"
-                      >
-                      </div>
+                      ></div>
                     </div>
                   </div>
                 </div>
                 <!-- hr -->
-                <hr class="mt-30 mb-30 bg-burgundy h-1" />
+                <div class="w-100p my-20 bg-burgundy h-1"></div>
                 <!-- image -->
                 <div class="row">
-                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-center">
-                    <img
-                      th:each="image : ${#strings.arraySplit(MODEL['notice_imgsUrl'], ',')}"
-                      th:src="@{|${STORAGE}/${page}/${image}|}"
-                      th:loading="${'lazy'}"
-                      th:alt="${'image'}"
-                      th:class="${'w-50p w-max200 h-auto'}"
-                    />
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <th:block th:if="${MODEL['notice_imgsUrl'] == ''}">
+                      <img
+                        th:src="@{|${STORAGE}/icon/logo.png|}"
+                        th:loading="${'lazy'}"
+                        th:alt="${'image'}"
+                        th:class="${'w-50p w-max300 border-1 radius-1 shadow-0'}"
+                      />
+                    </th:block>
+                    <th:block th:if="${MODEL['notice_imgsUrl'] != ''}">
+                      <img
+                        th:each="image : ${#strings.arraySplit(MODEL['notice_imgsUrl'], ',')}"
+                        th:src="@{|${STORAGE}/${page}/${image}|}"
+                        th:loading="${'lazy'}"
+                        th:alt="${'image'}"
+                        th:class="${'w-90p w-max300 border-1 radius-1 shadow-0'}"
+                      />
+                    </th:block>
                   </div>
                 </div>
                 <!-- hr -->
-                <hr class="mt-20 mb-20 bg-light-grey" />
+                <div class="w-100p my-20 bg-light-grey h-1"></div>
                 <!-- content -->
                 <div class="row">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -66,7 +75,7 @@
                   </div>
                 </div>
                 <!-- hr -->
-                <hr class="mt-20 mb-20 bg-light-grey" />
+                <div class="w-100p my-20 bg-light-grey h-1"></div>
                 <!-- like && dislike && count -->
                 <div class="row mb-30">
                   <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-row-left">
@@ -77,8 +86,7 @@
                         th:name="${'notice_like'}"
                         th:text="${MODEL['notice_like']}"
                         th:class="${'fs-1-0rem fw-600 dark'}"
-                      >
-                      </div>
+                      ></div>
                     </div>
                     <div class="d-row-center ms-1vw">
                       <i th:class="${'fa fa-thumbs-down fs-1-0rem me-10 burgundy'}"></i>
@@ -87,8 +95,7 @@
                         th:name="${'notice_dislike'}"
                         th:text="${MODEL['notice_dislike']}"
                         th:class="${'fs-1-0rem fw-600 dark'}"
-                      >
-                      </div>
+                      ></div>
                     </div>
                   </div>
                   <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
@@ -99,8 +106,7 @@
                         th:name="${'notice_count'}"
                         th:text="${MODEL['notice_count']}"
                         th:class="${'fs-1-0rem fw-600 dark'}"
-                      >
-                      </div>
+                      ></div>
                     </div>
                   </div>
                 </div>
@@ -114,8 +120,7 @@
                         th:name="${'notice_date'}"
                         th:class="${'fs-1-0rem fw-600 dark'}"
                         th:text="${#strings.substring((MODEL['notice_update'] != null ? MODEL['notice_update'] : MODEL['notice_date']), 0, 10)}"
-                      >
-                      </div>
+                      ></div>
                     </div>
                   </div>
                   <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
@@ -126,8 +131,7 @@
                         th:name="${'notice_writer'}"
                         th:text="${MODEL['notice_writer']}"
                         th:class="${'fs-1-0rem fw-600 dark'}"
-                      >
-                      </div>
+                      ></div>
                     </div>
                   </div>
                 </div>

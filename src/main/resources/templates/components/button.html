@@ -6,156 +6,438 @@
     <div class="row d-row-center">
       <div class="col-11 col-sm-11 col-md-10 col-lg-9 col-xl-8">
 
-        <!-- 1. list -->
-        <th:block th:if="${THEME == 'List'}">
-          <div class="row d-row-center">
-            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-              <button
-                th:type="${'button'}"
-                th:class="${'btn btn-dark w-90p'}"
-                th:if="${session.member_id == null}"
-                th:onclick="|return sessionAlert()|"
-              >
-                등록하기
-              </button>
-              <button
-                th:type="${'button'}"
-                th:class="${'btn btn-dark w-90p'}"
-                th:if="${session.member_id != null}"
-                th:onclick="|return goSave()|"
-              >
-                등록하기
-              </button>
+        <!-- 1. member -->
+        <th:block th:if="${page == 'member'}">
+          <!-- 1-1. login -->
+          <th:block th:if="${THEME == 'Login'}">
+            <div class="row d-row-center mb-20">
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-dark w-100p'}"
+                  th:onclick="getLogin()"
+                >
+                  로그인
+                </button>
+              </div>
             </div>
-            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-              <button
-                th:type="${'button'}"
-                th:class="${'btn btn-dark w-90p'}"
-                th:onclick="|return goHome()|"
-              >
-                홈으로
-              </button>
+            <div class="row">
+              <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 d-row-center mb-10">
+                <div class="fs-0-8rem fw-400 light-black me-10">
+                  아이디가 없는 경우
+                </div>
+                <div
+                  th:class="${'fs-0-8rem fw-500 blue'}"
+                  th:onclick="goToPage([[@{/member/signupMember}]])"
+                >
+                  회원가입
+                </div>
+              </div>
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-center mb-10">
+                <div class="fs-0-8rem fw-400 light-black me-10">
+                  아이디를 잊은 경우
+                </div>
+                <div
+                  th:class="${'fs-0-8rem fw-500 blue'}"
+                  th:onclick="goToPage([[@{/member/findMemberId}]])"
+                >
+                  ID 찾기
+                </div>
+              </div>
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-center">
+                <div class="fs-0-8rem fw-400 light-black me-10">
+                  비밀번호를 잊은 경우
+                </div>
+                <div
+                  th:class="${'fs-0-8rem fw-500 blue'}"
+                  th:onclick="goToPage([[@{/member/findMemberPw}]])"
+                >
+                  PW 찾기
+                </div>
+              </div>
             </div>
-          </div>
+          </th:block>
+          <!-- 1-2. signup -->
+          <th:block th:if="${THEME == 'Signup'}">
+            <div class="row d-row-center">
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-dark w-100p'}"
+                  th:onclick="getSignup()"
+                >
+                  회원가입
+                </button>
+              </div>
+            </div>
+          </th:block>
+          <!-- 1-2. detail -->
+          <th:block th:if="${THEME == 'Detail'}">
+            <div class="row d-row-center">
+              <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-dark w-90p'}"
+                  th:if="${session.member_id == null}"
+                  th:onclick="sessionAlert()"
+                >
+                  회원정보 수정
+                </button>
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-dark w-90p'}"
+                  th:if="${session.member_id != null}"
+                  th:with="memberNumber=${session.member_number}"
+                  th:onclick="goToPage('member/updateMember?member_number=' + [[${memberNumber}]])"
+                >
+                  회원정보 수정
+                </button>
+              </div>
+              <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-danger w-90p'}"
+                  th:if="${session.member_id == null}"
+                  th:onclick="sessionAlert()"
+                >
+                  회원탈퇴
+                </button>
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-danger w-90p'}"
+                  th:if="${session.member_id != null}"
+                  th:with="memberNumber=${session.member_number}"
+                  th:onclick="goToPage('member/deleteMember?member_number=' + [[${memberNumber}]])"
+                >
+                  회원탈퇴
+                </button>
+              </div>
+              <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-secondary w-90p'}"
+                  th:onclick="goToPage('home')"
+                >
+                  홈으로
+                </button>
+              </div>
+            </div>
+          </th:block>
+          <!-- 1-3. update -->
+          <th:block th:if="${THEME == 'Update'}">
+            <div class="row d-row-center">
+              <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-dark w-90p'}"
+                  th:if="${session.member_id == null}"
+                  th:onclick="sessionAlert()"
+                >
+                  수정완료
+                </button>
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-dark w-90p'}"
+                  th:if="${session.member_id != null}"
+                  th:onclick="getUpdateMember()"
+                >
+                  수정완료
+                </button>
+              </div>
+              <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-secondary w-90p'}"
+                  th:with="memberNumber=${session.member_number}"
+                  th:onclick="goToPage('member/detailMember?member_number=' + [[${memberNumber}]])"
+                >
+                  취소하기
+                </button>
+              </div>
+            </div>
+          </th:block>
+          <!-- 1-4. delete -->
+          <th:block th:if="${THEME == 'Delete'}">
+            <div class="row d-row-center">
+              <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-danger w-90p'}"
+                  th:if="${session.member_id == null}"
+                  th:onclick="sessionAlert()"
+                >
+                  탈퇴완료
+                </button>
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-danger w-90p'}"
+                  th:if="${session.member_id != null}"
+                  th:onclick="getDeleteMember()"
+                >
+                  탈퇴완료
+                </button>
+              </div>
+              <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-secondary w-90p'}"
+                  th:with="memberNumber=${session.member_number}"
+                  th:onclick="goToPage('member/detailMember?member_number=' + [[${memberNumber}]])"
+                >
+                  취소하기
+                </button>
+              </div>
+            </div>
+          </th:block>
+          <!-- 1-5. find id -->
+          <th:block th:if="${THEME == 'FindId'}">
+            <div class="row d-row-center mb-20">
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-dark w-100p'}"
+                  th:onclick="getFindId()"
+                >
+                  아이디 찾기
+                </button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 d-row-center mb-10">
+                <div class="fs-0-8rem fw-400 light-black me-10">
+                  아이디가 있는 경우
+                </div>
+                <div
+                  th:class="${'fs-0-8rem fw-500 blue'}"
+                  th:onclick="goToPage([[@{/member/loginMember}]])"
+                >
+                  로그인
+                </div>
+              </div>
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-center mb-10">
+                <div class="fs-0-8rem fw-400 light-black me-10">
+                  아이디가 없는 경우
+                </div>
+                <div
+                  th:class="${'fs-0-8rem fw-500 blue'}"
+                  th:onclick="goToPage([[@{/member/signupMember}]])"
+                >
+                  회원가입
+                </div>
+              </div>
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-center">
+                <div class="fs-0-8rem fw-400 light-black me-10">
+                  비밀번호를 잊은 경우
+                </div>
+                <div
+                  th:class="${'fs-0-8rem fw-500 blue'}"
+                  th:onclick="goToPage([[@{/member/findMemberPw}]])"
+                >
+                  PW 찾기
+                </div>
+              </div>
+            </div>
+          </th:block>
+          <!-- 1-6. find pw -->
+          <th:block th:if="${THEME == 'FindPw'}">
+            <div class="row d-row-center mb-20">
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-dark w-100p'}"
+                  th:onclick="getFindPw()"
+                >
+                  비밀번호 찾기
+                </button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 d-row-center mb-10">
+                <div class="fs-0-8rem fw-400 light-black me-10">
+                  아이디가 있는 경우
+                </div>
+                <div
+                  th:class="${'fs-0-8rem fw-500 blue'}"
+                  th:onclick="goToPage([[@{/member/loginMember}]])"
+                >
+                  로그인
+                </div>
+              </div>
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-center mb-10">
+                <div class="fs-0-8rem fw-400 light-black me-10">
+                  아이디가 없는 경우
+                </div>
+                <div
+                  th:class="${'fs-0-8rem fw-500 blue'}"
+                  th:onclick="goToPage([[@{/member/signupMember}]])"
+                >
+                  회원가입
+                </div>
+              </div>
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-center">
+                <div class="fs-0-8rem fw-400 light-black me-10">
+                  비밀번호를 잊은 경우
+                </div>
+                <div
+                  th:class="${'fs-0-8rem fw-500 blue'}"
+                  th:onclick="goToPage([[@{/member/findMemberId}]])"
+                >
+                  ID 찾기
+                </div>
+              </div>
+            </div>
+          </th:block>
         </th:block>
 
-        <!-- 2. detail -->
-        <th:block th:if="${THEME == 'Detail'}">
-          <div class="row d-row-center">
-            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-              <button
-                th:type="${'button'}"
-                th:class="${'btn btn-dark w-90p'}"
-                th:if="${session.member_id == null}"
-                th:onclick="|return sessionAlert()|"
-              >
-                수정하기
-              </button>
-              <button
-                th:type="${'button'}"
-                th:class="${'btn btn-dark w-90p'}"
-                th:if="${session.member_id != null}"
-                th:onclick="goUpdate(number)"
-              >
-                수정하기
-              </button>
+        <!-- 2. not member -->
+        <th:block th:if="${page != 'member'}">
+          <!-- 2-1. list -->
+          <th:block th:if="${THEME == 'List'}">
+            <div class="row d-row-center">
+              <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-dark w-90p'}"
+                  th:if="${session.member_id == null}"
+                  th:onclick="sessionAlert()"
+                >
+                  등록하기
+                </button>
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-dark w-90p'}"
+                  th:if="${session.member_id != null}"
+                  th:onclick="goToPage('save')"
+                >
+                  등록하기
+                </button>
+              </div>
+              <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-dark w-90p'}"
+                  th:onclick="goToPage('home')"
+                >
+                  홈으로
+                </button>
+              </div>
             </div>
-            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-              <button
-                th:type="${'button'}"
-                th:class="${'btn btn-danger w-90p'}"
-                th:if="${session.member_id == null}"
-                th:onclick="|return sessionAlert()|"
-              >
-                삭제하기
-              </button>
-              <button
-                th:type="${'button'}"
-                th:class="${'btn btn-danger w-90p'}"
-                th:if="${session.member_id != null}"
-                th:onclick="getDelete(number)"
-              >
-                삭제하기
-              </button>
+          </th:block>
+          <!-- 2-2. detail -->
+          <th:block th:if="${THEME == 'Detail'}">
+            <div class="row d-row-center">
+              <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-dark w-90p'}"
+                  th:if="${session.member_id == null}"
+                  th:onclick="sessionAlert()"
+                >
+                  수정하기
+                </button>
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-dark w-90p'}"
+                  th:if="${session.member_id != null}"
+                  th:onclick="goToPage('update', number)"
+                >
+                  수정하기
+                </button>
+              </div>
+              <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-danger w-90p'}"
+                  th:if="${session.member_id == null}"
+                  th:onclick="sessionAlert()"
+                >
+                  삭제하기
+                </button>
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-danger w-90p'}"
+                  th:if="${session.member_id != null}"
+                  th:onclick="getDelete(number)"
+                >
+                  삭제하기
+                </button>
+              </div>
+              <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-secondary w-90p'}"
+                  th:onclick="goToPage('list')"
+                >
+                  목록으로
+                </button>
+              </div>
             </div>
-            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-              <button
-                th:type="${'button'}"
-                th:class="${'btn btn-secondary w-90p'}"
-                th:onclick="|return goList()|"
-              >
-                목록으로
-              </button>
+          </th:block>
+          <!-- 2-3. save -->
+          <th:block th:if="${THEME == 'Save'}">
+            <div class="row d-row-center">
+              <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-dark w-90p'}"
+                  th:if="${session.member_id == null}"
+                  th:onclick="sessionAlert()"
+                >
+                  등록완료
+                </button>
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-dark w-90p'}"
+                  th:if="${session.member_id != null}"
+                  th:onclick="getSave()"
+                >
+                  등록완료
+                </button>
+              </div>
+              <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-secondary w-90p'}"
+                  th:onclick="goToPage('list')"
+                >
+                  목록으로
+                </button>
+              </div>
             </div>
-          </div>
+          </th:block>
+          <!-- 2-4. update -->
+          <th:block th:if="${THEME == 'Update'}">
+            <div class="row d-row-center">
+              <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-dark w-90p'}"
+                  th:if="${session.member_id == null}"
+                  th:onclick="sessionAlert()"
+                >
+                  수정완료
+                </button>
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-dark w-90p'}"
+                  th:if="${session.member_id != null}"
+                  th:onclick="getUpdate()"
+                >
+                  수정완료
+                </button>
+              </div>
+              <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <button
+                  th:type="${'button'}"
+                  th:class="${'btn btn-secondary w-90p'}"
+                  th:onclick="goToPage('list')"
+                >
+                  취소하기
+                </button>
+              </div>
+            </div>
+          </th:block>
         </th:block>
-
-        <!-- 3. save -->
-        <th:block th:if="${THEME == 'Save'}">
-          <div class="row d-row-center">
-            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-              <button
-                th:type="${'button'}"
-                th:class="${'btn btn-dark w-90p'}"
-                th:if="${session.member_id == null}"
-                th:onclick="|return sessionAlert()|"
-              >
-                등록완료
-              </button>
-              <button
-                th:type="${'button'}"
-                th:class="${'btn btn-dark w-90p'}"
-                th:if="${session.member_id != null}"
-                th:onclick="|return getSave()|"
-              >
-                등록완료
-              </button>
-            </div>
-            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-              <button
-                th:type="${'button'}"
-                th:class="${'btn btn-secondary w-90p'}"
-                th:onclick="|return goList()|"
-              >
-                목록으로
-              </button>
-            </div>
-          </div>
-        </th:block>
-
-        <!-- 4. update -->
-        <th:block th:if="${THEME == 'Update'}">
-          <div class="row d-row-center">
-            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-              <button
-                th:type="${'button'}"
-                th:class="${'btn btn-dark w-90p'}"
-                th:if="${session.member_id == null}"
-                th:onclick="|return sessionAlert()|"
-              >
-                수정완료
-              </button>
-              <button
-                th:type="${'button'}"
-                th:class="${'btn btn-dark w-90p'}"
-                th:if="${session.member_id != null}"
-                th:onclick="|return getUpdate()|"
-              >
-                수정완료
-              </button>
-            </div>
-            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-              <button
-                th:type="${'button'}"
-                th:class="${'btn btn-secondary w-90p'}"
-                th:onclick="|return goDetail()|"
-              >
-                취소하기
-              </button>
-            </div>
-          </div>
-        </th:block>
-
       </div>
     </div>
   </section>

@@ -16,121 +16,66 @@
       <div class="col-11 col-sm-11 col-md-10 col-lg-9 col-xl-8">
         <!-- form -->
         <form
-          th:method="${'POST'}"
-          th:onsubmit="|event.preventDefault(); checkMemberIdPw();|"
+          th:id="${'formData'}"
+          th:name="${'formData'}"
+          th:class="${'formData'}"
         >
-          <!-- title -->
-          <div class="row d-row-center mb-20">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="fs-1-8rem fw-800 light-black">
-                로그인
-              </div>
-            </div>
-          </div>
-          <!-- ID -->
-          <div class="row mb-20">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="d-row-left mb-10">
-                <div class="fs-0-9rem fw-800">
-                  ID
-                </div>
-                <div class="fs-0-9rem fw-800 burgundy me-10">
-                  *
-                </div>
-              </div>
-            </div>
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <input
-                th:type="${'text'}"
-                th:id="${'member_id'}"
-                th:name="${'member_id'}"
-                th:class="${'form-control'}"
-                th:placeholder="${'아이디를 입력하세요'}"
-              />
-            </div>
-          </div>
-          <!-- pw -->
+          <!-- detail -->
           <div class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="d-row-left mb-10">
-                <div class="fs-0-9rem fw-800 light-black">
-                  PW
+              <!-- title -->
+              <div class="row d-row-center mb-20">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <div class="fs-1-8rem fw-800 light-black">
+                    로그인
+                  </div>
                 </div>
-                <div class="fs-0-9rem fw-800 burgundy me-10">
-                  *
+              </div>
+              <!-- ID -->
+              <div class="row mb-20">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <div class="d-row-left mb-10">
+                    <div class="fs-0-9rem fw-800">
+                      ID
+                    </div>
+                    <div class="fs-0-9rem fw-800 burgundy ms-5">
+                      *
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <input
+                    th:type="${'text'}"
+                    th:id="${'member_id'}"
+                    th:name="${'member_id'}"
+                    th:class="${'form-control'}"
+                    th:placeholder="${'아이디를 입력하세요'}"
+                    autocomplete="username"
+                  />
                 </div>
               </div>
-            </div>
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <input
-                th:type="${'password'}"
-                th:id="${'member_pw'}"
-                th:name="${'member_pw'}"
-                th:class="${'form-control'}"
-                th:placeholder="${'비밀번호를 입력하세요'}"
-              />
-            </div>
-          </div>
-          <!-- hr -->
-          <hr
-          	th:id="${'hr'}"
-          	th:name="${'hr'}"
-          	th:class="${'mt-20 mb-20'}"
-          />
-          <!-- button -->
-          <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <button
-                th:type="${'submit'}"
-                th:class="${'btn btn-dark w-100p'}"
-              >
-                로그인
-              </button>
-            </div>
-          </div>
-          <!-- hr -->
-          <hr
-          	th:id="${'hr'}"
-          	th:name="${'hr'}"
-          	th:class="${'mt-20 mb-20'}"
-          />
-          <!-- link -->
-          <div class="row mb-10">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 d-row-center">
-              <div class="fs-0-8rem fw-400 light-black me-10">
-                아이디가 없는 경우
-              </div>
-              <div
-                th:class="${'fs-0-8rem fw-500 blue'}"
-                th:onclick="|location.href='| + @{/member/saveMember} + |'|"
-              >
-                회원가입
-              </div>
-            </div>
-          </div>
-          <div class="row mb-10">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-center">
-              <div class="fs-0-8rem fw-400 light-black me-10">
-                아이디를 잊은 경우
-              </div>
-              <div
-                th:class="${'fs-0-8rem fw-500 blue'}"
-                th:onclick="|location.href='| + @{/member/findMemberId} + |'|"
-              >
-                ID 찾기
-              </div>
-            </div>
-          </div>
-          <div class="row mb-10">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-center">
-              <div class="fs-0-8rem fw-400 light-black me-10">
-                비밀번호를 잊은 경우
-              </div>
-              <div
-                th:class="${'fs-0-8rem fw-500 blue'}"
-                th:onclick="|location.href='| + @{/member/findMemberPw} + |'|"
-              >
-                PW 찾기
+              <!-- pw -->
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <div class="d-row-left mb-10">
+                    <div class="fs-0-9rem fw-800 light-black">
+                      PW
+                    </div>
+                    <div class="fs-0-9rem fw-800 burgundy ms-5">
+                      *
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <input
+                    th:type="${'password'}"
+                    th:id="${'member_pw'}"
+                    th:name="${'member_pw'}"
+                    th:class="${'form-control'}"
+                    th:placeholder="${'비밀번호를 입력하세요'}"
+                    autocomplete="current-password"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -138,6 +83,12 @@
       </div>
     </div>
   </section>
+
+  <!-- divider -->
+  <th:block th:replace="~{components/divider :: divider}" />
+
+  <!-- button -->
+  <th:block th:replace="~{components/button :: button}" />
 
   <!-- footer -->
   <th:block th:replace="~{layouts/footer :: footer}" />

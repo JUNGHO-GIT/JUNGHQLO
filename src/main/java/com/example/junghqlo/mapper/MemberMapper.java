@@ -200,7 +200,7 @@ public interface MemberMapper {
     @Param("member_pw") String member_pw
   ) throws Exception;
 
-  // 3-1. saveMember -------------------------------------------------------------------------------
+  // 3-1. signupMember -------------------------------------------------------------------------------
   @Insert(
     """
     INSERT INTO
@@ -230,7 +230,7 @@ public interface MemberMapper {
     )
     """
   )
-  void saveMember(
+  void signupMember(
     Member member
   ) throws Exception;
 
@@ -253,7 +253,7 @@ public interface MemberMapper {
       member_id = #{member_id}
     """
   )
-  void updateMember(
+  Integer updateMember(
     Member member
   ) throws Exception;
 
@@ -290,11 +290,6 @@ public interface MemberMapper {
     @Param("member_name") String member_name,
     @Param("member_id") String member_id,
     @Param("member_pw") String member_pw
-  ) throws Exception;
-
-  // 6. logoutMember -------------------------------------------------------------------------------
-  void logoutMember(
-    HttpSession session
   ) throws Exception;
 
 }

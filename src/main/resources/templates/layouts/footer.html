@@ -14,7 +14,7 @@
               th:width="${'80px'}"
               th:height="${'80px'}"
               th:class="${'pointer'}"
-              th:onclick="|return goHome()|"
+              th:onclick="goToPage('home')"
             />
           </div>
           <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-col-left">
@@ -24,19 +24,19 @@
             <ul>
               <li
                 class="fs-0-8rem fw-600 grey hover pointer mb-10"
-                th:onclick="|location.href='@{/product/listProduct}'|"
+                th:onclick="goToPage('product/listProduct')"
               >
                 Clothing
               </li>
               <li
                 class="fs-0-8rem fw-600 grey hover pointer mb-10"
-                th:onclick="|location.href='@{/product/listProduct}'|"
+                th:onclick="goToPage('product/listProduct')"
               >
                 Trending
               </li>
               <li
                 class="fs-0-8rem fw-600 grey hover pointer mb-10"
-                th:onclick="|location.href='@{/product/listProduct}'|"
+                th:onclick="goToPage('product/listProduct')"
               >
                 Accessories
               </li>
@@ -49,28 +49,22 @@
             <ul>
               <li
                 class="fs-0-8rem fw-600 grey hover pointer mb-10"
-                th:onclick="|location.href='@{/qna/listQna}'|"
-              >
-                QnA
-              </li>
-              <li
-                class="fs-0-8rem fw-600 grey hover pointer mb-10"
-                th:onclick="|location.href='@{/notice/listNotice}'|"
+                th:onclick="goToPage('notice/listNotice')"
               >
                 Notice
               </li>
               <li
                 class="fs-0-8rem fw-600 grey hover pointer mb-10"
-                th:onclick="|location.href='@{/contact}'|"
+                th:onclick="goToPage('qna/listQna')"
               >
-                contact
+                QnA
               </li>
             </ul>
           </div>
         </div>
       </div>
     </div>
-    <hr class="bg-grey">
+    <div class="w-100p mt-10 mb-20 bg-grey h-1"></div>
     <div class="row d-row-center">
       <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <div class="fs-0-8rem fw-600 light-grey">

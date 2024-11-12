@@ -53,9 +53,6 @@ public class GlobalAttributeConfig {
     if (page.equals("board")) {
       ICON = "fas fa-chalkboard-teacher";
     }
-    else if (page.equals("contact")) {
-      ICON = "fas fa-map-marker-alt";
-    }
     else if (page.equals("member")) {
       ICON = "fas fa-user-cog";
     }

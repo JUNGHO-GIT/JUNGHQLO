@@ -62,7 +62,7 @@
                       </div>
                       <!-- name -->
                       <div class="junghoList-title">
-                        <a th:href="@{|/orders/detailOrders?orders_number=${orders.orders_number}|}" th:text="${orders.product_name}" th:id="|product_name" th:value="{orders.product_name|}"></a>
+                        <a th:onclick="@{|/orders/detailOrders?orders_number=${orders.orders_number}|}" th:text="${orders.product_name}" th:id="|product_name" th:value="{orders.product_name|}"></a>
                       </div>
                     </div>
                     <!-- quantity -->
