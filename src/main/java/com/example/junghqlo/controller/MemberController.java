@@ -78,8 +78,9 @@ public class MemberController {
     return result;
   }
 
-  // 0-3. logoutMember (GET) -----------------------------------------------------------------------
-  @GetMapping("/logoutMember")
+  // 0-3. logoutMember (POST) ----------------------------------------------------------------------
+  @ResponseBody
+  @PostMapping("/logoutMember")
   public Integer logoutMember(
     HttpSession session
   ) throws Exception {
@@ -195,7 +196,8 @@ public class MemberController {
   ) throws Exception {
 
     String result = memberService.findMemberId(member_name, member_email);
-    if (result != null) {
+
+    if (result != null && !result.equals("")) {
       return result;
     }
     else {
@@ -214,14 +216,14 @@ public class MemberController {
   @ResponseBody
   @PostMapping("/findMemberPw")
   public String findMemberPw(
-    @RequestParam String member_name,
     @RequestParam String member_id,
+    @RequestParam String member_name,
     @RequestParam String member_email
   ) throws Exception {
 
-    String result = memberService.findMemberPw(member_name, member_id, member_email);
+    String result = memberService.findMemberPw(member_id, member_name, member_email);
 
-    if (result != null) {
+    if (result != null && !result.equals("")) {
       return result;
     }
     else {
@@ -431,12 +433,14 @@ public class MemberController {
   public Integer deleteMember(
     @RequestParam String member_name,
     @RequestParam String member_id,
-    @RequestParam String member_pw
+    @RequestParam String member_pw,
+    HttpSession session
   ) throws Exception {
 
     Integer result = 0;
 
     if (memberService.deleteMember(member_name, member_id, member_pw) > 0) {
+      session.invalidate();
       result = 1;
     }
     else {

@@ -55,6 +55,14 @@ public interface ProductMapper {
       column = "product_imgsUrl"
     ),
     @Result (
+      property = "product_stripe_id",
+      column = "product_stripe_id"
+    ),
+    @Result (
+      property = "product_stripe_price",
+      column = "product_stripe_price"
+    ),
+    @Result (
       property = "product_date",
       column = "product_date",
       typeHandler = LocalDateTimeTypeHandler.class
@@ -63,14 +71,6 @@ public interface ProductMapper {
       property = "product_update",
       column = "product_update",
       typeHandler = LocalDateTimeTypeHandler.class
-    ),
-    @Result (
-      property = "stripe_id",
-      column = "stripe_id"
-    ),
-    @Result (
-      property = "stripe_price",
-      column = "stripe_price"
     ),
   })
 
@@ -129,8 +129,8 @@ public interface ProductMapper {
         product_origin,
         product_imgsUrl,
         product_date,
-        stripe_id,
-        stripe_price
+        product_stripe_id,
+        product_stripe_price
       )
     VALUES
       (
@@ -143,8 +143,8 @@ public interface ProductMapper {
         #{product.product_origin},
         #{imgsUrl},
         NOW(),
-        #{product.stripe_id},
-        #{product.stripe_price}
+        #{product.product_stripe_id},
+        #{product.product_stripe_price}
       )
     """
   )
@@ -168,10 +168,10 @@ public interface ProductMapper {
       product_origin = #{product.product_origin},
       product_imgsUrl = #{imgsUrl},
       product_update = NOW(),
-      stripe_id = #{product.stripe_id},
-      stripe_price = #{product.stripe_price}
+      product_stripe_id = #{product.product_stripe_id},
+      product_stripe_price = #{product.product_stripe_price}
     WHERE
-      product_number = #{product_number}
+      product_number = #{product.product_number}
     """
   )
   Integer updateProduct(

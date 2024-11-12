@@ -1,7 +1,6 @@
 package com.example.junghqlo.mapper;
 
 import java.util.List;
-import javax.servlet.http.HttpSession;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -60,6 +59,10 @@ public interface MemberMapper {
       column = "member_agree"
     ),
     @Result (
+      property = "email_code",
+      column = "email_code"
+    ),
+    @Result (
       property = "member_date",
       column = "member_date",
       typeHandler = LocalDateTimeTypeHandler.class
@@ -68,15 +71,7 @@ public interface MemberMapper {
       property = "member_update",
       column = "member_update",
       typeHandler = LocalDateTimeTypeHandler.class
-    ),
-    @Result (
-      property = "email_code",
-      column = "email_code"
-    ),
-    @Result (
-      property = "email_code",
-      column = "email_code"
-    ),
+    )
   })
 
   // 1. listMember ---------------------------------------------------------------------------------

@@ -61,8 +61,20 @@ public interface OrdersMapper {
     """
     SELECT
       *
-    FROM
-      orders
+    FROM (
+      SELECT
+        *
+      FROM
+        orders
+    ) A
+    LEFT JOIN (
+      SELECT
+        product_number, product_imgsUrl AS orders_imgsUrl
+      FROM
+        product
+    ) B
+    ON
+      A.orders_product_number = B.product_number
     WHERE
       orders_member_id = #{member_id}
     AND
@@ -83,8 +95,20 @@ public interface OrdersMapper {
     """
     SELECT
       *
-    FROM
-      orders
+    FROM (
+      SELECT
+        *
+      FROM
+        orders
+    ) A
+    LEFT JOIN (
+      SELECT
+        product_number, product_imgsUrl AS orders_imgsUrl
+      FROM
+        product
+    ) B
+    ON
+      A.orders_product_number = B.product_number
     WHERE
       orders_number = #{orders_number}
     """

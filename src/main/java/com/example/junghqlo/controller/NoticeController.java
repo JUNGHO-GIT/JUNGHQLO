@@ -124,7 +124,6 @@ public class NoticeController {
   // 2. detailNotice(GET) --------------------------------------------------------------------------
   @GetMapping("/detailNotice")
   public String detailNotice(
-    @ModelAttribute Notice notice,
     @RequestParam Integer notice_number,
     HttpSession session,
     Model model

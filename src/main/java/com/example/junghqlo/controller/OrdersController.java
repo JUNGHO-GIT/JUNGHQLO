@@ -107,7 +107,7 @@ public class OrdersController {
       return MessageFormat.format("redirect:/{0}/list{1}", page, PAGE);
     }
     else if (type.equals("all")) {
-      type = "orders_product_name OR product_category";
+      type = "orders_product_name";
       typeHandler = "all";
     }
     else if (type.equals("name")) {
@@ -149,15 +149,12 @@ public class OrdersController {
   // 2. detailOrders(GET) --------------------------------------------------------------------------
   @GetMapping("/detailOrders")
   public String detailOrders(
-    @ModelAttribute Orders orders,
     @RequestParam Integer orders_number,
-    HttpSession session,
     Model model
   ) throws Exception {
 
     // 모델
     model.addAttribute("MODEL", ordersService.detailOrders(orders_number));
-    model.addAttribute("member_id", session.getAttribute("member_id"));
 
     return MessageFormat.format("/pages/{0}/{1}Detail", page, page);
   }
@@ -178,29 +175,26 @@ public class OrdersController {
     Model model
   ) throws Exception {
 
-    logger.info(
-      "\n========================================================================\n" +
-      "orders : " + gson.toJson(orders) +
-      "\n" +
-      "product : " + gson.toJson(product) +
-      "\n========================================================================\n"
-    );
-
     // 1. 서비스 호출
     ordersService.saveOrders(orders, product);
 
     // 2. URL 생성
-    String stripePrice = URLEncoder.encode(product.getStripe_price(), StandardCharsets.UTF_8);
-    String productName = URLEncoder.encode(product.getProduct_name(), StandardCharsets.UTF_8);
+    String stripePrice = (
+      URLEncoder.encode(product.getProduct_stripe_price(), StandardCharsets.UTF_8)
+    );
+    String productName = (
+      URLEncoder.encode(product.getProduct_name(), StandardCharsets.UTF_8)
+    );
 
     // 성공했다면 successOrders 로 이동
     String SUCCESS_URL = (
       ORDERS_URL + "/successOrders" +
-      "?session_id=" + "{CHECKOUT_SESSION_ID}" +
+      "?check_session_id=" + "{CHECKOUT_SESSION_ID}" +
       "&product_number=" + product.getProduct_number() +
       "&product_stock=" + product.getProduct_stock() +
       "&orders_quantity=" + orders.getOrders_quantity() +
       "&orders_totalPrice=" + orders.getOrders_totalPrice() +
+      "&product_imgsUrl=" + product.getProduct_imgsUrl() +
       "&product_name=" + productName
     );
     // 실패했다면 failOrders 로 이동
@@ -208,23 +202,14 @@ public class OrdersController {
       ORDERS_URL + "/failOrders"
     );
 
-    logger.info(
-      "\n========================================================================\n" +
-      "success URL : " + SUCCESS_URL +
-      "\n" +
-      "cancel URL : " + CANCEL_URL +
-      "\n========================================================================\n"
-    );
-
     // 3. 메타데이터 생성
     Map<String, String> map = new HashMap<>();
-    map.put("product_number", product.getProduct_number().toString());
-    map.put("product_name", product.getProduct_name());
     map.put("member_id", orders.getOrders_member_id());
+    map.put("product_number", Integer.toString(product.getProduct_number()));
     map.put("product_stock", Integer.toString(product.getProduct_stock()));
     map.put("orders_quantity", Integer.toString(orders.getOrders_quantity()));
     map.put("orders_totalPrice", Integer.toString(orders.getOrders_totalPrice()));
-
+    map.put("product_name", product.getProduct_name());
 
     // 3. stripe 결제 처리
     SessionCreateParams params = SessionCreateParams.builder()
@@ -242,29 +227,24 @@ public class OrdersController {
     // stripe session 생성, 뷰 리턴
     Session stripSession = Session.create(params);
 
-    logger.info(
-      "\n========================================================================\n" +
-      "stripSession url : " + stripSession.getUrl() +
-      "\n========================================================================\n"
-    );
-
     return new RedirectView(stripSession.getUrl());
   };
 
   // 4-1. successOrders (GET) ----------------------------------------------------------------------
   @GetMapping("/successOrders")
   public String successOrders (
-    @RequestParam String session_id,
+    @RequestParam String check_session_id,
     @RequestParam String product_number,
-    @RequestParam String orders_quantity,
     @RequestParam String product_stock,
+    @RequestParam String orders_quantity,
     @RequestParam String orders_totalPrice,
+    @RequestParam String product_imgsUrl,
     @RequestParam String product_name,
     Model model
   ) throws Exception {
 
     // 1. 세션 정보 가져오기
-    Session session = Session.retrieve(session_id);
+    Session session = Session.retrieve(check_session_id);
     String paymentIntentId = session.getPaymentIntent();
 
     // 2. 결제 정보 가져오기
@@ -274,8 +254,12 @@ public class OrdersController {
     // 3. 결제 성공 여부 확인 및 모델에 결제 정보 저장
     if (paymentStatus.equals("succeeded")) {
       model.addAttribute("paymentStatus", "결제 완료");
+      model.addAttribute("paymentIntent", paymentIntent);
+      model.addAttribute("product_number", product_number);
+      model.addAttribute("product_stock", product_stock);
       model.addAttribute("orders_quantity", orders_quantity);
       model.addAttribute("orders_totalPrice", orders_totalPrice);
+      model.addAttribute("product_imgsUrl", product_imgsUrl);
       model.addAttribute("product_name", product_name);
     }
     else {

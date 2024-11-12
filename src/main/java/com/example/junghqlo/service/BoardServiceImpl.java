@@ -23,9 +23,6 @@ import com.google.cloud.storage.StorageOptions;
 @Service
 public class BoardServiceImpl implements BoardService {
 
-  @Value("${storage}")
-  private String STORAGE;
-
   @Value("${bucket-main}")
   private String BUCKET_MAIN;
 

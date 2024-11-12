@@ -14,6 +14,7 @@ public class Orders {
   private String orders_member_id;
   private Integer orders_quantity;
   private Integer orders_totalPrice;
+  private String orders_imgsUrl;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
   private LocalDateTime orders_date;
@@ -40,6 +41,9 @@ public class Orders {
   public Integer getOrders_totalPrice() {
     return this.orders_totalPrice;
   }
+  public String getOrders_imgsUrl() {
+    return this.orders_imgsUrl;
+  }
   public LocalDateTime getOrders_date() {
     return this.orders_date;
   }
@@ -65,6 +69,9 @@ public class Orders {
   }
   public void setOrders_totalPrice(Integer orders_totalPrice) {
     this.orders_totalPrice = orders_totalPrice;
+  }
+  public void setOrders_imgsUrl(String orders_imgsUrl) {
+    this.orders_imgsUrl = orders_imgsUrl;
   }
   public void setOrders_date(LocalDateTime orders_date) {
     this.orders_date = orders_date;

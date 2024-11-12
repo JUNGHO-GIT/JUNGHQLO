@@ -1,10 +1,18 @@
 package com.example.junghqlo.config;
 
+import java.io.File;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import com.example.junghqlo.adapter.FileAdapter;
+import com.example.junghqlo.adapter.LocalDateTimeAdapter;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Price;
@@ -31,11 +39,18 @@ public class StripeConfig {
   void initStripe() {
     Stripe.apiKey = secretKey;
   }
-
   @Bean
   AdjustableQuantity adjustableQuantity() {
     return SessionCreateParams.LineItem.AdjustableQuantity.builder().build();
   }
+
+  // 0. logger -------------------------------------------------------------------------------------
+  private static Logger logger = LoggerFactory.getLogger(StripeConfig.class);
+  private static Gson gson = new GsonBuilder()
+  .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+  .registerTypeAdapter(File.class, new FileAdapter())
+  .setPrettyPrinting()
+  .create();
 
   // 1. createProduct ------------------------------------------------------------------------------
   public Product createProduct(

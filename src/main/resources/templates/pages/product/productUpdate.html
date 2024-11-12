@@ -14,166 +14,356 @@
   <section class="container-fluid">
     <div class="row d-center">
       <div class="col-11 col-sm-11 col-md-10 col-lg-9 col-xl-8">
-    <form th:action="@{|/product/updateProduct}" th:method="${'POST" enctype="multipart/form-data" th:onsubmit="|return updateCheck()'}|">
-
-      <!-- hidden -->
-      <input th:type="${'hidden" th:name="|product_number" th:value="{productModel.product_number}" th:id="product_number'}"/>
-      <input th:type="${'hidden" th:name="|stripe_id" th:value="{productModel.stripe_id}'}"
-      th:id="${'stripe_id'}"/>
-      <input th:type="${'hidden" th:name="|stripe_price" th:value="{productModel.stripe_price}" th:id="stripe_price'}"/>
-      <input th:type="${'hidden" th:name="product_imgsUrl1" th:id="product_imgsUrl1'}"
-      th:value="${productModel.product_imgsUrl1}"/>
-      <input th:type="${'hidden" th:name="product_imgsUrl2" th:id="product_imgsUrl2'}"
-      th:value="${productModel.product_imgsUrl2}"/>
-
-      <!-- row 1 -->
-      <div class="row">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
-          <!-- title -->
-          <div class="row d-row-center mb-20">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="fs-1-8rem fw-800 light-black">상품 수정</h6>
-
-          <!-- row 2 -->
+        <!-- form -->
+        <form
+          th:id="${'formData'}"
+          th:name="${'formData'}"
+          th:class="${'formData'}"
+        >
+          <!-- detail -->
           <div class="row">
-            <!-- name -->
-            <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
-              <div class="checkout-input">
-                <p class="p">상품명<span>*</span></p>
-                <input th:type="${'text" th:placeholder="|Name" th:name="|product_name" th:id="product_name" th:value=|"${productModel.product_name}|'}"/>
-              </div>
-            </div>
-            <!-- price -->
-            <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
-              <div class="checkout-input">
-                <p class="p"> 가격<span>*</span></p>
-                <input th:type="${'text" th:placeholder="|Price" th:id="|product_price" th:name="product_price" th:value=|"${productModel.product_price}|'}"/>
-              </div>
-            </div>
-            <!-- stock -->
-            <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
-              <div class="checkout-input">
-                <p class="p"> 수량<span>*</span></p>
-                <input th:type="${'text" th:placeholder="|Stock" th:id="|product_stock" th:name="product_stock" th:value=|"${productModel.product_stock}|'}"/>
-              </div>
-            </div>
-            <!-- company -->
-            <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
-              <div class="checkout-input">
-                <p class="p"> 제조사<span>*</span></p>
-                <input th:type="${'text" th:placeholder="|Company" th:id="|product_brand" th:name="product_brand" th:value=|"${productModel.product_brand}|'}"/>
-              </div>
-            </div>
-            <!-- category -->
-            <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
-              <div class="checkout-input">
-                <p class="p">카테고리<span>*</span></p>
-                <select th:id="${'product_category" th:name="|product_category|'}">
-                  <option selected th:text="${productModel.product_category}"></option>
-                  <option value="아우터">아우터</option>
-                  <option value="상의">상의</option>
-                  <option value="하의">하의</option>
-                  <option value="신발">신발</option>
-                  <option value="가방">가방</option>
-                  <option value="악세사리">악세사리</option>
-                </select>
-              </div>
-            </div>
-            <!-- origin -->
-            <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
-              <div class="checkout-input">
-                <p class="p">원산지<span>*</span></p>
-                <select th:type="${'text" th:placeholder="|Origin" th:id="product_origin" th:name="product_origin|'}" required>
-                  <option selected th:text="${productModel.product_origin}"></option>
-                  <option value="대한민국">대한민국</option>
-                  <option value="중국">중국</option>
-                  <option value="일본">일본</option>
-                  <option value="미국">미국</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <!-- detail -->
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="checkout-input">
-                <p class="p"> 상품 설명<span>*</span></p>
-                <textarea th:placeholder="${'|Detail" th:id="|product_detail" th:name="product_detail" th:text=|"${productModel.product_detail}|'}">
-                </textarea>
-              </div>
-            </div>
-          </div>
-          <div class="row mb-5">
-            <!-- existing image 1 -->
-            <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">
-              <div class="checkout-input">
-                <div class="previewExisting-group">
-                  <p class="p">기존 이미지1<span>*</span></p>
-                  <img class="existingMiniBox" id="existingMiniBox" th:src="${productModel.product_imgsUrl1}" th:name="${'product_imgsUrl1'}"/>
+              <div class="border-1 radius-2 shadow-1 px-20 py-30">
+                <!-- name -->
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800">
+                        상품명
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy ms-5">
+                        *
+                      </div>
+                    </div>
+                    <div class="d-row-left">
+                      <input
+                        th:type="${'text'}"
+                        th:id="${'product_name'}"
+                        th:name="${'product_name'}"
+                        th:class="${'form-control'}"
+                        th:value="${MODEL['product_name']}"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- price -->
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800 light-black">
+                        가격
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy ms-5">
+                        *
+                      </div>
+                    </div>
+                    <div class="d-row-left">
+                      <input
+                        th:type="${'text'}"
+                        th:id="${'product_price'}"
+                        th:name="${'product_price'}"
+                        th:class="${'form-control'}"
+                        th:value="${MODEL['product_price']}"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- stock -->
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800 light-black">
+                        재고
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy ms-5">
+                        *
+                      </div>
+                    </div>
+                    <div class="d-row-left">
+                      <input
+                        th:type="${'text'}"
+                        th:id="${'product_stock'}"
+                        th:name="${'product_stock'}"
+                        th:class="${'form-control'}"
+                        th:value="${MODEL['product_stock']}"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- brand -->
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800 light-black">
+                        제조사
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy ms-5">
+                        *
+                      </div>
+                    </div>
+                    <div class="d-row-left">
+                      <input
+                        th:type="${'text'}"
+                        th:id="${'product_brand'}"
+                        th:name="${'product_brand'}"
+                        th:class="${'form-control'}"
+                        th:value="${MODEL['product_brand']}"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- category -->
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800 light-black">
+                        카테고리
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy ms-5">
+                        *
+                      </div>
+                    </div>
+                    <div class="d-row-left">
+                      <select
+                        th:id="${'product_category'}"
+                        th:name="${'product_category'}"
+                        th:class="${'form-control'}"
+                      >
+                        <option
+                          th:id="${'option-outer'}"
+                          th:name="${'option-outer'}"
+                          th:value="${'outer'}"
+                          th:selected="${MODEL['product_category'] == 'outer'}"
+                        >
+                          아우터
+                        </option>
+                        <option
+                          th:id="${'option-top'}"
+                          th:name="${'option-top'}"
+                          th:value="${'top'}"
+                          th:selected="${MODEL['product_category'] == 'top'}"
+                        >
+                          상의
+                        </option>
+                        <option
+                          th:id="${'option-bottom'}"
+                          th:name="${'option-bottom'}"
+                          th:value="${'bottom'}"
+                          th:selected="${MODEL['product_category'] == 'bottom'}"
+                        >
+                          하의
+                        </option>
+                        <option
+                          th:id="${'option-shoes'}"
+                          th:name="${'option-shoes'}"
+                          th:value="${'shoes'}"
+                          th:selected="${MODEL['product_category'] == 'shoes'}"
+                        >
+                          신발
+                        </option>
+                        <option
+                          th:id="${'option-bag'}"
+                          th:name="${'option-bag'}"
+                          th:value="${'bag'}"
+                          th:selected="${MODEL['product_category'] == 'bag'}"
+                        >
+                          가방
+                        </option>
+                        <option
+                          th:id="${'option-acc'}"
+                          th:name="${'option-acc'}"
+                          th:value="${'acc'}"
+                          th:selected="${MODEL['product_category'] == 'acc'}"
+                        >
+                          악세사리
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <!-- origin -->
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800 light-black">
+                        원산지
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy ms-5">
+                        *
+                      </div>
+                    </div>
+                    <div class="d-row-left">
+                      <select
+                        th:id="${'product_origin'}"
+                        th:name="${'product_origin'}"
+                        th:class="${'form-control'}"
+                      >
+                        <option
+                          th:id="${'option-ko'}"
+                          th:name="${'option-ko'}"
+                          th:value="${'ko'}"
+                          th:selected="${MODEL['product_origin'] == 'ko'}"
+                        >
+                          한국
+                        </option>
+                        <option
+                          th:id="${'option-ch'}"
+                          th:name="${'option-ch'}"
+                          th:value="${'ch'}"
+                          th:selected="${MODEL['product_origin'] == 'ch'}"
+                        >
+                          중국
+                        </option>
+                        <option
+                          th:id="${'option-jp'}"
+                          th:name="${'option-jp'}"
+                          th:value="${'jp'}"
+                          th:selected="${MODEL['product_origin'] == 'jp'}"
+                        >
+                          일본
+                        </option>
+                        <option
+                          th:id="${'option-us'}"
+                          th:name="${'option-us'}"
+                          th:value="${'us'}"
+                          th:selected="${MODEL['product_origin'] == 'us'}"
+                        >
+                          미국
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <!-- detail -->
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800 light-black">
+                        상품 상세설명
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy ms-5">
+                        *
+                      </div>
+                    </div>
+                    <div class="d-row-left">
+                      <textarea
+                        th:id="${'product_detail'}"
+                        th:name="${'product_detail'}"
+                        th:class="${'form-control'}"
+                        th:value="${MODEL['product_detail']}"
+                        th:text="${MODEL['product_detail']}"
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+                <!-- image new -->
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800 light-black">
+                        이미지
+                      </div>
+                      <div
+                        th:id="${'imgsLabel'}"
+                        th:name="${'imgsLabel'}"
+                        th:class="${'imgsLabel fs-0-9rem fw-800 burgundy ms-10 pointer'}"
+                        th:onclick="createImgs()"
+                      >
+                        선택하기 *
+                      </div>
+                    </div>
+                    <div class="d-row-center">
+                      <div
+                        th:id="${'imgsContainer'}"
+                        th:name="${'imgsContainer'}"
+                        th:data-limit="${'2'}"
+                        th:class="${'imgsContainer w-100p h-min100 p-20 border-1 radius-1'}"
+                      ></div>
+                      <div
+                        th:id="${'inputContainer'}"
+                        th:name="${'inputContainer'}"
+                        th:class="${'inputContainer d-none'}"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+                <!-- image existing -->
+                <div class="row">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-col-left">
+                      <div
+                        th:each="image,iterStat:${#strings.arraySplit(MODEL['product_imgsUrl'],',')}"
+                        th:class="${'d-row-between w-80p'}"
+                        th:classappend="${iterStat.last ? '' : 'mb-10'}"
+                      >
+                        <div class="d-row-center">
+                          <img
+                            th:src="@{|${STORAGE}/${page}/${image}|}"
+                            th:loading="${'lazy'}"
+                            th:id="${'existingImgs_' + image}"
+                            th:name="${'existingImgs_' + image}"
+                            th:class="${'w-30 h-30 radius-1'}"
+                          />
+                          <div
+                            th:id="${'existingName_' + image}"
+                            th:name="${'existingName_' + image}"
+                            th:class="${'fs-0-8rem fw-600 grey ms-10'}"
+                            th:text="${#strings.abbreviate(image, 20)}"
+                          ></div>
+                        </div>
+                        <div class="d-row-center">
+                          <div
+                            th:id="${'existingDelete_' + image}"
+                            th:name="${'existingDelete_' + image}"
+                            th:class="${'fs-1-0rem fw-600 burgundy pointer'}"
+                            th:text="${'X'}"
+                            th:onclick="deleteExistingImgs([[${image}]])"
+                          ></div>
+                        <div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- hidden -->
+                <div class="hidden-wrapper">
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'product_number'}"
+                    th:name="${'product_number'}"
+                    th:value="${MODEL['product_number']}"
+                  />
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'sessionId'}"
+                    th:name="${'sessionId'}"
+                    th:value="${session.member_id}"
+                  />
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'product_stripe_id'}"
+                    th:name="${'product_stripe_id'}"
+                    th:value="${MODEL['product_stripe_id']}"
+                  />
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'product_stripe_price'}"
+                    th:name="${'product_stripe_price'}"
+                    th:value="${MODEL['product_stripe_price']}"
+                  />
                 </div>
               </div>
             </div>
-            <!-- existing image 2 -->
-            <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">
-              <div class="checkout-input">
-                <div class="previewExisting-group">
-                  <p class="p">기존 이미지2<span>*</span></p>
-                  <img class="existingMiniBox" id="existingMiniBox" th:src="${productModel.product_imgsUrl2}" th:name="${'product_imgsUrl2'}"/>
-                </div>
-              </div>
-            </div>
-            <!-- product image 1 -->
-            <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">
-              <div class="checkout-input">
-                <div class="previewMini-group">
-                  <p class="p"><label for="imgsFile1">상품 이미지1<span>*</span></label></p>
-                  <input th:type="${'file" id="imgsFile1" onchange="junghoPreview(1)" class="imgsFile" name="product_imgsFile1'}"/>
-                  <div class="imgsMiniLoader" id="imgsMiniLoader1"></div>
-                  <img class="imgsMiniBox" id="imgsMiniBox1"/>
-                </div>
-              </div>
-            </div>
-            <!--  product image 2 -->
-            <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">
-              <div class="checkout-input">
-                <div class="previewMini-group">
-                  <p class="p"><label for="imgsFile2">상품 이미지2<span>*</span></label></p>
-                  <input th:type="${'file" th:id="imgsFile2" onchange="junghoPreview(2)" class="imgsFile" th:name="|product_imgsFile2|'}"/>
-                  <div class="imgsMiniLoader" id="imgsMiniLoader2"></div>
-                  <img class="imgsMiniBox" id="imgsMiniBox2"/>
-                </div>
-              </div>
-            </div>
           </div>
-        </div>
-        <!-- preview -->
-        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-          <div class="row">
-            <!-- preview image -->
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="previewImage-group">
-                <h4 class="p"><i class="fa fa-image"></i>&nbsp;Preview</h4>
-                <div class="imgsLoader" id="imgsLoader"></div>
-                <img class="imgsBox" id="imgsBox"/>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <!-- button -->
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="previewButton-group">
-                <button class="jungho-button" id="resetButton" th:type="${'reset'}"
-                th:onclick="|location.reload()|">새로고침</button>
-                <button class="jungho-button" id="submitButton" th:type="${'submit'}"
-                th:onclick="|return updateProduct()|">수정</button>
-                <button th:type="${'button" class="jungho-button" th:onclick="|location.href='@{/}'|'}"> 홈으로 </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        </form>
       </div>
-    </form>
+    </div>
   </section>
+
+  <!-- divider -->
+  <th:block th:replace="~{components/divider :: divider}" />
+
+  <!-- button -->
+  <th:block th:replace="~{components/button :: button}" />
 
   <!-- footer -->
   <th:block th:replace="~{layouts/footer :: footer}" />

@@ -44,7 +44,7 @@
             </div>
             <!-- x -->
             <div class="col-12 col-sm-12 d-md-none d-lg-none d-xl-none">
-              <div class="w-100p my-30 bg-light h-1"></div>
+              <div class="w-100p my-10 bg-light h-1"></div>
             </div>
             <!-- section 2 -->
             <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
@@ -84,7 +84,7 @@
                   ></div>
                 </div>
               </div>
-              <div class="w-100p my-10 bg-light h-1"></div>
+              <div class="w-100p my-20 bg-light h-1"></div>
               <!-- category & origin & stock & delivery -->
               <div class="row px-20">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-10">
@@ -144,7 +144,7 @@
                   ></div>
                 </div>
               </div>
-              <div class="w-100p my-10 bg-light h-1"></div>
+              <div class="w-100p my-20 bg-light h-1"></div>
               <!-- detail -->
               <div class="row px-20">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left">
@@ -159,7 +159,7 @@
               <div class="w-100p my-20 bg-light h-1"></div>
               <!-- quantity & total price & buy -->
               <div class="row px-20">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-20">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-30">
                   <div
                     th:id="${'orders_quantity_prefix'}"
                     th:name="${'orders_quantity_prefix'}"
@@ -190,12 +190,12 @@
                     ></i>
                   </div>
                 </div>
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-30">
                   <div
                     th:id="${'orders_totalPrice_prefix'}"
                     th:name="${'orders_totalPrice_prefix'}"
-                    th:text="${'총 금액'}"
                     th:class="${'fs-0-9rem fw-500 dark me-20'}"
+                    th:text="${'총 금액'}"
                   ></div>
                   <input
                     th:type="${'hidden'}"
@@ -206,20 +206,28 @@
                     th:id="${'orders_totalPrice'}"
                     th:name="${'orders_totalPrice'}"
                     th:text="${#numbers.formatInteger(MODEL['product_price'], 3, 'COMMA')}"
-                    th:class="${'fs-1-0rem fw-500 light-black ms-auto'}"
+                    th:class="${'fs-1-0rem fw-500 light-black ms-auto me-auto'}"
                   ></div>
-                  <i
-                    th:id="${'getOrders'}"
-                    th:name="${'getOrders'}"
-                    th:class="${'fa fa-shopping-cart fs-1-2rem fw-500 dark pointer ms-20'}"
-                    th:onclick="getOrders()"
-                  ></i>
                   <div
                     th:id="${'getOrders'}"
                     th:name="${'getOrders'}"
                     th:class="${'fs-1-0rem fw-700 black pointer-black ms-auto'}"
                     th:text="${'구매하기'}"
                     th:onclick="getOrders()"
+                  ></div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left">
+                  <div
+                    th:id="${'orders_card'}"
+                    th:name="${'orders_card'}"
+                    th:class="${'fs-0-9rem fw-500 dark me-20'}"
+                    th:text="${'테스트 카드'}"
+                  ></div>
+                  <div
+                    th:id="${'orders_card'}"
+                    th:name="${'orders_card'}"
+                    th:class="${'fs-0-8rem fw-500 dark ms-auto me-auto'}"
+                    th:text="${'4242 4242 4242 4242 / 12/34 / 567'}"
                   ></div>
                 </div>
               </div>
@@ -236,11 +244,11 @@
                   <div
                     th:id="${'info-content'}"
                     th:name="${'info-content'}"
+                    th:class="${'fs-0-7rem fw-400 grey lh-1-7'}"
                     th:text="${'상품 정보 제공 고시[전자상거래에 관한 상품정보 제공에 관한 고시] 항목에 의해 등록된 정보입니다. 품질보증기준 관련법규 및 소비자 보호법에 따름 A/S 책임자와 주문후 예상 배송기간 2~3일소요 구매, 교환, 반품, 배송, 설치 등과 관련하여 추가비용, 제한조건 등의 특이사항이 있는 경우 소비자가 전자상거래등에서 소비자 보호에 관한 법률 제 17조 제1항 또는 제3항에 따라 청약철회를 하고 동법 제 18조 제1항 에 따라 청약철회한 물품을 판매자에게 반환하였음에도 불구 하고 결제 대금의 환급이 3영업일을 넘게 지연된 경우, 소비자 는 전자상거래등에서 소비자보호에 관한 법률 제18조 제2항 및 동법 시행령 제21조 2에 따라 지연일수에 대하여 전상법 시행령으로 정하는 이율을 곱하여 산정한 지연이자(“지연배상금”)를 신청할 수 있습니다.'}"
-                    th:class="${'fs-0-7rem fw-400 light-grey lh-1-7'}"
                   ></div>
                 </div>
-                <div class="w-100p my-5 bg-light h-1"></div>
+                <div class="w-100p my-10 bg-light h-1"></div>
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-col-left">
                   <div
                     th:id="${'info-title'}"
@@ -251,11 +259,11 @@
                   <div
                     th:id="${'info-content'}"
                     th:name="${'info-content'}"
+                    th:class="${'fs-0-7rem fw-400 grey lh-1-7'}"
                     th:text="${'전자상거래 등에서의 소비자보호법에 관한 법률에 의거하여 미성년자가 물품을 구매하는 경우, 법정대리인이 동의하지 않으면 미성년자 본인 또는 법정대리인이 구매를 취소할 수 있습니다. 등록된 판매 상품과 상품의 내용, 거래 정보 및 가격은 판매자가 등록한 것으로 해당 내용에 대하여 일체의 책임을 지지 않습니다.'}"
-                    th:class="${'fs-0-7rem fw-400 light-grey lh-1-7'}"
                   ></div>
                 </div>
-                <div class="w-100p my-5 bg-light h-1"></div>
+                <div class="w-100p my-10 bg-light h-1"></div>
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-col-left">
                   <div
                     th:id="${'info-title'}"
@@ -266,8 +274,8 @@
                   <div
                     th:id="${'info-content'}"
                     th:name="${'info-content'}"
+                    th:class="${'fs-0-7rem fw-400 grey lh-1-7'}"
                     th:text="${'반품/교환 기준 상품 수령 후 7일 이내에 신청하실 수 있습니다. 단, 제품이 표시·광고 내용과 다르거나, 계약과 다르게 이행된 경우는 제품 수령일부터 3개월 이내, 그 사실을 안 날 또는 알 수 있었던 날부터 30일 이내에 교환/반품이 가능합니다. 추가적으로 다음의 경우 해당하는 반품/교환은 신청이 불가능할 수 있습니다.'}"
-                    th:class="${'fs-0-7rem fw-400 light-grey lh-1-7'}"
                   ></div>
                 </div>
               </div>
@@ -348,15 +356,15 @@
               />
               <input
                 th:type="${'hidden'}"
-                th:id="${'stripe_id'}"
-                th:name="${'stripe_id'}"
-                th:value="${MODEL['stripe_id']}"
+                th:id="${'product_stripe_id'}"
+                th:name="${'product_stripe_id'}"
+                th:value="${MODEL['product_stripe_id']}"
               />
               <input
                 th:type="${'hidden'}"
-                th:id="${'stripe_price'}"
-                th:name="${'stripe_price'}"
-                th:value="${MODEL['stripe_price']}"
+                th:id="${'product_stripe_price'}"
+                th:name="${'product_stripe_price'}"
+                th:value="${MODEL['product_stripe_price']}"
               />
             </div>
           </div>

@@ -2,7 +2,6 @@ package com.example.junghqlo.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 import com.example.junghqlo.handler.PageHandler;
 import com.example.junghqlo.mapper.MemberMapper;

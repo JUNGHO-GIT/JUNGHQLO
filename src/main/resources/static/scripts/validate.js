@@ -178,16 +178,6 @@ function validateProduct(page) {
         getById("product_name")?.focus();
         return false;
       }
-      if (!getValue(getById("product_detail"))) {
-        alert("상품 상세 설명을 입력하세요");
-        getById("product_detail")?.focus();
-        return false;
-      }
-      else if (getValue(getById("product_detail")).length > 100) {
-        alert("상품 상세 설명은 100글자 이하로 입력하세요");
-        getById("product_detail")?.focus();
-        return false;
-      }
       if (!getValue(getById("product_price"))) {
         alert("상품 가격을 입력하세요");
         getById("product_price")?.focus();
@@ -238,14 +228,18 @@ function validateProduct(page) {
         getById("product_origin")?.focus();
         return false;
       }
-      if (!getValue(getById("imgsFile1"))) {
-        alert("상품 이미지를 선택하세요");
-        getById("imgsFile1")?.focus();
+      if (!getValue(getById("product_detail"))) {
+        alert("상품 상세 설명을 입력하세요");
+        getById("product_detail")?.focus();
         return false;
       }
-      if (!getValue(getById("imgsFile2"))) {
+      else if (getValue(getById("product_detail")).length > 100) {
+        alert("상품 상세 설명은 100글자 이하로 입력하세요");
+        getById("product_detail")?.focus();
+        return false;
+      }
+      if (getById("inputContainer").hasChildNodes() === false) {
         alert("상품 이미지를 선택하세요");
-        getById("imgsFile2")?.focus();
         return false;
       }
     }
@@ -332,15 +326,6 @@ function validateMember (page) {
         getById("member_id")?.focus();
         return false;
       }
-      if (
-        getValue(getById("member_id")).length < 4 ||
-        getValue(getById("member_id")).length > 12 ||
-        !getValue(getById("member_id")).toString().match(/^[a-zA-Z0-9]+$/)
-      ) {
-        alert("아이디는 4~12자리의 영문 대소문자와 숫자를 포함해야 합니다");
-        getById("member_id")?.focus();
-        return false;
-      }
       if (getValue(getById("member_pw")) === "") {
         alert("비밀번호를 입력하세요");
         getById("member_pw")?.focus();
@@ -351,6 +336,15 @@ function validateMember (page) {
     else if (page === "signup") {
       if (getValue(getById("member_id")) === "") {
         alert("아이디를 입력하세요");
+        getById("member_id")?.focus();
+        return false;
+      }
+      if (
+        getValue(getById("member_id")).length < 4 ||
+        getValue(getById("member_id")).length > 12 ||
+        !getValue(getById("member_id")).toString().match(/^[a-zA-Z0-9]+$/)
+      ) {
+        alert("아이디는 4~12자리의 영문 대소문자와 숫자를 포함해야 합니다");
         getById("member_id")?.focus();
         return false;
       }
@@ -431,11 +425,6 @@ function validateMember (page) {
     else if (page === "updatePw") {
       if (getValue(getById("member_pw")) === "") {
         alert("비밀번호를 입력하세요");
-        getById("member_pw")?.focus();
-        return false;
-      }
-      if (!getValue(getById("member_pw")).toString().match(/^[a-zA-Z0-9]{8,12}$/)) {
-        alert("비밀번호는 8~12자리의 영문 대소문자와 숫자만 입력 가능합니다");
         getById("member_pw")?.focus();
         return false;
       }

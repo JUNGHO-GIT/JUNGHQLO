@@ -190,15 +190,12 @@ public class ProductController {
   // 2. detailProduct(GET) -------------------------------------------------------------------------
   @GetMapping("/detailProduct")
   public String getProductDetail (
-    @ModelAttribute Product product,
     @RequestParam Integer product_number,
-    HttpSession session,
     Model model
   ) throws Exception {
 
     // 모델
     model.addAttribute("MODEL", productService.detailProduct(product_number));
-    model.addAttribute("member_id", session.getAttribute("member_id"));
 
     return MessageFormat.format("/pages/{0}/{1}Detail", page, page);
   }

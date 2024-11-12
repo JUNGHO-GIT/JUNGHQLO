@@ -16,9 +16,6 @@ import com.stripe.exception.StripeException;
 @Service
 public class OrdersServiceImpl implements OrdersService {
 
-  @Value("${storage}")
-  private String STORAGE;
-
   @Value("${bucket-main}")
   private String BUCKET_MAIN;
 

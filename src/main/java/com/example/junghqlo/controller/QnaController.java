@@ -157,7 +157,6 @@ public class QnaController {
   // 2. detailQna(GET) -----------------------------------------------------------------------------
   @GetMapping("/detailQna")
   public String detailQna(
-    @ModelAttribute Qna qna,
     @RequestParam Integer qna_number,
     HttpSession session,
     Model model

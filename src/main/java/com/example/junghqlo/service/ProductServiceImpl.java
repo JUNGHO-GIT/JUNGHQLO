@@ -81,7 +81,7 @@ public class ProductServiceImpl implements ProductService {
     return new PageHandler<>(pageNumber, pageStart, pageEnd, 1, pageLast, itemsPer, itemsTotal, pageContent);
   }
 
-  // 2. detailProduct --------------------------------------------------------------------------
+  // 2. detailProduct ------------------------------------------------------------------------------
   @Override
   public Product detailProduct(
     Integer product_number
@@ -91,7 +91,7 @@ public class ProductServiceImpl implements ProductService {
   }
 
 
-  // 3. saveProduct ---------------------------------------------------------------------------------
+  // 3. saveProduct --------------------------------------------------------------------------------
   @Override
   public Integer saveProduct(
     @ModelAttribute Product product,
@@ -156,6 +156,42 @@ public class ProductServiceImpl implements ProductService {
       mergedImgsUrl = newImgsUrl;
     }
 
+    // 문자열로 구분된 이미지 각각 앞에 STORAGE를 붙여서 새로운 'string'으로 만들기
+    String fmtProductImgsUrl = "";
+    if (mergedImgsUrl != null && mergedImgsUrl.length() > 0) {
+      String[] productImgsUrl = mergedImgsUrl.split(",");
+      for (int i = 0; i < productImgsUrl.length; i++) {
+        if (i > 0) {
+          fmtProductImgsUrl += ",";
+        }
+        fmtProductImgsUrl += STORAGE + "/product/" + productImgsUrl[i];
+      }
+    }
+
+    // stripe id, price set
+    com.stripe.model.Product stripe_id = (
+      stripeConfig.createProduct(
+        product.getProduct_name(),
+        product.getProduct_detail(),
+        fmtProductImgsUrl
+      )
+    );
+    com.stripe.model.Price stripe_price = (
+      stripeConfig.createPrice(
+        stripe_id.getId(),
+        product.getProduct_price()
+      )
+    );
+
+    // set stripe to product
+    try {
+      product.setProduct_stripe_id(stripe_id.getId());
+      product.setProduct_stripe_price(stripe_price.getId());
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+
     Integer result = 0;
 
     if (productMapper.saveProduct(product, mergedImgsUrl) > 0) {
@@ -168,7 +204,7 @@ public class ProductServiceImpl implements ProductService {
     return result;
   };
 
-  // 4-1. updateProduct -----------------------------------------------------------------------------
+  // 4-1. updateProduct ----------------------------------------------------------------------------
   @Override
   public Integer updateProduct(
     @ModelAttribute Product product,
@@ -233,6 +269,43 @@ public class ProductServiceImpl implements ProductService {
       mergedImgsUrl = newImgsUrl;
     }
 
+    // 문자열로 구분된 이미지 각각 앞에 STORAGE를 붙여서 새로운 'string'으로 만들기
+    String fmtProductImgsUrl = "";
+    if (mergedImgsUrl != null && mergedImgsUrl.length() > 0) {
+      String[] productImgsUrl = mergedImgsUrl.split(",");
+      for (int i = 0; i < productImgsUrl.length; i++) {
+        if (i > 0) {
+          fmtProductImgsUrl += ",";
+        }
+        fmtProductImgsUrl += STORAGE + "/product/" + productImgsUrl[i];
+      }
+    }
+
+    // stripe id, price set
+    com.stripe.model.Product stripe_id = (
+      stripeConfig.updateProduct(
+        product.getProduct_stripe_id(),
+        product.getProduct_name(),
+        product.getProduct_detail(),
+        fmtProductImgsUrl
+      )
+    );
+    com.stripe.model.Price stripe_price = (
+      stripeConfig.updatePrice(
+        stripe_id.getId(),
+        product.getProduct_price()
+      )
+    );
+
+    // set stripe to product
+    try {
+      product.setProduct_stripe_id(stripe_id.getId());
+      product.setProduct_stripe_price(stripe_price.getId());
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+
     Integer result = 0;
 
     if (productMapper.updateProduct(product, mergedImgsUrl) > 0) {
@@ -255,8 +328,13 @@ public class ProductServiceImpl implements ProductService {
     Product product = detailProduct(product_number);
 
     // 2. delete product in stripe
-    stripeConfig.deleteProduct(product.getStripe_id());
-    stripeConfig.deletePrice(product.getStripe_price());
+    try {
+      stripeConfig.deleteProduct(product.getProduct_stripe_id());
+      stripeConfig.deletePrice(product.getProduct_stripe_price());
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
 
     Integer result = 0;
 

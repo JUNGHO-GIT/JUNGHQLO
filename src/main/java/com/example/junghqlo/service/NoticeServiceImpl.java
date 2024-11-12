@@ -30,9 +30,6 @@ import com.google.gson.GsonBuilder;
 @Service
 public class NoticeServiceImpl implements NoticeService {
 
-  @Value("${storage}")
-  private String STORAGE;
-
   @Value("${bucket-main}")
   private String BUCKET_MAIN;
 

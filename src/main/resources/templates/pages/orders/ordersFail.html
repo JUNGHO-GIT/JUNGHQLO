@@ -14,16 +14,63 @@
   <section class="container-fluid">
     <div class="row d-center">
       <div class="col-11 col-sm-11 col-md-10 col-lg-9 col-xl-8">
-    <div class="row jungho-center">
-      <div class="col-lg-6 col-md-6">
-        <div class="checkout-order">
-          <h4 class="order-title">주문이 실패하였습니다.</h4>
-          <button th:type="${'button" class="jungho-button" th:onclick="goToPage('home')"><i class="|fa fa-barcode fa-lg'}|"></i>&nbsp;홈으로
-          </button>
-        </div>
+        <!-- form -->
+        <form
+          th:id="${'formData'}"
+          th:name="${'formData'}"
+          th:class="${'formData'}"
+        >
+          <!-- detail -->
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="border-1 radius-2 shadow-1 px-20 py-40 bg-light">
+                <!-- title -->
+                <div class="row">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-center">
+                      <div
+                        th:id="${'success_title'}"
+                        th:name="${'success_title'}"
+                        th:class="${'fs-1-8rem fw-700 light-black'}"
+                        th:text="${'주문에 실패하였습니다.'}"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+                <!-- hr -->
+                <div class="w-100p my-30 bg-black h-1"></div>
+                <!-- date -->
+                <div class="row">
+                  <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 d-row-right">
+                    <div
+                      th:id="${'success_date_prefix'}"
+                      th:name="${'success_date_prefix'}"
+                      th:class="${'fs-1-1rem fw-500 dark-grey me-20'}"
+                      th:text="${'주문 일자'}"
+                    ></div>
+                  </div>
+                  <div class="col-7 col-sm-7 col-md-7 col-lg-7 col-xl-7 d-row-left">
+                    <div
+                      th:id="${'success_date'}"
+                      th:name="${'success_date'}"
+                      th:class="${'fs-1-2rem fw-600 light-black'}"
+                      th:text="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   </section>
+
+  <!-- divider -->
+  <th:block th:replace="~{components/divider :: divider}" />
+
+  <!-- button -->
+  <th:block th:replace="~{components/button :: button}" />
 
   <!-- footer -->
   <th:block th:replace="~{layouts/footer :: footer}" />

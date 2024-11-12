@@ -19,8 +19,8 @@ public class Product {
   private String product_imgsUrl;
 
   // stripe
-  private String stripe_id;
-  private String stripe_price;
+  private String product_stripe_id;
+  private String product_stripe_price;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
   private LocalDateTime product_date;
@@ -62,11 +62,11 @@ public class Product {
   public LocalDateTime getProduct_update() {
     return this.product_update;
   }
-  public String getStripe_id() {
-    return this.stripe_id;
+  public String getProduct_stripe_id() {
+    return this.product_stripe_id;
   }
-  public String getStripe_price() {
-    return this.stripe_price;
+  public String getProduct_stripe_price() {
+    return this.product_stripe_price;
   }
 
   // setter --------------------------------------------------------------------------------------->
@@ -103,11 +103,10 @@ public class Product {
   public void setProduct_update(LocalDateTime product_update) {
     this.product_update = product_update;
   }
-  public void setStripe_id(String stripe_id) {
-    this.stripe_id = stripe_id;
+  public void setProduct_stripe_id(String product_stripe_id) {
+    this.product_stripe_id = product_stripe_id;
   }
-  public void setStripe_price(String stripe_price) {
-    this.stripe_price = stripe_price;
+  public void setProduct_stripe_price(String product_stripe_price) {
+    this.product_stripe_price = product_stripe_price;
   }
-
 }

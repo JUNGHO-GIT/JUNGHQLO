@@ -23,9 +23,6 @@ import com.google.cloud.storage.StorageOptions;
 @Service
 public class QnaServiceImpl implements QnaService {
 
-  @Value("${storage}")
-  private String STORAGE;
-
   @Value("${bucket-main}")
   private String BUCKET_MAIN;
 

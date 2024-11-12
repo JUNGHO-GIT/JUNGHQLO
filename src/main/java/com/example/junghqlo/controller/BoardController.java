@@ -124,7 +124,6 @@ public class BoardController {
   // 2. detailBoard(GET) ---------------------------------------------------------------------------
   @GetMapping("/detailBoard")
   public String detailBoard(
-    @ModelAttribute Board board,
     @RequestParam Integer board_number,
     HttpSession session,
     Model model

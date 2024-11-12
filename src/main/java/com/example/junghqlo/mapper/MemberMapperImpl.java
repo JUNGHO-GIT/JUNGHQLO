@@ -49,14 +49,14 @@ public class MemberMapperImpl implements MemberMapper {
   // 1-4. findMemberPw -----------------------------------------------------------------------------
   @Override
   public String findMemberPw(
-    String member_name,
     String member_id,
+    String member_name,
     String member_email
   ) throws Exception {
 
     Map<String, Object> map = new HashMap<>();
-    map.put("member_name", member_name);
     map.put("member_id", member_id);
+    map.put("member_name", member_name);
     map.put("member_email", member_email);
 
     return sqlSession.selectOne("findMemberPw", map);

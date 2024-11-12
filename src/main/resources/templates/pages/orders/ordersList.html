@@ -14,81 +14,102 @@
   <section class="container-fluid">
     <div class="row d-center">
       <div class="col-11 col-sm-11 col-md-10 col-lg-9 col-xl-8">
-    <div class="row mb-3 jungho-inline">
-      <!-- sorting -->
-      <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-        <div class="jungho-left">
-          <i class="fas fa-sort-amount-down fa-lg"></i>&nbsp;&nbsp;
-          <form th:action="@{|/orders/listOrders}" th:method="${'GET" onchange="this.submit()'}">
-            <select name="sort" class="form-control w-50p">
-              <option value="all">정렬</option>
-              <option value="nameASC">이름순(오름차순)</option>
-              <option value="nameDESC">이름순(내림차순)</option>
-              <option value="priceASC">가격낮은순</option>
-              <option value="priceDESC">가격높은순</option>
-              <option value="dateASC">오래된순</option>
-              <option value="dateDESC">최신순</option>
-            </select>
-          </form>
-        </div>
-      </div>
-      <!-- search -->
-      <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-        <form id="searchForm" th:method="${'GET" th:action="@{|/orders/searchOrders}'}">
-          <div class="jungho-right">
-            <select class="ft-5 fw-8 ms-2 searchSelect" th:name="${'type" th:id="type'}">
-              <option value="name">Name</option>
-            </select>
-            <input class="form-control ft-7 fw-7 me-1 searchBar" th:type="${'search" th:id="|keyword" th:placeholder="search" th:name="keyword|'}" required/>
-            <i class="fas fa-search fa-lg" th:id="${'searchIcon'}"></i>
-            <button th:type="${'submit" id="hiddenSubmit" class="hiddenSubmit'}"></button>
-          </div>
-        </form>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12">
-        <div class="junghoList-card card-margin">
-          <div class="card-body">
-            <div class="row">
+        <!-- form -->
+        <form
+          th:id="${'formData'}"
+          th:name="${'formData'}"
+          th:class="${'formData'}"
+        >
+          <!-- list -->
+          <div class="row">
+            <th:block th:each="LIST: ${LIST}">
               <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <!-- orders row -->
-                <div class="junghoList-container" th:each="orders:${ordersList}">
-                  <div class="junghoList">
-                    <div class="jungho-inline">
-                      <!-- image -->
-                      <div class="junghoList-emp-img">
-                        <img th:src="${orders.product_imgsUrl}"/>
-                      </div>
+                <div
+                  th:class="${'border-1 radius-2 shadow-0 p-20'}"
+                  th:classappend="${LISTStat.last ? '' : 'mb-0'}"
+                >
+                  <div class="row">
+                    <!-- image -->
+                    <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 d-col-center">
+                      <img
+                        th:each="image, iterStat:${#strings.arraySplit(LIST['orders_imgsUrl'], ',')}"
+                        th:if="${iterStat.index == 0}"
+                        th:src="@{|${STORAGE}/product/${image}|}"
+                        th:loading="${'lazy'}"
+                        th:alt="${'image'}"
+                        th:class="${'radius-2 w-100p w-max300'}"
+                      />
+                    </div>
+                    <!-- details -->
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 d-col-center ms-auto">
                       <!-- name -->
-                      <div class="junghoList-title">
-                        <a th:onclick="@{|/orders/detailOrders?orders_number=${orders.orders_number}|}" th:text="${orders.product_name}" th:id="|product_name" th:value="{orders.product_name|}"></a>
+                      <div class="d-row-left w-100p mb-20">
+                        <div
+                          th:id="${'orders_product_name'}"
+                          th:name="${'orders_product_name'}"
+                          th:text="${#strings.abbreviate(LIST['orders_product_name'], 30)}"
+                          th:class="${'fs-1-3rem fw-600 light-black hover'}"
+                          th:onclick="goToPage('detail', [[${LIST['orders_number']}]])"
+                        ></div>
+                      </div>
+                      <!-- price -->
+                      <div class="d-row-left w-100p mb-10">
+                      <i th:class="${'fa fa-won-sign fs-0-7rem dark me-10'}"></i>
+                        <div
+                          th:id="${'orders_totalPrice'}"
+                          th:name="${'orders_totalPrice'}"
+                          th:class="${'fs-1-0rem fw-600 dark-grey'}"
+                          th:text="${#numbers.formatInteger(LIST['orders_totalPrice'], 3, 'COMMA')}"
+                        ></div>
+                      </div>
+                      <!-- quantity -->
+                      <div class="d-row-left w-100p mb-10">
+                        <i th:class="${'fa fa-box fs-0-7rem dark me-10'}"></i>
+                        <div
+                          th:id="${'orders_quantity'}"
+                          th:name="${'orders_quantity'}"
+                          th:class="${'fs-0-9rem fw-600 dark-grey'}"
+                          th:text="${LIST['orders_quantity']}"
+                        ></div>
+                      </div>
+                      <!-- date -->
+                      <div class="d-row-left w-100p mb-10">
+                        <i th:class="${'fa fa-calendar fs-0-7rem dark me-10'}"></i>
+                        <div
+                          th:id="${'orders_date'}"
+                          th:name="${'orders_date'}"
+                          th:class="${'fs-0-9rem fw-600 dark-grey'}"
+                          th:text="${#strings.substring((LIST['orders_update'] != null ? LIST['orders_update'] : LIST['orders_date']), 0, 10)}"
+                        ></div>
                       </div>
                     </div>
-                    <!-- quantity -->
-                    <div class="junghoList-quantity">
-                      <span th:text="${''수량  : ' + ${orders.orders_quantity}" th:id="|orders_quantity" th:value="{orders.orders_quantity}'}"></span>
-                    </div>
-                    <!-- price -->
-                    <div class="junghoList-price">
-                      <i class="fas fa-won-sign fa-xs"></i>&nbsp;
-                      <span  th:text="${#numbers.formatInteger(orders.orders_totalPrice, 3, 'COMMA')}" th:id="${'|orders_totalPrice" th:value="{orders.orders_totalPrice}'}">
-                      </span>
-                    </div>
-                    <!-- date -->
-                    <div class="junghoList-date">
-                      <i class="far fa-calendar-alt fa-xs"></i>&nbsp;
-                      <span th:text="${#strings.substring((orders.orders_update != null ? orders.orders_update : orders.orders_date), 0, 10)}"></span>
+                    <!-- number -->
+                    <div class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
+                      <div
+                        th:id="${'orders_number'}"
+                        th:name="${'orders_number'}"
+                        th:class="${'fs-0-8rem fw-600 dark-grey'}"
+                        th:text="${LIST['orders_number']}"
+                      ></div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </th:block>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </section>
+
+  <!-- divider -->
+  <th:block th:replace="~{components/divider :: divider}" />
+
+  <!-- sorting -->
+  <th:block th:replace="~{components/sorting :: sorting}" />
+
+  <!-- divider -->
+  <th:block th:replace="~{components/divider :: divider}" />
 
   <!-- pagination -->
   <th:block th:replace="~{components/pagination :: pagination}" />

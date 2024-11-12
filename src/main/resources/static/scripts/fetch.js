@@ -9,6 +9,9 @@ function goToPage(url, param) {
     else if (url === "home") {
       location.href = `/${title}`;
     }
+    else if (url === "list") {
+      location.href = `/${title}/${preFix1}/list${preFix2}`;
+    }
     else if (url === "save") {
       location.href = `/${title}/${preFix1}/save${preFix2}`;
     }
@@ -16,7 +19,7 @@ function goToPage(url, param) {
       location.href = `/${title}/${url}`;
     }
   }
-  if (url && param) {
+  else if (url && param) {
     if (url === 'detail') {
       location.href = `/${title}/${preFix1}/detail${preFix2}?${preFix1}_number=${param}`;
     }
@@ -79,7 +82,7 @@ function getSave() {
     success: function(response) {
       if (response === 1) {
         alert("등록되었습니다.");
-        goToPage('list');
+        goToPage(`${preFix1}/list${preFix2}`);
       }
       else if (response === 0) {
         alert("등록 실패했습니다.");
@@ -119,7 +122,7 @@ function getUpdate() {
     success: function(response) {
       if (response === 1) {
         alert("수정되었습니다.");
-        goToPage('list');
+        goToPage(`${preFix1}/list${preFix2}`);
       }
       else if (response === 0) {
         alert("수정 실패했습니다.");
@@ -148,11 +151,13 @@ function getDelete() {
   $.ajax({
     type: "POST",
     url: `/${title}/${preFix1}/delete${preFix2}`,
-    data: `${preFix1}_number=${number}`,
+    data: {
+      [`${preFix1}_number`]: number
+    },
     success: function(response) {
       if (response === 1) {
         alert("삭제되었습니다.");
-        goToPage('list');
+        goToPage(`${preFix1}/list${preFix2}`);
       }
       else if (response === 0) {
         alert("삭제 실패했습니다.");
