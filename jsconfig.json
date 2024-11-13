@@ -26,6 +26,7 @@
     "listFiles": false,
     "listEmittedFiles": false,
     "generateCpuProfile": "profile.cpuprofile",
+    "tsBuildInfoFile": ".tsbuildinfo",
     "declaration": true,
     "declarationMap": true,
     "target": "ESNext",

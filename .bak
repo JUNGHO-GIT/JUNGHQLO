@@ -1,0 +1,61 @@
+#!/bin/bash
+
+# OS 확인
+if [[ "$OSTYPE" == "msys" ]]; then
+  OS="win"
+else
+  OS="linux"
+fi
+echo "Activated OS is : $OS"
+
+# 변경 로그 수정 함수
+modify_changelog() {
+
+  local current_date = $(date +"%Y-%m-%d")
+  local current_time = $(date +"%H:%M:%S")
+  local last_version = $(grep -oP '\d+\.\d+\.\d+' changelog.md | tail -1)
+  local new_version = $(echo $last_version | awk -F. -v OFS=. '{$NF += 1 ; print}')
+
+  echo -e "\n## [$new_version]\n- $current_date ($current_time)\n" >> changelog.md
+  echo "Changelog updated to version $new_version."
+}
+
+# Git 작업 수행 함수
+git_push() {
+  git add .
+  git commit -m "$(date +"%Y-%m-%d %H:%M:%S")"
+  git push origin main
+  echo "Changes pushed to repository."
+}
+
+# 원격 서버에서 작업 수행 함수
+run_remote_script() {
+
+  local ip_addr = "34.23.233.23";
+  local key_path = ""
+  local service_id = ""
+
+  if [[ "$OS" == "win" ]]; then
+    key_path = "C:\\Users\\jungh\\.ssh\\JKEY"
+    service_id = "junghomun00"
+  else
+    key_path = "~/ssh/JKEY"
+    service_id = "junghomun1234"
+  fi
+
+  ssh -i "$key_path" "$service_id@$ip_addr" << EOF
+    cd /var/www/junghomun.com/JPAGE/server
+    sudo git fetch --all
+    sudo git reset --hard origin/master
+    sudo rm -rf client
+    sudo chmod -R 755 /var/www/junghomun.com/JPAGE/server
+    sudo ./mvnw clean install -DskipTests
+    sudo systemctl restart springboot_app
+EOF
+  echo "Remote server updated and application restarted."
+}
+
+# 실행
+modify_changelog
+git_push
+run_remote_script
