@@ -11393,6 +11393,18 @@
   align-items: center !important;
   text-align: right !important;
 }
+.d-top {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  text-align: center !important;
+}
+.d-bottom {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: flex-end !important;
+  text-align: center !important;
+}
 .d-row {
   display: flex !important;
   flex-direction: row !important;
@@ -11458,6 +11470,7 @@
   text-align: center !important;
 }
 .d-col-left {
+  width: 100%;
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
@@ -12276,30 +12289,32 @@
 
 /** 100. animation ********************************************************************************/
 .loader-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999999;
 }
 .loader {
-	width: 40px;
-	height: 40px;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-top: -13px;
-	margin-left: -13px;
-	border-radius: 60px;
-	animation: loader 0.7s linear infinite;
-	-webkit-animation: loader 0.7s linear infinite;
+  width: 50px;
+  height: 50px;
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border-top: 3px solid #1976D2 !important;
+  border-right: 3px solid transparent;
+  animation: loaderAnimation 0.7s linear infinite;
+  z-index: 1000000;
 }
-@keyframes loader {
+@keyframes loaderAnimation {
 	0% {
 		-webkit-transform: rotate(0deg);
 		transform: rotate(0deg);
@@ -12319,7 +12334,7 @@
 		border-left-color: transparent;
 	}
 }
-@-webkit-keyframes loader {
+@-webkit-keyframes loaderAnimation {
 	0% {
 		-webkit-transform: rotate(0deg);
 		border: 4px solid #f44336;

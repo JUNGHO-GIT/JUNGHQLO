@@ -14,7 +14,7 @@
               <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-dark w-100p'}"
+                  th:class="${'btn btn-dark w-100p h-40'}"
                   th:onclick="getLogin()"
                 >
                   로그인
@@ -63,7 +63,7 @@
               <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-dark w-100p'}"
+                  th:class="${'btn btn-dark w-100p h-40'}"
                   th:onclick="getSignup()"
                 >
                   회원가입
@@ -77,26 +77,26 @@
               <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-dark w-90p'}"
+                  th:class="${'btn btn-dark w-90p h-40'}"
                   th:if="${session.member_id == null}"
                   th:onclick="sessionAlert()"
                 >
-                  회원정보 수정
+                  정보수정
                 </button>
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-dark w-90p'}"
+                  th:class="${'btn btn-dark w-90p h-40'}"
                   th:if="${session.member_id != null}"
                   th:with="memberNumber=${session.member_number}"
                   th:onclick="goToPage('member/updateMember?member_number=' + [[${memberNumber}]])"
                 >
-                  회원정보 수정
+                  정보수정
                 </button>
               </div>
               <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-danger w-90p'}"
+                  th:class="${'btn btn-danger w-90p h-40'}"
                   th:if="${session.member_id == null}"
                   th:onclick="sessionAlert()"
                 >
@@ -104,7 +104,7 @@
                 </button>
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-danger w-90p'}"
+                  th:class="${'btn btn-danger w-90p h-40'}"
                   th:if="${session.member_id != null}"
                   th:with="memberNumber=${session.member_number}"
                   th:onclick="goToPage('member/deleteMember?member_number=' + [[${memberNumber}]])"
@@ -115,7 +115,7 @@
               <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-secondary w-90p'}"
+                  th:class="${'btn btn-secondary w-90p h-40'}"
                   th:onclick="goToPage('home')"
                 >
                   홈으로
@@ -129,7 +129,7 @@
               <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-dark w-90p'}"
+                  th:class="${'btn btn-dark w-90p h-40'}"
                   th:if="${session.member_id == null}"
                   th:onclick="sessionAlert()"
                 >
@@ -137,7 +137,7 @@
                 </button>
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-dark w-90p'}"
+                  th:class="${'btn btn-dark w-90p h-40'}"
                   th:if="${session.member_id != null}"
                   th:onclick="getUpdateMember();"
                 >
@@ -147,26 +147,26 @@
               <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-dark w-90p'}"
+                  th:class="${'btn btn-dark w-90p h-40 fs-0-9rem'}"
                   th:if="${session.member_id == null}"
                   th:onclick="sessionAlert()"
                 >
-                  비밀번호 변경
+                  비밀번호변경
                 </button>
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-dark w-90p'}"
+                  th:class="${'btn btn-dark w-90p h-40 fs-0-9rem'}"
                   th:if="${session.member_id != null}"
                   th:with="memberNumber=${session.member_number}"
                   th:onclick="goToPage('member/updateMemberPw?member_number=' + [[${memberNumber}]])"
                 >
-                  비밀번호 변경
+                  비밀번호변경
                 </button>
               </div>
               <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-secondary w-90p'}"
+                  th:class="${'btn btn-secondary w-90p h-40'}"
                   th:with="memberNumber=${session.member_number}"
                   th:onclick="goToPage('member/detailMember?member_number=' + [[${memberNumber}]])"
                 >
@@ -181,7 +181,7 @@
               <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-dark w-90p'}"
+                  th:class="${'btn btn-dark w-90p h-40'}"
                   th:if="${session.member_id == null}"
                   th:onclick="sessionAlert()"
                 >
@@ -189,7 +189,7 @@
                 </button>
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-dark w-90p'}"
+                  th:class="${'btn btn-dark w-90p h-40'}"
                   th:if="${session.member_id != null}"
                   th:onclick="getUpdatePw()"
                 >
@@ -199,7 +199,7 @@
               <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-secondary w-90p'}"
+                  th:class="${'btn btn-secondary w-90p h-40'}"
                   th:with="memberNumber=${session.member_number}"
                   th:onclick="goToPage('member/detailMember?member_number=' + [[${memberNumber}]])"
                 >
@@ -214,7 +214,7 @@
               <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-danger w-90p'}"
+                  th:class="${'btn btn-danger w-90p h-40'}"
                   th:if="${session.member_id == null}"
                   th:onclick="sessionAlert()"
                 >
@@ -222,7 +222,7 @@
                 </button>
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-danger w-90p'}"
+                  th:class="${'btn btn-danger w-90p h-40'}"
                   th:if="${session.member_id != null}"
                   th:onclick="getDeleteMember()"
                 >
@@ -232,7 +232,7 @@
               <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-secondary w-90p'}"
+                  th:class="${'btn btn-secondary w-90p h-40'}"
                   th:with="memberNumber=${session.member_number}"
                   th:onclick="goToPage('member/detailMember?member_number=' + [[${memberNumber}]])"
                 >
@@ -247,7 +247,7 @@
               <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-dark w-100p'}"
+                  th:class="${'btn btn-dark w-100p h-40'}"
                   th:onclick="getFindId()"
                 >
                   아이디 찾기
@@ -296,7 +296,7 @@
               <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-dark w-100p'}"
+                  th:class="${'btn btn-dark w-100p h-40'}"
                   th:onclick="getFindPw()"
                 >
                   비밀번호 찾기
@@ -349,7 +349,7 @@
               <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-dark w-90p'}"
+                  th:class="${'btn btn-dark w-90p h-40'}"
                   th:if="${session.member_id == null}"
                   th:onclick="sessionAlert()"
                 >
@@ -357,7 +357,7 @@
                 </button>
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-dark w-90p'}"
+                  th:class="${'btn btn-dark w-90p h-40'}"
                   th:if="${session.member_id != null}"
                   th:onclick="goToPage('save')"
                 >
@@ -367,7 +367,7 @@
               <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-dark w-90p'}"
+                  th:class="${'btn btn-dark w-90p h-40'}"
                   th:onclick="goToPage('home')"
                 >
                   홈으로
@@ -381,7 +381,7 @@
               <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-dark w-90p'}"
+                  th:class="${'btn btn-dark w-90p h-40'}"
                   th:if="${session.member_id == null}"
                   th:onclick="sessionAlert()"
                 >
@@ -389,7 +389,7 @@
                 </button>
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-dark w-90p'}"
+                  th:class="${'btn btn-dark w-90p h-40'}"
                   th:if="${session.member_id != null}"
                   th:onclick="goToPage('update', number)"
                 >
@@ -399,7 +399,7 @@
               <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-danger w-90p'}"
+                  th:class="${'btn btn-danger w-90p h-40'}"
                   th:if="${session.member_id == null}"
                   th:onclick="sessionAlert()"
                 >
@@ -407,7 +407,7 @@
                 </button>
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-danger w-90p'}"
+                  th:class="${'btn btn-danger w-90p h-40'}"
                   th:if="${session.member_id != null}"
                   th:onclick="getDelete(number)"
                 >
@@ -417,7 +417,7 @@
               <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-secondary w-90p'}"
+                  th:class="${'btn btn-secondary w-90p h-40'}"
                   th:onclick="goToPage('list')"
                 >
                   목록으로
@@ -431,7 +431,7 @@
               <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-dark w-90p'}"
+                  th:class="${'btn btn-dark w-90p h-40'}"
                   th:if="${session.member_id == null}"
                   th:onclick="sessionAlert()"
                 >
@@ -439,7 +439,7 @@
                 </button>
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-dark w-90p'}"
+                  th:class="${'btn btn-dark w-90p h-40'}"
                   th:if="${session.member_id != null}"
                   th:onclick="getSave()"
                 >
@@ -449,7 +449,7 @@
               <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-secondary w-90p'}"
+                  th:class="${'btn btn-secondary w-90p h-40'}"
                   th:onclick="goToPage('list')"
                 >
                   목록으로
@@ -463,7 +463,7 @@
               <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-dark w-90p'}"
+                  th:class="${'btn btn-dark w-90p h-40'}"
                   th:if="${session.member_id == null}"
                   th:onclick="sessionAlert()"
                 >
@@ -471,7 +471,7 @@
                 </button>
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-dark w-90p'}"
+                  th:class="${'btn btn-dark w-90p h-40'}"
                   th:if="${session.member_id != null}"
                   th:onclick="getUpdate()"
                 >
@@ -481,7 +481,7 @@
               <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-secondary w-90p'}"
+                  th:class="${'btn btn-secondary w-90p h-40'}"
                   th:onclick="goToPage('list')"
                 >
                   취소하기
@@ -495,7 +495,7 @@
               <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <button
                   th:type="${'button'}"
-                  th:class="${'btn btn-dark w-100p'}"
+                  th:class="${'btn btn-dark w-100p h-40'}"
                   th:onclick="goToPage('home')"
                 >
                   홈으로

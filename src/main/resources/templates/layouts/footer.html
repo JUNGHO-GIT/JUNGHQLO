@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- footer -->
-  <section th:fragment="footer" class="container-fluid bg-black mt-40 p-30">
-    <div class="row d-row-center">
-      <div class="col-11 col-sm-11 col-md-10 col-lg-9 col-xl-8">
+  <section th:fragment="footer" class="container-fluid bg-black mt-40 p-20">
+    <div class="row d-center">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <div class="row">
-          <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-col-left">
+          <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-col-center">
             <img
               th:src="@{|${STORAGE}/icon/logo.png|}"
               th:loading="${'lazy'}"
@@ -17,49 +17,86 @@
               th:onclick="goToPage('home')"
             />
           </div>
-          <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-col-left">
-            <div class="fs-1-0rem fw-800 light-grey mb-10">
-              Shopping
+          <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-col-center">
+            <div class="d-row-left">
+              <div class="fs-1-0rem fw-800 light-grey upper mb-10">
+                Shop
+              </div>
             </div>
-            <ul>
-              <li
-                class="fs-0-8rem fw-600 grey hover pointer mb-10"
-                th:onclick="goToPage('product/listProduct')"
-              >
-                Clothing
-              </li>
-              <li
-                class="fs-0-8rem fw-600 grey hover pointer mb-10"
-                th:onclick="goToPage('product/listProduct')"
-              >
-                Trending
-              </li>
-              <li
-                class="fs-0-8rem fw-600 grey hover pointer mb-10"
-                th:onclick="goToPage('product/listProduct')"
-              >
-                Accessories
-              </li>
-            </ul>
+            <div class="d-row-left">
+              <ul>
+                <li
+                  th:class="${'fs-0-8rem fw-600 grey hover pointer mb-10'}"
+                  th:onclick="goToPage('list', {sort: 'all', category: 'outer', origin: 'all'}, 'product')"
+                >
+                  Outer
+                </li>
+                <li
+                  th:class="${'fs-0-8rem fw-600 grey hover pointer mb-10'}"
+                  th:onclick="goToPage('list', {sort: 'all', category: 'top', origin: 'all'}, 'product')"
+                >
+                  Top
+                </li>
+                <li
+                  th:class="${'fs-0-8rem fw-600 grey hover pointer mb-10'}"
+                  th:onclick="goToPage('list', {sort: 'all', category: 'bottom', origin: 'all'}, 'product')"
+                >
+                  Bottom
+                </li>
+                <li
+                  th:class="${'fs-0-8rem fw-600 grey hover pointer mb-10'}"
+                  th:onclick="goToPage('list', {sort: 'all', category: 'shoes', origin: 'all'}, 'product')"
+                >
+                  Shoes
+                </li>
+                <li
+                  th:class="${'fs-0-8rem fw-600 grey hover pointer mb-10'}"
+                  th:onclick="goToPage('list', {sort: 'all', category: 'acc', origin: 'all'}, 'product')"
+                >
+                  Accessory
+                </li>
+              </ul>
+            </div>
           </div>
-          <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 d-col-left">
-            <div class="fs-1-0rem fw-800 light-grey mb-10">
-              Info
+          <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-col-center">
+            <div class="d-row-left">
+              <div class="fs-1-0rem fw-800 light-grey upper mb-10">
+                Info
+              </div>
             </div>
-            <ul>
-              <li
-                class="fs-0-8rem fw-600 grey hover pointer mb-10"
-                th:onclick="goToPage('notice/listNotice')"
-              >
-                Notice
-              </li>
-              <li
-                class="fs-0-8rem fw-600 grey hover pointer mb-10"
-                th:onclick="goToPage('qna/listQna')"
-              >
-                QnA
-              </li>
-            </ul>
+            <div class="d-row-left">
+              <ul>
+                <li
+                  th:class="${'fs-0-8rem fw-600 grey hover pointer mb-10'}"
+                  th:onclick="goToPage('product/listProduct')"
+                >
+                  Product
+                </li>
+                <li
+                  th:class="${'fs-0-8rem fw-600 grey hover pointer mb-10'}"
+                >
+                  Order
+                </li>
+                <li
+                  th:class="${'fs-0-8rem fw-600 grey hover pointer mb-10'}"
+                  th:onclick="goToPage('board/listBoard')"
+                >
+                  Board
+                </li>
+                <li
+                  th:class="${'fs-0-8rem fw-600 grey hover pointer mb-10'}"
+                  th:onclick="goToPage('notice/listNotice')"
+                >
+                  Notice
+                </li>
+                <li
+                  th:class="${'fs-0-8rem fw-600 grey hover pointer mb-10'}"
+                  th:onclick="goToPage('qna/listQna')"
+                >
+                  QnA
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -73,5 +110,4 @@
       </div>
     </div>
   </section>
-
 </html>

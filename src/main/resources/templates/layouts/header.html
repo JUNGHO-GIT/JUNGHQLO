@@ -5,7 +5,7 @@
   <section th:fragment="header" class="container-fluid">
 
     <!-- loader -->
-    <th:block th:replace="~{layouts/loader :: loader}" />
+    <th:block th:replace="~{components/loader :: loader}" />
 
     <!-- off-canvas -->
     <th:block th:replace="~{layouts/offcanvas :: offcanvas}" />
@@ -111,64 +111,60 @@
 
     <!-- container 2 -->
     <div class="container bg-white p-10">
-      <div class="row d-row-center">
-        <!-- logo -->
-        <div class="col-4 col-sm-2 col-md-2 col-lg-2 col-xl-2 d-row-center">
-          <img
-            th:src="@{|${STORAGE}/icon/logo.png|}"
-            th:loading="${'lazy'}"
-            th:alt="${'logo'}"
-            th:width="${'70px'}"
-            th:height="${'70px'}"
-            th:class="${'pointer ms-n20'}"
-            th:onclick="goToPage('home')"
-          />
-        </div>
-        <!-- menu -->
-        <div class="d-none d-sm-block col-sm-10 col-md-10 col-lg-10 col-xl-10">
-          <div
-            th:class="${'fs-0-9rem fw-700 upper pointer-burgundy ls-1 ms-n30 me-2vw'}"
-            th:onclick="goToPage('product/listProduct')"
-          >
-            Product
-          </div>
-          <div
-            th:class="${'fs-0-9rem fw-700 upper pointer-burgundy ls-1 me-2vw'}"
-            th:if="${session.member_id != null}"
-            th:onclick="goToPage('orders/listOrders')"
-          >
-            Orders
-          </div>
-          <div
-            th:class="${'fs-0-9rem fw-700 upper pointer-burgundy ls-1 me-2vw'}"
-            th:if="${session.member_id == null}"
-            th:onclick="sessionAlert()"
-          >
-            Orders
-          </div>
-          <div
-            th:class="${'fs-0-9rem fw-700 upper pointer-burgundy ls-1 me-2vw'}"
-            th:onclick="goToPage('board/listBoard')"
-          >
-            Board
-          </div>
-          <div
-            th:class="${'fs-0-9rem fw-700 upper pointer-burgundy ls-1 me-2vw'}"
-            th:onclick="goToPage('notice/listNotice')"
-          >
-            Notice
-          </div>
-          <div
-            th:class="${'fs-0-9rem fw-700 upper pointer-burgundy ls-1 me-2vw'}"
-            th:onclick="goToPage('qna/listQna')"
-          >
-            QnA
-          </div>
-        </div>
-        <!-- mobile menu -->
-        <div class="col-8 d-sm-none">
-          <div class="mobile-toggle d-row-right me-20">
-            <i class="fa fa-bars fs-1-8rem pointer hover"></i>
+      <div class="row d-center">
+        <div class="col-11 col-sm-11 col-md-10 col-lg-9 col-xl-8">
+          <div class="row d-center">
+            <!-- logo -->
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-row-left">
+              <img
+                th:src="@{|${STORAGE}/icon/logo.png|}"
+                th:loading="${'lazy'}"
+                th:alt="${'logo'}"
+                th:width="${'70px'}"
+                th:height="${'70px'}"
+                th:class="${'pointer ms-20'}"
+                th:onclick="goToPage('home')"
+              />
+            </div>
+            <!-- menu -->
+            <div class="d-none d-sm-block col-sm-8 col-md-8 col-lg-8 col-xl-8">
+              <div
+                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy ls-1 ms-n30 me-2vw'}"
+                th:onclick="goToPage('product/listProduct')"
+              >
+                Product
+              </div>
+              <div
+                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy ls-1 me-2vw'}"
+                th:onclick="(${session.member_id == null} ? sessionAlert() : goToPage('orders/listOrders'))"
+              >
+                Orders
+              </div>
+              <div
+                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy ls-1 me-2vw'}"
+                th:onclick="goToPage('board/listBoard')"
+              >
+                Board
+              </div>
+              <div
+                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy ls-1 me-2vw'}"
+                th:onclick="goToPage('notice/listNotice')"
+              >
+                Notice
+              </div>
+              <div
+                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy ls-1 me-2vw'}"
+                th:onclick="goToPage('qna/listQna')"
+              >
+                QnA
+              </div>
+            </div>
+            <!-- mobile menu -->
+            <div class="col-8 d-sm-none">
+              <div class="mobile-toggle d-row-right me-20">
+                <i class="fa fa-bars fs-1-8rem pointer hover"></i>
+              </div>
+            </div>
           </div>
         </div>
       </div>

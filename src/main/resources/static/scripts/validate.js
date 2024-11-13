@@ -1,4 +1,26 @@
 /** ------------------------------------------------------------------------------------------------
+* @param null
+* @return {boolean}
+* @desc 로그인 회원 알림
+**/
+function sessionAlert() {
+  alert("로그인한 회원만 가능합니다.")
+  location.href = `/${title}/member/loginMember`;
+  return false;
+}
+
+/** ------------------------------------------------------------------------------------------------
+* @param null
+* @return {boolean}
+* @desc 관리자 알림
+**/
+function adminAlert() {
+  alert("관리자만 가능합니다.")
+  location.href = `/${title}/member/loginMember`;
+  return false;
+}
+
+/** ------------------------------------------------------------------------------------------------
 * @param {string} page
 * @return {boolean}
 * @desc board 입력 유효성 검사
