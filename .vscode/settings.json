@@ -46,5 +46,11 @@
     "**/*.env*": true,
   },
   "explorerExclude.backup": {},
-  "java.configuration.updateBuildConfiguration": "automatic"
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "maven.terminal.favorites": [
+    {
+      "command": "mvn clean package -Pproduction",
+      "debug": false
+    }
+  ]
 }

@@ -1,0 +1,14 @@
+[Unit]
+Description=Tomcat 9
+After=network.target syslog.target
+
+[Service]
+Type=forking
+
+ExecStart=/usr/share/tomcat9/bin/startup.sh
+ExecStop=/usr/share/tomcat9/bin/shutdown.sh
+User=tomcat
+Group=tomcat
+
+[Install]
+WantedBy=multi-user.target
