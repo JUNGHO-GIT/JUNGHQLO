@@ -585,7 +585,7 @@ function getUpdateMember() {
 /** ------------------------------------------------------------------------------------------------
 * @desc 비밀번호 변경
 **/
-function getUpdatePw() {
+function getUpdateMemberPw() {
 
   // 동적 validate 함수 호출
   const validate = eval(`validateMember('updatePw')`);

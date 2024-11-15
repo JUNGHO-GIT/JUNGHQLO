@@ -38,10 +38,10 @@
                     <div class="d-row-left">
                       <input
                         th:type="${'text'}"
-                        th:id="${'board_title'}"
-                        th:name="${'board_title'}"
+                        th:id="${'qna_title'}"
+                        th:name="${'qna_title'}"
                         th:class="${'form-control'}"
-                        th:value="${MODEL['board_title']}"
+                        th:value="${MODEL['qna_title']}"
                       />
                     </div>
                   </div>
@@ -59,12 +59,63 @@
                     </div>
                     <div class="d-row-left">
                       <textarea
-                        th:id="${'board_contents'}"
-                        th:name="${'board_contents'}"
+                        th:id="${'qna_contents'}"
+                        th:name="${'qna_contents'}"
                         th:class="${'form-control h-min20vh border-1 lh-1-7'}"
-                        th:value="${MODEL['board_contents']}"
-                        th:text="${MODEL['board_contents']}"
+                        th:value="${MODEL['qna_contents']}"
+                        th:text="${MODEL['qna_contents']}"
                       ></textarea>
+                    </div>
+                  </div>
+                </div>
+                <!-- category -->
+                <div class="row mb-20">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-10">
+                      <div class="fs-0-9rem fw-800">
+                        카테고리
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy ms-5">
+                        *
+                      </div>
+                    </div>
+                    <div class="d-row-left w-100p">
+                      <select
+                        th:id="${'qna_category'}"
+                        th:name="${'qna_category'}"
+                        th:class="${'form-control'}"
+                      >
+                        <option
+                          th:value="${'goods'}"
+                          th:text="${'상품 문의'}"
+                          th:selected="${MODEL['qna_category'] == 'goods'}"
+                        ></option>
+                        <option
+                          th:value="${'exchange'}"
+                          th:text="${'교환 문의'}"
+                          th:selected="${MODEL['qna_category'] == 'exchange'}"
+                        ></option>
+                        <option
+                          th:value="${'refund'}"
+                          th:text="${'환불 문의'}"
+                          th:selected="${MODEL['qna_category'] == 'refund'}"
+                        ></option>
+                        <option
+                          th:value="${'payment'}"
+                          th:text="${'결제 문의'}"
+                          th:selected="${MODEL['qna_category'] == 'payment'}"
+                        ></option>
+                        <option
+                          th:value="${'delivery'}"
+                          th:text="${'배송 문의'}"
+                          th:selected="${MODEL['qna_category'] == 'delivery'}"
+                        ></option>
+                        <option
+                          th:value="${'etc'}"
+                          th:text="${'기타 문의'}"
+                          th:selected="${MODEL['qna_category'] == 'etc'}"
+                        ></option>
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -126,7 +177,7 @@
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <div class="d-col-left">
                       <div
-                        th:each="image,iterStat:${#strings.arraySplit(MODEL['board_imgsUrl'],',')}"
+                        th:each="image,iterStat:${#strings.arraySplit(MODEL['qna_imgsUrl'],',')}"
                         th:class="${'d-row-between w-80p'}"
                         th:classappend="${iterStat.last ? '' : 'mb-10'}"
                       >
@@ -168,45 +219,45 @@
                   />
                   <input
                     th:type="${'hidden'}"
-                    th:id="${'board_number'}"
-                    th:name="${'board_number'}"
-                    th:value="${MODEL['board_number']}"
+                    th:id="${'qna_number'}"
+                    th:name="${'qna_number'}"
+                    th:value="${MODEL['qna_number']}"
                   />
                   <input
                     th:type="${'hidden'}"
-                    th:id="${'board_writer'}"
-                    th:name="${'board_writer'}"
-                    th:value="${MODEL['board_writer']}"
+                    th:id="${'qna_writer'}"
+                    th:name="${'qna_writer'}"
+                    th:value="${MODEL['qna_writer']}"
                   />
                   <input
                     th:type="${'hidden'}"
-                    th:id="${'board_count'}"
-                    th:name="${'board_count'}"
-                    th:value="${MODEL['board_count']}"
+                    th:id="${'qna_count'}"
+                    th:name="${'qna_count'}"
+                    th:value="${MODEL['qna_count']}"
                   />
                   <input
                     th:type="${'hidden'}"
-                    th:id="${'board_like'}"
-                    th:name="${'board_like'}"
-                    th:value="${MODEL['board_like']}"
+                    th:id="${'qna_like'}"
+                    th:name="${'qna_like'}"
+                    th:value="${MODEL['qna_like']}"
                   />
                   <input
                     th:type="${'hidden'}"
-                    th:id="${'board_dislike'}"
-                    th:name="${'board_dislike'}"
-                    th:value="${MODEL['board_dislike']}"
+                    th:id="${'qna_dislike'}"
+                    th:name="${'qna_dislike'}"
+                    th:value="${MODEL['qna_dislike']}"
                   />
                   <input
                     th:type="${'hidden'}"
-                    th:id="${'board_date'}"
-                    th:name="${'board_date'}"
-                    th:value="${MODEL['board_date']}"
+                    th:id="${'qna_date'}"
+                    th:name="${'qna_date'}"
+                    th:value="${MODEL['qna_date']}"
                   />
                   <input
                     th:type="${'hidden'}"
-                    th:id="${'board_imgsUrl'}"
-                    th:name="${'board_imgsUrl'}"
-                    th:value="${MODEL['board_imgsUrl']}"
+                    th:id="${'qna_imgsUrl'}"
+                    th:name="${'qna_imgsUrl'}"
+                    th:value="${MODEL['qna_imgsUrl']}"
                   />
                 </div>
               </div>

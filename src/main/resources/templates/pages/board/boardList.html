@@ -24,14 +24,44 @@
           <div class="row">
             <th:block th:each="LIST : ${LIST}">
               <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4 p-20 d-center">
-                <div class="border-1 radius-2 shadow-3 w-300 h-300 object-cover">
+                <div class="radius-2 shadow-1 w-100p h-300 w-max500 object-cover p-relative">
+                  <!-- image -->
                   <div
+                    th:each="image, iterStat:${#strings.arraySplit(LIST['board_imgsUrl'], ',')}"
+                    th:if="${iterStat.index == 0}"
+                    th:attr="board-bg=@{|${STORAGE}/${page}/${image}|}"
                     th:id="${'board-bg'}"
                     th:name="${'board-bg'}"
                     th:class="${'radius-2 z-100'}"
-                    th:attr="board-bg=@{|${STORAGE}/${page}/${LIST['board_imgsUrl']}|}"
                   ></div>
-                  <div class="blog-item-text z-200">
+                  <!-- hover -->
+                  <div class="board-hover radius-2 fadeIn p-20">
+                    <!-- title -->
+                    <div class="d-row-center mb-20">
+                      <div
+                        th:id="${'board_title'}"
+                        th:name="${'board_title'}"
+                        th:class="${'fs-1-4rem fw-700 light-black'}"
+                        th:text="${#strings.abbreviate(LIST['board_title'], 20)}"
+                      ></div>
+                    </div>
+                    <!-- click read more -->
+                    <div class="d-row-center mb-20">
+                      <input
+                        th:type="${'hidden'}"
+                        th:id="${'board_number'}"
+                        th:name="${'board_number'}"
+                        th:value="${LIST['board_number']}"
+                      />
+                      <div
+                        th:id="${'read-more'}"
+                        th:name="${'read-more'}"
+                        th:class="${'pointer-burgundy fs-1-0rem fw-600 upper'}"
+                        th:onclick="goToPage('detail', [[${LIST['board_number']}]])"
+                      >
+                        Read More
+                      </div>
+                    </div>
                     <!-- date & view -->
                     <div class="d-row-between">
                       <div class="d-row-left">
@@ -49,34 +79,6 @@
                         ></div>
                       </div>
                     </div>
-                    <!-- hr -->
-                    <br class="my-10" />
-                    <!-- title -->
-                    <div
-                      th:id="${'board_title'}"
-                      th:name="${'board_title'}"
-                      th:class="${'fs-1-0rem fw-700 light-black'}"
-                      th:text="${#strings.abbreviate(LIST['board_title'], 20)}"
-                    ></div>
-                    <!-- hr -->
-                    <br class="my-10" />
-                    <!-- click read more -->
-                    <div class="d-row-center">
-                      <input
-                        th:type="${'hidden'}"
-                        th:id="${'board_number'}"
-                        th:name="${'board_number'}"
-                        th:value="${LIST['board_number']}"
-                      />
-                      <div
-                        th:id="${'read-more'}"
-                        th:name="${'read-more'}"
-                        th:class="${'pointer-burgundy fs-0-9rem fw-600 upper'}"
-                        th:onclick="goToPage('detail', [[${LIST['board_number']}]])"
-                      >
-                        Read More
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -89,26 +91,42 @@
 
   <!-- script -->
   <script defer>
-    // set background image
-    const blogBg = document.querySelectorAll('[board-bg]');
-    blogBg.forEach((bg) => {
+    // board-bg 이미지 삽입
+    document.querySelectorAll('[board-bg]')?.forEach((bg) => {
       const bgUrl = bg.getAttribute('board-bg');
-      bg.style.backgroundImage = `url(${bgUrl})`;
-      bg.style.width = '100%';
-      bg.style.height = '100%';
-      bg.style.backgroundSize = 'cover';
-      bg.style.backgroundPosition = 'center';
-    });
-    // blog-item-text 호버했을때 효과
-    const blogItemText = document.querySelectorAll('.blog-item-text');
-    blogItemText.forEach((text) => {
-      text.addEventListener('mouseover', () => {
-        text.style.scale = '1.1';
-        text.style.transition = 'all 0.3s';
+      Object.assign(bg.style, {
+        backgroundImage: `url(${bgUrl})`,
+        width: '100%',
+        height: '100%',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
       });
-      text.addEventListener('mouseout', () => {
-        text.style.scale = '1';
-        text.style.transition = 'all 0.3s';
+    });
+
+    document.querySelectorAll('.board-hover').forEach((el) => {
+      Object.assign(el.style, {
+        position: 'absolute',
+        width: '70%',
+        minHeight: '50%',
+        top: '30%',
+        left: '15%',
+        backgroundColor: 'rgb(255 255 255 / 77%)',
+        display: 'block',
+        zIndex: '300',
+      });
+      el.parentElement.addEventListener('mouseover', () => {
+        Object.assign(el.style, {
+          display: 'block',
+          transition: 'transform 0.3s',
+          transform: 'scale(1.1)',
+        });
+      });
+      el.parentElement.addEventListener('mouseout', () => {
+        Object.assign(el.style, {
+          display: 'block',
+          transition: 'transform 0.3s',
+          transform: 'scale(1)',
+        });
       });
     });
   </script>

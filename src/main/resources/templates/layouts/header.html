@@ -67,17 +67,17 @@
                 </a>
               </li>
               <li>
-                <a th:onclick="@{|/member/listMember|}">
+                <a th:onclick="goToPage('member/listMember')">
                   MemberList
                 </a>
               </li>
               <li>
-                <a th:onclick="@{|/product/saveProduct|}">
+                <a th:onclick="goToPage('product/saveProduct')">
                   SaveProduct
                 </a>
               </li>
               <li>
-                <a th:onclick="@{|/notice/saveNotice|}">
+                <a th:onclick="goToPage('notice/saveNotice')">
                   SaveNotice
                 </a>
               </li>
@@ -115,7 +115,7 @@
         <div class="col-11 col-sm-11 col-md-10 col-lg-9 col-xl-8">
           <div class="row d-center">
             <!-- logo -->
-            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-row-left">
+            <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
               <img
                 th:src="@{|${STORAGE}/icon/logo.png|}"
                 th:loading="${'lazy'}"
@@ -127,40 +127,40 @@
               />
             </div>
             <!-- menu -->
-            <div class="d-none d-sm-block col-sm-8 col-md-8 col-lg-8 col-xl-8">
+            <div class="d-none d-sm-block col-sm-10 col-md-10 col-lg-10 col-xl-10">
               <div
-                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy ls-1 ms-n30 me-2vw'}"
+                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy ls-1 me-4vw'}"
                 th:onclick="goToPage('product/listProduct')"
               >
                 Product
               </div>
               <div
-                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy ls-1 me-2vw'}"
-                th:onclick="(${session.member_id == null} ? sessionAlert() : goToPage('orders/listOrders'))"
+                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy ls-1 me-4vw'}"
+                th:onclick="${session.member_id == null} ? 'sessionAlert()' : 'goToPage(\'orders/listOrders\')'"
               >
                 Orders
               </div>
               <div
-                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy ls-1 me-2vw'}"
+                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy ls-1 me-4vw'}"
                 th:onclick="goToPage('board/listBoard')"
               >
                 Board
               </div>
               <div
-                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy ls-1 me-2vw'}"
+                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy ls-1 me-4vw'}"
                 th:onclick="goToPage('notice/listNotice')"
               >
                 Notice
               </div>
               <div
-                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy ls-1 me-2vw'}"
+                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy ls-1'}"
                 th:onclick="goToPage('qna/listQna')"
               >
                 QnA
               </div>
             </div>
             <!-- mobile menu -->
-            <div class="col-8 d-sm-none">
+            <div class="col-10 d-sm-none">
               <div class="mobile-toggle d-row-right me-20">
                 <i class="fa fa-bars fs-1-8rem pointer hover"></i>
               </div>
@@ -169,6 +169,7 @@
         </div>
       </div>
     </div>
+
     <!-- hidden -->
     <div class="hidden-wrapper">
       <input
