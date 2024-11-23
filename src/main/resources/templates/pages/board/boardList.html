@@ -37,16 +37,16 @@
                   <!-- hover -->
                   <div class="board-hover radius-2 fadeIn p-20">
                     <!-- title -->
-                    <div class="d-row-center mb-20">
+                    <div class="d-row-center mb-3vh">
                       <div
                         th:id="${'board_title'}"
                         th:name="${'board_title'}"
-                        th:class="${'fs-1-4rem fw-700 light-black'}"
+                        th:class="${'fs-1-1rem fw-600 light-black'}"
                         th:text="${#strings.abbreviate(LIST['board_title'], 20)}"
                       ></div>
                     </div>
                     <!-- click read more -->
-                    <div class="d-row-center mb-20">
+                    <div class="d-row-center mb-3vh">
                       <input
                         th:type="${'hidden'}"
                         th:id="${'board_number'}"
@@ -56,10 +56,10 @@
                       <div
                         th:id="${'read-more'}"
                         th:name="${'read-more'}"
-                        th:class="${'pointer-burgundy fs-1-0rem fw-600 upper'}"
+                        th:class="${'pointer-burgundy fs-1-0rem fw-700 upper'}"
                         th:onclick="goToPage('detail', [[${LIST['board_number']}]])"
                       >
-                        Read More
+                        More
                       </div>
                     </div>
                     <!-- date & view -->
@@ -106,10 +106,10 @@
     document.querySelectorAll('.board-hover').forEach((el) => {
       Object.assign(el.style, {
         position: 'absolute',
-        width: '70%',
+        width: '90%',
         minHeight: '50%',
         top: '30%',
-        left: '15%',
+        left: '5%',
         backgroundColor: 'rgb(255 255 255 / 77%)',
         display: 'block',
         zIndex: '300',

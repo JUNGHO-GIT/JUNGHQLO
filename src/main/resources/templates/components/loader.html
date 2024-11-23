@@ -6,5 +6,11 @@
     <div class="loader-wrapper">
       <div class="loader"></div>
     </div>
+    <script defer>
+      setTimeout(() => {
+        // 엘리멘트 자체를 제거
+        document.querySelector('.loader-wrapper').remove();
+      }, 500);
+    </script>
   </section>
 </html>

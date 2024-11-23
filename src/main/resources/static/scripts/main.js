@@ -1,7 +1,3 @@
-/** Preloader ***********************************************************************************/
-$(window).on("load", function () {
-  $(".loader-wrapper").fadeOut("slow");
-});
 
 /** Background Set ******************************************************************************/
 $(".set-bg").each(function () {
@@ -35,4 +31,12 @@ $(".hero-slider").owlCarousel({
   smartSpeed: 1200,
   autoHeight: false,
   autoplay: false,
+});
+
+/** Filter ****************************************************************************************/
+$(window).on("load", function () {
+  if ($(".product-filter").length > 0) {
+    var containerEl = document.querySelector(".product-filter");
+    var mixer = mixitup(containerEl);
+  }
 });

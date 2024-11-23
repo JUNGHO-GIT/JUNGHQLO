@@ -26,7 +26,7 @@
             <div class="d-none d-sm-block col-sm-3 col-md-3 col-lg-3 col-xl-3">
               <!-- sort -->
               <div class="slider-sort">
-                <div class="d-row-left mb-10">
+                <div class="d-row-left mb-2vh">
                   <i
                     th:id="${'sort-icon'}"
                     th:name="${'sort-icon'}"
@@ -49,7 +49,7 @@
                   <div
                     th:id="${'all'}"
                     th:name="${'all'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${sortHandler == 'all' ? 'bg-dark light' : ''}"
                     th:text="${'ALL'}"
                     th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'all', origin: [[${originHandler}]]})"
@@ -57,7 +57,7 @@
                   <div
                     th:id="${'nameASC'}"
                     th:name="${'nameASC'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${sortHandler == 'nameASC' ? 'bg-dark light' : ''}"
                     th:text="${'Name   ' + '   ▲'}"
                     th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'nameASC', origin: [[${originHandler}]]})"
@@ -65,7 +65,7 @@
                   <div
                     th:id="${'nameDESC'}"
                     th:name="${'nameDESC'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${sortHandler == 'nameDESC' ? 'bg-dark light' : ''}"
                     th:text="${'Name   ' + '   ▼'}"
                     th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'nameDESC', origin: [[${originHandler}]]})"
@@ -73,7 +73,7 @@
                   <div
                     th:id="${'priceASC'}"
                     th:name="${'priceASC'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${sortHandler == 'priceASC' ? 'bg-dark light' : ''}"
                     th:text="${'Price   ' + '   ▲'}"
                     th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'priceASC', origin: [[${originHandler}]]})"
@@ -81,7 +81,7 @@
                   <div
                     th:id="${'priceDESC'}"
                     th:name="${'priceDESC'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${sortHandler == 'priceDESC' ? 'bg-dark light' : ''}"
                     th:text="${'Price   ' + '   ▼'}"
                     th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'priceDESC', origin: [[${originHandler}]]})"
@@ -89,7 +89,7 @@
                   <div
                     th:id="${'dateASC'}"
                     th:name="${'dateASC'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${sortHandler == 'dateASC' ? 'bg-dark light' : ''}"
                     th:text="${'Date   ' + '   ▲'}"
                     th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'dateASC', origin: [[${originHandler}]]})"
@@ -97,17 +97,17 @@
                   <div
                     th:id="${'dateDESC'}"
                     th:name="${'dateDESC'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw'}"
                     th:classappend="${sortHandler == 'dateDESC' ? 'bg-dark light' : ''}"
                     th:text="${'Date   ' + '   ▼'}"
                     th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'dateDESC', origin: [[${originHandler}]]})"
                   ></div>
                 </div>
               </div>
-              <div class="w-100p my-20 bg-light-grey h-1"></div>
+              <div class="w-100p my-3vh bg-light-grey h-1"></div>
               <!-- category -->
               <div class="slider-category">
-                <div class="d-row-left mb-10">
+                <div class="d-row-left mb-2vh">
                   <i
                     th:id="${'category-icon'}"
                     th:name="${'category-icon'}"
@@ -130,7 +130,7 @@
                   <div
                     th:id="${'all'}"
                     th:name="${'all'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${categoryHandler == 'all' ? 'bg-dark light' : ''}"
                     th:text="${'ALL'}"
                     th:onclick="goToPage('list', {category: 'all', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
@@ -138,7 +138,7 @@
                   <div
                     th:id="${'outer'}"
                     th:name="${'outer'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${categoryHandler == 'outer' ? 'bg-dark light' : ''}"
                     th:text="${'OUTER'}"
                     th:onclick="goToPage('list', {category: 'outer', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
@@ -146,7 +146,7 @@
                   <div
                     th:id="${'top'}"
                     th:name="${'top'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${categoryHandler == 'top' ? 'bg-dark light' : ''}"
                     th:text="${'TOP'}"
                     th:onclick="goToPage('list', {category: 'top', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
@@ -154,7 +154,7 @@
                   <div
                     th:id="${'bottom'}"
                     th:name="${'bottom'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${categoryHandler == 'bottom' ? 'bg-dark light' : ''}"
                     th:text="${'BOTTOM'}"
                     th:onclick="goToPage('list', {category: 'bottom', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
@@ -162,7 +162,7 @@
                   <div
                     th:id="${'shoes'}"
                     th:name="${'shoes'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${categoryHandler == 'shoes' ? 'bg-dark light' : ''}"
                     th:text="${'SHOES'}"
                     th:onclick="goToPage('list', {category: 'shoes', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
@@ -170,7 +170,7 @@
                   <div
                     th:id="${'bag'}"
                     th:name="${'bag'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${categoryHandler == 'bag' ? 'bg-dark light' : ''}"
                     th:text="${'BAG'}"
                     th:onclick="goToPage('list', {category: 'bag', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
@@ -178,17 +178,17 @@
                   <div
                     th:id="${'acc'}"
                     th:name="${'acc'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw'}"
                     th:classappend="${categoryHandler == 'acc' ? 'bg-dark light' : ''}"
                     th:text="${'ACC'}"
                     th:onclick="goToPage('list', {category: 'acc', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
                   ></div>
                 </div>
               </div>
-              <div class="w-100p my-20 bg-light-grey h-1"></div>
+              <div class="w-100p my-3vh bg-light-grey h-1"></div>
               <!-- origin -->
               <div class="slider-origin">
-                <div class="d-row-left mb-10">
+                <div class="d-row-left mb-2vh">
                   <i
                     th:id="${'origin-icon'}"
                     th:name="${'origin-icon'}"
@@ -211,7 +211,7 @@
                   <div
                     th:id="${'all'}"
                     th:name="${'all'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${originHandler == 'all' ? 'bg-dark light' : ''}"
                     th:text="${'ALL'}"
                     th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'all'})"
@@ -219,7 +219,7 @@
                   <div
                     th:id="${'kr'}"
                     th:name="${'kr'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${originHandler == 'kr' ? 'bg-dark light' : ''}"
                     th:text="${'KOREA'}"
                     th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'kr'})"
@@ -227,7 +227,7 @@
                   <div
                     th:id="${'ch'}"
                     th:name="${'ch'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${originHandler == 'ch' ? 'bg-dark light' : ''}"
                     th:text="${'CHINA'}"
                     th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'ch'})"
@@ -235,7 +235,7 @@
                   <div
                     th:id="${'jp'}"
                     th:name="${'jp'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${originHandler == 'jp' ? 'bg-dark light' : ''}"
                     th:text="${'JAPAN'}"
                     th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'jp'})"
@@ -243,7 +243,7 @@
                   <div
                     th:id="${'us'}"
                     th:name="${'us'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${originHandler == 'us' ? 'bg-dark light' : ''}"
                     th:text="${'USA'}"
                     th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'us'})"
@@ -270,7 +270,7 @@
                       ></div>
                       <!-- hover -->
                       <div class="product-hover radius-2 fadeIn">
-                        <div class="d-row-center hover ms-20 mb-20">
+                        <div class="d-row-center hover ms-20 mb-3vh">
                           <i class="far fa-heart white me-10"></i>
                           <div
                             th:id="${'like'}"
@@ -280,7 +280,7 @@
                             Like
                           </div>
                         </div>
-                        <div class="d-row-center hover ms-20 mb-20">
+                        <div class="d-row-center hover ms-20 mb-3vh">
                           <i class="fas fa-exchange-alt white me-10"></i>
                           <div
                             th:id="${'compare'}"
@@ -304,7 +304,7 @@
                       </div>
                       <!-- text -->
                       <div class="product-text">
-                        <div class="d-row-center mt-20">
+                        <div class="d-row-center mt-3vh">
                           <div
                             th:id="${'product_name'}"
                             th:name="${'product_name'}"
@@ -312,7 +312,7 @@
                             th:text="${#strings.abbreviate(LIST['product_name'], 20)}"
                           ></div>
                         </div>
-                        <div class="d-row-between mt-10">
+                        <div class="d-row-between mt-2vh">
                           <div
                             th:id="${'product_brand'}"
                             th:name="${'product_brand'}"
@@ -336,7 +336,7 @@
             <div class="d-block d-sm-none col-12">
               <!-- sort -->
               <div class="slider-off-sort">
-                <div class="d-row-left mb-10">
+                <div class="d-row-left mb-2vh">
                 <i
                   th:id="${'off-sort-icon'}"
                   th:name="${'off-sort-icon'}"
@@ -359,7 +359,7 @@
                   <div
                     th:id="${'all'}"
                     th:name="${'all'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${sortHandler == 'all' ? 'bg-dark light' : ''}"
                     th:text="${'ALL'}"
                     th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'all', origin: [[${originHandler}]]})"
@@ -367,7 +367,7 @@
                   <div
                     th:id="${'nameASC'}"
                     th:name="${'nameASC'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${sortHandler == 'nameASC' ? 'bg-dark light' : ''}"
                     th:text="${'Name   ' + '   ▲'}"
                     th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'nameASC', origin: [[${originHandler}]]})"
@@ -375,7 +375,7 @@
                   <div
                     th:id="${'nameDESC'}"
                     th:name="${'nameDESC'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${sortHandler == 'nameDESC' ? 'bg-dark light' : ''}"
                     th:text="${'Name   ' + '   ▼'}"
                     th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'nameDESC', origin: [[${originHandler}]]})"
@@ -383,7 +383,7 @@
                   <div
                     th:id="${'priceASC'}"
                     th:name="${'priceASC'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${sortHandler == 'priceASC' ? 'bg-dark light' : ''}"
                     th:text="${'Price   ' + '   ▲'}"
                     th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'priceASC', origin: [[${originHandler}]]})"
@@ -391,7 +391,7 @@
                   <div
                     th:id="${'priceDESC'}"
                     th:name="${'priceDESC'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${sortHandler == 'priceDESC' ? 'bg-dark light' : ''}"
                     th:text="${'Price   ' + '   ▼'}"
                     th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'priceDESC', origin: [[${originHandler}]]})"
@@ -399,7 +399,7 @@
                   <div
                     th:id="${'dateASC'}"
                     th:name="${'dateASC'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${sortHandler == 'dateASC' ? 'bg-dark light' : ''}"
                     th:text="${'Date   ' + '   ▲'}"
                     th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'dateASC', origin: [[${originHandler}]]})"
@@ -407,17 +407,17 @@
                   <div
                     th:id="${'dateDESC'}"
                     th:name="${'dateDESC'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw'}"
                     th:classappend="${sortHandler == 'dateDESC' ? 'bg-dark light' : ''}"
                     th:text="${'Date   ' + '   ▼'}"
                     th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'dateDESC', origin: [[${originHandler}]]})"
                   ></div>
                 </div>
               </div>
-              <div class="w-100p my-20 bg-light-grey h-1"></div>
+              <div class="w-100p my-3vh bg-light-grey h-1"></div>
               <!-- category -->
               <div class="slider-off-category">
-                <div class="d-row-left mb-10">
+                <div class="d-row-left mb-2vh">
                   <i
                     th:id="${'off-category-icon'}"
                     th:name="${'off-category-icon'}"
@@ -440,7 +440,7 @@
                   <div
                     th:id="${'all'}"
                     th:name="${'all'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${categoryHandler == 'all' ? 'bg-dark light' : ''}"
                     th:text="${'ALL'}"
                     th:onclick="goToPage('list', {category: 'all', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
@@ -448,7 +448,7 @@
                   <div
                     th:id="${'outer'}"
                     th:name="${'outer'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${categoryHandler == 'outer' ? 'bg-dark light' : ''}"
                     th:text="${'OUTER'}"
                     th:onclick="goToPage('list', {category: 'outer', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
@@ -456,7 +456,7 @@
                   <div
                     th:id="${'top'}"
                     th:name="${'top'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${categoryHandler == 'top' ? 'bg-dark light' : ''}"
                     th:text="${'TOP'}"
                     th:onclick="goToPage('list', {category: 'top', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
@@ -464,7 +464,7 @@
                   <div
                     th:id="${'bottom'}"
                     th:name="${'bottom'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${categoryHandler == 'bottom' ? 'bg-dark light' : ''}"
                     th:text="${'BOTTOM'}"
                     th:onclick="goToPage('list', {category: 'bottom', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
@@ -472,7 +472,7 @@
                   <div
                     th:id="${'shoes'}"
                     th:name="${'shoes'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${categoryHandler == 'shoes' ? 'bg-dark light' : ''}"
                     th:text="${'SHOES'}"
                     th:onclick="goToPage('list', {category: 'shoes', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
@@ -480,7 +480,7 @@
                   <div
                     th:id="${'bag'}"
                     th:name="${'bag'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${categoryHandler == 'bag' ? 'bg-dark light' : ''}"
                     th:text="${'BAG'}"
                     th:onclick="goToPage('list', {category: 'bag', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
@@ -488,17 +488,17 @@
                   <div
                     th:id="${'acc'}"
                     th:name="${'acc'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw'}"
                     th:classappend="${categoryHandler == 'acc' ? 'bg-dark light' : ''}"
                     th:text="${'ACC'}"
                     th:onclick="goToPage('list', {category: 'acc', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
                   ></div>
                 </div>
               </div>
-              <div class="w-100p my-20 bg-light-grey h-1"></div>
+              <div class="w-100p my-3vh bg-light-grey h-1"></div>
               <!-- origin -->
               <div class="slider-off-origin">
-                <div class="d-row-left mb-10">
+                <div class="d-row-left mb-2vh">
                   <i
                     th:id="${'off-origin-icon'}"
                     th:name="${'off-origin-icon'}"
@@ -521,7 +521,7 @@
                   <div
                     th:id="${'all'}"
                     th:name="${'all'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${originHandler == 'all' ? 'bg-dark light' : ''}"
                     th:text="${'ALL'}"
                     th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'all'})"
@@ -529,7 +529,7 @@
                   <div
                     th:id="${'kr'}"
                     th:name="${'kr'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${originHandler == 'kr' ? 'bg-dark light' : ''}"
                     th:text="${'KOREA'}"
                     th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'kr'})"
@@ -537,7 +537,7 @@
                   <div
                     th:id="${'ch'}"
                     th:name="${'ch'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${originHandler == 'ch' ? 'bg-dark light' : ''}"
                     th:text="${'CHINA'}"
                     th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'ch'})"
@@ -545,7 +545,7 @@
                   <div
                     th:id="${'jp'}"
                     th:name="${'jp'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${originHandler == 'jp' ? 'bg-dark light' : ''}"
                     th:text="${'JAPAN'}"
                     th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'jp'})"
@@ -553,7 +553,7 @@
                   <div
                     th:id="${'us'}"
                     th:name="${'us'}"
-                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-5 px-10 mb-10'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
                     th:classappend="${originHandler == 'us' ? 'bg-dark light' : ''}"
                     th:text="${'USA'}"
                     th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'us'})"

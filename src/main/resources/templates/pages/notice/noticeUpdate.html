@@ -23,11 +23,11 @@
           <!-- detail -->
           <div class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="border-1 radius-2 shadow-1 px-20 py-30">
+              <div class="border-1 radius-2 shadow-1 px-5vw py-6vh">
                 <!-- title -->
-                <div class="row mb-20">
+                <div class="row mb-3vh">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <div class="d-row-left mb-10">
+                    <div class="d-row-left mb-2vh">
                       <div class="fs-0-9rem fw-800">
                         제목
                       </div>
@@ -47,9 +47,9 @@
                   </div>
                 </div>
                 <!-- content -->
-                <div class="row mb-20">
+                <div class="row mb-3vh">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <div class="d-row-left mb-10">
+                    <div class="d-row-left mb-2vh">
                       <div class="fs-0-9rem fw-800 light-black">
                         내용
                       </div>
@@ -69,9 +69,9 @@
                   </div>
                 </div>
                 <!-- image new -->
-                <div class="row mb-20">
+                <div class="row mb-3vh">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <div class="d-row-left mb-10">
+                    <div class="d-row-left mb-2vh">
                       <div class="fs-0-9rem fw-800 light-black">
                         이미지
                       </div>
@@ -106,7 +106,7 @@
                       <div
                         th:each="image,iterStat:${#strings.arraySplit(MODEL['notice_imgsUrl'],',')}"
                         th:class="${'d-row-between w-80p'}"
-                        th:classappend="${iterStat.last ? '' : 'mb-10'}"
+                        th:classappend="${iterStat.last ? '' : 'mb-2vh'}"
                       >
                         <div class="d-row-center">
                           <img

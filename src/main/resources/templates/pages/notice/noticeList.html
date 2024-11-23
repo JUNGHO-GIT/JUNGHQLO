@@ -26,10 +26,10 @@
               <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div
                   th:class="${'border-1 radius-2 shadow-1 p-30'}"
-                  th:classappend="${LISTStat.last ? '' : 'mb-20'}"
+                  th:classappend="${LISTStat.last ? '' : 'mb-3vh'}"
                 >
                   <!-- logo + title -->
-                  <div class="d-row-left w-100p mb-20">
+                  <div class="d-row-left w-100p mb-3vh">
                     <img
                       th:each="image, iterStat:${#strings.arraySplit(LIST['notice_imgsUrl'], ',')}"
                       th:if="${iterStat.index == 0}"
@@ -55,7 +55,7 @@
                     ></div>
                   </div>
                   <!-- contents -->
-                  <div class="d-row-left w-100p mb-30">
+                  <div class="d-row-left w-100p mb-4vh">
                     <div
                       th:id="${'notice_contents'}"
                       th:name="${'notice_contents'}"

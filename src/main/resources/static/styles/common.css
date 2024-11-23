@@ -512,7 +512,10 @@ a:not([href]):hover {
   height: 40px;
   border: 1px solid #e8e8e8;
   border-radius: 5px;
-  padding:
-.375rem
-.75rem;
+  padding: .375rem .75rem;
+}
+
+/** loader ****************************************************************************************/
+.loader {
+  border-top: 3px solid #973131 !important;
 }

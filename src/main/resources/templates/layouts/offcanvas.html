@@ -95,36 +95,36 @@
         </div>
       </div>
       <!-- hr -->
-      <div class="w-100p my-30 bg-light-grey h-1"></div>
+      <div class="w-100p my-3vh bg-light-grey h-1"></div>
       <!-- menu -->
       <div class="d-col-left">
         <th:block th:if="${session.member_id == null}">
           <div
-            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy ls-1 mt-25 mb-25'}"
+            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy my-3vh'}"
             th:onclick="sessionAlert()"
           >
             Product
           </div>
           <div
-            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy ls-1 mt-25 mb-25'}"
+            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy my-3vh'}"
             th:onclick="sessionAlert()"
           >
             Orders
           </div>
           <div
-            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy ls-1 mt-25 mb-25'}"
+            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy my-3vh'}"
             th:onclick="sessionAlert()"
           >
             Board
           </div>
           <div
-            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy ls-1 mt-25 mb-25'}"
+            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy my-3vh'}"
             th:onclick="sessionAlert()"
           >
             Notice
           </div>
           <div
-            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy ls-1 mt-25 mb-25'}"
+            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy my-3vh'}"
             th:onclick="sessionAlert()"
           >
             QnA
@@ -132,31 +132,31 @@
         </th:block>
         <th:block th:if="${session.member_id != null}">
           <div
-            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy ls-1 mt-25 mb-25'}"
+            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy my-3vh'}"
             th:onclick="goToPage('product/listProduct')"
           >
             Product
           </div>
           <div
-            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy ls-1 mt-25 mb-25'}"
+            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy my-3vh'}"
             th:onclick="goToPage('orders/listOrders')"
           >
             Orders
           </div>
           <div
-            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy ls-1 mt-25 mb-25'}"
+            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy my-3vh'}"
             th:onclick="goToPage('board/listBoard')"
           >
             Board
           </div>
           <div
-            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy ls-1 mt-25 mb-25'}"
+            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy my-3vh'}"
             th:onclick="goToPage('notice/listNotice')"
           >
             Notice
           </div>
           <div
-            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy ls-1 mt-25 mb-25'}"
+            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy my-3vh'}"
             th:onclick="goToPage('qna/listQna')"
           >
             QnA
@@ -164,7 +164,7 @@
         </th:block>
       </div>
       <!-- hr -->
-      <div class="w-100p my-30 bg-light-grey h-1"></div>
+      <div class="w-100p my-3vh bg-light-grey h-1"></div>
       <!-- text -->
       <div class="d-col-left">
         <img
@@ -176,13 +176,13 @@
           th:class="${'pointer'}"
           th:onclick="goToPage('home')"
         />
-        <div class="fs-1-0rem fw-700 my-20">
+        <div class="fs-1-0rem fw-700 my-3vh">
           JUNGHQLO
         </div>
-        <div class="fs-0-9rem fw-400 mb-10 ls-1">
+        <div class="fs-0-9rem fw-400 mb-2vh">
           ⓒ 2024 JUNGHQLO
         </div>
-        <div class="fs-0-9rem fw-400 ls-1">
+        <div class="fs-0-9rem fw-400">
           All Rights Reserved.
         </div>
       </div>

@@ -29,7 +29,7 @@
                   th:classappend="${LISTStat.last ? '' : 'mb-0'}"
                 >
                   <!-- logo + title -->
-                  <div class="d-row-left w-100p mb-20">
+                  <div class="d-row-left w-100p mb-3vh">
                     <img
                       th:each="image, iterStat:${#strings.arraySplit(LIST['qna_imgsUrl'], ',')}"
                       th:if="${iterStat.index == 0}"

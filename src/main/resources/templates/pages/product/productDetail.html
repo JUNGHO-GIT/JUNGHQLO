@@ -33,29 +33,29 @@
                     th:loading="${'lazy'}"
                     th:alt="${'image'}"
                     th:class="${'w-100p w-max500 border-0 radius-1 shadow-1'}"
-                    th:classappend="${iterStat.index == 0} ? 'mb-20' : ''"
+                    th:classappend="${iterStat.index == 0} ? 'mb-3vh' : ''"
                   />
                 </div>
               </div>
             </div>
             <!-- y -->
             <div class="d-none d-md-block col-md-1 col-lg-1 col-xl-1">
-              <div class="h-98p mt-10 bg-light w-1 m-auto"></div>
+              <div class="h-98p mt-2vh bg-light w-1 m-auto"></div>
             </div>
             <!-- x -->
             <div class="col-12 col-sm-12 d-md-none d-lg-none d-xl-none">
-              <div class="w-100p my-10 bg-light h-1"></div>
+              <div class="w-100p my-1vh bg-light h-1"></div>
             </div>
             <!-- section 2 -->
             <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
               <!-- top -->
-              <div class="row px-20">
+              <div class="row px-5vw">
                 <div class="d-none d-md-block col-md-12 col-lg-12 col-xl-12">
-                  <div class="w-100p mt-40"></div>
+                  <div class="w-100p mt-5vh"></div>
                 </div>
               </div>
               <!-- name -->
-              <div class="row px-20 mb-30">
+              <div class="row px-5vw mb-4vh">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-center">
                   <div
                     th:id="${'product_name'}"
@@ -66,7 +66,7 @@
                 </div>
               </div>
               <!-- price & brand -->
-              <div class="row px-20">
+              <div class="row px-5vw">
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 d-row-left">
                   <div
                     th:id="${'product_price'}"
@@ -84,10 +84,10 @@
                   ></div>
                 </div>
               </div>
-              <div class="w-100p my-20 bg-light h-1"></div>
+              <div class="w-100p my-3vh bg-light h-1"></div>
               <!-- category & origin & stock & delivery -->
-              <div class="row px-20">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-10">
+              <div class="row px-5vw">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-2vh">
                   <div
                     th:id="${'product_category_prefix'}"
                     th:name="${'product_category_prefix'}"
@@ -101,7 +101,7 @@
                     th:class="${'fs-0-9rem fw-500 light-black'}"
                   ></div>
                 </div>
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-10">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-2vh">
                   <div
                     th:id="${'product_origin_prefix'}"
                     th:name="${'product_origin_prefix'}"
@@ -115,7 +115,7 @@
                     th:class="${'fs-0-9rem fw-500 light-black'}"
                   ></div>
                 </div>
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-10">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-2vh">
                   <div
                     th:id="${'product_stock_prefix'}"
                     th:name="${'product_stock_prefix'}"
@@ -144,9 +144,9 @@
                   ></div>
                 </div>
               </div>
-              <div class="w-100p my-20 bg-light h-1"></div>
+              <div class="w-100p my-3vh bg-light h-1"></div>
               <!-- detail -->
-              <div class="row px-20">
+              <div class="row px-5vw">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left">
                   <div
                     th:id="${'product_detail'}"
@@ -156,10 +156,10 @@
                   ></div>
                 </div>
               </div>
-              <div class="w-100p my-20 bg-light h-1"></div>
+              <div class="w-100p my-3vh bg-light h-1"></div>
               <!-- quantity & total price & buy -->
-              <div class="row px-20">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-30">
+              <div class="row px-5vw">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-4vh">
                   <div
                     th:id="${'orders_quantity_prefix'}"
                     th:name="${'orders_quantity_prefix'}"
@@ -190,7 +190,7 @@
                     ></i>
                   </div>
                 </div>
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-30">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-4vh">
                   <div
                     th:id="${'orders_totalPrice_prefix'}"
                     th:name="${'orders_totalPrice_prefix'}"
@@ -221,25 +221,25 @@
                     th:id="${'orders_card'}"
                     th:name="${'orders_card'}"
                     th:class="${'fs-0-9rem fw-500 dark me-20'}"
-                    th:text="${'테스트 카드'}"
+                    th:text="${'테스트카드'}"
                   ></div>
                   <div
                     th:id="${'orders_card'}"
                     th:name="${'orders_card'}"
-                    th:class="${'fs-0-8rem fw-500 dark ms-auto me-auto'}"
+                    th:class="${'fs-0-8rem fw-700 black ms-auto me-auto'}"
                     th:text="${'4242 4242 4242 4242 / 12/34 / 567'}"
                   ></div>
                 </div>
               </div>
-              <div class="w-100p mt-50 mb-20 bg-light-grey h-1"></div>
+              <div class="w-100p mt-5vh mb-3vh bg-light-grey h-1"></div>
               <!-- information -->
-              <div class="row px-20">
+              <div class="row px-5vw">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-col-left">
                   <div
                     th:id="${'info-title'}"
                     th:name="${'info-title'}"
                     th:text="${'■ 상품 정보 제공 고시'}"
-                    th:class="${'fs-0-8rem fw-500 dark mb-10'}"
+                    th:class="${'fs-0-8rem fw-500 dark mb-2vh'}"
                   ></div>
                   <div
                     th:id="${'info-content'}"
@@ -248,13 +248,13 @@
                     th:text="${'상품 정보 제공 고시[전자상거래에 관한 상품정보 제공에 관한 고시] 항목에 의해 등록된 정보입니다. 품질보증기준 관련법규 및 소비자 보호법에 따름 A/S 책임자와 주문후 예상 배송기간 2~3일소요 구매, 교환, 반품, 배송, 설치 등과 관련하여 추가비용, 제한조건 등의 특이사항이 있는 경우 소비자가 전자상거래등에서 소비자 보호에 관한 법률 제 17조 제1항 또는 제3항에 따라 청약철회를 하고 동법 제 18조 제1항 에 따라 청약철회한 물품을 판매자에게 반환하였음에도 불구 하고 결제 대금의 환급이 3영업일을 넘게 지연된 경우, 소비자 는 전자상거래등에서 소비자보호에 관한 법률 제18조 제2항 및 동법 시행령 제21조 2에 따라 지연일수에 대하여 전상법 시행령으로 정하는 이율을 곱하여 산정한 지연이자(“지연배상금”)를 신청할 수 있습니다.'}"
                   ></div>
                 </div>
-                <div class="w-100p my-10 bg-light h-1"></div>
+                <div class="w-100p my-1vh bg-light h-1"></div>
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-col-left">
                   <div
                     th:id="${'info-title'}"
                     th:name="${'info-title'}"
                     th:text="${'■ 필수 고시 사항'}"
-                    th:class="${'fs-0-8rem fw-500 dark mb-10'}"
+                    th:class="${'fs-0-8rem fw-500 dark mb-2vh'}"
                   ></div>
                   <div
                     th:id="${'info-content'}"
@@ -263,13 +263,13 @@
                     th:text="${'전자상거래 등에서의 소비자보호법에 관한 법률에 의거하여 미성년자가 물품을 구매하는 경우, 법정대리인이 동의하지 않으면 미성년자 본인 또는 법정대리인이 구매를 취소할 수 있습니다. 등록된 판매 상품과 상품의 내용, 거래 정보 및 가격은 판매자가 등록한 것으로 해당 내용에 대하여 일체의 책임을 지지 않습니다.'}"
                   ></div>
                 </div>
-                <div class="w-100p my-10 bg-light h-1"></div>
+                <div class="w-100p my-1vh bg-light h-1"></div>
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-col-left">
                   <div
                     th:id="${'info-title'}"
                     th:name="${'info-title'}"
                     th:text="${'■ 교환 정보'}"
-                    th:class="${'fs-0-8rem fw-500 dark mb-10'}"
+                    th:class="${'fs-0-8rem fw-500 dark mb-2vh'}"
                   ></div>
                   <div
                     th:id="${'info-content'}"

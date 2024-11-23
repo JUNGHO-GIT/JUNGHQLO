@@ -112,7 +112,7 @@
     <!-- container 2 -->
     <div class="container bg-white p-10">
       <div class="row d-center">
-        <div class="col-11 col-sm-11 col-md-10 col-lg-9 col-xl-8">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-10 col-xl-10">
           <div class="row d-center">
             <!-- logo -->
             <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
@@ -129,31 +129,31 @@
             <!-- menu -->
             <div class="d-none d-sm-block col-sm-10 col-md-10 col-lg-10 col-xl-10">
               <div
-                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy ls-1 me-4vw'}"
+                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy me-4vw'}"
                 th:onclick="goToPage('product/listProduct')"
               >
                 Product
               </div>
               <div
-                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy ls-1 me-4vw'}"
+                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy me-4vw'}"
                 th:onclick="${session.member_id == null} ? 'sessionAlert()' : 'goToPage(\'orders/listOrders\')'"
               >
                 Orders
               </div>
               <div
-                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy ls-1 me-4vw'}"
+                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy me-4vw'}"
                 th:onclick="goToPage('board/listBoard')"
               >
                 Board
               </div>
               <div
-                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy ls-1 me-4vw'}"
+                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy me-4vw'}"
                 th:onclick="goToPage('notice/listNotice')"
               >
                 Notice
               </div>
               <div
-                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy ls-1'}"
+                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy'}"
                 th:onclick="goToPage('qna/listQna')"
               >
                 QnA

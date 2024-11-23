@@ -197,6 +197,34 @@ function getOrders() {
   }
 };
 
+/** ----------------------------------------------------------------------------------------------->
+* @desc 테스트 로그인
+**/
+function getLoginTest() {
+  $.ajax({
+    type: "POST",
+    url: `/${title}/member/loginMember`,
+    data: {
+      member_id: "test",
+      member_pw: "test",
+    },
+    success: function(response) {
+      if (response === 1) {
+        alert("로그인 되었습니다.");
+        goToPage("home");
+      }
+      else if (response === 0) {
+        alert("아이디 또는 비밀번호가 일치하지 않습니다.");
+        goToPage("refresh");
+      }
+      else {
+        alert("오류가 발생했습니다.");
+        goToPage("refresh");
+      }
+    }
+  });
+};
+
 /** ------------------------------------------------------------------------------------------------
 * @desc 로그인
 **/

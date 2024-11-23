@@ -20,9 +20,9 @@
     <!-- preconnect -->
     <link rel="preconnect" th:href="@{https://cdn.jsdelivr.net}" crossorigin/>
     <link rel="preconnect" th:href="@{https://storage.googleapis.com}" crossorigin/>
+    <link rel="preconnect" th:href="@{https://jungho-git.github.io}" crossorigin/>
 
     <!-- css 1 -->
-    <link rel="stylesheet" as="style" th:href="@{https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css}"/>
     <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/@icon/elegant-icons@0.0.1-alpha.4/elegant-icons.min.css}"/>
     <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/magnific-popup@1.2.0/dist/magnific-popup.min.css}"/>
@@ -31,12 +31,6 @@
     <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.carousel.min.css}"/>
     <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/slicknav@1.0.8/dist/slicknav.min.css}"/>
     <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.css}"/>
-
-    <!-- css 2 -->
-    <link rel="stylesheet" th:href="@{/styles/reset.css}" />
-    <link rel="stylesheet" th:href="@{/styles/index.css}" />
-    <link rel="stylesheet" th:href="@{/styles/common.css}" />
-    <link rel="stylesheet" th:href="@{/styles/Jstyle.css}" />
 
     <!-- js 1 -->
     <script defer th:src="@{https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js}">
@@ -62,7 +56,30 @@
     <script defer th:src="@{//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js}">
     </script>
 
+    <!-- style -->
+    <link
+      rel="stylesheet"
+      href="https://jungho-git.github.io/JCDN/fonts/PretendardVariable.min.css"
+      crossorigin
+    />
+    <link
+      rel="stylesheet"
+      href="https://jungho-git.github.io/JCDN/styles/Reset.min.css"
+      crossorigin
+    />
+    <link
+      rel="stylesheet"
+      href="https://jungho-git.github.io/JCDN/styles/Init.min.css"
+      crossorigin
+    />
+    <link
+      rel="stylesheet"
+      href="https://jungho-git.github.io/JCDN/styles/Jstyle.min.css"
+      crossorigin
+    />
+
     <!-- js 2 -->
+    <link rel="stylesheet" th:href="@{/styles/common.css}" />
     <script defer th:src="@{/scripts/global.js}"></script>
     <script defer th:src="@{/scripts/dom.js}"></script>
     <script defer th:src="@{/scripts/fetch.js}"></script>

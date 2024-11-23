@@ -8,29 +8,29 @@
   <th:block th:replace="~{layouts/header :: header}" />
 
   <!-- hero -->
-  <section class="container hero-slider owl-carousel mb-30">
+  <section class="container hero-slider owl-carousel mb-4vh">
     <th:block th:each="i : ${#numbers.sequence(1, 2)}">
       <div
         th:class="${'hero-items set-bg'}"
         th:attr="data-setbg=@{${STORAGE} + '/main/main-' + ${i} + '.png'(i=${i})}"
       >
-        <div class="hero-text px-20">
-          <div class="fw-1-0rem fw-800 burgundy upper mb-20">
+        <div class="hero-text px-5vw">
+          <div class="fw-1-0rem fw-800 burgundy upper mb-3vh">
             <span th:text="${#dates.year(#dates.createNow())}"></span>
             <span>New Arrivals</span>
           </div>
-          <div class="fs-2-5rem fw-800 black upper mb-20">
+          <div class="fs-2-5rem fw-800 black upper mb-3vh">
             <span th:text="${#dates.year(#dates.createNow())}"></span>
             <span>Collection</span>
           </div>
-          <div class="fs-1-0rem fw-600 light-black lh-2-0 mb-20">
+          <div class="fs-1-0rem fw-600 light-black lh-2-0 mb-3vh">
             A specialist label creating luxury essentials. Ethically crafted with an unwavering commitment to exceptional quality.
           </div>
           <div
             th:class="${'primary-btn'}"
             th:onclick="goToPage('product/listProduct')"
           >
-            <p>Shop now</p>
+            <p class="p-0">Shop now</p>
             <span class="arrow_right"></span>
           </div>
         </div>
@@ -39,11 +39,11 @@
   </section>
 
   <!-- product -->
-  <section class="container-fluid px-30 mb-30">
+  <section class="container-fluid px-6vw mb-4vh">
     <!-- filter -->
     <div class="row">
       <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-        <div class="filter-controls d-row-center mb-30">
+        <div class="filter-controls d-row-center mb-4vh">
           <div
             th:class="${'fs-1-5rem fw-700 pointer-burgundy me-4vw active'}"
             th:data-filter="${'*'}"
@@ -186,7 +186,7 @@
   </section>
 
   <!-- instagram -->
-  <section class="container-fluid px-30">
+  <section class="container-fluid px-6vw">
     <div class="row">
       <th:block th:each="i : ${#numbers.sequence(1, 6)}">
         <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 p-0">
@@ -202,10 +202,10 @@
     </div>
     <div class="row">
       <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 pt-40">
-        <div class="fs-2-2rem fw-700 black mb-20">
+        <div class="fs-2-2rem fw-700 black mb-3vh">
           Instagram
         </div>
-        <div class="fs-1-1rem fw-600 light-black lh-1-4 mb-20">
+        <div class="fs-1-1rem fw-600 light-black lh-1-4 mb-3vh">
           In a quaint village by the sea, young Amelia dreamed of adventure. She spent her days exploring the shoreline, collecting seashells and watching the ships sail by.
         </div>
         <div class="fs-1-7rem fw-700 burgundy">
