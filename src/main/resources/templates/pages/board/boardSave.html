@@ -31,7 +31,7 @@
                       <div class="fs-0-9rem fw-800">
                         제목
                       </div>
-                      <div class="fs-0-9rem fw-800 burgundy ms-5">
+                      <div class="fs-0-9rem fw-800 burgundy ml-5px">
                         *
                       </div>
                     </div>
@@ -52,7 +52,7 @@
                       <div class="fs-0-9rem fw-800 light-black">
                         내용
                       </div>
-                      <div class="fs-0-9rem fw-800 burgundy ms-5">
+                      <div class="fs-0-9rem fw-800 burgundy ml-5px">
                         *
                       </div>
                     </div>
@@ -60,7 +60,7 @@
                       <textarea
                         th:id="${'board_contents'}"
                         th:name="${'board_contents'}"
-                        th:class="${'form-control h-min20vh border-1 lh-1-7'}"
+                        th:class="${'form-control h-min-20vh border-1 lh-1-7'}"
                       ></textarea>
                     </div>
                   </div>
@@ -75,7 +75,7 @@
                       <div
                         th:id="${'imgsLabel'}"
                         th:name="${'imgsLabel'}"
-                        th:class="${'imgsLabel fs-0-9rem fw-800 burgundy ms-10 pointer'}"
+                        th:class="${'imgsLabel fs-0-9rem fw-800 burgundy ml-10px pointer'}"
                         th:onclick="createImgs()"
                       >
                         선택하기 *
@@ -86,7 +86,7 @@
                         th:id="${'imgsContainer'}"
                         th:name="${'imgsContainer'}"
                         th:data-limit="${'3'}"
-                        th:class="${'imgsContainer w-100p h-min100 p-20 border-1 radius-1'}"
+                        th:class="${'imgsContainer w-100p h-min-100px p-20px border-1 radius-1'}"
                       ></div>
                       <div
                         th:id="${'inputContainer'}"

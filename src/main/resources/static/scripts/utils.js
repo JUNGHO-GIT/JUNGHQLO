@@ -317,21 +317,21 @@ const createImgs = () => {
   // 2-2. 생성 (preview)
   const createImagePreview = (imageSrc, imageName, inputElement) => {
     const imgsPreviewContainer = Object.assign(document.createElement("div"), {
-      className: `d-row-between mb-10 imgsPreviewContainer-${inputElement.id}`,
+      className: `d-row-between mb-10px imgsPreviewContainer-${inputElement.id}`,
       innerHTML: (`
         <div class="d-row-center">
           <img
             id="imgsPreview"
             name="imgsPreview"
             alt="imgsPreview"
-            class="imgsPreview w-30 h-30"
+            class="imgsPreview w-30px h-30px"
             loading="lazy"
             src="${imageSrc}"
           />
           <div
             id="imgsName"
             name="imgsName"
-            class="fs-0-9rem fw-500 dark ms-10"
+            class="fs-0-9rem fw-500 dark ml-10px"
           >
             ${imageName.length > 15 ? imageName.substring(0, 15) + "..." : imageName}
           </div>

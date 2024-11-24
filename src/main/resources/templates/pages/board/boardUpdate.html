@@ -31,7 +31,7 @@
                       <div class="fs-0-9rem fw-800">
                         제목
                       </div>
-                      <div class="fs-0-9rem fw-800 burgundy ms-5">
+                      <div class="fs-0-9rem fw-800 burgundy ml-5px">
                         *
                       </div>
                     </div>
@@ -53,7 +53,7 @@
                       <div class="fs-0-9rem fw-800 light-black">
                         내용
                       </div>
-                      <div class="fs-0-9rem fw-800 burgundy ms-5">
+                      <div class="fs-0-9rem fw-800 burgundy ml-5px">
                         *
                       </div>
                     </div>
@@ -61,7 +61,7 @@
                       <textarea
                         th:id="${'board_contents'}"
                         th:name="${'board_contents'}"
-                        th:class="${'form-control h-min20vh border-1 lh-1-7'}"
+                        th:class="${'form-control h-min-20vh border-1 lh-1-7'}"
                         th:value="${MODEL['board_contents']}"
                         th:text="${MODEL['board_contents']}"
                       ></textarea>
@@ -78,7 +78,7 @@
                       <div
                         th:id="${'imgsLabel'}"
                         th:name="${'imgsLabel'}"
-                        th:class="${'imgsLabel fs-0-9rem fw-800 burgundy ms-10 pointer'}"
+                        th:class="${'imgsLabel fs-0-9rem fw-800 burgundy ml-10px pointer'}"
                         th:onclick="createImgs()"
                       >
                         선택하기 *
@@ -89,7 +89,7 @@
                         th:id="${'imgsContainer'}"
                         th:name="${'imgsContainer'}"
                         th:data-limit="${'3'}"
-                        th:class="${'imgsContainer w-100p h-min100 p-20 border-1 radius-1'}"
+                        th:class="${'imgsContainer w-100p h-min-100px p-20px border-1 radius-1'}"
                       ></div>
                       <div
                         th:id="${'inputContainer'}"
@@ -114,12 +114,12 @@
                             th:loading="${'lazy'}"
                             th:id="${'existingImgs_' + image}"
                             th:name="${'existingImgs_' + image}"
-                            th:class="${'w-30 h-30 radius-1'}"
+                            th:class="${'w-30px h-30px radius-1'}"
                           />
                           <div
                             th:id="${'existingName_' + image}"
                             th:name="${'existingName_' + image}"
-                            th:class="${'fs-0-8rem fw-600 grey ms-10'}"
+                            th:class="${'fs-0-8rem fw-600 grey ml-10px'}"
                             th:text="${#strings.abbreviate(image, 20)}"
                           ></div>
                         </div>

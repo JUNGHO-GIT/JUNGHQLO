@@ -15,7 +15,7 @@
             th:if="${session.member_id == null}"
             th:onclick="@{|/member/signupMember|}"
           >
-            <span class="upper me-20">
+            <span class="upper mr-20px">
               SignUp
             </span>
           </a>
@@ -23,7 +23,7 @@
             th:if="${session.member_id == null}"
             th:onclick="@{|/member/loginMember|}"0
           >
-            <span class="upper me-20">
+            <span class="upper mr-20px">
               Login
             </span>
           </a>
@@ -31,7 +31,7 @@
             th:if="${session.member_id != null}"
             th:onclick="goToPage('detail', [[${session.member_number}]])"
           >
-            <span class="upper me-20">
+            <span class="upper mr-20px">
               MyPage
             </span>
           </a>
@@ -39,7 +39,7 @@
             th:if="${session.member_id != null}"
             th:onclick="getLogout()"
           >
-            <span class="upper me-20">
+            <span class="upper mr-20px">
               Logout
             </span>
           </a>
@@ -95,7 +95,7 @@
         </div>
       </div>
       <!-- hr -->
-      <div class="w-100p my-3vh bg-light-grey h-1"></div>
+      <div class="w-100p my-3vh bg-light-grey h-1px"></div>
       <!-- menu -->
       <div class="d-col-left">
         <th:block th:if="${session.member_id == null}">
@@ -164,7 +164,7 @@
         </th:block>
       </div>
       <!-- hr -->
-      <div class="w-100p my-3vh bg-light-grey h-1"></div>
+      <div class="w-100p my-3vh bg-light-grey h-1px"></div>
       <!-- text -->
       <div class="d-col-left">
         <img

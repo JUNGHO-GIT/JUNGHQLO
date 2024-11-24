@@ -25,7 +25,7 @@
             <th:block th:each="LIST: ${LIST}">
               <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div
-                  th:class="${'border-1 radius-2 shadow-1 p-30'}"
+                  th:class="${'border-1 radius-2 shadow-1 p-30px'}"
                   th:classappend="${LISTStat.last ? '' : 'mb-3vh'}"
                 >
                   <!-- logo + title -->
@@ -38,7 +38,7 @@
                       th:alt="${'logo'}"
                       th:width="${'30px'}"
                       th:height="${'30px'}"
-                      th:class="${'radius-2 me-10'}"
+                      th:class="${'radius-2 mr-10px'}"
                     />
                     <div
                       th:id="${'notice_title'}"
@@ -51,7 +51,7 @@
                       th:id="${'notice_number'}"
                       th:name="${'notice_number'}"
                       th:text="${LIST['notice_number']}"
-                      th:class="${'fs-0-9rem fw-600 grey ms-auto'}"
+                      th:class="${'fs-0-9rem fw-600 grey ml-auto'}"
                     ></div>
                   </div>
                   <!-- contents -->
@@ -66,7 +66,7 @@
                   <!-- date & view count -->
                   <div class="d-row-between w-100p">
                     <div class="d-row-center">
-                      <i th:class="${'fa fa-calendar fs-0-7rem me-10'}"></i>
+                      <i th:class="${'fa fa-calendar fs-0-7rem mr-10px'}"></i>
                       <div
                         th:id="${'notice_date'}"
                         th:name="${'notice_date'}"
@@ -75,7 +75,7 @@
                       ></div>
                     </div>
                     <div class="d-row-center">
-                      <i th:class="${'fa fa-eye fs-0-7rem me-10'}"></i>
+                      <i th:class="${'fa fa-eye fs-0-7rem mr-10px'}"></i>
                       <div
                         th:id="${'notice_count'}"
                         th:name="${'notice_count'}"

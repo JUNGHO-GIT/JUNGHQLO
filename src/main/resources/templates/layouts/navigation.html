@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">\
 
   <!-- navigation -->
-  <section th:fragment="navigation" class="container-fluid bg-light-yellow border-1 p-30 mb-4vh">
+  <section th:fragment="navigation" class="container-fluid bg-light-yellow border-1 p-30px mb-4vh">
     <div class="row d-center">
       <div class="col-11 col-sm-11 col-md-10 col-lg-9 col-xl-8">
         <div class="fs-1-8rem fw-600 mb-3vh d-row-left">
@@ -16,7 +16,7 @@
             th:id="${'text1'}"
             th:name="${'text1'}"
             th:text="${PAGE}"
-            th:class="${'ms-5'}"
+            th:class="${'ml-5px'}"
           ></span>
         </div>
         <div class="fs-1-2rem fw-500 d-row-left">
@@ -30,19 +30,19 @@
             th:id="${'text2'}"
             th:name="${'text2'}"
             th:text="${'Home'}"
-            th:class="${'ms-5'}"
+            th:class="${'ml-5px'}"
           ></span>
           <span
             th:id="${'text3'}"
             th:name="${'text3'}"
             th:text="${'|'}"
-            th:class="${'ms-5'}"
+            th:class="${'ml-5px'}"
           ></span>
           <span
             th:id="${'text4'}"
             th:name="${'text4'}"
             th:text="${THEME}"
-            th:class="${'ms-5'}"
+            th:class="${'ml-5px'}"
           ></span>
         </div>
       </div>

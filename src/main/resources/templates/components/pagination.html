@@ -11,7 +11,7 @@
             <div
               th:id="${'prev'}"
               th:name="${'prev'}"
-              th:class="${'fs-1-6rem fw-700 h-30 w-30 d-center black pointer'}"
+              th:class="${'fs-1-6rem fw-700 h-30px w-30px d-center black pointer'}"
               th:onclick="|location.href='@{|/${page}/list${PAGE}?pageNumber=${pageHandler.pageNumber-1}&itemsPer=${pageHandler.itemsPer}|}'|"
               th:text="${'&laquo;'}"
             ></div>
@@ -20,7 +20,7 @@
             <div
               th:id="${'prev'}"
               th:name="${'prev'}"
-              th:class="${'fs-1-6rem fw-700 h-30 w-30 d-center grey'}"
+              th:class="${'fs-1-6rem fw-700 h-30px w-30px d-center grey'}"
               th:text="${'&laquo;'}"
             ></div>
           </th:block>
@@ -30,7 +30,7 @@
               <div
                 th:id="${'number'}"
                 th:name="${'number'}"
-                th:class="${'fs-1-0rem fw-700 h-30 w-30 border-1 radius-50 d-center ms-1vw me-1vw bg-black white pointer'}"
+                th:class="${'fs-1-0rem fw-700 h-30px w-30px border-1 radius-50 d-center ml-1vw mr-1vw bg-black white pointer'}"
                 th:text="${pageNumber}"
               ></div>
             </th:block>
@@ -38,7 +38,7 @@
               <div
                 th:id="${'number'}"
                 th:name="${'number'}"
-                th:class="${'fs-1-0rem fw-700 h-30 w-30 border-1 radius-50 d-center ms-1vw me-1vw bg-white black pointer'}"
+                th:class="${'fs-1-0rem fw-700 h-30px w-30px border-1 radius-50 d-center ml-1vw mr-1vw bg-white black pointer'}"
                 th:onclick="|location.href='@{|/${page}/list${PAGE}?pageNumber=${pageNumber}&itemsPer=${pageHandler.itemsPer}|}'|"
                 th:text="${pageNumber}"
               ></div>
@@ -49,7 +49,7 @@
             <div
               th:id="${'next'}"
               th:name="${'next'}"
-              th:class="${'fs-1-6rem fw-700 h-30 w-30 d-center black pointer'}"
+              th:class="${'fs-1-6rem fw-700 h-30px w-30px d-center black pointer'}"
               th:onclick="|location.href='@{|/${page}/list${PAGE}?pageNumber=${pageHandler.pageNumber+1}&itemsPer=${pageHandler.itemsPer}|}'|"
               th:text="${'&raquo;'}"
             ></div>
@@ -58,7 +58,7 @@
             <div
               th:id="${'next'}"
               th:name="${'next'}"
-              th:class="${'fs-1-6rem fw-700 h-30 w-30 d-center grey'}"
+              th:class="${'fs-1-6rem fw-700 h-30px w-30px d-center grey'}"
               th:text="${'&raquo;'}"
             ></div>
           </th:block>
@@ -76,21 +76,21 @@
           <div
             th:id="${'prev'}"
             th:name="${'prev'}"
-            th:class="${'fs-1-6rem fw-700 h-30 w-30 d-center pointer'}"
+            th:class="${'fs-1-6rem fw-700 h-30px w-30px d-center pointer'}"
             th:text="${'&laquo;'}"
           ></div>
           <!-- number -->
           <div
             th:id="${'number'}"
             th:name="${'number'}"
-            th:class="${'fs-1-0rem fw-700 h-30 w-30 border-1 radius-50 d-center pointer ms-1vw me-1vw'}"
+            th:class="${'fs-1-0rem fw-700 h-30px w-30px border-1 radius-50 d-center pointer ml-1vw mr-1vw'}"
             th:text="${'1'}"
           ></div>
           <!-- next -->
           <div
             th:id="${'next'}"
             th:name="${'next'}"
-            th:class="${'fs-1-6rem fw-700 h-30 w-30 d-center pointer'}"
+            th:class="${'fs-1-6rem fw-700 h-30px w-30px d-center pointer'}"
             th:text="${'&raquo;'}"
           ></div>
         </div>

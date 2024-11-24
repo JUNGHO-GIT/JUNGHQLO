@@ -2,13 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
   <!-- loader -->
-  <section th:fragment="loader" class="container-fluid d-center">
+  <section th:fragment="loader" class="container-fluid d-center loader-layout">
     <div class="loader-wrapper">
       <div class="loader"></div>
     </div>
     <script defer>
       setTimeout(() => {
-        // 엘리멘트 자체를 제거
         document.querySelector('.loader-wrapper').remove();
       }, 500);
     </script>

@@ -23,8 +23,8 @@
           <!-- list -->
           <div class="row">
             <th:block th:each="LIST : ${LIST}">
-              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4 p-20 d-center">
-                <div class="radius-2 shadow-1 w-100p h-300 w-max500 object-cover p-relative">
+              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4 p-20px d-center">
+                <div class="radius-2 shadow-1 w-100p h-300px w-max-500px object-cover p-relative">
                   <!-- image -->
                   <div
                     th:each="image, iterStat:${#strings.arraySplit(LIST['board_imgsUrl'], ',')}"
@@ -35,7 +35,7 @@
                     th:class="${'radius-2 z-100'}"
                   ></div>
                   <!-- hover -->
-                  <div class="board-hover radius-2 fadeIn p-20">
+                  <div class="board-hover radius-2 fadeIn p-20px">
                     <!-- title -->
                     <div class="d-row-center mb-3vh">
                       <div
@@ -67,14 +67,14 @@
                       <div class="d-row-left">
                         <i class="far fa-calendar-alt"></i>
                         <div
-                          th:class="${'fs-0-7rem fw-600 dark-grey ms-5'}"
+                          th:class="${'fs-0-7rem fw-600 dark-grey ml-5px'}"
                           th:text="${#strings.substring((LIST['board_update'] != null ? LIST['board_update'] : LIST['board_date']), 0, 10)}"
                         ></div>
                       </div>
                       <div class="d-row-right">
                         <i class="fa fa-eye"></i>
                         <div
-                          th:class="${'fs-0-7rem fw-600 dark-grey ms-5'}"
+                          th:class="${'fs-0-7rem fw-600 dark-grey ml-5px'}"
                           th:text="${LIST['board_count']}"
                         ></div>
                       </div>

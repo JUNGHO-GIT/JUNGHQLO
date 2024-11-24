@@ -38,13 +38,13 @@
                         th:id="${'qna_category'}"
                         th:name="${'qna_category'}"
                         th:text="${MODEL['qna_category'] == 'goods' ? '상품문의' : MODEL['qna_category'] == 'exchange' ? '교환문의' : MODEL['qna_category'] == 'refund' ? '환불문의' : MODEL['qna_category'] == 'payment' ? '결제문의' : MODEL['qna_category'] == 'delivery' ? '배송문의' : MODEL['qna_category'] == 'etc' ? '기타문의' : '문의'}"
-                        th:class="${'fs-1-2rem fw-600 grey ms-10'}"
+                        th:class="${'fs-1-2rem fw-600 grey ml-10px'}"
                       ></div>
                     </div>
                   </div>
                 </div>
                 <!-- hr -->
-                <div class="w-100p my-3vh bg-burgundy h-2"></div>
+                <div class="w-100p my-3vh bg-burgundy h-2px"></div>
                 <!-- image -->
                 <div class="row">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -53,7 +53,7 @@
                         th:src="@{|${STORAGE}/icon/logo.png|}"
                         th:loading="${'lazy'}"
                         th:alt="${'image'}"
-                        th:class="${'w-50p w-max500 border-1 radius-1 shadow-0'}"
+                        th:class="${'w-50p w-max-500px border-1 radius-1 shadow-0'}"
                       />
                     </th:block>
                     <th:block th:if="${MODEL['qna_imgsUrl'] != ''}">
@@ -62,13 +62,13 @@
                         th:src="@{|${STORAGE}/${page}/${image}|}"
                         th:loading="${'lazy'}"
                         th:alt="${'image'}"
-                        th:class="${'w-90p w-max500 border-1 radius-1 shadow-0'}"
+                        th:class="${'w-90p w-max-500px border-1 radius-1 shadow-0'}"
                       />
                     </th:block>
                   </div>
                 </div>
                 <!-- hr -->
-                <div class="w-100p my-3vh bg-light-grey h-1"></div>
+                <div class="w-100p my-3vh bg-light-grey h-1px"></div>
                 <!-- content -->
                 <div class="row">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -76,12 +76,12 @@
                       th:id="${'qna_contents'}"
                       th:name="${'qna_contents'}"
                       th:text="${MODEL['qna_contents']}"
-                      th:class="${'form-control h-min20vh border-0 lh-1-7'}"
+                      th:class="${'form-control h-min-20vh border-0 lh-1-7'}"
                     ></textarea>
                   </div>
                 </div>
                 <!-- hr -->
-                <div class="w-100p my-3vh bg-light-grey h-1"></div>
+                <div class="w-100p my-3vh bg-light-grey h-1px"></div>
                 <!-- answer -->
                 <div class="row mb-3vh">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -89,7 +89,7 @@
                       <div class="fs-0-9rem fw-800 light-black">
                         답변 상태
                       </div>
-                      <div class="fs-0-9rem fw-800 burgundy ms-5">
+                      <div class="fs-0-9rem fw-800 burgundy ml-5px">
                         *
                       </div>
                     </div>
@@ -105,12 +105,12 @@
                   </div>
                 </div>
                 <!-- hr -->
-                <div class="w-100p my-3vh bg-light-grey h-2"></div>
+                <div class="w-100p my-3vh bg-light-grey h-2px"></div>
                 <!-- like && dislike && count -->
                 <div class="row mb-4vh">
                   <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-row-left">
-                    <div class="d-row-center me-1vw">
-                      <i th:class="${'fa fa-thumbs-up fs-1-0rem me-10 navy'}"></i>
+                    <div class="d-row-center mr-1vw">
+                      <i th:class="${'fa fa-thumbs-up fs-1-0rem mr-10px navy'}"></i>
                       <div
                         th:id="${'qna_like'}"
                         th:name="${'qna_like'}"
@@ -118,8 +118,8 @@
                         th:class="${'fs-1-0rem fw-600 dark'}"
                       ></div>
                     </div>
-                    <div class="d-row-center ms-1vw">
-                      <i th:class="${'fa fa-thumbs-down fs-1-0rem me-10 burgundy'}"></i>
+                    <div class="d-row-center ml-1vw">
+                      <i th:class="${'fa fa-thumbs-down fs-1-0rem mr-10px burgundy'}"></i>
                       <div
                         th:id="${'qna_dislike'}"
                         th:name="${'qna_dislike'}"
@@ -130,7 +130,7 @@
                   </div>
                   <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
                     <div class="d-row-right">
-                      <i th:class="${'fa fa-eye fs-1-0rem me-10 secondary'}"></i>
+                      <i th:class="${'fa fa-eye fs-1-0rem mr-10px secondary'}"></i>
                       <div
                         th:id="${'qna_count'}"
                         th:name="${'qna_count'}"
@@ -144,7 +144,7 @@
                 <div class="row">
                   <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                     <div class="d-row-left">
-                      <i th:class="${'fa fa-calendar fs-1-0rem me-10'}"></i>
+                      <i th:class="${'fa fa-calendar fs-1-0rem mr-10px'}"></i>
                       <div
                         th:id="${'qna_date'}"
                         th:name="${'qna_date'}"
@@ -155,7 +155,7 @@
                   </div>
                   <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                     <div class="d-row-right">
-                      <i th:class="${'fa fa-user fs-1-0rem me-10'}"></i>
+                      <i th:class="${'fa fa-user fs-1-0rem mr-10px'}"></i>
                       <div
                         th:id="${'qna_writer'}"
                         th:name="${'qna_writer'}"

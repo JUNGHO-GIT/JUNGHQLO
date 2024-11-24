@@ -32,7 +32,7 @@
                     th:src="@{|${STORAGE}/${page}/${image}|}"
                     th:loading="${'lazy'}"
                     th:alt="${'image'}"
-                    th:class="${'w-100p w-max500 border-0 radius-1 shadow-1'}"
+                    th:class="${'w-100p w-max-500px border-0 radius-1 shadow-1'}"
                     th:classappend="${iterStat.index == 0} ? 'mb-3vh' : ''"
                   />
                 </div>
@@ -40,11 +40,11 @@
             </div>
             <!-- y -->
             <div class="d-none d-md-block col-md-1 col-lg-1 col-xl-1">
-              <div class="h-98p mt-2vh bg-light w-1 m-auto"></div>
+              <div class="h-98p mt-2vh bg-light w-1px m-auto"></div>
             </div>
             <!-- x -->
             <div class="col-12 col-sm-12 d-md-none d-lg-none d-xl-none">
-              <div class="w-100p my-1vh bg-light h-1"></div>
+              <div class="w-100p my-1vh bg-light h-1px"></div>
             </div>
             <!-- section 2 -->
             <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
@@ -84,7 +84,7 @@
                   ></div>
                 </div>
               </div>
-              <div class="w-100p my-3vh bg-light h-1"></div>
+              <div class="w-100p my-3vh bg-light h-1px"></div>
               <!-- category & origin & stock & delivery -->
               <div class="row px-5vw">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-2vh">
@@ -92,7 +92,7 @@
                     th:id="${'product_category_prefix'}"
                     th:name="${'product_category_prefix'}"
                     th:text="${'스 타 일'}"
-                    th:class="${'fs-0-8rem fw-500 dark me-10'}"
+                    th:class="${'fs-0-8rem fw-500 dark mr-10px'}"
                   ></div>
                   <div
                     th:id="${'product_category'}"
@@ -106,7 +106,7 @@
                     th:id="${'product_origin_prefix'}"
                     th:name="${'product_origin_prefix'}"
                     th:text="${'원 산 지'}"
-                    th:class="${'fs-0-8rem fw-500 dark me-10'}"
+                    th:class="${'fs-0-8rem fw-500 dark mr-10px'}"
                   ></div>
                   <div
                     th:id="${'product_origin'}"
@@ -120,7 +120,7 @@
                     th:id="${'product_stock_prefix'}"
                     th:name="${'product_stock_prefix'}"
                     th:text="${'재고 수량'}"
-                    th:class="${'fs-0-8rem fw-500 dark me-10'}"
+                    th:class="${'fs-0-8rem fw-500 dark mr-10px'}"
                   ></div>
                   <div
                     th:id="${'product_stock'}"
@@ -134,7 +134,7 @@
                     th:id="${'product_delivery_prefix'}"
                     th:name="${'product_delivery_prefix'}"
                     th:text="${'배송 안내'}"
-                    th:class="${'fs-0-8rem fw-500 dark me-10'}"
+                    th:class="${'fs-0-8rem fw-500 dark mr-10px'}"
                   ></div>
                   <div
                     th:id="${'product_delivery'}"
@@ -144,7 +144,7 @@
                   ></div>
                 </div>
               </div>
-              <div class="w-100p my-3vh bg-light h-1"></div>
+              <div class="w-100p my-3vh bg-light h-1px"></div>
               <!-- detail -->
               <div class="row px-5vw">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left">
@@ -156,7 +156,7 @@
                   ></div>
                 </div>
               </div>
-              <div class="w-100p my-3vh bg-light h-1"></div>
+              <div class="w-100p my-3vh bg-light h-1px"></div>
               <!-- quantity & total price & buy -->
               <div class="row px-5vw">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-4vh">
@@ -164,9 +164,9 @@
                     th:id="${'orders_quantity_prefix'}"
                     th:name="${'orders_quantity_prefix'}"
                     th:text="${'수 량'}"
-                    th:class="${'fs-0-9rem fw-500 dark me-30'}"
+                    th:class="${'fs-0-9rem fw-500 dark mr-30px'}"
                   ></div>
-                  <div class="p-relative w-70p ms-auto">
+                  <div class="p-relative w-70p ml-auto">
                     <input
                       th:id="${'orders_quantity'}"
                       th:name="${'orders_quantity'}"
@@ -174,7 +174,7 @@
                       th:min="${'1'}"
                       th:value="${'1'}"
                       th:max="${MODEL['product_stock']}"
-                      th:class="${'form-control h-30'}"
+                      th:class="${'form-control h-30px'}"
                     />
                     <i
                       th:id="${'minus'}"
@@ -194,7 +194,7 @@
                   <div
                     th:id="${'orders_totalPrice_prefix'}"
                     th:name="${'orders_totalPrice_prefix'}"
-                    th:class="${'fs-0-9rem fw-500 dark me-20'}"
+                    th:class="${'fs-0-9rem fw-500 dark mr-20px'}"
                     th:text="${'총 금액'}"
                   ></div>
                   <input
@@ -206,12 +206,12 @@
                     th:id="${'orders_totalPrice'}"
                     th:name="${'orders_totalPrice'}"
                     th:text="${#numbers.formatInteger(MODEL['product_price'], 3, 'COMMA')}"
-                    th:class="${'fs-1-0rem fw-500 light-black ms-auto me-auto'}"
+                    th:class="${'fs-1-0rem fw-500 light-black ml-auto mr-auto'}"
                   ></div>
                   <div
                     th:id="${'getOrders'}"
                     th:name="${'getOrders'}"
-                    th:class="${'fs-1-0rem fw-700 black pointer-black ms-auto'}"
+                    th:class="${'fs-1-0rem fw-700 black pointer-black ml-auto'}"
                     th:text="${'구매하기'}"
                     th:onclick="getOrders()"
                   ></div>
@@ -220,18 +220,18 @@
                   <div
                     th:id="${'orders_card'}"
                     th:name="${'orders_card'}"
-                    th:class="${'fs-0-9rem fw-500 dark me-20'}"
+                    th:class="${'fs-0-9rem fw-500 dark mr-20px'}"
                     th:text="${'테스트카드'}"
                   ></div>
                   <div
                     th:id="${'orders_card'}"
                     th:name="${'orders_card'}"
-                    th:class="${'fs-0-8rem fw-700 black ms-auto me-auto'}"
+                    th:class="${'fs-0-8rem fw-700 black ml-auto mr-auto'}"
                     th:text="${'4242 4242 4242 4242 / 12/34 / 567'}"
                   ></div>
                 </div>
               </div>
-              <div class="w-100p mt-5vh mb-3vh bg-light-grey h-1"></div>
+              <div class="w-100p mt-5vh mb-3vh bg-light-grey h-1px"></div>
               <!-- information -->
               <div class="row px-5vw">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-col-left">
@@ -248,7 +248,7 @@
                     th:text="${'상품 정보 제공 고시[전자상거래에 관한 상품정보 제공에 관한 고시] 항목에 의해 등록된 정보입니다. 품질보증기준 관련법규 및 소비자 보호법에 따름 A/S 책임자와 주문후 예상 배송기간 2~3일소요 구매, 교환, 반품, 배송, 설치 등과 관련하여 추가비용, 제한조건 등의 특이사항이 있는 경우 소비자가 전자상거래등에서 소비자 보호에 관한 법률 제 17조 제1항 또는 제3항에 따라 청약철회를 하고 동법 제 18조 제1항 에 따라 청약철회한 물품을 판매자에게 반환하였음에도 불구 하고 결제 대금의 환급이 3영업일을 넘게 지연된 경우, 소비자 는 전자상거래등에서 소비자보호에 관한 법률 제18조 제2항 및 동법 시행령 제21조 2에 따라 지연일수에 대하여 전상법 시행령으로 정하는 이율을 곱하여 산정한 지연이자(“지연배상금”)를 신청할 수 있습니다.'}"
                   ></div>
                 </div>
-                <div class="w-100p my-1vh bg-light h-1"></div>
+                <div class="w-100p my-1vh bg-light h-1px"></div>
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-col-left">
                   <div
                     th:id="${'info-title'}"
@@ -263,7 +263,7 @@
                     th:text="${'전자상거래 등에서의 소비자보호법에 관한 법률에 의거하여 미성년자가 물품을 구매하는 경우, 법정대리인이 동의하지 않으면 미성년자 본인 또는 법정대리인이 구매를 취소할 수 있습니다. 등록된 판매 상품과 상품의 내용, 거래 정보 및 가격은 판매자가 등록한 것으로 해당 내용에 대하여 일체의 책임을 지지 않습니다.'}"
                   ></div>
                 </div>
-                <div class="w-100p my-1vh bg-light h-1"></div>
+                <div class="w-100p my-1vh bg-light h-1px"></div>
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-col-left">
                   <div
                     th:id="${'info-title'}"

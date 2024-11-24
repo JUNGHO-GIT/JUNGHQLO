@@ -30,7 +30,7 @@
                   <i
                     th:id="${'sort-icon'}"
                     th:name="${'sort-icon'}"
-                    th:class="${'fas fa-list-ul me-10'}"
+                    th:class="${'fas fa-list-ul mr-10px'}"
                   ></i>
                   <div
                     th:id="${'sort-title'}"
@@ -41,7 +41,7 @@
                   <i
                     th:id="${'sort-icon-down'}"
                     th:name="${'sort-icon-down'}"
-                    th:class="${'fas fa-sort-down mt-n5 ms-3'}"
+                    th:class="${'fas fa-sort-down mt-n5px ml-3px'}"
                     th:onclick="collapseList('sort')"
                   ></i>
                 </div>
@@ -104,14 +104,14 @@
                   ></div>
                 </div>
               </div>
-              <div class="w-100p my-3vh bg-light-grey h-1"></div>
+              <div class="w-100p my-3vh bg-light-grey h-1px"></div>
               <!-- category -->
               <div class="slider-category">
                 <div class="d-row-left mb-2vh">
                   <i
                     th:id="${'category-icon'}"
                     th:name="${'category-icon'}"
-                    th:class="${'fas fa-list-ul me-10'}"
+                    th:class="${'fas fa-list-ul mr-10px'}"
                   ></i>
                   <div
                     th:id="${'category-title'}"
@@ -122,7 +122,7 @@
                   <i
                     th:id="${'category-icon-down'}"
                     th:name="${'category-icon-down'}"
-                    th:class="${'fas fa-sort-down mt-n5 ms-3'}"
+                    th:class="${'fas fa-sort-down mt-n5px ml-3px'}"
                     th:onclick="collapseList('category')"
                   ></i>
                 </div>
@@ -185,14 +185,14 @@
                   ></div>
                 </div>
               </div>
-              <div class="w-100p my-3vh bg-light-grey h-1"></div>
+              <div class="w-100p my-3vh bg-light-grey h-1px"></div>
               <!-- origin -->
               <div class="slider-origin">
                 <div class="d-row-left mb-2vh">
                   <i
                     th:id="${'origin-icon'}"
                     th:name="${'origin-icon'}"
-                    th:class="${'fas fa-list-ul me-10'}"
+                    th:class="${'fas fa-list-ul mr-10px'}"
                   ></i>
                   <div
                     th:id="${'origin-title'}"
@@ -203,7 +203,7 @@
                   <i
                     th:id="${'origin-icon-down'}"
                     th:name="${'origin-icon-down'}"
-                    th:class="${'fas fa-sort-down mt-n5 ms-3'}"
+                    th:class="${'fas fa-sort-down mt-n5px ml-3px'}"
                     th:onclick="collapseList('origin')"
                   ></i>
                 </div>
@@ -255,8 +255,8 @@
             <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9">
               <div class="row">
                 <th:block th:each="LIST : ${LIST}">
-                  <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 d-center p-10 mb-15vh">
-                    <div class="radius-2 shadow-1 w-100p h-300 w-max500 object-cover p-relative">
+                  <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 d-center p-10px mb-15vh">
+                    <div class="radius-2 shadow-1 w-100p h-300px w-max-500px object-cover p-relative">
                       <!-- image -->
                       <div
                         th:each="image, iterStat:${#strings.arraySplit(LIST['product_imgsUrl'], ',')}"
@@ -270,8 +270,8 @@
                       ></div>
                       <!-- hover -->
                       <div class="product-hover radius-2 fadeIn">
-                        <div class="d-row-center hover ms-20 mb-3vh">
-                          <i class="far fa-heart white me-10"></i>
+                        <div class="d-row-center hover ml-20px mb-3vh">
+                          <i class="far fa-heart white mr-10px"></i>
                           <div
                             th:id="${'like'}"
                             th:name="${'like'}"
@@ -280,8 +280,8 @@
                             Like
                           </div>
                         </div>
-                        <div class="d-row-center hover ms-20 mb-3vh">
-                          <i class="fas fa-exchange-alt white me-10"></i>
+                        <div class="d-row-center hover ml-20px mb-3vh">
+                          <i class="fas fa-exchange-alt white mr-10px"></i>
                           <div
                             th:id="${'compare'}"
                             th:name="${'compare'}"
@@ -290,8 +290,8 @@
                             Compare
                           </div>
                         </div>
-                        <div class="d-row-center hover ms-20 mb-0">
-                          <i class="fas fa-search white me-10"></i>
+                        <div class="d-row-center hover ml-20px mb-0px">
+                          <i class="fas fa-search white mr-10px"></i>
                           <div
                             th:id="${'view'}"
                             th:name="${'view'}"
@@ -316,13 +316,13 @@
                           <div
                             th:id="${'product_brand'}"
                             th:name="${'product_brand'}"
-                            th:class="${'fs-0-9rem fw-600 grey ms-20'}"
+                            th:class="${'fs-0-9rem fw-600 grey ml-20px'}"
                             th:text="${LIST['product_brand']}"
                           ></div>
                           <div
                             th:id="${'product_price'}"
                             th:name="${'product_price'}"
-                            th:class="${'fs-0-9rem fw-600 dark me-20'}"
+                            th:class="${'fs-0-9rem fw-600 dark mr-20px'}"
                             th:text="${#numbers.formatInteger(LIST['product_price'], 3, 'COMMA')}"
                           ></div>
                         </div>
@@ -340,7 +340,7 @@
                 <i
                   th:id="${'off-sort-icon'}"
                   th:name="${'off-sort-icon'}"
-                  th:class="${'fas fa-list-ul me-10'}"
+                  th:class="${'fas fa-list-ul mr-10px'}"
                 ></i>
                 <div
                   th:id="${'off-sort-title'}"
@@ -351,7 +351,7 @@
                 <i
                   th:id="${'off-sort-icon-down'}"
                   th:name="${'off-sort-icon-down'}"
-                  th:class="${'fas fa-sort-down mt-n5 ms-3'}"
+                  th:class="${'fas fa-sort-down mt-n5px ml-3px'}"
                   th:onclick="collapseList('off-sort')"
                 ></i>
                 </div>
@@ -414,14 +414,14 @@
                   ></div>
                 </div>
               </div>
-              <div class="w-100p my-3vh bg-light-grey h-1"></div>
+              <div class="w-100p my-3vh bg-light-grey h-1px"></div>
               <!-- category -->
               <div class="slider-off-category">
                 <div class="d-row-left mb-2vh">
                   <i
                     th:id="${'off-category-icon'}"
                     th:name="${'off-category-icon'}"
-                    th:class="${'fas fa-list-ul me-10'}"
+                    th:class="${'fas fa-list-ul mr-10px'}"
                   ></i>
                   <div
                     th:id="${'off-category-title'}"
@@ -432,7 +432,7 @@
                   <i
                     th:id="${'off-category-icon-down'}"
                     th:name="${'off-category-icon-down'}"
-                    th:class="${'fas fa-sort-down mt-n5 ms-3'}"
+                    th:class="${'fas fa-sort-down mt-n5px ml-3px'}"
                     th:onclick="collapseList('off-category')"
                   ></i>
                 </div>
@@ -495,14 +495,14 @@
                   ></div>
                 </div>
               </div>
-              <div class="w-100p my-3vh bg-light-grey h-1"></div>
+              <div class="w-100p my-3vh bg-light-grey h-1px"></div>
               <!-- origin -->
               <div class="slider-off-origin">
                 <div class="d-row-left mb-2vh">
                   <i
                     th:id="${'off-origin-icon'}"
                     th:name="${'off-origin-icon'}"
-                    th:class="${'fas fa-list-ul me-10'}"
+                    th:class="${'fas fa-list-ul mr-10px'}"
                   ></i>
                   <div
                     th:id="${'off-origin-title'}"
@@ -513,7 +513,7 @@
                   <i
                     th:id="${'off-origin-icon-down'}"
                     th:name="${'off-origin-icon-down'}"
-                    th:class="${'fas fa-sort-down mt-n5 ms-3'}"
+                    th:class="${'fas fa-sort-down mt-n5px ml-3px'}"
                     th:onclick="collapseList('off-origin')"
                   ></i>
                 </div>
@@ -643,15 +643,15 @@
           elementList.style.maxHeight = '500px';
           elementList.style.opacity = '1';
           iconDown.style.transform = 'rotate(0deg)';
-          iconDown.classList.add('mt-n5');
-          iconDown?.classList?.remove('mb-n5');
+          iconDown.classList.add('mt-n5px');
+          iconDown?.classList?.remove('mb-n5px');
         }
         else {
           elementList.style.maxHeight = '0';
           elementList.style.opacity = '0';
           iconDown.style.transform = 'rotate(180deg)';
-          iconDown.classList.remove('mt-n5');
-          iconDown?.classList?.add('mb-n5');
+          iconDown.classList.remove('mt-n5px');
+          iconDown?.classList?.add('mb-n5px');
         }
       });
     };

@@ -11,7 +11,7 @@
     <th:block th:replace="~{layouts/offcanvas :: offcanvas}" />
 
     <!-- container 1 -->
-    <div class="container bg-black p-20">
+    <div class="container bg-black p-20px">
       <div class="row row-d-center">
         <div class="d-none d-sm-block col-sm-7 col-md-7 col-lg-7 col-xl-7">
           <span class="fs-0-9rem fw-400 white">
@@ -23,7 +23,7 @@
             <div
               th:id="${'signup'}"
               th:name="${'signup'}"
-              th:class="${'upper white hover fs-0-8rem me-20'}"
+              th:class="${'upper white hover fs-0-8rem mr-20px'}"
               th:onclick="goToPage('member/signupMember')"
             >
               SignUp
@@ -31,7 +31,7 @@
             <div
               th:id="${'login'}"
               th:name="${'login'}"
-              th:class="${'upper white hover fs-0-8rem me-20'}"
+              th:class="${'upper white hover fs-0-8rem mr-20px'}"
               th:onclick="goToPage('member/loginMember')"
             >
               Login
@@ -41,7 +41,7 @@
             <div
               th:id="${'mypage'}"
               th:name="${'mypage'}"
-              th:class="${'upper white hover fs-0-8rem me-20'}"
+              th:class="${'upper white hover fs-0-8rem mr-20px'}"
               th:with="memberNumber=${session.member_number}"
               th:onclick="goToPage('member/detailMember?member_number=' + [[${memberNumber}]])"
             >
@@ -50,7 +50,7 @@
             <div
               th:id="${'logout'}"
               th:name="${'logout'}"
-              th:class="${'upper white hover fs-0-8rem me-20'}"
+              th:class="${'upper white hover fs-0-8rem mr-20px'}"
               th:onclick="getLogout()"
             >
               Logout
@@ -110,7 +110,7 @@
     </div>
 
     <!-- container 2 -->
-    <div class="container bg-white p-10">
+    <div class="container bg-white p-10px">
       <div class="row d-center">
         <div class="col-12 col-sm-12 col-md-12 col-lg-10 col-xl-10">
           <div class="row d-center">
@@ -122,32 +122,32 @@
                 th:alt="${'logo'}"
                 th:width="${'70px'}"
                 th:height="${'70px'}"
-                th:class="${'pointer ms-20'}"
+                th:class="${'pointer ml-20px'}"
                 th:onclick="goToPage('home')"
               />
             </div>
             <!-- menu -->
             <div class="d-none d-sm-block col-sm-10 col-md-10 col-lg-10 col-xl-10">
               <div
-                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy me-4vw'}"
+                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy mr-4vw'}"
                 th:onclick="goToPage('product/listProduct')"
               >
                 Product
               </div>
               <div
-                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy me-4vw'}"
+                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy mr-4vw'}"
                 th:onclick="${session.member_id == null} ? 'sessionAlert()' : 'goToPage(\'orders/listOrders\')'"
               >
                 Orders
               </div>
               <div
-                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy me-4vw'}"
+                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy mr-4vw'}"
                 th:onclick="goToPage('board/listBoard')"
               >
                 Board
               </div>
               <div
-                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy me-4vw'}"
+                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy mr-4vw'}"
                 th:onclick="goToPage('notice/listNotice')"
               >
                 Notice
@@ -161,7 +161,7 @@
             </div>
             <!-- mobile menu -->
             <div class="col-10 d-sm-none">
-              <div class="mobile-toggle d-row-right me-20">
+              <div class="mobile-toggle d-row-right mr-20px">
                 <i class="fa fa-bars fs-1-8rem pointer hover"></i>
               </div>
             </div>

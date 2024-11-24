@@ -25,8 +25,8 @@
             <th:block th:each="LIST: ${LIST}">
               <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div
-                  th:class="${'border-1 radius-2 shadow-0 p-30'}"
-                  th:classappend="${LISTStat.last ? '' : 'mb-0'}"
+                  th:class="${'border-1 radius-2 shadow-0 p-30px'}"
+                  th:classappend="${LISTStat.last ? '' : 'mb-0px'}"
                 >
                   <!-- logo + title -->
                   <div class="d-row-left w-100p mb-3vh">
@@ -38,7 +38,7 @@
                       th:alt="${'logo'}"
                       th:width="${'30px'}"
                       th:height="${'30px'}"
-                      th:class="${'radius-2 me-10'}"
+                      th:class="${'radius-2 mr-10px'}"
                     />
                     <div
                       th:id="${'qna_title'}"
@@ -51,13 +51,13 @@
                       th:id="${'qna_category'}"
                       th:name="${'qna_category'}"
                       th:text="${LIST['qna_category'] == 'goods' ? '상품문의' : LIST['qna_category'] == 'exchange' ? '교환문의' : LIST['qna_category'] == 'refund' ? '환불문의' : LIST['qna_category'] == 'payment' ? '결제문의' : LIST['qna_category'] == 'delivery' ? '배송문의' : LIST['qna_category'] == 'etc' ? '기타문의' : '문의'}"
-                      th:class="${'fs-0-9rem fw-600 dark ms-auto'}"
+                      th:class="${'fs-0-9rem fw-600 dark ml-auto'}"
                     ></div>
                   </div>
                   <!-- date & user -->
                   <div class="d-row-between w-100p">
                     <div class="d-row-center">
-                      <i th:class="${'fa fa-calendar fs-0-7rem me-10'}"></i>
+                      <i th:class="${'fa fa-calendar fs-0-7rem mr-10px'}"></i>
                       <div
                         th:id="${'qna_date'}"
                         th:name="${'qna_date'}"
@@ -66,7 +66,7 @@
                       ></div>
                     </div>
                     <div class="d-row-center">
-                      <i th:class="${'fa fa-user fs-0-7rem me-10'}"></i>
+                      <i th:class="${'fa fa-user fs-0-7rem mr-10px'}"></i>
                       <div
                         th:id="${'qna_writer'}"
                         th:name="${'qna_writer'}"

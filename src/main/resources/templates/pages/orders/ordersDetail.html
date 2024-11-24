@@ -31,20 +31,20 @@
                       <div
                         th:id="${'order_date'}"
                         th:name="${'order_date'}"
-                        th:class="${'fs-1-8rem fw-700 light-black ms-auto'}"
+                        th:class="${'fs-1-8rem fw-700 light-black ml-auto'}"
                         th:text="${#strings.substring((MODEL['orders_update'] != null ? MODEL['orders_update'] : MODEL['orders_date']), 0, 10)}"
                       ></div>
                       <div
                         th:id="${'order_number'}"
                         th:name="${'order_number'}"
-                        th:class="${'fs-1-1rem fw-700 dark-grey ms-auto'}"
+                        th:class="${'fs-1-1rem fw-700 dark-grey ml-auto'}"
                         th:text="${MODEL['orders_number']}"
                       ></div>
                     </div>
                   </div>
                 </div>
                 <!-- hr -->
-                <div class="w-100p my-3vh bg-black h-1"></div>
+                <div class="w-100p my-3vh bg-black h-1px"></div>
                 <!-- image -->
                 <div class="row">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -53,7 +53,7 @@
                         th:src="@{|${STORAGE}/icon/logo.png|}"
                         th:loading="${'lazy'}"
                         th:alt="${'image'}"
-                        th:class="${'w-100p w-max500 border-1 radius-1 shadow-0'}"
+                        th:class="${'w-100p w-max-500px border-1 radius-1 shadow-0'}"
                       />
                     </th:block>
                     <th:block th:if="${MODEL['orders_imgsUrl'] != ''}">
@@ -63,20 +63,20 @@
                         th:src="@{|${STORAGE}/product/${image}|}"
                         th:loading="${'lazy'}"
                         th:alt="${'image'}"
-                        th:class="${'w-90p w-max500 border-1 radius-1 shadow-0'}"
+                        th:class="${'w-90p w-max-500px border-1 radius-1 shadow-0'}"
                       />
                     </th:block>
                   </div>
                 </div>
                 <!-- hr -->
-                <div class="w-100p my-3vh bg-light-grey h-1"></div>
+                <div class="w-100p my-3vh bg-light-grey h-1px"></div>
                 <!-- product name -->
                 <div class="row mb-3vh">
                   <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 d-row-right">
                     <div
                       th:id="${'product_name_prefix'}"
                       th:name="${'product_name_prefix'}"
-                      th:class="${'fs-1-1rem fw-500 dark-grey me-20'}"
+                      th:class="${'fs-1-1rem fw-500 dark-grey mr-20px'}"
                       th:text="${'상품명'}"
                     ></div>
                   </div>
@@ -95,7 +95,7 @@
                     <div
                       th:id="${'orders_date_prefix'}"
                       th:name="${'orders_date_prefix'}"
-                      th:class="${'fs-1-1rem fw-500 dark-grey me-20'}"
+                      th:class="${'fs-1-1rem fw-500 dark-grey mr-20px'}"
                       th:text="${'주문 일자'}"
                     ></div>
                     </div>
@@ -114,7 +114,7 @@
                     <div
                       th:id="${'orders_quantity_prefix'}"
                       th:name="${'orders_quantity_prefix'}"
-                      th:class="${'fs-1-1rem fw-500 dark-grey me-20'}"
+                      th:class="${'fs-1-1rem fw-500 dark-grey mr-20px'}"
                       th:text="${'수량'}"
                     ></div>
                   </div>
@@ -133,7 +133,7 @@
                     <div
                       th:id="${'orders_totalPrice_prefix'}"
                       th:name="${'orders_totalPrice_prefix'}"
-                      th:class="${'fs-1-1rem fw-500 dark-grey me-20'}"
+                      th:class="${'fs-1-1rem fw-500 dark-grey mr-20px'}"
                       th:text="${'결제 금액'}"
                     ></div>
                   </div>

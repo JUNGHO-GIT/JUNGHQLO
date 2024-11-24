@@ -1,3 +1,26 @@
+/** Loader ****************************************************************************************/
+const startLoader = () => {
+  const loaderLayout = document.querySelector(".loader-layout");
+  const loaderWrapper = Object.assign(document.createElement("div"), {
+    innerHTML: (`
+      <div class="loader-wrapper">
+        <div class="loader"></div>
+      </div>
+    `),
+  });
+  if (loaderLayout) {
+    loaderLayout.appendChild(loaderWrapper);
+  }
+};
+
+const removeLoader = () => {
+  const loaderLayout = document.querySelector(".loader-layout");
+  const loaderWrapper = document.querySelector(".loader-wrapper");
+
+  if (loaderLayout) {
+    loaderLayout.removeChild(loaderWrapper);
+  }
+}
 
 /** Background Set ******************************************************************************/
 $(".set-bg").each(function () {

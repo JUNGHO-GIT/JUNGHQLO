@@ -30,7 +30,7 @@
             th:class="${'primary-btn'}"
             th:onclick="goToPage('product/listProduct')"
           >
-            <p class="p-0">Shop now</p>
+            <p class="p-0px">Shop now</p>
             <span class="arrow_right"></span>
           </div>
         </div>
@@ -45,12 +45,12 @@
       <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <div class="filter-controls d-row-center mb-4vh">
           <div
-            th:class="${'fs-1-5rem fw-700 pointer-burgundy me-4vw active'}"
+            th:class="${'fs-1-5rem fw-700 pointer-burgundy mr-4vw active'}"
             th:data-filter="${'*'}"
             th:text="${'All'}"
           ></div>
           <div
-            th:class="${'fs-1-5rem fw-700 pointer-burgundy me-4vw'}"
+            th:class="${'fs-1-5rem fw-700 pointer-burgundy mr-4vw'}"
             th:data-filter="${'.classic'}"
             th:text="${'Classic'}"
           ></div>
@@ -66,7 +66,7 @@
     <div class="row product-filter" id="productContainer">
       <!-- 1~4 (Modern) -->
       <th:block th:each="i, iterStat : ${#numbers.sequence(1, 4)}">
-        <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mix modern p-10">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mix modern p-10px">
           <!-- image -->
           <div class="d-row-center">
             <img
@@ -74,7 +74,7 @@
               th:name="|product-item-pic-${i}|"
               th:aria-label="|product-item-pic-${i}|"
               th:src="@{|${STORAGE}/recommend/recommend-${i}.jpg|}"
-              th:class="${'w-100p h-300 radius-2 border-1 shadow-1'}"
+              th:class="${'w-100p h-300px radius-2 border-1 shadow-1'}"
             />
           </div>
           <!-- title & theme -->
@@ -84,25 +84,25 @@
                 Modern Styles
               </div>
             </div>
-            <div class="d-row-right me-20">
+            <div class="d-row-right mr-20px">
               <div
                 th:if="${iterStat.index} == 0"
-                th:class="${'fs-0-7rem primary me-5 mt-5'}"
+                th:class="${'fs-0-7rem primary mr-5px mt-5px'}"
                 th:text="${'New'}"
               ></div>
               <div
                 th:if="${iterStat.index} == 1"
-                th:class="${'fs-0-7rem danger me-5 mt-5'}"
+                th:class="${'fs-0-7rem danger mr-5px mt-5px'}"
                 th:text="${'Hot'}"
               ></div>
               <div
                 th:if="${iterStat.index} == 2"
-                th:class="${'fs-0-7rem warning me-5 mt-5'}"
+                th:class="${'fs-0-7rem warning mr-5px mt-5px'}"
                 th:text="${'Sale'}"
               ></div>
               <div
                 th:if="${iterStat.index} == 3"
-                th:class="${'fs-0-7rem success me-5 mt-5'}"
+                th:class="${'fs-0-7rem success mr-5px mt-5px'}"
                 th:text="${'Best'}"
               ></div>
             </div>
@@ -115,9 +115,9 @@
                 <span th:id="|price-${i}|"></span>
               </div>
             </div>
-            <div class="d-row-right me-20">
-              <div class="fs-0-7rem primary me-5">●</div>
-              <div class="fs-0-7rem danger me-5">●</div>
+            <div class="d-row-right mr-20px">
+              <div class="fs-0-7rem primary mr-5px">●</div>
+              <div class="fs-0-7rem danger mr-5px">●</div>
               <div class="fs-0-7rem warning">●</div>
             </div>
           </div>
@@ -125,7 +125,7 @@
       </th:block>
       <!-- 5~8 (Classic) -->
       <th:block th:each="i, iterStat : ${#numbers.sequence(5, 8)}">
-        <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mix classic p-10">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mix classic p-10px">
           <!-- image -->
           <div class="d-row-center">
             <img
@@ -133,7 +133,7 @@
               th:name="|product-item-pic-${i}|"
               th:aria-label="|product-item-pic-${i}|"
               th:src="@{|${STORAGE}/recommend/recommend-${i}.jpg|}"
-              th:class="${'w-100p h-300 radius-2 border-1 shadow-1'}"
+              th:class="${'w-100p h-300px radius-2 border-1 shadow-1'}"
             />
           </div>
           <!-- title & theme -->
@@ -143,25 +143,25 @@
                 Classic Styles
               </div>
             </div>
-            <div class="d-row-right me-20">
+            <div class="d-row-right mr-20px">
               <div
                 th:if="${iterStat.index} == 2"
-                th:class="${'fs-0-7rem primary me-5 mt-5'}"
+                th:class="${'fs-0-7rem primary mr-5px mt-5px'}"
                 th:text="${'New'}"
               ></div>
               <div
                 th:if="${iterStat.index} == 1"
-                th:class="${'fs-0-7rem danger me-5 mt-5'}"
+                th:class="${'fs-0-7rem danger mr-5px mt-5px'}"
                 th:text="${'Hot'}"
               ></div>
               <div
                 th:if="${iterStat.index} == 3"
-                th:class="${'fs-0-7rem warning me-5 mt-5'}"
+                th:class="${'fs-0-7rem warning mr-5px mt-5px'}"
                 th:text="${'Sale'}"
               ></div>
               <div
                 th:if="${iterStat.index} == 0"
-                th:class="${'fs-0-7rem success me-5 mt-5'}"
+                th:class="${'fs-0-7rem success mr-5px mt-5px'}"
                 th:text="${'Best'}"
               ></div>
             </div>
@@ -174,9 +174,9 @@
                 <span th:id="|price-${i}|"></span>
               </div>
             </div>
-            <div class="d-row-right me-20">
-              <div class="fs-0-7rem dark me-5">●</div>
-              <div class="fs-0-7rem info me-5">●</div>
+            <div class="d-row-right mr-20px">
+              <div class="fs-0-7rem dark mr-5px">●</div>
+              <div class="fs-0-7rem info mr-5px">●</div>
               <div class="fs-0-7rem success">●</div>
             </div>
           </div>
@@ -189,7 +189,7 @@
   <section class="container-fluid px-6vw">
     <div class="row">
       <th:block th:each="i : ${#numbers.sequence(1, 6)}">
-        <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 p-0">
+        <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 p-0px">
           <img
             th:id="${'instagram-' + i}"
             th:name="${'instagram-' + i}"
@@ -201,7 +201,7 @@
       </th:block>
     </div>
     <div class="row">
-      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 pt-40">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 pt-40px">
         <div class="fs-2-2rem fw-700 black mb-3vh">
           Instagram
         </div>

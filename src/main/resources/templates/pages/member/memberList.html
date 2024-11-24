@@ -33,8 +33,8 @@
             <th:block th:each="LIST: ${LIST}">
               <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div
-                  th:class="${'border-1 radius-2 shadow-0 p-20'}"
-                  th:classappend="${LISTStat.last ? '' : 'mb-0'}"
+                  th:class="${'border-1 radius-2 shadow-0 p-20px'}"
+                  th:classappend="${LISTStat.last ? '' : 'mb-0px'}"
                 >
                   <div class="row">
                     <!-- image -->
@@ -43,11 +43,11 @@
                         th:src="@{|${STORAGE}/icon/logo.png|}"
                         th:loading="${'lazy'}"
                         th:alt="${'image'}"
-                        th:class="${'radius-2 w-50p w-max100'}"
+                        th:class="${'radius-2 w-50p w-max-100px'}"
                       />
                     </div>
                     <!-- details -->
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 d-col-center ms-auto">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 d-col-center ml-auto">
                       <!-- name -->
                       <div class="d-row-left w-100p mb-3vh">
                         <div
@@ -60,7 +60,7 @@
                       </div>
                       <!-- id -->
                       <div class="d-row-left w-100p mb-2vh">
-                        <i th:class="${'fa fa-id-card fs-0-7rem dark me-10'}"></i>
+                        <i th:class="${'fa fa-id-card fs-0-7rem dark mr-10px'}"></i>
                         <div
                           th:id="${'member_id'}"
                           th:name="${'member_id'}"
@@ -70,7 +70,7 @@
                       </div>
                       <!-- email -->
                       <div class="d-row-left w-100p mb-2vh">
-                        <i th:class="${'fa fa-envelope fs-0-7rem dark me-10'}"></i>
+                        <i th:class="${'fa fa-envelope fs-0-7rem dark mr-10px'}"></i>
                         <div
                           th:id="${'member_email'}"
                           th:name="${'member_email'}"
@@ -80,7 +80,7 @@
                       </div>
                       <!-- date -->
                       <div class="d-row-left w-100p mb-2vh">
-                        <i th:class="${'fa fa-calendar fs-0-7rem dark me-10'}"></i>
+                        <i th:class="${'fa fa-calendar fs-0-7rem dark mr-10px'}"></i>
                         <div
                           th:id="${'member_date'}"
                           th:name="${'member_date'}"

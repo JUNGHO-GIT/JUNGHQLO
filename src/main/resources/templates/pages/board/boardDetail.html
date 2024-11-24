@@ -23,7 +23,7 @@
           <!-- detail -->
           <div class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="border-1 radius-2 shadow-1 px-5vw py-5vh bg-ivory-light">
+              <div class="border-1 radius-2 shadow-1 px-5vw py-5vh bg-light-ivory">
                 <!-- title -->
                 <div class="row">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -38,7 +38,7 @@
                   </div>
                 </div>
                 <!-- hr -->
-                <div class="w-100p my-3vh bg-burgundy h-2"></div>
+                <div class="w-100p my-3vh bg-burgundy h-2px"></div>
                 <!-- image -->
                 <div class="row">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -47,7 +47,7 @@
                         th:src="@{|${STORAGE}/icon/logo.png|}"
                         th:loading="${'lazy'}"
                         th:alt="${'image'}"
-                        th:class="${'w-50p w-max500 border-1 radius-1 shadow-0'}"
+                        th:class="${'w-50p w-max-500px border-1 radius-1 shadow-0'}"
                       />
                     </th:block>
                     <th:block th:if="${MODEL['board_imgsUrl'] != ''}">
@@ -56,13 +56,13 @@
                         th:src="@{|${STORAGE}/${page}/${image}|}"
                         th:loading="${'lazy'}"
                         th:alt="${'image'}"
-                        th:class="${'w-90p w-max500 border-1 radius-1 shadow-0'}"
+                        th:class="${'w-90p w-max-500px border-1 radius-1 shadow-0'}"
                       />
                     </th:block>
                   </div>
                 </div>
                 <!-- hr -->
-                <div class="w-100p my-3vh bg-light-grey h-1"></div>
+                <div class="w-100p my-3vh bg-light-grey h-1px"></div>
                 <!-- content -->
                 <div class="row">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -70,17 +70,17 @@
                       th:id="${'board_contents'}"
                       th:name="${'board_contents'}"
                       th:text="${MODEL['board_contents']}"
-                      th:class="${'form-control h-min30vh border-1 radius-1 shadow-1 lh-1-7'}"
+                      th:class="${'form-control h-min-30vh border-1 radius-1 shadow-1 lh-1-7'}"
                     ></textarea>
                   </div>
                 </div>
                 <!-- hr -->
-                <div class="w-100p my-3vh bg-light-grey h-1"></div>
+                <div class="w-100p my-3vh bg-light-grey h-1px"></div>
                 <!-- like && dislike && count -->
                 <div class="row mb-4vh">
                   <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-row-left">
-                    <div class="d-row-center me-1vw">
-                      <i th:class="${'fa fa-thumbs-up fs-1-0rem me-10 navy'}"></i>
+                    <div class="d-row-center mr-1vw">
+                      <i th:class="${'fa fa-thumbs-up fs-1-0rem mr-10px navy'}"></i>
                       <div
                         th:id="${'board_like'}"
                         th:name="${'board_like'}"
@@ -88,8 +88,8 @@
                         th:class="${'fs-1-0rem fw-600 dark'}"
                       ></div>
                     </div>
-                    <div class="d-row-center ms-1vw">
-                      <i th:class="${'fa fa-thumbs-down fs-1-0rem me-10 burgundy'}"></i>
+                    <div class="d-row-center ml-1vw">
+                      <i th:class="${'fa fa-thumbs-down fs-1-0rem mr-10px burgundy'}"></i>
                       <div
                         th:id="${'board_dislike'}"
                         th:name="${'board_dislike'}"
@@ -100,7 +100,7 @@
                   </div>
                   <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
                     <div class="d-row-right">
-                      <i th:class="${'fa fa-eye fs-1-0rem me-10 secondary'}"></i>
+                      <i th:class="${'fa fa-eye fs-1-0rem mr-10px secondary'}"></i>
                       <div
                         th:id="${'board_count'}"
                         th:name="${'board_count'}"
@@ -114,7 +114,7 @@
                 <div class="row">
                   <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                     <div class="d-row-left">
-                      <i th:class="${'fa fa-calendar fs-1-0rem me-10'}"></i>
+                      <i th:class="${'fa fa-calendar fs-1-0rem mr-10px'}"></i>
                       <div
                         th:id="${'board_date'}"
                         th:name="${'board_date'}"
@@ -125,7 +125,7 @@
                   </div>
                   <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                     <div class="d-row-right">
-                      <i th:class="${'fa fa-user fs-1-0rem me-10'}"></i>
+                      <i th:class="${'fa fa-user fs-1-0rem mr-10px'}"></i>
                       <div
                         th:id="${'board_writer'}"
                         th:name="${'board_writer'}"
