@@ -1,4 +1,4 @@
-## 1. 📝 정보
+## 1. 정보
 <table style="width:100%">
   <tr>
     <td><b>🔹프로젝트명</b></td>
@@ -22,7 +22,7 @@
   </tr>
 </table>
 
-## 2. ⭐ 특징
+## 2. 특징
 <table style="width:100%">
   <tr>
     <td><b>🔹Spring Boot</b></td>
@@ -46,7 +46,7 @@
   </tr>
 </table>
 
-## 3. 🛠️ 사용 기술
+## 3. 사용 기술
 <table style="width:100%">
   <tr>
     <td><b>🔹프론트엔드</b></td>
