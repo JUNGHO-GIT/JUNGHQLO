@@ -56,11 +56,11 @@ git_push_private() {
   echo "Pushing changes to private repository..."
 
   if [ -f .gitignore ]; then
-    mv .gitignore .gitignore_public
+    mv .gitignore .gitignore.public
   fi
 
-  if [ -f .gitignore_private ]; then
-    mv .gitignore_private .gitignore
+  if [ -f .gitignore.private ]; then
+    mv .gitignore.private .gitignore
   fi
 
   git add .
@@ -68,11 +68,11 @@ git_push_private() {
   git push private master
 
   if [ -f .gitignore ]; then
-    mv .gitignore .gitignore_private
+    mv .gitignore .gitignore.private
   fi
 
-  if [ -f .gitignore_public ]; then
-    mv .gitignore_public .gitignore
+  if [ -f .gitignore.public ]; then
+    mv .gitignore.public .gitignore
   fi
 
   echo "Changes pushed to private repository."
