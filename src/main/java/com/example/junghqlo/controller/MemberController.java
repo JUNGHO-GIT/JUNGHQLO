@@ -52,7 +52,7 @@ public class MemberController {
   public String loginMember() throws Exception {
 
     return MessageFormat.format("/pages/{0}/{1}Login", page, page);
-  }
+  };
 
   // 0-2. loginMember (POST) -----------------------------------------------------------------------
   @ResponseBody
