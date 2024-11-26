@@ -1,6 +1,6 @@
 # gitignore
 
-# directories 3
+# directories 1
 node_modules/
 build/
 dist/
@@ -11,10 +11,11 @@ META-INF/
 target/
 test/
 
-# directories 4
+# directories 2
+# .vscode/
+# .idea/
 .tmp/
 .cache/
-.idea/
 .nyc_output/
 .grunt/
 .gulp/
@@ -58,8 +59,7 @@ thumbs.db
 *npm-debug.log
 *pnpm-debug.log
 
-# etc
-*.vsix
+# config files
 *tsconfig.json
 *tsconfig.path.json
 *tsconfig.paths.json
@@ -68,7 +68,11 @@ thumbs.db
 *jsconfig.path.json
 *jsconfig.paths.json
 *jsconfig.jsonc
+
+# etc
 *push.cjs
 *push.sh
 *gcloud.cjs
 *gcloud.sh
+*.gitignore_private
+*.vsix
