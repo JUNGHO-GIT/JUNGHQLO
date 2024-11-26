@@ -1,8 +1,13 @@
 ## 1. 정보
 <table style="width:100%">
   <tr>
-    <td><b>🔹프로젝트명</b></td>
-    <td>JUNGHQLO</td>
+    <td style="display:inline-flex;align-items:center;justify-content:center">
+      <h6 style="color:navy">●</h6>
+      <h4 style="margin-left:10px">프로젝트 정보</h4>
+    </td>
+    <td>
+      <h5 style="color:white">JUNGHQLO</h5>
+    </td>
   </tr>
   <tr>
     <td><b>🔹주제</b></td>
