@@ -61,10 +61,10 @@ thumbs.db
 # etc
 *.vsix
 *tsconfig.json
-*tsconfig.path.json
+*tsconfig.path*.json
 *tsconfig.jsonc
 *jsconfig.json
-*jsconfig.path.json
+*jsconfig.path*.json
 *jsconfig.jsonc
 *push.cjs
 *push.sh
