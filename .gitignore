@@ -47,18 +47,16 @@ thumbs.db
 *.backup
 *.orig
 *.rej
-
-# package manager files
-package-lock.json
-yarn.lock
-.pnpm-lock.yaml
-npm-debug.log
-pnpm-debug.log
-pom.xml
 *.jar
 *.war
 *.ear
 *.class
+
+# package manager files
+*package-lock.json
+*yarn.lock
+*npm-debug.log
+*pnpm-debug.log
 
 # etc
 *.vsix
