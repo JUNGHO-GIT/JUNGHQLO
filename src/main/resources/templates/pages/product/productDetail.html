@@ -202,6 +202,8 @@
                     th:id="${'orders_totalPrice'}"
                     th:name="${'orders_totalPrice'}"
                   />
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-center mb-4vh">
                   <div
                     th:id="${'orders_totalPrice'}"
                     th:name="${'orders_totalPrice'}"
@@ -223,18 +225,20 @@
                     th:class="${'fs-0-9rem fw-500 dark mr-20px'}"
                     th:text="${'테스트카드'}"
                   ></div>
-                  <div
-                    th:id="${'orders_card'}"
-                    th:name="${'orders_card'}"
-                    th:class="${'fs-0-8rem fw-500 black ml-auto'}"
-                    th:text="${'4242 4242 4242 4242'}"
-                  ></div>
-                  <div
-                    th:id="${'orders_card'}"
-                    th:name="${'orders_card'}"
-                    th:class="${'fs-0-8rem fw-500 black ml-auto'}"
-                    th:text="${'12/34 / 567'}"
-                  ></div>
+                  <div class="d-col-left">
+                    <div
+                      th:id="${'orders_card_number1'}"
+                      th:name="${'orders_card_number1'}"
+                      th:class="${'fs-0-8rem fw-500 black'}"
+                      th:text="${'4242 4242 4242 4242'}"
+                    ></div>
+                    <div
+                      th:id="${'orders_card_number2'}"
+                      th:name="${'orders_card_number2'}"
+                      th:class="${'fs-0-8rem fw-500 black'}"
+                      th:text="${'12/34 / 567'}"
+                    ></div>
+                  </div>
                 </div>
               </div>
               <div class="w-100p mt-5vh mb-3vh bg-light-grey h-1px"></div>
