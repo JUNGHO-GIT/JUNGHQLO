@@ -13,7 +13,7 @@
   <!-- main -->
   <section class="container-fluid">
     <div class="row d-center">
-      <div class="col-11 col-sm-11 col-md-10 col-lg-9 col-xl-8">
+      <div class="col-11 col-sm-11 col-md-10 col-lg-10 col-xl-10">
         <!-- form -->
         <form
           th:id="${'formData'}"
@@ -38,16 +38,12 @@
                 </div>
               </div>
             </div>
-            <!-- y -->
-            <div class="d-none d-md-block col-md-1 col-lg-1 col-xl-1">
-              <div class="h-98p mt-2vh bg-light w-1px m-auto"></div>
-            </div>
             <!-- x -->
             <div class="col-12 col-sm-12 d-md-none d-lg-none d-xl-none">
-              <div class="w-100p my-1vh bg-light h-1px"></div>
+              <div class="w-100p my-3vh bg-light h-1px"></div>
             </div>
             <!-- section 2 -->
-            <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
               <!-- top -->
               <div class="row px-5vw">
                 <div class="d-none d-md-block col-md-12 col-lg-12 col-xl-12">
@@ -160,13 +156,15 @@
               <!-- quantity & total price & buy -->
               <div class="row px-5vw">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-4vh">
-                  <div
-                    th:id="${'orders_quantity_prefix'}"
-                    th:name="${'orders_quantity_prefix'}"
-                    th:text="${'수 량'}"
-                    th:class="${'fs-0-9rem fw-500 dark mr-30px'}"
-                  ></div>
-                  <div class="p-relative w-70p ml-auto">
+                  <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 d-row-left">
+                    <div
+                      th:id="${'orders_quantity_prefix'}"
+                      th:name="${'orders_quantity_prefix'}"
+                      th:text="${'수 량'}"
+                      th:class="${'fs-0-9rem fw-500 dark mr-30px'}"
+                    ></div>
+                  </div>
+                  <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9 d-row-left">
                     <input
                       th:id="${'orders_quantity'}"
                       th:name="${'orders_quantity'}"
@@ -191,49 +189,57 @@
                   </div>
                 </div>
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left mb-4vh">
-                  <div
-                    th:id="${'orders_totalPrice_prefix'}"
-                    th:name="${'orders_totalPrice_prefix'}"
-                    th:class="${'fs-0-9rem fw-500 dark mr-20px'}"
-                    th:text="${'총 금액'}"
-                  ></div>
-                  <input
-                    th:type="${'hidden'}"
-                    th:id="${'orders_totalPrice'}"
-                    th:name="${'orders_totalPrice'}"
-                  />
-                  <div
-                    th:id="${'orders_totalPrice'}"
-                    th:name="${'orders_totalPrice'}"
-                    th:text="${#numbers.formatInteger(MODEL['product_price'], 3, 'COMMA')}"
-                    th:class="${'fs-1-0rem fw-500 light-black ml-auto mr-auto'}"
-                  ></div>
-                  <div
-                    th:id="${'getOrders'}"
-                    th:name="${'getOrders'}"
-                    th:class="${'fs-1-0rem fw-700 black pointer-burgundy ml-auto'}"
-                    th:text="${'구매'}"
-                    th:onclick="getOrders()"
-                  ></div>
+                  <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 d-row-left">
+                    <div
+                      th:id="${'orders_totalPrice_prefix'}"
+                      th:name="${'orders_totalPrice_prefix'}"
+                      th:class="${'fs-0-9rem fw-500 dark'}"
+                      th:text="${'총 금액'}"
+                    ></div>
+                  </div>
+                  <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 d-row-left">
+                    <input
+                      th:type="${'hidden'}"
+                      th:id="${'orders_totalPrice'}"
+                      th:name="${'orders_totalPrice'}"
+                    />
+                    <div
+                      th:id="${'orders_totalPrice'}"
+                      th:name="${'orders_totalPrice'}"
+                      th:text="${#numbers.formatInteger(MODEL['product_price'], 3, 'COMMA')}"
+                      th:class="${'fs-1-0rem fw-500 light-black'}"
+                    ></div>
+                  </div>
+                  <div class="col-4 col-sm-4 col-md-8 col-lg-8 col-xl-8 d-row-left">
+                    <div
+                      th:id="${'getOrders'}"
+                      th:name="${'getOrders'}"
+                      th:class="${'fs-1-0rem fw-700 black pointer-burgundy'}"
+                      th:text="${'구매'}"
+                      th:onclick="getOrders()"
+                    ></div>
+                  </div>
                 </div>
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-row-left">
-                  <div
-                    th:id="${'orders_card'}"
-                    th:name="${'orders_card'}"
-                    th:class="${'fs-0-8rem fw-500 dark mr-20px'}"
-                    th:text="${'테스트카드'}"
-                  ></div>
-                  <div class="d-col-left">
+                  <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 d-row-left">
+                    <div
+                      th:id="${'orders_card'}"
+                      th:name="${'orders_card'}"
+                      th:class="${'fs-0-9rem fw-500 dark'}"
+                      th:text="${'카드'}"
+                    ></div>
+                  </div>
+                  <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9 d-row-left">
                     <div
                       th:id="${'orders_card_number1'}"
                       th:name="${'orders_card_number1'}"
-                      th:class="${'fs-0-7rem fw-500 black'}"
+                      th:class="${'fs-0-7rem fw-500 light-black mr-1vw'}"
                       th:text="${'4242 4242 4242 4242'}"
                     ></div>
                     <div
                       th:id="${'orders_card_number2'}"
                       th:name="${'orders_card_number2'}"
-                      th:class="${'fs-0-7rem fw-500 black'}"
+                      th:class="${'fs-0-7rem fw-500 light-black ml-1vw'}"
                       th:text="${'12/34 / 567'}"
                     ></div>
                   </div>
