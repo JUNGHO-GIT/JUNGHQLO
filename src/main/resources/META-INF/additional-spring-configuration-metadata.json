@@ -1,0 +1,44 @@
+{
+  "properties": [
+    {
+      "name": "title",
+      "type": "java.lang.String",
+      "description": "JUNGHQLO"
+    },
+    {
+      "name": "admin",
+      "type": "java.lang.String",
+      "description": "eric4757"
+    },
+    {
+      "name": "storage",
+      "type": "java.lang.String",
+      "description": "https://storage.googleapis.com/jungho-bucket/JUNGHQLO/IMAGE"
+    },
+    {
+      "name": "orders-url",
+      "type": "java.lang.String",
+      "description": "https://www.junghomun.com/JUNGHQLO/orders"
+    },
+    {
+      "name": "bucket-main",
+      "type": "java.lang.String",
+      "description": "jungho-bucket"
+    },
+    {
+      "name": "bucket-folder",
+      "type": "java.lang.String",
+      "description": "JUNGHQLO/IMAGE"
+    },
+    {
+      "name": "stripe-pk",
+      "type": "java.lang.String",
+      "description": "pk_test_51Mg7EfLu8D8MOb5jEqRvQV8FFOsURbCKLbEhVAZv5fDoL1LII0SRR7WcZwMsXyCozGSK6ytzAtw2ft1npugcm2fv00giPpR9lP"
+    },
+    {
+      "name": "stripe-sk",
+      "type": "java.lang.String",
+      "description": "sk_test_51Mg7EfLu8D8MOb5jqTUZrmNVqWma0G6nZx1P266MaS5lSbOLvcqJNvxeXo4Eef9FjDLNjN5JqvblejPQGgALod4d00lkWUpcSw"
+    }
+  ]
+}
