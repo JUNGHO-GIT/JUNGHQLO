@@ -1,9 +1,11 @@
 package com.example.junghqlo.handler;
 
 import java.util.List;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
 public class PageHandler<T> {
 
   // fields --------------------------------------------------------------------------------------->
@@ -16,49 +18,7 @@ public class PageHandler<T> {
   private Integer itemsTotal;
   private List<T> content;
 
-  // constructor ---------------------------------------------------------------------------------->
-  public PageHandler(
-    Integer pageNumber,
-    Integer pageStart,
-    Integer pageEnd,
-    Integer pageFirst,
-    Integer pageLast,
-    Integer itemsPer,
-    Integer itemsTotal,
-    List<T> content
-  ) {
-    this.pageNumber = pageNumber;
-    this.pageStart = pageStart;
-    this.pageEnd = pageEnd;
-    this.pageFirst = pageFirst;
-    this.pageLast = pageLast;
-    this.itemsPer = itemsPer;
-    this.itemsTotal = itemsTotal;
-    this.content = content;
-  }
-
   // getter --------------------------------------------------------------------------------------->
-  public Integer getPageNumber() {
-    return pageNumber;
-  }
-  public Integer getPageStart() {
-    return pageStart;
-  }
-  public Integer getPageEnd() {
-    return pageEnd;
-  }
-  public Integer getPageFirst() {
-    return pageFirst;
-  }
-  public Integer getItemsPer() {
-    return itemsPer;
-  }
-  public Integer getTotalItems() {
-    return itemsTotal;
-  }
-  public List<T> getContent() {
-    return content;
-  }
   public Integer getTotalPages() {
     return pageLast;
   }
@@ -73,29 +33,22 @@ public class PageHandler<T> {
   }
 
   // setter --------------------------------------------------------------------------------------->
-  public void setPageNumber(Integer pageNumber) {
-    this.pageNumber = pageNumber;
+  public void setTotalPages(Integer totalPages) {
+    this.pageLast = totalPages;
   }
-  public void setPageStart(Integer pageStart) {
-    this.pageStart = pageStart;
+  public void setHasNext(boolean hasNext) {
+    if (hasNext) {
+      this.pageNumber++;
+    }
   }
-  public void setPageEnd(Integer pageEnd) {
-    this.pageEnd = pageEnd;
+  public void setHasPrev(boolean hasPrev) {
+    if (hasPrev) {
+      this.pageNumber--;
+    }
   }
-  public void setPageFirst(Integer pageFirst) {
-    this.pageFirst = pageFirst;
+  public void setHasContent(boolean hasContent) {
+    if (!hasContent) {
+      this.content = null;
+    }
   }
-  public void setPageLast(Integer pageLast) {
-    this.pageLast = pageLast;
-  }
-  public void setItemsPer(Integer itemsPer) {
-    this.itemsPer = itemsPer;
-  }
-  public void setItemsTotal(Integer itemsTotal) {
-    this.itemsTotal = itemsTotal;
-  }
-  public void setContent(List<T> content) {
-    this.content = content;
-  }
-
 }

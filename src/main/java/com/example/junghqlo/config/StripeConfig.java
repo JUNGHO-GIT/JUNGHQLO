@@ -44,14 +44,6 @@ public class StripeConfig {
     return SessionCreateParams.LineItem.AdjustableQuantity.builder().build();
   }
 
-  // 0. logger -------------------------------------------------------------------------------------
-  private static Logger logger = LoggerFactory.getLogger(StripeConfig.class);
-  private static Gson gson = new GsonBuilder()
-  .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
-  .registerTypeAdapter(File.class, new FileAdapter())
-  .setPrettyPrinting()
-  .create();
-
   // 1. createProduct ------------------------------------------------------------------------------
   public Product createProduct(
     String productName,

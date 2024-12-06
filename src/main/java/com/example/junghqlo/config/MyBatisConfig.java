@@ -18,14 +18,13 @@ public class MyBatisConfig {
 
   // dataSource ------------------------------------------------------------------------------------
   private final DataSource dataSource;
-
   public MyBatisConfig(DataSource dataSource) {
     this.dataSource = dataSource;
   }
 
   // SqlSessionFactory -----------------------------------------------------------------------------
   @Bean
-  public SqlSessionFactory sqlSessionFactory() throws Exception {
+  SqlSessionFactory sqlSessionFactory() throws Exception {
     SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
     sessionFactory.setDataSource(dataSource);
     sessionFactory.setTypeAliasesPackage("com.example.junghqlo.domain");
@@ -60,14 +59,14 @@ public class MyBatisConfig {
 
   // SqlSessionTemplate ----------------------------------------------------------------------------
   @Bean
-  public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
+  SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
     return new SqlSessionTemplate(sqlSessionFactory);
   }
 
   // DataSourceTransactionManager ------------------------------------------------------------------
   @Bean
   @DependsOnDatabaseInitialization
-  public DataSourceTransactionManager transactionManager() {
+  DataSourceTransactionManager transactionManager() {
     return new DataSourceTransactionManager(dataSource);
   }
 }
