@@ -1,25 +1,25 @@
-# java
+# .gitattributes
+
+# text
+* text eol=lf
+
+# linguist-detectable
+* linguist-detectable=true
+*.json linguist-detectable=false
+*.yml linguist-detectable=false
+*.yaml linguist-detectable=false
+*.lock linguist-detectable=false
+*.log linguist-detectable=false
+*.md linguist-detectable=false
+*.txt linguist-detectable=false
+
+# linguist-vendored
+**/libs/** linguist-vendored=true
+**/fonts/** linguist-vendored=true
+**/images/** linguist-vendored=true
+**/types/** linguist-vendored=true
+
+# linguist-language
 *.java linguist-language=Java
-
-# jsp
 *.jsp linguist-language=Java
-
-# javascript
-*.js linguist-language=JavaScript
-*.jsx linguist-language=JavaScript
-*.ts linguist-language=JavaScript
-*.tsx linguist-language=JavaScript
-
-# css
-*.css linguist-language=CSS
-
-# xml
-*.xml linguist-language=XML
-*.xsd linguist-language=XML
-*.xsl linguist-language=XML
-
-# sql
-*.sql linguist-language=SQL
-
-# json
-*.json linguist-language=JSON
+*.html linguist-language=Java

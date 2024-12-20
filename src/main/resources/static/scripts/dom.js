@@ -1,81 +1,73 @@
-/** -----------------------------------------------------------------------------------------------
+/** ------------------------------------------------------------------------------------------------
 * @param {string} el
 * @return {Element | null}
 * @desc 쿼리 셀렉터
 **/
-function getElem(el) {
+function getEl(el) {
   const element = document.querySelector(el);
-  if (element) {
-    return element;
-  }
-  else {
-    console.error(`No element found with query "${el}"`);
+
+  if (!element) {
     return null;
   }
+
+  return element;
 }
 
-/** -----------------------------------------------------------------------------------------------
+/** ------------------------------------------------------------------------------------------------
 * @param {string} el
-* @return {NodeListOf<Element>}
+* @return {NodeListOf<Element> | []}
 * @desc 쿼리 셀렉터 올
 **/
-function getElemAll(el) {
+function getElAll(el) {
   const elements = document.querySelectorAll(el);
-  if (elements.length > 0) {
-    return elements;
+
+  if (!elements || elements.length === 0) {
+    return [];
   }
-  else {
-    console.error(`No elements found with query "${el}"`);
-    return elements;
-  }
+
+  return elements;
 }
 
-/** ----------------------------------------------------------------------------------------------->
+/** ------------------------------------------------------------------------------------------------
 * @param {string} el
 * @return {HTMLElement | null}
 * @desc 아이디로 찾기
 **/
 function getById(el) {
   const element = document.getElementById(el);
-  if (element) {
-    return element;
-  }
-  else {
-    console.error(`Element with id ${el} not found`);
+  if (!element) {
     return null;
   }
+
+  return element;
 }
 
-/** ----------------------------------------------------------------------------------------------->
+/** ------------------------------------------------------------------------------------------------
 * @param {string} el
 * @return {HTMLCollectionOf<Element> | null}
 * @desc 클래스로 찾기
 **/
 function getByClass(el) {
   const element = document.getElementsByClassName(el);
-  if (element) {
-    return element;
-  }
-  else {
-    console.error(`Element with class ${el} not found`);
+  if (!element || element.length === 0) {
     return null;
   }
+
+  return element;
 }
 
-/** ----------------------------------------------------------------------------------------------->
+/** ------------------------------------------------------------------------------------------------
 * @param {string} el
 * @return {NodeListOf<HTMLElement> | null}
 * @desc name값으로 찾기
 **/
 function getByName(el) {
   const element = document.getElementsByName(el);
-  if (element) {
-    return element;
-  }
-  else {
-    console.error(`Element with name ${el} not found`);
+  if (!element || element.length === 0) {
     return null;
   }
+
+  return element;
 }
 
 /** ------------------------------------------------------------------------------------------------
@@ -85,71 +77,63 @@ function getByName(el) {
 **/
 function getFormByName(el) {
   const element = document.forms[el];
-  if (element) {
-    return element;
-  }
-  else {
-    console.error(`Form with name ${el} not found`);
+  if (!element) {
     return null;
   }
+
+  return element;
 }
 
-/** ----------------------------------------------------------------------------------------------->
+/** ------------------------------------------------------------------------------------------------
 * @param {HTMLElement} el
-* @return {string}
+* @return {string | null}
 * @desc innerHTML 값 얻기
 **/
 function getInnerHTML(el) {
-  if (el && el instanceof HTMLElement) {
-    return el.innerHTML.trim();
+  if (!el || !(el instanceof HTMLElement)) {
+    return null;
   }
-  else {
-    console.error(`Element with innerHTML ${el} not found`);
-    return "";
-  }
+
+  return String(el.innerHTML).trim();
 }
 
-/** ----------------------------------------------------------------------------------------------->
+/** ------------------------------------------------------------------------------------------------
 * @param {HTMLElement | null} el
-* @return {string}
+* @return {string | null}
 * @desc value 값 얻기
 **/
 function getValue(el) {
-  if (el && el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement || el instanceof HTMLSelectElement || el instanceof HTMLButtonElement || el instanceof HTMLOptionElement) {
-    return el.value.trim();
+  if (!el || !(el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement || el instanceof HTMLSelectElement || el instanceof HTMLButtonElement || el instanceof HTMLOptionElement)) {
+    return null;
   }
-  else {
-    console.error(`Element with value ${el} not found`);
-    return "";
-  }
+
+  return String(el.value).trim();
 }
 
-/** ----------------------------------------------------------------------------------------------->
+/** ------------------------------------------------------------------------------------------------
 * @param {HTMLElement} el
 * @param {string} text
 * @return {void}
 * @desc value 값 설정
 **/
 function setValue(el, text) {
-  if (el && el instanceof HTMLInputElement) {
-    el.value = text.trim();
+  if (!el || !(el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement || el instanceof HTMLSelectElement || el instanceof HTMLButtonElement || el instanceof HTMLOptionElement)) {
+    return;
   }
-  else {
-    console.error(`Element with value ${el} not found`);
-  }
+
+  el.value = text ? String(text).trim() : "";
 };
 
-/** ----------------------------------------------------------------------------------------------->
+/** ------------------------------------------------------------------------------------------------
 * @param {HTMLElement} el
 * @param {string} text
 * @return {void}
 * @desc innerHTML 값 설정
 **/
 function setInnerHTML(el, text) {
-  if (el && el instanceof HTMLElement) {
-    el.innerHTML = text.trim();
+  if (!el || !(el instanceof HTMLElement)) {
+    return;
   }
-  else {
-    console.error(`Element with innerHTML ${el} not found`);
-  }
+
+  el.innerHTML = text ? String(text).trim() : "";
 };
