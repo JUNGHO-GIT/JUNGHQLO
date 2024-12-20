@@ -1,0 +1,27 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-JunghqloApplication<JUNGHQLO>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.example.junghqlo.JunghqloApplication",
+      "projectName": "JUNGHQLO",
+      "envFile": "${workspaceFolder}/.env",
+      "console": "integratedTerminal",
+      "sourcePaths": [
+        "${workspaceFolder}/src/main/java"
+      ]
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-JunghqloApplication<junghqlo>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.example.junghqlo.JunghqloApplication",
+      "projectName": "junghqlo",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
