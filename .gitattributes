@@ -14,10 +14,10 @@
 *.txt linguist-detectable=false
 
 # linguist-vendored
-**/libs/** linguist-vendored=true
-**/fonts/** linguist-vendored=true
-**/images/** linguist-vendored=true
-**/types/** linguist-vendored=true
+**/lib/** linguist-vendored=true
+**/font/** linguist-vendored=true
+**/image/** linguist-vendored=true
+**/type/** linguist-vendored=true
 
 # linguist-language
 *.java linguist-language=Java

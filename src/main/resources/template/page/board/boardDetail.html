@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+  <!-- head -->
+  <th:block th:replace="~{layout/head :: head}" />
+
+  <!-- header -->
+  <th:block th:replace="~{layout/header :: header}" />
+
+  <!-- navigation -->
+  <th:block th:replace="~{layout/navigation :: navigation}" />
+
+  <!-- main -->
+  <section class="container-fluid">
+    <div class="row d-center">
+      <div class="col-11 col-sm-11 col-md-10 col-lg-10 col-xl-10">
+        <!-- form -->
+        <form
+          th:id="${'formData'}"
+          th:name="${'formData'}"
+          th:class="${'formData'}"
+        >
+          <!-- detail -->
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="border-1 radius-2 shadow-1 px-5vw py-5vh bg-light-ivory">
+                <!-- title -->
+                <div class="row">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-center">
+                      <div
+                        th:id="${'board_title'}"
+                        th:name="${'board_title'}"
+                        th:text="${MODEL['board_title']}"
+                        th:class="${'fs-1-8rem fw-800 light-black'}"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+                <!-- hr -->
+                <div class="w-100p my-3vh bg-burgundy h-2px"></div>
+                <!-- image -->
+                <div class="row">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <th:block th:if="${MODEL['board_imgsUrl'] == ''}">
+                      <img
+                        th:src="@{|${STORAGE}/icon/logo.png|}"
+                        th:loading="${'lazy'}"
+                        th:alt="${'image'}"
+                        th:class="${'w-50p w-max-500px border-1 radius-1 shadow-0'}"
+                      />
+                    </th:block>
+                    <th:block th:if="${MODEL['board_imgsUrl'] != ''}">
+                      <img
+                        th:each="image : ${#strings.arraySplit(MODEL['board_imgsUrl'], ',')}"
+                        th:src="@{|${STORAGE}/${page}/${image}|}"
+                        th:loading="${'lazy'}"
+                        th:alt="${'image'}"
+                        th:class="${'w-90p w-max-500px border-1 radius-1 shadow-0'}"
+                      />
+                    </th:block>
+                  </div>
+                </div>
+                <!-- hr -->
+                <div class="w-100p my-3vh bg-light-grey h-1px"></div>
+                <!-- content -->
+                <div class="row">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <textarea
+                      th:id="${'board_contents'}"
+                      th:name="${'board_contents'}"
+                      th:text="${MODEL['board_contents']}"
+                      th:class="${'form-control h-min-30vh border-1 radius-1 shadow-1 lh-1-7'}"
+                    ></textarea>
+                  </div>
+                </div>
+                <!-- hr -->
+                <div class="w-100p my-3vh bg-light-grey h-1px"></div>
+                <!-- like && dislike && count -->
+                <div class="row mb-4vh">
+                  <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-row-left">
+                    <div class="d-row-center mr-1vw">
+                      <i th:class="${'fa fa-thumbs-up fs-1-0rem mr-10px navy'}"></i>
+                      <div
+                        th:id="${'board_like'}"
+                        th:name="${'board_like'}"
+                        th:text="${MODEL['board_like']}"
+                        th:class="${'fs-1-0rem fw-600 dark'}"
+                      ></div>
+                    </div>
+                    <div class="d-row-center ml-1vw">
+                      <i th:class="${'fa fa-thumbs-down fs-1-0rem mr-10px burgundy'}"></i>
+                      <div
+                        th:id="${'board_dislike'}"
+                        th:name="${'board_dislike'}"
+                        th:text="${MODEL['board_dislike']}"
+                        th:class="${'fs-1-0rem fw-600 dark'}"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                    <div class="d-row-right">
+                      <i th:class="${'fa fa-eye fs-1-0rem mr-10px secondary'}"></i>
+                      <div
+                        th:id="${'board_count'}"
+                        th:name="${'board_count'}"
+                        th:text="${MODEL['board_count']}"
+                        th:class="${'fs-1-0rem fw-600 dark'}"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+                <!-- date && writer -->
+                <div class="row">
+                  <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="d-row-left">
+                      <i th:class="${'fa fa-calendar fs-1-0rem mr-10px'}"></i>
+                      <div
+                        th:id="${'board_date'}"
+                        th:name="${'board_date'}"
+                        th:class="${'fs-1-0rem fw-600 dark'}"
+                        th:text="${#strings.substring((MODEL['board_update'] != null ? MODEL['board_update'] : MODEL['board_date']), 0, 10)}"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="d-row-right">
+                      <i th:class="${'fa fa-user fs-1-0rem mr-10px'}"></i>
+                      <div
+                        th:id="${'board_writer'}"
+                        th:name="${'board_writer'}"
+                        th:text="${MODEL['board_writer']}"
+                        th:class="${'fs-1-0rem fw-600 dark'}"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+                <!-- hidden -->
+                <div class="hidden-wrapper">
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'board_number'}"
+                    th:name="${'board_number'}"
+                    th:value="${MODEL['board_number']}"
+                  />
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'sessionId'}"
+                    th:name="${'sessionId'}"
+                    th:value="${session.member_id}"
+                  />
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'writerId'}"
+                    th:name="${'writerId'}"
+                    th:value="${MODEL['board_writer']}"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- divider -->
+  <th:block th:replace="~{interface/divider :: divider}" />
+
+  <!-- button -->
+  <th:block th:replace="~{interface/button :: button}" />
+
+  <!-- footer -->
+  <th:block th:replace="~{layout/footer :: footer}" />
+
+</html>

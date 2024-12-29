@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+  <!-- header -->
+  <section th:fragment="header" class="container-fluid">
+
+    <!-- loader -->
+    <th:block th:replace="~{interface/loader :: loader}" />
+
+    <!-- off-canvas -->
+    <th:block th:replace="~{layout/offcanvas :: offcanvas}" />
+
+    <!-- container 1 -->
+    <div class="container bg-black p-20px">
+      <div class="row row-d-center">
+        <div class="d-none d-sm-block col-sm-7 col-md-7 col-lg-7 col-xl-7">
+          <span class="fs-0-9rem fw-400 white">
+            Free shipping, 30-day return or refund guarantee.
+          </span>
+        </div>
+        <div class="col-12 col-sm-5 col-md-5 col-lg-5 col-xl-5 d-row-right">
+          <th:block th:if="${session.member_id == null}">
+            <div
+              th:id="${'signup'}"
+              th:name="${'signup'}"
+              th:class="${'upper white hover fs-0-8rem mr-20px'}"
+              th:onclick="goToPage('member/signupMember')"
+            >
+              SignUp
+            </div>
+            <div
+              th:id="${'login'}"
+              th:name="${'login'}"
+              th:class="${'upper white hover fs-0-8rem mr-20px'}"
+              th:onclick="goToPage('member/loginMember')"
+            >
+              Login
+            </div>
+          </th:block>
+          <th:block th:if="${session.member_id != null}">
+            <div
+              th:id="${'mypage'}"
+              th:name="${'mypage'}"
+              th:class="${'upper white hover fs-0-8rem mr-20px'}"
+              th:with="memberNumber=${session.member_number}"
+              th:onclick="goToPage('member/detailMember?member_number=' + [[${memberNumber}]])"
+            >
+              MyPage
+            </div>
+            <div
+              th:id="${'logout'}"
+              th:name="${'logout'}"
+              th:class="${'upper white hover fs-0-8rem mr-20px'}"
+              th:onclick="getLogout()"
+            >
+              Logout
+            </div>
+          </th:block>
+          <div class="header-top-hover">
+            <span class="upper white hover fs-0-8rem">
+              Admin
+            </span>
+            <ul th:if ="${session.member_id == ADMIN}">
+              <li>
+                <a th:onclick="@{https://dashboard.stripe.com/test/dashboard|}">
+                  AdminPage
+                </a>
+              </li>
+              <li>
+                <a th:onclick="goToPage('member/listMember')">
+                  MemberList
+                </a>
+              </li>
+              <li>
+                <a th:onclick="goToPage('product/saveProduct')">
+                  SaveProduct
+                </a>
+              </li>
+              <li>
+                <a th:onclick="goToPage('notice/saveNotice')">
+                  SaveNotice
+                </a>
+              </li>
+            </ul>
+            <ul th:if ="${session.member_id != ADMIN}">
+              <li>
+                <a th:onclick="adminAlert()">
+                  AdminPage
+                </a>
+              </li>
+              <li>
+                <a th:onclick="adminAlert()">
+                  MemberList
+                </a>
+              </li>
+              <li>
+                <a th:onclick="adminAlert()">
+                  SaveProduct
+                </a>
+              </li>
+              <li>
+                <a th:onclick="adminAlert()">
+                  SaveNotice
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- container 2 -->
+    <div class="container bg-white p-10px">
+      <div class="row d-center">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-10 col-xl-10">
+          <div class="row d-center">
+            <!-- logo -->
+            <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+              <img
+                th:src="@{|${STORAGE}/icon/logo.png|}"
+                th:loading="${'lazy'}"
+                th:alt="${'logo'}"
+                th:width="${'70px'}"
+                th:height="${'70px'}"
+                th:class="${'pointer ml-20px'}"
+                th:onclick="goToPage('home')"
+              />
+            </div>
+            <!-- menu -->
+            <div class="d-none d-sm-block col-sm-10 col-md-10 col-lg-10 col-xl-10">
+              <div
+                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy mr-4vw'}"
+                th:onclick="goToPage('product/listProduct')"
+              >
+                Product
+              </div>
+              <div
+                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy mr-4vw'}"
+                th:onclick="${session.member_id == null} ? 'sessionAlert()' : 'goToPage(\'orders/listOrders\')'"
+              >
+                Orders
+              </div>
+              <div
+                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy mr-4vw'}"
+                th:onclick="goToPage('board/listBoard')"
+              >
+                Board
+              </div>
+              <div
+                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy mr-4vw'}"
+                th:onclick="goToPage('notice/listNotice')"
+              >
+                Notice
+              </div>
+              <div
+                th:class="${'fs-1-1rem fw-700 upper pointer-burgundy'}"
+                th:onclick="goToPage('qna/listQna')"
+              >
+                QnA
+              </div>
+            </div>
+            <!-- mobile menu -->
+            <div class="col-10 d-sm-none">
+              <div class="mobile-toggle d-row-right mr-20px">
+                <i class="fa fa-bars fs-1-8rem pointer hover"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- hidden -->
+    <div class="hidden-wrapper">
+      <input
+        th:type="${'hidden'}"
+        th:id="${'memberId'}"
+        th:name="${'memberId'}"
+        th:value="${session.member_id}"
+      />
+      <input
+        th:type="${'hidden'}"
+        th:id="${'memberNumber'}"
+        th:name="${'memberNumber'}"
+        th:value="${session.member_number}"
+      />
+    </div>
+  </section>
+</html>

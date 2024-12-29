@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+  <!-- head -->
+  <th:block th:replace="~{layout/head :: head}" />
+
+  <!-- header -->
+  <th:block th:replace="~{layout/header :: header}" />
+
+  <!-- navigation -->
+  <th:block th:replace="~{layout/navigation :: navigation}" />
+
+  <!-- main -->
+  <section class="container-fluid">
+    <div class="row d-center">
+      <div class="col-11 col-sm-11 col-md-10 col-lg-10 col-xl-10">
+        <!-- form -->
+        <form
+          th:id="${'formData'}"
+          th:name="${'formData'}"
+          th:class="${'formData'}"
+        >
+          <!-- list -->
+          <div class="row">
+            <!-- slider -->
+            <div class="d-none d-sm-block col-sm-3 col-md-3 col-lg-3 col-xl-3">
+              <!-- sort -->
+              <div class="slider-sort">
+                <div class="d-row-left mb-2vh">
+                  <i
+                    th:id="${'sort-icon'}"
+                    th:name="${'sort-icon'}"
+                    th:class="${'fas fa-list-ul mr-10px'}"
+                  ></i>
+                  <div
+                    th:id="${'sort-title'}"
+                    th:name="${'sort-title'}"
+                    th:class="${'fs-0-8rem fw-700 light-black upper'}"
+                    th:text="${'Sort'}"
+                  ></div>
+                  <i
+                    th:id="${'sort-icon-down'}"
+                    th:name="${'sort-icon-down'}"
+                    th:class="${'fas fa-sort-down mt-n5px ml-3px'}"
+                    th:onclick="collapseList('sort')"
+                  ></i>
+                </div>
+                <div class="d-col-left">
+                  <div
+                    th:id="${'all'}"
+                    th:name="${'all'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${sortHandler == 'all' ? 'bg-dark light' : ''}"
+                    th:text="${'ALL'}"
+                    th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'all', origin: [[${originHandler}]]})"
+                  ></div>
+                  <div
+                    th:id="${'nameASC'}"
+                    th:name="${'nameASC'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${sortHandler == 'nameASC' ? 'bg-dark light' : ''}"
+                    th:text="${'Name   ' + '   ▲'}"
+                    th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'nameASC', origin: [[${originHandler}]]})"
+                  ></div>
+                  <div
+                    th:id="${'nameDESC'}"
+                    th:name="${'nameDESC'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${sortHandler == 'nameDESC' ? 'bg-dark light' : ''}"
+                    th:text="${'Name   ' + '   ▼'}"
+                    th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'nameDESC', origin: [[${originHandler}]]})"
+                  ></div>
+                  <div
+                    th:id="${'priceASC'}"
+                    th:name="${'priceASC'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${sortHandler == 'priceASC' ? 'bg-dark light' : ''}"
+                    th:text="${'Price   ' + '   ▲'}"
+                    th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'priceASC', origin: [[${originHandler}]]})"
+                  ></div>
+                  <div
+                    th:id="${'priceDESC'}"
+                    th:name="${'priceDESC'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${sortHandler == 'priceDESC' ? 'bg-dark light' : ''}"
+                    th:text="${'Price   ' + '   ▼'}"
+                    th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'priceDESC', origin: [[${originHandler}]]})"
+                  ></div>
+                  <div
+                    th:id="${'dateASC'}"
+                    th:name="${'dateASC'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${sortHandler == 'dateASC' ? 'bg-dark light' : ''}"
+                    th:text="${'Date   ' + '   ▲'}"
+                    th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'dateASC', origin: [[${originHandler}]]})"
+                  ></div>
+                  <div
+                    th:id="${'dateDESC'}"
+                    th:name="${'dateDESC'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw'}"
+                    th:classappend="${sortHandler == 'dateDESC' ? 'bg-dark light' : ''}"
+                    th:text="${'Date   ' + '   ▼'}"
+                    th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'dateDESC', origin: [[${originHandler}]]})"
+                  ></div>
+                </div>
+              </div>
+              <div class="w-100p my-3vh bg-light-grey h-1px"></div>
+              <!-- category -->
+              <div class="slider-category">
+                <div class="d-row-left mb-2vh">
+                  <i
+                    th:id="${'category-icon'}"
+                    th:name="${'category-icon'}"
+                    th:class="${'fas fa-list-ul mr-10px'}"
+                  ></i>
+                  <div
+                    th:id="${'category-title'}"
+                    th:name="${'category-title'}"
+                    th:class="${'fs-0-8rem fw-700 light-black upper'}"
+                    th:text="${'category'}"
+                  ></div>
+                  <i
+                    th:id="${'category-icon-down'}"
+                    th:name="${'category-icon-down'}"
+                    th:class="${'fas fa-sort-down mt-n5px ml-3px'}"
+                    th:onclick="collapseList('category')"
+                  ></i>
+                </div>
+                <div class="d-col-left">
+                  <div
+                    th:id="${'all'}"
+                    th:name="${'all'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${categoryHandler == 'all' ? 'bg-dark light' : ''}"
+                    th:text="${'ALL'}"
+                    th:onclick="goToPage('list', {category: 'all', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  ></div>
+                  <div
+                    th:id="${'outer'}"
+                    th:name="${'outer'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${categoryHandler == 'outer' ? 'bg-dark light' : ''}"
+                    th:text="${'OUTER'}"
+                    th:onclick="goToPage('list', {category: 'outer', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  ></div>
+                  <div
+                    th:id="${'top'}"
+                    th:name="${'top'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${categoryHandler == 'top' ? 'bg-dark light' : ''}"
+                    th:text="${'TOP'}"
+                    th:onclick="goToPage('list', {category: 'top', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  ></div>
+                  <div
+                    th:id="${'bottom'}"
+                    th:name="${'bottom'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${categoryHandler == 'bottom' ? 'bg-dark light' : ''}"
+                    th:text="${'BOTTOM'}"
+                    th:onclick="goToPage('list', {category: 'bottom', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  ></div>
+                  <div
+                    th:id="${'shoes'}"
+                    th:name="${'shoes'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${categoryHandler == 'shoes' ? 'bg-dark light' : ''}"
+                    th:text="${'SHOES'}"
+                    th:onclick="goToPage('list', {category: 'shoes', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  ></div>
+                  <div
+                    th:id="${'bag'}"
+                    th:name="${'bag'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${categoryHandler == 'bag' ? 'bg-dark light' : ''}"
+                    th:text="${'BAG'}"
+                    th:onclick="goToPage('list', {category: 'bag', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  ></div>
+                  <div
+                    th:id="${'acc'}"
+                    th:name="${'acc'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw'}"
+                    th:classappend="${categoryHandler == 'acc' ? 'bg-dark light' : ''}"
+                    th:text="${'ACC'}"
+                    th:onclick="goToPage('list', {category: 'acc', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  ></div>
+                </div>
+              </div>
+              <div class="w-100p my-3vh bg-light-grey h-1px"></div>
+              <!-- origin -->
+              <div class="slider-origin">
+                <div class="d-row-left mb-2vh">
+                  <i
+                    th:id="${'origin-icon'}"
+                    th:name="${'origin-icon'}"
+                    th:class="${'fas fa-list-ul mr-10px'}"
+                  ></i>
+                  <div
+                    th:id="${'origin-title'}"
+                    th:name="${'origin-title'}"
+                    th:class="${'fs-0-8rem fw-700 light-black upper'}"
+                    th:text="${'Origin'}"
+                  ></div>
+                  <i
+                    th:id="${'origin-icon-down'}"
+                    th:name="${'origin-icon-down'}"
+                    th:class="${'fas fa-sort-down mt-n5px ml-3px'}"
+                    th:onclick="collapseList('origin')"
+                  ></i>
+                </div>
+                <div class="d-col-left">
+                  <div
+                    th:id="${'all'}"
+                    th:name="${'all'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${originHandler == 'all' ? 'bg-dark light' : ''}"
+                    th:text="${'ALL'}"
+                    th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'all'})"
+                  ></div>
+                  <div
+                    th:id="${'kr'}"
+                    th:name="${'kr'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${originHandler == 'kr' ? 'bg-dark light' : ''}"
+                    th:text="${'KOREA'}"
+                    th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'kr'})"
+                  ></div>
+                  <div
+                    th:id="${'ch'}"
+                    th:name="${'ch'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${originHandler == 'ch' ? 'bg-dark light' : ''}"
+                    th:text="${'CHINA'}"
+                    th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'ch'})"
+                  ></div>
+                  <div
+                    th:id="${'jp'}"
+                    th:name="${'jp'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${originHandler == 'jp' ? 'bg-dark light' : ''}"
+                    th:text="${'JAPAN'}"
+                    th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'jp'})"
+                  ></div>
+                  <div
+                    th:id="${'us'}"
+                    th:name="${'us'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-8rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${originHandler == 'us' ? 'bg-dark light' : ''}"
+                    th:text="${'USA'}"
+                    th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'us'})"
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <!-- product-list -->
+            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+              <div class="row">
+                <th:block th:each="LIST : ${LIST}">
+                  <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 d-center p-10px mb-15vh">
+                    <div class="radius-2 shadow-1 w-100p h-300px w-max-500px object-cover p-relative">
+                      <!-- image -->
+                      <div
+                        th:each="image, iterStat:${#strings.arraySplit(LIST['product_imgsUrl'], ',')}"
+                        th:if="${iterStat.index == 0}"
+                        th:loading="${'lazy'}"
+                        th:alt="${'image'}"
+                        th:id="${'product-bg'}"
+                        th:name="${'product-bg'}"
+                        th:class="${'radius-2 z-100'}"
+                        th:attr="product-bg=@{|${STORAGE}/${page}/${image}|}"
+                      ></div>
+                      <!-- hover -->
+                      <div class="product-hover radius-2 fadeIn">
+                        <div class="d-row-center hover ml-20px mb-3vh">
+                          <i class="far fa-heart white mr-10px"></i>
+                          <div
+                            th:id="${'like'}"
+                            th:name="${'like'}"
+                            th:class="${'fs-0-9rem fw-500 white'}"
+                          >
+                            Like
+                          </div>
+                        </div>
+                        <div class="d-row-center hover ml-20px mb-3vh">
+                          <i class="fas fa-exchange-alt white mr-10px"></i>
+                          <div
+                            th:id="${'compare'}"
+                            th:name="${'compare'}"
+                            th:class="${'fs-0-9rem fw-500 white'}"
+                          >
+                            Compare
+                          </div>
+                        </div>
+                        <div class="d-row-center hover ml-20px mb-0px">
+                          <i class="fas fa-search white mr-10px"></i>
+                          <div
+                            th:id="${'view'}"
+                            th:name="${'view'}"
+                            th:class="${'fs-0-9rem fw-500 white'}"
+                            th:onclick="goToPage('detail', [[${LIST['product_number']}]])"
+                          >
+                            View
+                          </div>
+                        </div>
+                      </div>
+                      <!-- text -->
+                      <div class="product-text">
+                        <div class="d-row-center mt-3vh">
+                          <div
+                            th:id="${'product_name'}"
+                            th:name="${'product_name'}"
+                            th:class="${'fs-1-1rem fw-700 light-black'}"
+                            th:text="${#strings.abbreviate(LIST['product_name'], 20)}"
+                          ></div>
+                        </div>
+                        <div class="d-row-between mt-2vh">
+                          <div
+                            th:id="${'product_brand'}"
+                            th:name="${'product_brand'}"
+                            th:class="${'fs-0-9rem fw-600 grey ml-20px'}"
+                            th:text="${LIST['product_brand']}"
+                          ></div>
+                          <div
+                            th:id="${'product_price'}"
+                            th:name="${'product_price'}"
+                            th:class="${'fs-0-9rem fw-600 dark mr-20px'}"
+                            th:text="${#numbers.formatInteger(LIST['product_price'], 3, 'COMMA')}"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </th:block>
+              </div>
+            </div>
+            <!-- slider-off -->
+            <div class="d-block d-sm-none col-12">
+              <!-- sort -->
+              <div class="slider-off-sort">
+                <div class="d-row-left mb-2vh">
+                <i
+                  th:id="${'off-sort-icon'}"
+                  th:name="${'off-sort-icon'}"
+                  th:class="${'fas fa-list-ul mr-10px'}"
+                ></i>
+                <div
+                  th:id="${'off-sort-title'}"
+                  th:name="${'off-sort-title'}"
+                  th:class="${'fs-0-7rem fw-600 light-black upper'}"
+                  th:text="${'Sort'}"
+                ></div>
+                <i
+                  th:id="${'off-sort-icon-down'}"
+                  th:name="${'off-sort-icon-down'}"
+                  th:class="${'fas fa-sort-down mt-n5px ml-3px'}"
+                  th:onclick="collapseList('off-sort')"
+                ></i>
+                </div>
+                <div class="d-col-left">
+                  <div
+                    th:id="${'all'}"
+                    th:name="${'all'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${sortHandler == 'all' ? 'bg-dark light' : ''}"
+                    th:text="${'ALL'}"
+                    th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'all', origin: [[${originHandler}]]})"
+                  ></div>
+                  <div
+                    th:id="${'nameASC'}"
+                    th:name="${'nameASC'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${sortHandler == 'nameASC' ? 'bg-dark light' : ''}"
+                    th:text="${'Name   ' + '   ▲'}"
+                    th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'nameASC', origin: [[${originHandler}]]})"
+                  ></div>
+                  <div
+                    th:id="${'nameDESC'}"
+                    th:name="${'nameDESC'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${sortHandler == 'nameDESC' ? 'bg-dark light' : ''}"
+                    th:text="${'Name   ' + '   ▼'}"
+                    th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'nameDESC', origin: [[${originHandler}]]})"
+                  ></div>
+                  <div
+                    th:id="${'priceASC'}"
+                    th:name="${'priceASC'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${sortHandler == 'priceASC' ? 'bg-dark light' : ''}"
+                    th:text="${'Price   ' + '   ▲'}"
+                    th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'priceASC', origin: [[${originHandler}]]})"
+                  ></div>
+                  <div
+                    th:id="${'priceDESC'}"
+                    th:name="${'priceDESC'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${sortHandler == 'priceDESC' ? 'bg-dark light' : ''}"
+                    th:text="${'Price   ' + '   ▼'}"
+                    th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'priceDESC', origin: [[${originHandler}]]})"
+                  ></div>
+                  <div
+                    th:id="${'dateASC'}"
+                    th:name="${'dateASC'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${sortHandler == 'dateASC' ? 'bg-dark light' : ''}"
+                    th:text="${'Date   ' + '   ▲'}"
+                    th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'dateASC', origin: [[${originHandler}]]})"
+                  ></div>
+                  <div
+                    th:id="${'dateDESC'}"
+                    th:name="${'dateDESC'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw'}"
+                    th:classappend="${sortHandler == 'dateDESC' ? 'bg-dark light' : ''}"
+                    th:text="${'Date   ' + '   ▼'}"
+                    th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: 'dateDESC', origin: [[${originHandler}]]})"
+                  ></div>
+                </div>
+              </div>
+              <div class="w-100p my-3vh bg-light-grey h-1px"></div>
+              <!-- category -->
+              <div class="slider-off-category">
+                <div class="d-row-left mb-2vh">
+                  <i
+                    th:id="${'off-category-icon'}"
+                    th:name="${'off-category-icon'}"
+                    th:class="${'fas fa-list-ul mr-10px'}"
+                  ></i>
+                  <div
+                    th:id="${'off-category-title'}"
+                    th:name="${'off-category-title'}"
+                    th:class="${'fs-0-7rem fw-600 light-black upper'}"
+                    th:text="${'category'}"
+                  ></div>
+                  <i
+                    th:id="${'off-category-icon-down'}"
+                    th:name="${'off-category-icon-down'}"
+                    th:class="${'fas fa-sort-down mt-n5px ml-3px'}"
+                    th:onclick="collapseList('off-category')"
+                  ></i>
+                </div>
+                <div class="d-col-left">
+                  <div
+                    th:id="${'all'}"
+                    th:name="${'all'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${categoryHandler == 'all' ? 'bg-dark light' : ''}"
+                    th:text="${'ALL'}"
+                    th:onclick="goToPage('list', {category: 'all', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  ></div>
+                  <div
+                    th:id="${'outer'}"
+                    th:name="${'outer'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${categoryHandler == 'outer' ? 'bg-dark light' : ''}"
+                    th:text="${'OUTER'}"
+                    th:onclick="goToPage('list', {category: 'outer', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  ></div>
+                  <div
+                    th:id="${'top'}"
+                    th:name="${'top'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${categoryHandler == 'top' ? 'bg-dark light' : ''}"
+                    th:text="${'TOP'}"
+                    th:onclick="goToPage('list', {category: 'top', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  ></div>
+                  <div
+                    th:id="${'bottom'}"
+                    th:name="${'bottom'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${categoryHandler == 'bottom' ? 'bg-dark light' : ''}"
+                    th:text="${'BOTTOM'}"
+                    th:onclick="goToPage('list', {category: 'bottom', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  ></div>
+                  <div
+                    th:id="${'shoes'}"
+                    th:name="${'shoes'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${categoryHandler == 'shoes' ? 'bg-dark light' : ''}"
+                    th:text="${'SHOES'}"
+                    th:onclick="goToPage('list', {category: 'shoes', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  ></div>
+                  <div
+                    th:id="${'bag'}"
+                    th:name="${'bag'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${categoryHandler == 'bag' ? 'bg-dark light' : ''}"
+                    th:text="${'BAG'}"
+                    th:onclick="goToPage('list', {category: 'bag', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  ></div>
+                  <div
+                    th:id="${'acc'}"
+                    th:name="${'acc'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw'}"
+                    th:classappend="${categoryHandler == 'acc' ? 'bg-dark light' : ''}"
+                    th:text="${'ACC'}"
+                    th:onclick="goToPage('list', {category: 'acc', sort: [[${sortHandler}]], origin: [[${originHandler}]]})"
+                  ></div>
+                </div>
+              </div>
+              <div class="w-100p my-3vh bg-light-grey h-1px"></div>
+              <!-- origin -->
+              <div class="slider-off-origin">
+                <div class="d-row-left mb-2vh">
+                  <i
+                    th:id="${'off-origin-icon'}"
+                    th:name="${'off-origin-icon'}"
+                    th:class="${'fas fa-list-ul mr-10px'}"
+                  ></i>
+                  <div
+                    th:id="${'off-origin-title'}"
+                    th:name="${'off-origin-title'}"
+                    th:class="${'fs-0-7rem fw-600 light-black upper'}"
+                    th:text="${'Origin'}"
+                  ></div>
+                  <i
+                    th:id="${'off-origin-icon-down'}"
+                    th:name="${'off-origin-icon-down'}"
+                    th:class="${'fas fa-sort-down mt-n5px ml-3px'}"
+                    th:onclick="collapseList('off-origin')"
+                  ></i>
+                </div>
+                <div class="d-col-left">
+                  <div
+                    th:id="${'all'}"
+                    th:name="${'all'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${originHandler == 'all' ? 'bg-dark light' : ''}"
+                    th:text="${'ALL'}"
+                    th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'all'})"
+                  ></div>
+                  <div
+                    th:id="${'kr'}"
+                    th:name="${'kr'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${originHandler == 'kr' ? 'bg-dark light' : ''}"
+                    th:text="${'KOREA'}"
+                    th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'kr'})"
+                  ></div>
+                  <div
+                    th:id="${'ch'}"
+                    th:name="${'ch'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${originHandler == 'ch' ? 'bg-dark light' : ''}"
+                    th:text="${'CHINA'}"
+                    th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'ch'})"
+                  ></div>
+                  <div
+                    th:id="${'jp'}"
+                    th:name="${'jp'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${originHandler == 'jp' ? 'bg-dark light' : ''}"
+                    th:text="${'JAPAN'}"
+                    th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'jp'})"
+                  ></div>
+                  <div
+                    th:id="${'us'}"
+                    th:name="${'us'}"
+                    th:class="${'w-100p d-center bg-light hover fs-0-7rem upper py-2vh px-3vw mb-2vh'}"
+                    th:classappend="${originHandler == 'us' ? 'bg-dark light' : ''}"
+                    th:text="${'USA'}"
+                    th:onclick="goToPage('list', {category: [[${categoryHandler}]], sort: [[${sortHandler}]], origin: 'us'})"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- script -->
+  <script defer>
+    // product-bg 이미지 삽입
+    function insertBg() {
+      document.querySelectorAll('[product-bg]')?.forEach((bg) => {
+        const bgUrl = bg.getAttribute('product-bg');
+        Object.assign(bg.style, {
+          backgroundImage: `url(${bgUrl})`,
+          width: '100%',
+          height: '100%',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        });
+      });
+    };
+
+    // product-hover 호버했을때 효과
+    function hoverTransition() {
+      const itemHover = document.querySelectorAll('.product-hover');
+      const itemText = document.querySelectorAll('.product-text');
+      itemHover.forEach((el) => {
+        Object.assign(el.style, {
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          top: '0',
+          backgroundColor: 'rgba(0, 0, 0, 0.4)',
+          display: 'none',
+        });
+        el.parentElement.addEventListener('mouseover', () => {
+          Object.assign(el.style, {
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'flex-start',
+          });
+          Object.assign(Array.from(itemText).filter((text) => (
+            text.parentElement === el.parentElement
+          )).map((text) => text.style), {
+            color: 'white',
+            transition: 'color 0.3s, transform 0.3s',
+            transform: 'scale(1.1)',
+          });
+        });
+        el.parentElement.addEventListener('mouseout', () => {
+          Object.assign(el.style, {
+            display: 'none',
+          });
+          Object.assign(Array.from(itemText).filter((text) => (
+            text.parentElement === el.parentElement
+          )).map((text) => text.style), {
+            color: 'light-black',
+            transition: 'color 0.3s, transform 0.3s',
+            transform: 'scale(1)',
+          });
+        });
+      });
+    };
+
+    // collapse 효과
+    function collapseList(element) {
+      document.querySelectorAll(`.slider-${element}`).forEach((el) => {
+        const iconDown = el.querySelector(`#${element}-icon-down`);
+        const elementList = el.querySelector('.d-col-left');
+
+        const computedStyle = window.getComputedStyle(elementList);
+        const currentMaxHeight = computedStyle.maxHeight;
+        const currentOpacity = computedStyle.opacity;
+
+        elementList.style.transition = 'max-height 0.5s ease, opacity 0.5s ease';
+        elementList.style.overflow = 'hidden';
+
+        if (currentMaxHeight === '0px' && currentOpacity === '0') {
+          elementList.style.maxHeight = '500px';
+          elementList.style.opacity = '1';
+          iconDown.style.transform = 'rotate(0deg)';
+          iconDown.classList.add('mt-n5px');
+          iconDown?.classList?.remove('mb-n5px');
+        }
+        else {
+          elementList.style.maxHeight = '0';
+          elementList.style.opacity = '0';
+          iconDown.style.transform = 'rotate(180deg)';
+          iconDown.classList.remove('mt-n5px');
+          iconDown?.classList?.add('mb-n5px');
+        }
+      });
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      insertBg();
+      hoverTransition();
+    });
+  </script>
+
+  <!-- divider -->
+  <th:block th:replace="~{interface/divider :: divider}" />
+
+  <!-- sorting -->
+  <th:block th:replace="~{interface/sorting :: sorting}" />
+
+  <!-- divider -->
+  <th:block th:replace="~{interface/divider :: divider}" />
+
+  <!-- button -->
+  <th:block th:replace="~{interface/button :: button}" />
+
+  <!-- divider -->
+  <th:block th:replace="~{interface/divider :: divider}" />
+
+  <!-- pagination -->
+  <th:block th:replace="~{interface/pagination :: pagination}" />
+
+  <!-- footer -->
+  <th:block th:replace="~{layout/footer :: footer}" />
+
+</html>

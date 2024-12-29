@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+  <!-- head -->
+  <head th:fragment="head">
+
+    <!-- meta -->
+    <title>JUNGHQLO</title>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="JUNGHQLO"/>
+    <meta name="keywords" content="JUNGHQLO"/>
+    <meta name="author" content="JUNGHQLO"/>
+
+    <!-- favicon -->
+    <link
+      rel="icon"
+      type="image/x-icon"
+      th:href="@{|${STORAGE}/icon/favicon.ico|}"
+    />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      th:href="@{|${STORAGE}/icon/logo.png|}"
+    />
+
+    <!-- preconnect -->
+    <link
+      rel="preconnect"
+      th:href="@{https://cdnjs.cloudflare.com}"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      th:href="@{https://storage.googleapis.com}"
+      crossorigin
+    />
+    <link
+      rel="preconnect"
+      th:href="@{https://jungho-git.github.io}"
+      crossorigin
+    />
+
+    <!-- css 1 -->
+    <link rel="stylesheet" th:href="|${CDN}/bootstrap/4.6.2/css/bootstrap.min.css|" />
+    <link rel="stylesheet" th:href="|${CDN}/font-awesome/5.15.4/css/all.min.css|" />
+    <link rel="stylesheet" th:href="|${CDN}/magnific-popup.js/1.2.0/magnific-popup.min.css|" />
+    <link rel="stylesheet" th:href="|${CDN}/jquery-nice-select/1.1.0/css/nice-select.min.css|" />
+    <link rel="stylesheet" th:href="|${CDN}/OwlCarousel2/2.3.4/assets/owl.carousel.min.css|" />
+    <link rel="stylesheet" th:href="|${CDN}/SlickNav/1.0.10/slicknav.min.css|" />
+    <link rel="stylesheet" th:href="|${CDN}/slick-carousel/1.9.0/slick.min.css|" />
+
+    <!-- css 2 -->
+    <link rel="stylesheet" th:href="@{/style/common.css}" />
+
+    <!-- js 1 -->
+    <script th:src="@{|${CDN}/jquery/3.7.1/jquery.min.js|}"></script>
+    <script defer th:src="|${CDN}/bootstrap/4.6.2/js/bootstrap.bundle.min.js|"></script>
+    <script defer th:src="|${CDN}/popper.js/1.16.1/umd/popper.min.js|"></script>
+    <script defer th:src="|${CDN}/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js|"></script>
+    <script defer th:src="|${CDN}/magnific-popup.js/1.2.0/jquery.magnific-popup.min.js|"></script>
+    <script defer th:src="|${CDN}/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js|"></script>
+    <script defer th:src="|${CDN}/mixitup/3.3.1/mixitup.min.js|"></script>
+    <script defer th:src="|${CDN}/OwlCarousel2/2.3.4/owl.carousel.min.js|"></script>
+    <script defer th:src="|${CDN}/SlickNav/1.0.10/jquery.slicknav.min.js|"></script>
+    <script defer th:src="|//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js|"></script>
+
+    <!-- js 2 -->
+    <script defer th:src="@{/script/global.js}"></script>
+    <script defer th:src="@{/script/dom.js}"></script>
+    <script defer th:src="@{/script/fetch.js}"></script>
+    <script defer th:src="@{/script/utils.js}"></script>
+    <script defer th:src="@{/script/validate.js}"></script>
+    <script defer th:src="@{/script/main.js}"></script>
+
+    <!-- cdn -->
+    <link
+      rel="stylesheet"
+      th:href="@{https://jungho-git.github.io/JCDN/fonts/PretendardVariable.min.css}"
+      crossorigin
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{https://jungho-git.github.io/JCDN/styles/Reset.min.css}"
+      crossorigin
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{https://jungho-git.github.io/JCDN/styles/Init.min.css}"
+      crossorigin
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{https://jungho-git.github.io/JCDN/styles/Jstyle.min.css}"
+      crossorigin
+    />
+
+  </head>
+</html>
