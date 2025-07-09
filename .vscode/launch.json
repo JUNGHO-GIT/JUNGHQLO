@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-JunghqloApplication<JUNGHQLO>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.JUNGHQLO.JunghqloApplication",
+      "projectName": "JUNGHQLO",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
