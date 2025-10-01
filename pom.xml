@@ -13,6 +13,7 @@
   <packaging>war</packaging>
   <modelVersion>4.0.0</modelVersion>
   <version>1.0.0</version>
+
   <!-- parent -->
   <parent>
     <groupId>org.springframework.boot</groupId>
