@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+  <!-- head -->
+  <th:block th:replace="~{layouts/head :: head}" />
+
+  <!-- header -->
+  <th:block th:replace="~{layouts/header :: header}" />
+
+  <!-- navigation -->
+  <th:block th:replace="~{layouts/navigation :: navigation}" />
+
+  <!-- main -->
+  <section class="container-fluid">
+    <div class="row d-center">
+      <div class="col-11 col-sm-11 col-md-10 col-lg-9 col-xl-8">
+        <!-- form -->
+        <form
+          th:id="${'formData'}"
+          th:name="${'formData'}"
+          th:class="${'formData'}"
+        >
+          <!-- detail -->
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="border-1 radius-2 shadow-1 px-5vw py-6vh">
+                <!-- title -->
+                <div class="row">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="fs-1-8rem fw-800 light-black">
+                      비밀번호 변경
+                    </div>
+                  </div>
+                </div>
+                <!-- hr -->
+                <div class="w-100p my-3vh bg-light-grey h-1px"></div>
+                <!-- PW -->
+                <div class="row mb-3vh">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-2vh">
+                      <div class="fs-0-9rem fw-800 light-black">
+                        비밀번호
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy">
+                        *
+                      </div>
+                    </div>
+                    <input
+                      th:type="${'password'}"
+                      th:id="${'member_pw'}"
+                      th:name="${'member_pw'}"
+                      th:class="${'form-control'}"
+                    />
+                  </div>
+                </div>
+                <!-- PW confirm -->
+                <div class="row mb-3vh">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-left mb-2vh">
+                      <div class="fs-0-9rem fw-800 light-black">
+                        비밀번호 확인
+                      </div>
+                      <div class="fs-0-9rem fw-800 burgundy">
+                        *
+                      </div>
+                    </div>
+                    <input
+                      th:type="${'password'}"
+                      th:id="${'member_pw2'}"
+                      th:name="${'member_pw2'}"
+                      th:class="${'form-control'}"
+                    />
+                  </div>
+                </div>
+                <!-- hidden -->
+                <div class="hidden-wrapper">
+                  <input
+                    th:type="${'hidden'}"
+                    th:id="${'member_id'}"
+                    th:name="${'member_id'}"
+                    th:value="${session.member_id}"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- divider -->
+  <th:block th:replace="~{components/divider :: divider}" />
+
+  <!-- button -->
+  <th:block th:replace="~{components/button :: button}" />
+
+  <!-- footer -->
+  <th:block th:replace="~{layouts/footer :: footer}" />
+
+</html>

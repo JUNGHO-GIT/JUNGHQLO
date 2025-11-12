@@ -1,0 +1,13 @@
+{
+  "name": "junghqlo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "index.ts",
+  "license": "Apache-2.0",
+  "scripts": {
+		"reset": "node .node/reset.cjs --pnpm",
+		"autofix": "node .node/autofix.cjs --fix",
+		"gcloud": "node .node/gcloud.cjs --deploy"
+  }
+}

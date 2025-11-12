@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+  <!-- head -->
+  <th:block th:replace="~{layouts/head :: head}" />
+
+  <!-- header -->
+  <th:block th:replace="~{layouts/header :: header}" />
+
+  <!-- hero -->
+  <section class="container hero-slider owl-carousel mb-4vh">
+    <th:block th:each="i : ${#numbers.sequence(1, 2)}">
+      <div
+        th:class="${'hero-items set-bg'}"
+        th:attr="data-setbg=@{${STORAGE} + '/main/main-' + ${i} + '.png'(i=${i})}"
+      >
+        <div class="hero-text px-5vw">
+          <div class="fw-1-0rem fw-800 burgundy upper mb-3vh">
+            <span th:text="${#dates.year(#dates.createNow())}"></span>
+            <span>New Arrivals</span>
+          </div>
+          <div class="fs-2-5rem fw-800 black upper mb-3vh">
+            <span th:text="${#dates.year(#dates.createNow())}"></span>
+            <span>Collection</span>
+          </div>
+          <div class="fs-1-0rem fw-600 light-black lh-2-0 mb-3vh">
+            A specialist label creating luxury essentials. Ethically crafted with an unwavering commitment to exceptional quality.
+          </div>
+          <div
+            th:class="${'primary-btn'}"
+            th:onclick="goToPage('product/listProduct')"
+          >
+            <p class="p-0px">Shop now</p>
+            <span class="arrow_right"></span>
+          </div>
+        </div>
+      </div>
+    </th:block>
+  </section>
+
+  <!-- product -->
+  <section class="container-fluid px-6vw mb-4vh">
+    <!-- filter -->
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="filter-controls d-row-center mb-4vh">
+          <div
+            th:class="${'fs-1-5rem fw-700 pointer-burgundy mr-4vw active'}"
+            th:data-filter="${'*'}"
+            th:text="${'All'}"
+          ></div>
+          <div
+            th:class="${'fs-1-5rem fw-700 pointer-burgundy mr-4vw'}"
+            th:data-filter="${'.classic'}"
+            th:text="${'Classic'}"
+          ></div>
+          <div
+            th:class="${'fs-1-5rem fw-700 pointer-burgundy'}"
+            th:data-filter="${'.modern'}"
+            th:text="${'Modern'}"
+          ></div>
+        </div>
+      </div>
+    </div>
+    <!-- image -->
+    <div class="row product-filter" id="productContainer">
+      <!-- 1~4 (Modern) -->
+      <th:block th:each="i, iterStat : ${#numbers.sequence(1, 4)}">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mix modern p-10px">
+          <!-- image -->
+          <div class="d-row-center">
+            <img
+              th:id="|product-item-pic-${i}|"
+              th:name="|product-item-pic-${i}|"
+              th:aria-label="|product-item-pic-${i}|"
+              th:src="@{|${STORAGE}/recommend/recommend-${i}.jpg|}"
+              th:class="${'w-100p h-300px radius-2 border-1 shadow-1'}"
+            />
+          </div>
+          <!-- title & theme -->
+          <div class="d-row-between">
+            <div class="d-row-left">
+              <div class="fs-1-2rem fw-700 lh-2-0">
+                Modern Styles
+              </div>
+            </div>
+            <div class="d-row-right mr-20px">
+              <div
+                th:if="${iterStat.index} == 0"
+                th:class="${'fs-0-7rem primary mr-5px mt-5px'}"
+                th:text="${'New'}"
+              ></div>
+              <div
+                th:if="${iterStat.index} == 1"
+                th:class="${'fs-0-7rem danger mr-5px mt-5px'}"
+                th:text="${'Hot'}"
+              ></div>
+              <div
+                th:if="${iterStat.index} == 2"
+                th:class="${'fs-0-7rem warning mr-5px mt-5px'}"
+                th:text="${'Sale'}"
+              ></div>
+              <div
+                th:if="${iterStat.index} == 3"
+                th:class="${'fs-0-7rem success mr-5px mt-5px'}"
+                th:text="${'Best'}"
+              ></div>
+            </div>
+          </div>
+          <!-- price & color -->
+          <div class="d-row-between">
+            <div class="d-row-left">
+              <div class="fs-1-0rem fw-600 dark lh-2-0">
+                <i class="fas fa-won-sign fa-xs"></i>
+                <span th:id="|price-${i}|"></span>
+              </div>
+            </div>
+            <div class="d-row-right mr-20px">
+              <div class="fs-0-7rem primary mr-5px">●</div>
+              <div class="fs-0-7rem danger mr-5px">●</div>
+              <div class="fs-0-7rem warning">●</div>
+            </div>
+          </div>
+        </div>
+      </th:block>
+      <!-- 5~8 (Classic) -->
+      <th:block th:each="i, iterStat : ${#numbers.sequence(5, 8)}">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mix classic p-10px">
+          <!-- image -->
+          <div class="d-row-center">
+            <img
+              th:id="|product-item-pic-${i}|"
+              th:name="|product-item-pic-${i}|"
+              th:aria-label="|product-item-pic-${i}|"
+              th:src="@{|${STORAGE}/recommend/recommend-${i}.jpg|}"
+              th:class="${'w-100p h-300px radius-2 border-1 shadow-1'}"
+            />
+          </div>
+          <!-- title & theme -->
+          <div class="d-row-between">
+            <div class="d-row-left">
+              <div class="fs-1-2rem fw-700 lh-2-0">
+                Classic Styles
+              </div>
+            </div>
+            <div class="d-row-right mr-20px">
+              <div
+                th:if="${iterStat.index} == 2"
+                th:class="${'fs-0-7rem primary mr-5px mt-5px'}"
+                th:text="${'New'}"
+              ></div>
+              <div
+                th:if="${iterStat.index} == 1"
+                th:class="${'fs-0-7rem danger mr-5px mt-5px'}"
+                th:text="${'Hot'}"
+              ></div>
+              <div
+                th:if="${iterStat.index} == 3"
+                th:class="${'fs-0-7rem warning mr-5px mt-5px'}"
+                th:text="${'Sale'}"
+              ></div>
+              <div
+                th:if="${iterStat.index} == 0"
+                th:class="${'fs-0-7rem success mr-5px mt-5px'}"
+                th:text="${'Best'}"
+              ></div>
+            </div>
+          </div>
+          <!-- price & color -->
+          <div class="d-row-between">
+            <div class="d-row-left">
+              <div class="fs-1-0rem fw-600 dark lh-2-0">
+                <i class="fas fa-won-sign fa-xs"></i>
+                <span th:id="|price-${i}|"></span>
+              </div>
+            </div>
+            <div class="d-row-right mr-20px">
+              <div class="fs-0-7rem dark mr-5px">●</div>
+              <div class="fs-0-7rem info mr-5px">●</div>
+              <div class="fs-0-7rem success">●</div>
+            </div>
+          </div>
+        </div>
+      </th:block>
+    </div>
+  </section>
+
+  <!-- instagram -->
+  <section class="container-fluid px-6vw">
+    <div class="row">
+      <th:block th:each="i : ${#numbers.sequence(1, 6)}">
+        <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 p-0px">
+          <img
+            th:id="${'instagram-' + i}"
+            th:name="${'instagram-' + i}"
+            th:aria-label="${'instagram-' + i}"
+            th:src="@{|${STORAGE}/instagram/instagram-${i}.webp|}"
+            th:class="${'w-100p h-auto'}"
+          />
+        </div>
+      </th:block>
+    </div>
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 pt-40px">
+        <div class="fs-2-2rem fw-700 black mb-3vh">
+          Instagram
+        </div>
+        <div class="fs-1-1rem fw-600 light-black lh-1-4 mb-3vh">
+          In a quaint village by the sea, young Amelia dreamed of adventure. She spent her days exploring the shoreline, collecting seashells and watching the ships sail by.
+        </div>
+        <div class="fs-1-7rem fw-700 burgundy">
+          #JUNGHQLO
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- footer -->
+  <th:block th:replace="~{layouts/footer :: footer}" />
+
+</html>

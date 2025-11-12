@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+  <!-- off-canvas -->
+  <section th:fragment="offcanvas">
+
+    <!-- off-canvas-menu-overlay -->
+    <div class="off-canvas-menu-overlay"></div>
+
+    <!-- off-canvas -->
+    <div class="off-canvas-menu-wrapper">
+      <div class="d-row-center">
+        <div class="off-canvas-links">
+          <a
+            th:if="${session.member_id == null}"
+            th:onclick="@{|/member/signupMember|}"
+          >
+            <span class="upper mr-20px">
+              SignUp
+            </span>
+          </a>
+          <a
+            th:if="${session.member_id == null}"
+            th:onclick="@{|/member/loginMember|}"0
+          >
+            <span class="upper mr-20px">
+              Login
+            </span>
+          </a>
+          <a
+            th:if="${session.member_id != null}"
+            th:onclick="goToPage('detail', [[${session.member_number}]])"
+          >
+            <span class="upper mr-20px">
+              MyPage
+            </span>
+          </a>
+          <a
+            th:if="${session.member_id != null}"
+            th:onclick="getLogout()"
+          >
+            <span class="upper mr-20px">
+              Logout
+            </span>
+          </a>
+        </div>
+        <div class="off-canvas-top-hover">
+          <span class="upper black hover">
+            Admin
+          </span>
+          <ul th:if ="${session.member_id == ADMIN}">
+            <li>
+              <a th:onclick="@{https://dashboard.stripe.com/test/dashboard|}">
+                AdminPage
+              </a>
+            </li>
+            <li>
+              <a th:onclick="@{|/member/listMember|}">
+                MemberList
+              </a>
+            </li>
+            <li>
+              <a th:onclick="@{|/product/saveProduct|}">
+                SaveProduct
+              </a>
+            </li>
+            <li>
+              <a th:onclick="@{|/notice/saveNotice|}">
+                SaveNotice
+              </a>
+            </li>
+          </ul>
+          <ul th:if ="${session.member_id != ADMIN}">
+            <li>
+              <a th:onclick="adminAlert()">
+                AdminPage
+              </a>
+            </li>
+            <li>
+              <a th:onclick="adminAlert()">
+                MemberList
+              </a>
+            </li>
+            <li>
+              <a th:onclick="adminAlert()">
+                SaveProduct
+              </a>
+            </li>
+            <li>
+              <a th:onclick="adminAlert()">
+                SaveNotice
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- hr -->
+      <div class="w-100p my-3vh bg-light-grey h-1px"></div>
+      <!-- menu -->
+      <div class="d-col-left">
+        <th:block th:if="${session.member_id == null}">
+          <div
+            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy my-3vh'}"
+            th:onclick="sessionAlert()"
+          >
+            Product
+          </div>
+          <div
+            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy my-3vh'}"
+            th:onclick="sessionAlert()"
+          >
+            Orders
+          </div>
+          <div
+            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy my-3vh'}"
+            th:onclick="sessionAlert()"
+          >
+            Board
+          </div>
+          <div
+            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy my-3vh'}"
+            th:onclick="sessionAlert()"
+          >
+            Notice
+          </div>
+          <div
+            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy my-3vh'}"
+            th:onclick="sessionAlert()"
+          >
+            QnA
+          </div>
+        </th:block>
+        <th:block th:if="${session.member_id != null}">
+          <div
+            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy my-3vh'}"
+            th:onclick="goToPage('product/listProduct')"
+          >
+            Product
+          </div>
+          <div
+            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy my-3vh'}"
+            th:onclick="goToPage('orders/listOrders')"
+          >
+            Orders
+          </div>
+          <div
+            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy my-3vh'}"
+            th:onclick="goToPage('board/listBoard')"
+          >
+            Board
+          </div>
+          <div
+            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy my-3vh'}"
+            th:onclick="goToPage('notice/listNotice')"
+          >
+            Notice
+          </div>
+          <div
+            th:class="${'fs-1-0rem fw-700 upper pointer-burgundy my-3vh'}"
+            th:onclick="goToPage('qna/listQna')"
+          >
+            QnA
+          </div>
+        </th:block>
+      </div>
+      <!-- hr -->
+      <div class="w-100p my-3vh bg-light-grey h-1px"></div>
+      <!-- text -->
+      <div class="d-col-left">
+        <img
+          th:src="@{|${STORAGE}/icon/logo.png|}"
+          th:loading="${'lazy'}"
+          th:alt="${'logo'}"
+          th:width="${'70px'}"
+          th:height="${'70px'}"
+          th:class="${'pointer'}"
+          th:onclick="goToPage('home')"
+        />
+        <div class="fs-1-0rem fw-700 my-3vh">
+          JUNGHQLO
+        </div>
+        <div class="fs-0-9rem fw-400 mb-2vh">
+          ⓒ 2024 JUNGHQLO
+        </div>
+        <div class="fs-0-9rem fw-400">
+          All Rights Reserved.
+        </div>
+      </div>
+    </div>
+  </section>
+
+</html>
