@@ -102,7 +102,7 @@ public class NoticeController {
     model.addAttribute("pageHandler", pageHandler);
     model.addAttribute("LIST", pageHandler.getContent());
 
-    return MessageFormat.format("/page/{0}/{1}List", page, page);
+    return MessageFormat.format("/pages/{0}/{1}List", page, page);
   };
 
   // 2. detailNotice(GET) --------------------------------------------------------------------------
@@ -120,14 +120,14 @@ public class NoticeController {
     model.addAttribute("MODEL", noticeService.detailNotice(notice_number));
     model.addAttribute("member_id", session.getAttribute("member_id"));
 
-    return MessageFormat.format("/page/{0}/{1}Detail", page, page);
+    return MessageFormat.format("/pages/{0}/{1}Detail", page, page);
   }
 
   // 3. saveNotice (GET) ---------------------------------------------------------------------------
   @GetMapping("/saveNotice")
   public String saveNotice() throws Exception {
 
-    return MessageFormat.format("/page/{0}/{1}Save", page, page);
+    return MessageFormat.format("/pages/{0}/{1}Save", page, page);
   }
 
   // 3. saveNotice (POST) --------------------------------------------------------------------------
@@ -165,7 +165,7 @@ public class NoticeController {
     // 모델
     model.addAttribute("MODEL", noticeService.detailNotice(notice_number));
 
-    return MessageFormat.format("/page/{0}/{1}Update", page, page);
+    return MessageFormat.format("/pages/{0}/{1}Update", page, page);
   }
 
   // 4-1. updateNotice (POST) ----------------------------------------------------------------------

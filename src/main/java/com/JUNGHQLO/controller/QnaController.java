@@ -135,7 +135,7 @@ public class QnaController {
     model.addAttribute("pageHandler", pageHandler);
     model.addAttribute("LIST", pageHandler.getContent());
 
-    return MessageFormat.format("/page/{0}/{1}List", page, page);
+    return MessageFormat.format("/pages/{0}/{1}List", page, page);
   };
 
   // 2. detailQna(GET) -----------------------------------------------------------------------------
@@ -153,14 +153,14 @@ public class QnaController {
     model.addAttribute("MODEL", qnaService.detailQna(qna_number));
     model.addAttribute("member_id", session.getAttribute("member_id"));
 
-    return MessageFormat.format("/page/{0}/{1}Detail", page, page);
+    return MessageFormat.format("/pages/{0}/{1}Detail", page, page);
   }
 
   // 3. saveQna (GET) ------------------------------------------------------------------------------
   @GetMapping("/saveQna")
   public String saveQna() throws Exception {
 
-    return MessageFormat.format("/page/{0}/{1}Save", page, page);
+    return MessageFormat.format("/pages/{0}/{1}Save", page, page);
   }
 
   // 3. saveQna (POST) -----------------------------------------------------------------------------
@@ -198,7 +198,7 @@ public class QnaController {
     // 모델
     model.addAttribute("MODEL", qnaService.detailQna(qna_number));
 
-    return MessageFormat.format("/page/{0}/{1}Update", page, page);
+    return MessageFormat.format("/pages/{0}/{1}Update", page, page);
   }
 
   // 4-1. updateQna (POST) -------------------------------------------------------------------------

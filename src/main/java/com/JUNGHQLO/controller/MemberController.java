@@ -35,7 +35,7 @@ public class MemberController {
   @GetMapping("/loginMember")
   public String loginMember() throws Exception {
 
-    return MessageFormat.format("/page/{0}/{1}Login", page, page);
+    return MessageFormat.format("/pages/{0}/{1}Login", page, page);
   };
 
   // 0-2. loginMember (POST) -----------------------------------------------------------------------
@@ -161,14 +161,14 @@ public class MemberController {
     model.addAttribute("pageHandler", pageHandler);
     model.addAttribute("LIST", pageHandler.getContent());
 
-    return MessageFormat.format("/page/{0}/{1}List", page, page);
+    return MessageFormat.format("/pages/{0}/{1}List", page, page);
   };
 
   // 1-3. findMemberId (GET) -----------------------------------------------------------------------
   @GetMapping("/findMemberId")
   public String findMemberId() throws Exception {
 
-    return MessageFormat.format("/page/{0}/{1}FindId", page, page);
+    return MessageFormat.format("/pages/{0}/{1}FindId", page, page);
   }
 
   // 1-3. findMemberId (POST) ----------------------------------------------------------------------
@@ -193,7 +193,7 @@ public class MemberController {
   @GetMapping("/findMemberPw")
   public String findMemberPw() throws Exception {
 
-    return MessageFormat.format("/page/{0}/{1}FindPw", page, page);
+    return MessageFormat.format("/pages/{0}/{1}FindPw", page, page);
   }
 
   // 1-4. findMemberPw (POST) ----------------------------------------------------------------------
@@ -228,7 +228,7 @@ public class MemberController {
     model.addAttribute("MODEL", memberService.detailMember(member_number));
     model.addAttribute("member_id", session.getAttribute("member_id"));
 
-    return MessageFormat.format("/page/{0}/{1}Detail", page, page);
+    return MessageFormat.format("/pages/{0}/{1}Detail", page, page);
   }
 
   // 2-2 checkMemberId (GET) ----------------------------------------------------------------------
@@ -280,7 +280,7 @@ public class MemberController {
   @GetMapping("/signupMember")
   public String signupMember() throws Exception {
 
-    return MessageFormat.format("/page/{0}/{1}Signup", page, page);
+    return MessageFormat.format("/pages/{0}/{1}Signup", page, page);
   }
 
   // 3-1. signupMember (POST) ----------------------------------------------------------------------
@@ -349,7 +349,7 @@ public class MemberController {
     // 모델
     model.addAttribute("MODEL", memberService.detailMember(member_number));
 
-    return MessageFormat.format("/page/{0}/{1}Update", page, page);
+    return MessageFormat.format("/pages/{0}/{1}Update", page, page);
   }
 
   // 4-1. updateMember (POST) ----------------------------------------------------------------------
@@ -375,7 +375,7 @@ public class MemberController {
   @GetMapping("/updateMemberPw")
   public String updateMemberPw() throws Exception {
 
-    return MessageFormat.format("/page/{0}/{1}UpdatePw", page, page);
+    return MessageFormat.format("/pages/{0}/{1}UpdatePw", page, page);
   }
 
   // 4-2. updateMemberPw (POST) --------------------------------------------------------------------
@@ -408,7 +408,7 @@ public class MemberController {
     // 모델
     model.addAttribute("MODEL", memberService.detailMember(member_number));
 
-    return MessageFormat.format("/page/{0}/{1}Delete", page, page);
+    return MessageFormat.format("/pages/{0}/{1}Delete", page, page);
   }
 
   // 5. deleteMember (POST) ------------------------------------------------------------------------

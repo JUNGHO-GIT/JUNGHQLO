@@ -9,6 +9,6 @@ public class CommonController {
 	// home ------------------------------------------------------------------------------------------
 	@GetMapping("/")
 	public String home() throws Exception {
-		return "/page/home";
+		return "/pages/home";
   }
 };

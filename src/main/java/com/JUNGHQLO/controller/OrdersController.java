@@ -121,12 +121,12 @@ public class OrdersController {
       model.addAttribute("pageHandler", pageHandler);
       model.addAttribute("LIST", pageHandler.getContent());
 
-      return MessageFormat.format("/page/{0}/{1}List", page, page);
+      return MessageFormat.format("/pages/{0}/{1}List", page, page);
     }
 
     // 주문내역이 없는경우
     else {
-      return MessageFormat.format("/page/{0}/{1}ListEmpty", page, page);
+      return MessageFormat.format("/pages/{0}/{1}ListEmpty", page, page);
     }
   }
 
@@ -140,14 +140,14 @@ public class OrdersController {
     // 모델
     model.addAttribute("MODEL", ordersService.detailOrders(orders_number));
 
-    return MessageFormat.format("/page/{0}/{1}Detail", page, page);
+    return MessageFormat.format("/pages/{0}/{1}Detail", page, page);
   }
 
   // 3. saveOrders (GET) ---------------------------------------------------------------------------
   @GetMapping("/saveOrders")
   public String saveOrders() throws Exception {
 
-    return MessageFormat.format("/page/{0}/{1}Save", page, page);
+    return MessageFormat.format("/pages/{0}/{1}Save", page, page);
   }
 
   // 3. saveOrders (POST) --------------------------------------------------------------------------
@@ -257,13 +257,13 @@ public class OrdersController {
       Integer.parseInt(orders_quantity)
     );
 
-    return MessageFormat.format("/page/{0}/{1}Success", page, page);
+    return MessageFormat.format("/pages/{0}/{1}Success", page, page);
   }
 
   // 4-2. failOrders (GET) -------------------------------------------------------------------------
   @GetMapping("/failOrders")
   public String failOrders () throws Exception {
 
-    return MessageFormat.format("/page/{0}/{1}Fail", page, page);
+    return MessageFormat.format("/pages/{0}/{1}Fail", page, page);
   }
 }

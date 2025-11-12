@@ -167,7 +167,7 @@ public class ProductController {
     model.addAttribute("pageHandler", pageHandler);
     model.addAttribute("LIST", pageHandler.getContent());
 
-    return MessageFormat.format("/page/{0}/{1}List", page, page);
+    return MessageFormat.format("/pages/{0}/{1}List", page, page);
   };
 
   // 2. detailProduct(GET) -------------------------------------------------------------------------
@@ -180,14 +180,14 @@ public class ProductController {
     // 모델
     model.addAttribute("MODEL", productService.detailProduct(product_number));
 
-    return MessageFormat.format("/page/{0}/{1}Detail", page, page);
+    return MessageFormat.format("/pages/{0}/{1}Detail", page, page);
   }
 
   // 3. saveProduct (GET) --------------------------------------------------------------------------
   @GetMapping("/saveProduct")
   public String saveProduct() throws Exception {
 
-    return MessageFormat.format("/page/{0}/{1}Save", page, page);
+    return MessageFormat.format("/pages/{0}/{1}Save", page, page);
   }
 
   // 3. saveProduct (POST) -------------------------------------------------------------------------
@@ -225,7 +225,7 @@ public class ProductController {
     // 모델
     model.addAttribute("MODEL", productService.detailProduct(product_number));
 
-    return MessageFormat.format("/page/{0}/{1}Update", page, page);
+    return MessageFormat.format("/pages/{0}/{1}Update", page, page);
   }
 
   // 4. updateProduct (POST) -----------------------------------------------------------------------
