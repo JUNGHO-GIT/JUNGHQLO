@@ -164,10 +164,10 @@ public class OrdersController {
 
     // 2. URL 생성
     String stripePrice = (
-      URLEncoder.encode(product.getProduct_stripe_price(), StandardCharsets.UTF_8)
+      URLEncoder.encode(product.getProduct_stripe_price(), "UTF-8")
     );
     String productName = (
-      URLEncoder.encode(product.getProduct_name(), StandardCharsets.UTF_8)
+      URLEncoder.encode(product.getProduct_name(), "UTF-8")
     );
 
     // 성공했다면 successOrders 로 이동
