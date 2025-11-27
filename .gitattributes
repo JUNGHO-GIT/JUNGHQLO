@@ -1,25 +1,219 @@
 # .gitattributes
 
-# text
-* text eol=lf
+* text eol=crlf
+*.json linguist-vendored linguist-generated
+*.json.* linguist-vendored linguist-generated
 
-# linguist-detectable
-* linguist-detectable=true
-*.json linguist-detectable=false
-*.yml linguist-detectable=false
-*.yaml linguist-detectable=false
-*.lock linguist-detectable=false
-*.log linguist-detectable=false
-*.md linguist-detectable=false
-*.txt linguist-detectable=false
+# ==================================================================================================
+# Directories ======================================================================================
+# ==================================================================================================
 
-# linguist-vendored
-**/lib/** linguist-vendored=true
-**/font/** linguist-vendored=true
-**/image/** linguist-vendored=true
-**/type/** linguist-vendored=true
+build/** linguist-vendored=true
+.build/** linguist-vendored=true
+bundle/** linguist-vendored=true
+.bundle/** linguist-vendored=true
+vendor/** linguist-vendored=true
+.vendor/** linguist-vendored=true
+debug/** linguist-vendored=true
+.debug/** linguist-vendored=true
+dist/** linguist-vendored=true
+.dist/** linguist-vendored=true
+coverage/** linguist-vendored=true
+.coverage/** linguist-vendored=true
+out/** linguist-vendored=true
+.out/** linguist-vendored=true
+temp/** linguist-vendored=true
+.temp/** linguist-vendored=true
+target/** linguist-vendored=true
+.target/** linguist-vendored=true
+gradle/** linguist-vendored=true
+.gradle/** linguist-vendored=true
+bin/** linguist-vendored=true
+.bin/** linguist-vendored=true
+gen/** linguist-vendored=true
+.gen/** linguist-vendored=true
+.git/** linguist-vendored=true
+node_modules/** linguist-vendored=true
+META-INF/** linguist-vendored=true
+.META-INF/** linguist-vendored=true
 
-# linguist-language
+# 4. ide & temp directories
+.vscode/** linguist-vendored=true
+.idea/** linguist-vendored=true
+.tmp/** linguist-vendored=true
+.cache/** linguist-vendored=true
+.nyc_output/** linguist-vendored=true
+.grunt/** linguist-vendored=true
+.gulp/** linguist-vendored=true
+.parcel-cache/** linguist-vendored=true
+.history/** linguist-vendored=true
+.bookmark/** linguist-vendored=true
+.backup/** linguist-vendored=true
+.etc/** linguist-vendored=true
+.node/** linguist-vendored=true
+.cxx/** linguist-vendored=true
+
+# ==================================================================================================
+# Files ============================================================================================
+# ==================================================================================================
+
+# 1. os-specific files
+*.swp linguist-vendored=true
+*.swo linguist-vendored=true
+*.DS_Store linguist-vendored=true
+*Thumbs.db linguist-vendored=true
+*Gemfile linguist-vendored=true
+
+# 2. log files
+*.log linguist-vendored=true
+npm-debug.log linguist-vendored=true
+yarn-debug.log linguist-vendored=true
+yarn-error.log linguist-vendored=true
+
+# 3. env files
+*.env linguist-vendored=true
+*.env.* linguist-vendored=true
+*.properties linguist-vendored=true
+*.properties.* linguist-vendored=true
+*.classpath linguist-vendored=true
+*.classpath.* linguist-vendored=true
+*.props linguist-vendored=true
+*.props.* linguist-vendored=true
+*.project linguist-vendored=true
+*.project.* linguist-vendored=true
+*.settings linguist-vendored=true
+*.settings.* linguist-vendored=true
+*.keystore linguist-vendored=true
+*.keystore.* linguist-vendored=true
+app.json linguist-vendored=true
+app.json.* linguist-vendored=true
+gradlew linguist-vendored=true
+gradlew.* linguist-vendored=true
+gradlew.bat linguist-vendored=true
+gradlew.bat.* linguist-vendored=true
+settings.gradle linguist-vendored=true
+settings.gradle.* linguist-vendored=true
+build.gradle linguist-vendored=true
+.build.gradle linguist-vendored=true
+
+# 4. temporary files
+*.tmp linguist-vendored=true
+*.tmp.* linguist-vendored=true
+*.bak linguist-vendored=true
+*.bak.* linguist-vendored=true
+*.backup linguist-vendored=true
+*.backup.* linguist-vendored=true
+*.orig linguist-vendored=true
+*.orig.* linguist-vendored=true
+*.rej linguist-vendored=true
+*.rej.* linguist-vendored=true
+
+# 6. package manager lock files
+package-lock.json linguist-vendored=true
+package-lock.json.* linguist-vendored=true
+yarn.lock linguist-vendored=true
+yarn.lock.* linguist-vendored=true
+
+# 7. config files
+tsconfig.json linguist-vendored=true
+tsconfig.json.* linguist-vendored=true
+tsconfig.paths.json linguist-vendored=true
+tsconfig.paths.json.* linguist-vendored=true
+tsconfig.default.json linguist-vendored=true
+tsconfig.default.json.* linguist-vendored=true
+tsconfig.regular.json linguist-vendored=true
+tsconfig.regular.json.* linguist-vendored=true
+jsconfig.json linguist-vendored=true
+jsconfig.json.* linguist-vendored=true
+jsconfig.paths.json linguist-vendored=true
+jsconfig.paths.json.* linguist-vendored=true
+jsconfig.default.json linguist-vendored=true
+jsconfig.default.json.* linguist-vendored=true
+jsconfig.regular.json linguist-vendored=true
+jsconfig.regular.json.* linguist-vendored=true
+metro.config.js linguist-vendored=true
+metro.config.* linguist-vendored=true
+jest.config.js linguist-vendored=true
+jest.config.* linguist-vendored=true
+babel.config.js linguist-vendored=true
+babel.config.* linguist-vendored=true
+.watchmanconfig linguist-vendored=true
+.watchmanconfig.* linguist-vendored=true
+.prettierrc linguist-vendored=true
+.prettierrc.* linguist-vendored=true
+.prettierignore linguist-vendored=true
+.prettierignore.* linguist-vendored=true
+.prettierrc.js linguist-vendored=true
+.prettierrc.js.* linguist-vendored=true
+.eslintrc linguist-vendored=true
+.eslintrc.* linguist-vendored=true
+.eslintignore linguist-vendored=true
+.eslintignore.* linguist-vendored=true
+.eslintrc.js linguist-vendored=true
+.eslintrc.js.* linguist-vendored=true
+.stylelintrc linguist-vendored=true
+.stylelintrc.* linguist-vendored=true
+.stylelintignore linguist-vendored=true
+.swcrc linguist-vendored=true
+.swcrc.* linguist-vendored=true
+
+# 8. etc files
+push.cjs linguist-vendored=true
+push.cjs.* linguist-vendored=true
+push.sh linguist-vendored=true
+push.sh.* linguist-vendored=true
+fetch.cjs linguist-vendored=true
+fetch.cjs.* linguist-vendored=true
+fetch.sh linguist-vendored=true
+fetch.sh.* linguist-vendored=true
+pull.cjs linguist-vendored=true
+pull.cjs linguist-vendored=true
+pull.sh linguist-vendored=true
+pull.sh.* linguist-vendored=true
+merge.cjs linguist-vendored=true
+merge.cjs.* linguist-vendored=true
+merge.sh linguist-vendored=true
+merge.sh.* linguist-vendored=true
+gcloud.cjs linguist-vendored=true
+gcloud.cjs.* linguist-vendored=true
+gcloud.sh linguist-vendored=true
+gcloud.sh.* linguist-vendored=true
+.gitignore.public linguist-vendored=true
+.gitignore.public.* linguist-vendored=true
+.gitignore.private linguist-vendored=true
+.gitignore.private.* linguist-vendored=true
+*.vsix linguist-vendored=true
+*.vsix.* linguist-vendored=true
+
+# ==================================================================================================
+# Specific files ===================================================================================
+# ==================================================================================================
+
+# java
 *.java linguist-language=Java
+
+# jsp
 *.jsp linguist-language=Java
+
+# thymeleaf
 *.html linguist-language=Java
+
+# javascript
+*.js linguist-language=JavaScript
+*.jsx linguist-language=JavaScript
+*.ts linguist-language=JavaScript
+*.tsx linguist-language=JavaScript
+
+# css
+*.css linguist-language=CSS
+
+# xml
+*.xml linguist-language=XML
+*.xsd linguist-language=XML
+*.xsl linguist-language=XML
+
+# sql
+*.sql linguist-language=SQL
+
+# json
+*.json linguist-language=JSON
