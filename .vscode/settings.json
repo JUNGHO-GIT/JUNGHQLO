@@ -1,0 +1,26 @@
+{
+	"files.exclude": {
+		"**/.git": false,
+		"**/.svn": false,
+		"**/.hg": false,
+		"**/.DS_Store": false,
+		"**/Thumbs.db": false,
+		"**/CVS": false,
+		"**/bower_components": false,
+		"**/coverage": false,
+		"**/tmp": false,
+		"**/.mvn": false,
+		"**/mvnw": false,
+		"**/mvnw.cmd": false,
+		"**/*history*": false,
+		"**/*bookmark*": false,
+		"**/node_modules": false,
+		"**/dist": false,
+		"**/out": false
+	},
+	"editor.tabSize": 2,
+	"explorerExclude.backup": {},
+	"editor.codeLens": true,
+	"terminal.integrated.fontSize": 12,
+	"debug.console.fontSize": 12,
+}
